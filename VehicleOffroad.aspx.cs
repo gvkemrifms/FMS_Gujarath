@@ -1,27 +1,26 @@
-﻿using GvkFMSAPP.BLL;
-using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Globalization;
+using GvkFMSAPP.BLL;
+using GvkFMSAPP.BLL.VAS_BLL;
+using MySql.Data.MySqlClient;
+
 namespace GvkFMSAPP.PL.VAS
 {
-    public partial class VehicleOffroad : System.Web.UI.Page
+    public partial class VehicleOffroad : Page
     {
-        GvkFMSAPP.BLL.BaseVehicleDetails fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
-        GvkFMSAPP.BLL.VAS_BLL.VASGeneral vehallobj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
-        public IInventory objInventory = new FMSInventory();
-        GvkFMSAPP.BLL.FMSGeneral fmsgeneral = new GvkFMSAPP.BLL.FMSGeneral();
-        DataTable dtBreakdown = new DataTable();
+        BLL.BaseVehicleDetails _fmsobj = new BLL.BaseVehicleDetails();
+        VASGeneral _vehallobj = new VASGeneral();
+        public IInventory ObjInventory = new FMSInventory();
+        FMSGeneral _fmsgeneral = new FMSGeneral();
+        DataTable _dtBreakdown = new DataTable();
 	protected void Page_PreInit(Object sender, EventArgs e)
         {
 
@@ -32,7 +31,7 @@ namespace GvkFMSAPP.PL.VAS
             else {
                 if (Session["Role_Id"].ToString() == "120")
                 { 
-                    this.MasterPageFile = "~/MasterERO.master";
+                    MasterPageFile = "~/MasterERO.master";
                 }
             }
         }
@@ -55,7 +54,7 @@ namespace GvkFMSAPP.PL.VAS
                 FillMaintenanceTypes();
 
                 //txtReqBy.Text = Session["User_Name"].ToString();
-                dtBreakdown = null;
+                _dtBreakdown = null;
                 btnSubmit.Enabled = true;
                 //ddlOFFHour.Items.FindByText(timenow[1].ToString()).Selected = true;
             }
@@ -64,7 +63,7 @@ namespace GvkFMSAPP.PL.VAS
 
         public void FillMaintenanceTypes()
         {
-            DataSet ds = fmsgeneral.GetMaintenanceType();
+            DataSet ds = _fmsgeneral.GetMaintenanceType();
             ddlreasons.DataSource = ds.Tables[0];
             ddlreasons.DataValueField = "Maint_Type_ID";
             ddlreasons.DataTextField = "Maint_Desc";
@@ -77,10 +76,10 @@ namespace GvkFMSAPP.PL.VAS
         protected void GetTime()
         {
             // string[] timenow = DateTime.Now.ToString("dd/MM/yyyy hh:mm tt").Split(' ');
-	        string[] timenow = DateTime.Now.ToString().Split(' ');
-            txtOfftimeDate.Text = timenow[0].ToString();
-            int hour = Convert.ToInt32(timenow[1].Split(':')[0].ToString());
-            int minute = Convert.ToInt32(timenow[1].Split(':')[1].ToString());
+	        string[] timenow = DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ');
+            txtOfftimeDate.Text = timenow[0];
+            int hour = Convert.ToInt32(timenow[1].Split(':')[0]);
+            int minute = Convert.ToInt32(timenow[1].Split(':')[1]);
 
             if (timenow.Length > 2)
             {
@@ -88,14 +87,9 @@ namespace GvkFMSAPP.PL.VAS
                 {
 
                     if (hour < 10)
-                    {
-                        ddlOFFHour.Items.FindByValue("0" + timenow[1].Split(':')[0].ToString()).Selected = true;
-                    }
+                        ddlOFFHour.Items.FindByValue("0" + timenow[1].Split(':')[0]).Selected = true;
                     else
-                    {
-                        ddlOFFHour.Items.FindByValue(timenow[1].Split(':')[0].ToString()).Selected = true;
-                    }
-
+                        ddlOFFHour.Items.FindByValue(timenow[1].Split(':')[0]).Selected = true;
                 }
                 else
                 {
@@ -122,80 +116,74 @@ namespace GvkFMSAPP.PL.VAS
             }
 
 
-            if (minute < 10)
-            {
-                ddlOFFMin.Items.FindByValue(timenow[1].Split(':')[1]).Selected = true;
-            }
-            else
-            {
-                ddlOFFMin.Items.FindByValue(timenow[1].Split(':')[1]).Selected = true;
-            }
+            ddlOFFMin.Items.FindByValue(timenow[1].Split(':')[1]).Selected = true;
         }
 
-        public void insertdata(string smsContent,string name, string mobileno )
+        public void Insertdata(string smsContent,string name, string mobileno )
         {
             smsContent = smsContent.Replace("{name}", name);
-            SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["Str"].ToString());
+            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
             conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into t_SMS(smsContent ,mobileno) values ('"+ smsContent + "', '"+ mobileno + "')";
-            cmd.Connection = conn;
-           // cmd.ExecuteNonQuery();
+            var cmd= new SqlCommand
+            {
+                CommandType = CommandType.Text,
+                CommandText = "insert into t_SMS(smsContent ,mobileno) values ('" + smsContent + "', '" + mobileno +
+                              "')",
+                Connection = conn
+            };
+            // cmd.ExecuteNonQuery();
             conn.Close();
 
         }
 
-        public void insertAgent(string offroadid, string vehicleNo, string AgentID)
+        public void InsertAgent(string offroadid, string vehicleNo, string agentId)
         {
-            string ip = GetLocalIPAddress();
-            SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["Str"].ToString());
+            var ip = GetLocalIPAddress();
+            var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
             conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into t_offroadAgent(offroadid ,vehicleNo, AgentID,AgentName,ip) values ('" + offroadid + "', '" + vehicleNo + "', '" + AgentID + "', '"+Session["User_Name"].ToString() +"','"+ ip + "')";
-            cmd.Connection = conn;
+            var cmd = new SqlCommand
+            {
+                CommandType = CommandType.Text,
+                CommandText = "insert into t_offroadAgent(offroadid ,vehicleNo, AgentID,AgentName,ip) values ('" +
+                              offroadid + "', '" + vehicleNo + "', '" + agentId + "', '" + Session["User_Name"] +
+                              "','" + ip + "')",
+                Connection = conn
+            };
             cmd.ExecuteNonQuery();
             conn.Close();
 
         }
 
 
-        public void sendSms(string vehicleno, string breakdownid, string reason)
+        public void SendSms(string vehicleno, string breakdownid, string reason)
         {
             DataTable dtPenData = new DataTable();
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["Str"].ToString());
+                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
                 conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select * from m_vehicle_supervisors where VehicleNo = '" + vehicleno + "'";
-                cmd.Connection = conn;
+                var cmd = new SqlCommand
+                {
+                    CommandType = CommandType.Text,
+                    CommandText = "select * from m_vehicle_supervisors where VehicleNo = '" + vehicleno + "'",
+                    Connection = conn
+            };
+                var adp = new SqlDataAdapter(cmd);           
                 adp.Fill(dtPenData);
                 conn.Close();
-                if(dtPenData.Rows.Count > 0)
-                {
-                    string smsContent = "Dear {name},\nVehicleNumber-"+ vehicleno + " is made off road with reason-"+ reason + " and breakdownid-"+ breakdownid+" and base location:" + dtPenData.Rows[0]["BaseLocation"].ToString() + " by ERO:" + Session["User_Name"].ToString();
-
-                 //   insertdata(smsContent, dtPenData.Rows[0]["Emename"].ToString(), dtPenData.Rows[0]["EmeContactNumber"].ToString());
-                   // insertdata(smsContent, dtPenData.Rows[0]["Pmname"].ToString(), dtPenData.Rows[0]["PmContactNumber"].ToString());
-                 //   insertdata(smsContent, dtPenData.Rows[0]["Rmname"].ToString(), dtPenData.Rows[0]["RmContactNumber"].ToString());
-                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // ignored
             }
         }
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             btnSubmit.Enabled = false;
-	DateTime entrydate = DateTime.ParseExact(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedValue.ToString() + ":"+ ddlOFFMin.SelectedValue.ToString() , "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
-            if(entrydate > System.DateTime.Now)
+	var entrydate = DateTime.ParseExact(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedValue + ":"+ ddlOFFMin.SelectedValue , "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+            if(entrydate > DateTime.Now)
             {
                 Show("Off road date should not be greater than current date ");
-              // Show("Success");
 		 return;
             }
 
@@ -211,20 +199,20 @@ namespace GvkFMSAPP.PL.VAS
                 objStringBuilder.Append("<NewDataSet>");
                 objStringBuilder.Append("<TransDtls>");
 
-                vehallobj.ContactNumber = txtContactNumber.Text;
-                vehallobj.Comments = txtComment.Text;
-                vehallobj.District = ddlDistrict.SelectedItem.Text;
-                vehallobj.OffRoadDate = Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text);
-                vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
-                vehallobj.ReasonForOffRoad = ddlreasons.SelectedItem.Text;
-                vehallobj.RequestedBy = txtReqBy.Text;
-                vehallobj.EMEID = txtEMEId.Text;
-                vehallobj.PilotID = txtPilotId.Text;
-                vehallobj.PilotName = txtPilotName.Text;
-                vehallobj.Odometer = txtOdo.Text;
-                vehallobj.ExpDateOfRecovery = Convert.ToDateTime(txtExpDateOfRec.Text + " " + ddlExpDateOfRecHr.SelectedItem.Text + ":" + ddlExpDateOfRecMin.SelectedItem.Text);
-                vehallobj.SegmentId = 0;
-                vehallobj.totEstimated = txtAllEstimatedCost.Text;
+                _vehallobj.ContactNumber = txtContactNumber.Text;
+                _vehallobj.Comments = txtComment.Text;
+                _vehallobj.District = ddlDistrict.SelectedItem.Text;
+                _vehallobj.OffRoadDate = Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text);
+                _vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
+                _vehallobj.ReasonForOffRoad = ddlreasons.SelectedItem.Text;
+                _vehallobj.RequestedBy = txtReqBy.Text;
+                _vehallobj.EMEID = txtEMEId.Text;
+                _vehallobj.PilotID = txtPilotId.Text;
+                _vehallobj.PilotName = txtPilotName.Text;
+                _vehallobj.Odometer = txtOdo.Text;
+                _vehallobj.ExpDateOfRecovery = Convert.ToDateTime(txtExpDateOfRec.Text + " " + ddlExpDateOfRecHr.SelectedItem.Text + ":" + ddlExpDateOfRecMin.SelectedItem.Text);
+                _vehallobj.SegmentId = 0;
+                _vehallobj.totEstimated = txtAllEstimatedCost.Text;
 
 
                 if (ddlreasons.SelectedItem != null && ddlreasons.SelectedIndex == 4)
@@ -252,61 +240,61 @@ namespace GvkFMSAPP.PL.VAS
                 objStringBuilder.Append("</TransDtls> ");
                 objStringBuilder.Append("</NewDataSet>");
 
-                vehallobj.BreakDownDetails = objStringBuilder.ToString();
+                _vehallobj.BreakDownDetails = objStringBuilder.ToString();
 
-                if (pnlothersegment.Visible == true && grdvothersegment.Visible == true)
+                if (pnlothersegment.Visible && grdvothersegment.Visible)
                 {
                     dsmandalsupd = (DataSet)Session["dsmandals"];
                     for (int j = 0; j < dsmandalsupd.Tables[0].Rows.Count; j++)
                     {
-                        mandalids = mandalids + dsmandalsupd.Tables[0].Rows[j][0].ToString() + ",";
-                        segmentids = segmentids + ((DropDownList)grdvothersegment.Rows[j].Controls[1].Controls[1]).SelectedValue.ToString() + ",";
-                        segmentnames = segmentnames + ((DropDownList)grdvothersegment.Rows[j].Controls[1].Controls[1]).SelectedItem.Text.ToString() + ",";
+                        mandalids = mandalids + dsmandalsupd.Tables[0].Rows[j][0] + ",";
+                        segmentids = segmentids + ((DropDownList)grdvothersegment.Rows[j].Controls[1].Controls[1]).SelectedValue + ",";
+                        segmentnames = segmentnames + ((DropDownList)grdvothersegment.Rows[j].Controls[1].Controls[1]).SelectedItem.Text + ",";
                     }
 
-                    vehallobj.SegmentIds = segmentids;
-                    vehallobj.MandalIds = mandalids;
-                    vehallobj.SegmentNames = segmentnames;
+                    _vehallobj.SegmentIds = segmentids;
+                    _vehallobj.MandalIds = mandalids;
+                    _vehallobj.SegmentNames = segmentnames;
                     makeVehicleoffRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text).ToString("yyyy-MM-dd HH:mm:ss"), ddlreasons.SelectedItem.Text, Session["User_Name"].ToString(), txtOdo.Text, txtReqBy.Text, txtPilotName.Text,txtPilotId.Text);
 
-                    int insres = vehallobj.InsertOffRoadVehicleDetail();
+                    int insres = _vehallobj.InsertOffRoadVehicleDetail();
                     if (insres != 0)
                     {
-                        insertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
-                        sendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
-                        Show("Record Inserted Successfully!! And BreakDown Id=" + insres.ToString());
+                        InsertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
+                        SendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
+                        Show("Record Inserted Successfully!! And BreakDown Id=" + insres);
                     }
                     else
                     {
                         Show("Record not Inserted Successfully!!");
                     }
                 }
-                else if (pnlothervehicle.Visible == true && grdvothervehicle.Visible == true)
+                else if (pnlothervehicle.Visible && grdvothervehicle.Visible)
                 {
                     dsmandalsupd = (DataSet)Session["dsmandals"];
                     for (int j = 0; j < dsmandalsupd.Tables[0].Rows.Count; j++)
                     {
-                        mandalids = mandalids + dsmandalsupd.Tables[0].Rows[j][0].ToString() + ",";
-                        segmentids = segmentids + Convert.ToInt32(Session["segmentid"]).ToString() + ",";  //((DropDownList)grdvothervehicle.Rows[j].Controls[1].Controls[1]).SelectedValue.ToString() + ",";
-                        segmentnames = segmentnames + lblSegmentName.Text.ToString() + ",";//((DropDownList)grdvothervehicle.Rows[j].Controls[1].Controls[1]).SelectedItem.Text.ToString() + ",";
+                        mandalids = mandalids + dsmandalsupd.Tables[0].Rows[j][0] + ",";
+                        segmentids = segmentids + Convert.ToInt32(Session["segmentid"]) + ",";  //((DropDownList)grdvothervehicle.Rows[j].Controls[1].Controls[1]).SelectedValue.ToString() + ",";
+                        segmentnames = segmentnames + lblSegmentName.Text + ",";//((DropDownList)grdvothervehicle.Rows[j].Controls[1].Controls[1]).SelectedItem.Text.ToString() + ",";
                     }
 
-                    vehallobj.SegmentIds = segmentids;
-                    vehallobj.MandalIds = mandalids;
-                    vehallobj.SegmentNames = segmentnames;
-                    vehallobj.OtherVehicleNumber = ddlothervehicle.SelectedItem.Text;
+                    _vehallobj.SegmentIds = segmentids;
+                    _vehallobj.MandalIds = mandalids;
+                    _vehallobj.SegmentNames = segmentnames;
+                    _vehallobj.OtherVehicleNumber = ddlothervehicle.SelectedItem.Text;
                     //     vehallobj.OtherSegmentId = Convert.ToInt32(Session["othersegmentid"]);
                     //  makeVehicleoffRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text), ddlreasons.SelectedItem.Text);
                     makeVehicleoffRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text).ToString("yyyy-MM-dd HH:mm:ss"), ddlreasons.SelectedItem.Text, Session["User_Name"].ToString(), txtOdo.Text, txtReqBy.Text, txtPilotName.Text, txtPilotId.Text);
 
-                    int insres = vehallobj.InsertOtherOffRoadVehicleDetail();
+                    int insres = _vehallobj.InsertOtherOffRoadVehicleDetail();
                     Session["offId"] = insres;
                     if (insres != 0)
                     {
-                        insertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
-                        sendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
+                        InsertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
+                        SendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
 
-                        Show("Record Inserted Successfully!! And Breakdown Id=" + insres.ToString());
+                        Show("Record Inserted Successfully!! And Breakdown Id=" + insres);
                     }
                     else
                     {
@@ -317,21 +305,21 @@ namespace GvkFMSAPP.PL.VAS
                 {
                     mandalids = ""; segmentids = ""; segmentnames = "";
 
-                    vehallobj.SegmentIds = segmentids;
-                    vehallobj.MandalIds = mandalids;
-                    vehallobj.SegmentNames = segmentnames;
+                    _vehallobj.SegmentIds = segmentids;
+                    _vehallobj.MandalIds = mandalids;
+                    _vehallobj.SegmentNames = segmentnames;
 
                   //  makeVehicleoffRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text), ddlreasons.SelectedItem.Text);
                     makeVehicleoffRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtOfftimeDate.Text + " " + ddlOFFHour.SelectedItem.Text + ":" + ddlOFFMin.SelectedItem.Text).ToString("yyyy-MM-dd HH:mm:ss"), ddlreasons.SelectedItem.Text, Session["User_Name"].ToString(), txtOdo.Text, txtReqBy.Text, txtPilotName.Text, txtPilotId.Text);
 
 
-                    int insres = vehallobj.InsertOffRoadVehicleDetail();
+                    int insres = _vehallobj.InsertOffRoadVehicleDetail();
                     Session["offId"] = insres;
                     if (insres != 0)
                     {
-                        insertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
-                        sendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
-                        Show("Record Inserted Successfully!!And Breakdown Id=" + insres.ToString());
+                        InsertAgent(insres.ToString(), ddlVehicleNumber.SelectedItem.Text, Session["User_Id"].ToString());
+                        SendSms(ddlVehicleNumber.SelectedItem.Text, insres.ToString(), ddlreasons.SelectedItem.Text);
+                        Show("Record Inserted Successfully!!And Breakdown Id=" + insres);
                     }
                     else
                     {
@@ -374,18 +362,18 @@ namespace GvkFMSAPP.PL.VAS
             throw new Exception("Local IP Address Not Found!");
         }
 
-        private void updateScheduledPanality(string VehicleNumber, string OfftimeDate, string reason,string odoReading, string offId)
+        private void UpdateScheduledPanality(string vehicleNumber, string offtimeDate, string reason,string odoReading, string offId)
         {
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["Str"].ToString());
+                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "P_Update_Penality_RFP_new";
-                cmd.Parameters.AddWithValue("@VechicleNo", VehicleNumber);
-                cmd.Parameters.AddWithValue("@OfftimeDate", OfftimeDate);
+                cmd.Parameters.AddWithValue("@VechicleNo", vehicleNumber);
+                cmd.Parameters.AddWithValue("@OfftimeDate", offtimeDate);
                 cmd.Parameters.AddWithValue("@reason", reason);
                 cmd.Parameters.AddWithValue("@odoReading", odoReading);
                 cmd.Parameters.AddWithValue("@offId", offId);
@@ -406,12 +394,12 @@ namespace GvkFMSAPP.PL.VAS
 
         }
 
-        private DataTable getPenalityData(int i)
+        private DataTable GetPenalityData(int i)
         {
             DataTable dtPenData = new DataTable();
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["Str"].ToString());
+                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
@@ -421,41 +409,47 @@ namespace GvkFMSAPP.PL.VAS
                 adp.Fill(dtPenData);
                 conn.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // ignored
             }
+
             return dtPenData;
         }
 
-        private int makeVehicleoffRoad(string VehicleNumber, string offroaddate, string offroadtype, string Status_change_by, string odo_meter, string informer_name, string piliot_name, string piliot_gid)
+        private int makeVehicleoffRoad(string vehicleNumber, string offroaddate, string offroadtype, string statusChangeBy, string odoMeter, string informerName, string piliotName, string piliotGid)
         {
             int i = 0;
             try
             {
-                MySqlConnection conn = new MySqlConnection(ConfigurationSettings.AppSettings["MySqlConn"].ToString());
+                var conn = new MySqlConnection(ConfigurationManager.AppSettings["MySqlConn"]);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "UpdateVehicleStatus";
-             //piliot_gid VARCHAR(10)
-                cmd.Parameters.AddWithValue("VehicleNumber", VehicleNumber);
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "UpdateVehicleStatus",
+                    Connection = conn
+                };
+                //piliot_gid VARCHAR(10)
+                cmd.Parameters.AddWithValue("VehicleNumber", vehicleNumber);
                 cmd.Parameters.AddWithValue("offroaddate", offroaddate);
                 cmd.Parameters.AddWithValue("offroadtype", offroadtype);
-                cmd.Parameters.AddWithValue("Status_change_by", Status_change_by);
-                cmd.Parameters.AddWithValue("odo_meter", odo_meter);
-                cmd.Parameters.AddWithValue("informer_name", informer_name);
-                cmd.Parameters.AddWithValue("piliot_name", piliot_name);
-                cmd.Parameters.AddWithValue("piliot_gid", piliot_gid);
+                cmd.Parameters.AddWithValue("Status_change_by", statusChangeBy);
+                cmd.Parameters.AddWithValue("odo_meter", odoMeter);
+                cmd.Parameters.AddWithValue("informer_name", informerName);
+                cmd.Parameters.AddWithValue("piliot_name", piliotName);
+                cmd.Parameters.AddWithValue("piliot_gid", piliotGid);
 
 
-                cmd.Connection = conn;
-                DataSet ds = new DataSet();
+              
+                var adp = new MySqlDataAdapter(cmd);
+              
+                var ds = new DataSet();
                 adp.Fill(ds);
                 conn.Close();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Do Log
             }
@@ -465,7 +459,7 @@ namespace GvkFMSAPP.PL.VAS
 
         public void GetDistrict()
         {
-            ddlDistrict.DataSource = fmsobj.GetDistricts_new();
+            ddlDistrict.DataSource = _fmsobj.GetDistricts_new();
             ddlDistrict.DataTextField = "district_name";
             ddlDistrict.DataValueField = "district_id";
             ddlDistrict.DataBind();
@@ -525,26 +519,26 @@ namespace GvkFMSAPP.PL.VAS
             {
                 if (i < 10)
                 {
-                    this.ddlOFFHour.Items.Add(new ListItem("0" + i.ToString(), "0" + i.ToString()));
-                    this.ddlExpDateOfRecHr.Items.Add(new ListItem("0" + i.ToString(), "0" + i.ToString()));
+                    ddlOFFHour.Items.Add(new ListItem("0" + i, "0" + i));
+                    ddlExpDateOfRecHr.Items.Add(new ListItem("0" + i, "0" + i));
                 }
                 else
                 {
-                    this.ddlOFFHour.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                    this.ddlExpDateOfRecHr.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                    ddlOFFHour.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                    ddlExpDateOfRecHr.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }
             }
             for (i = 0; i < 60; i++)
             {
                 if (i < 10)
                 {
-                    this.ddlOFFMin.Items.Add(new ListItem("0" + i.ToString(), "0" + i.ToString()));
-                    this.ddlExpDateOfRecMin.Items.Add(new ListItem("0" + i.ToString(), "0" + i.ToString()));
+                    ddlOFFMin.Items.Add(new ListItem("0" + i, "0" + i));
+                    ddlExpDateOfRecMin.Items.Add(new ListItem("0" + i, "0" + i));
                 }
                 else
                 {
-                    this.ddlOFFMin.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                    this.ddlExpDateOfRecMin.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                    ddlOFFMin.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                    ddlExpDateOfRecMin.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }
             }
 
@@ -557,8 +551,8 @@ namespace GvkFMSAPP.PL.VAS
                 //ddlVehicleNumber.SelectedIndex = 0;
                 //ddlVehicleNumber_SelectedIndexChanged(this, null);
                 DataSet ds = new DataSet();
-                vehallobj.DistrictId = int.Parse(ddlDistrict.SelectedItem.Value);
-                ds = vehallobj.GetActiveVehiclesForOffRoad_new(); //objInventory.FillVehiclesWithDistrictID(int.Parse(ddlDistrict.SelectedItem.Value));
+                _vehallobj.DistrictId = int.Parse(ddlDistrict.SelectedItem.Value);
+                ds = _vehallobj.GetActiveVehiclesForOffRoad_new(); //objInventory.FillVehiclesWithDistrictID(int.Parse(ddlDistrict.SelectedItem.Value));
                 ddlVehicleNumber.DataSource = ds;
                 ddlVehicleNumber.DataValueField = "Vehicle";
                 ddlVehicleNumber.DataTextField = "VehicleNumber";
@@ -597,8 +591,8 @@ namespace GvkFMSAPP.PL.VAS
                 ddlreasons_SelectedIndexChanged(this, null);
                 txtContactNumber.Text = "";
 
-                DataSet ds = objInventory.GetVehicleContactNumber(ddlVehicleNumber.SelectedItem.Text,
-                                                               ConfigurationSettings.AppSettings["StrCTIAPPS"].ToString());
+                DataSet ds = ObjInventory.GetVehicleContactNumber(ddlVehicleNumber.SelectedItem.Text,
+                                                               ConfigurationSettings.AppSettings["StrCTIAPPS"]);
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
@@ -683,7 +677,7 @@ namespace GvkFMSAPP.PL.VAS
 
                 DataSet dsvehicler = new DataSet();
                 dsvehicler = (DataSet)Session["dsvehilce"];
-                DataView dv = new DataView(dsvehicler.Tables[0], "Vehicle <>'" + ddlVehicleNumber.SelectedValue.ToString() + "'", "Sg_SName", DataViewRowState.CurrentRows);
+                DataView dv = new DataView(dsvehicler.Tables[0], "Vehicle <>'" + ddlVehicleNumber.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows);
 
                 ddlothervehicle.DataSource = dv;
                 ddlothervehicle.DataTextField = "VehicleNumber";
@@ -708,8 +702,8 @@ namespace GvkFMSAPP.PL.VAS
         protected void grdvothersegment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             DataSet dssegmentgot = new DataSet();
-            vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-            dssegmentgot = vehallobj.GetMappedSegments(); //(DataSet)Session["dssegment"];
+            _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            dssegmentgot = _vehallobj.GetMappedSegments(); //(DataSet)Session["dssegment"];
             DataView dv = new DataView(dssegmentgot.Tables[0], "Sg_Segid <>" + Convert.ToInt32(Session["segmentid"]), "Sg_SName", DataViewRowState.CurrentRows);
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -729,7 +723,7 @@ namespace GvkFMSAPP.PL.VAS
 
             DataSet dssegmentgvo = new DataSet();
             dssegmentgvo = (DataSet)Session["dssegment"];
-            DataView dv1 = new DataView(dsvehiclevgvo.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue.ToString() + "'", "Sg_SName", DataViewRowState.CurrentRows);
+            DataView dv1 = new DataView(dsvehiclevgvo.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows);
             //othersegmentid = Convert.ToInt32(dv1[0][3]);
             Session["othersegmentid"] = Convert.ToInt32(dv1[0][3]);
             DataView dv = new DataView(dssegmentgvo.Tables[0], "Sg_Segid <>" + Convert.ToInt32(Session["othersegmentid"]), "Sg_SName", DataViewRowState.CurrentRows);
@@ -750,7 +744,7 @@ namespace GvkFMSAPP.PL.VAS
             DataSet dsvehiclevov = new DataSet();
             dsvehiclevov = (DataSet)Session["dsvehilce"];
 
-            DataView dv = new DataView(dsvehiclevov.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue.ToString() + "'", "Sg_SName", DataViewRowState.CurrentRows);
+            DataView dv = new DataView(dsvehiclevov.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows);
             //othersegmentid = Convert.ToInt32(dv[0][3]); 
             Session["othersegmentid"] = Convert.ToInt32(dv[0][3]);
             // txtothervsegment.Text=dv[0][2].ToString();
@@ -763,9 +757,9 @@ namespace GvkFMSAPP.PL.VAS
             Session["locationid"] = Convert.ToInt32(dv[0][4]);
             DataSet ds = new DataSet();
 
-            vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-            vehallobj.SegmentId = Convert.ToInt32(Session["othersegmentid"]);
-            ds = vehallobj.GetMandals();
+            _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            _vehallobj.SegmentId = Convert.ToInt32(Session["othersegmentid"]);
+            ds = _vehallobj.GetMandals();
             if (ds.Tables[0].Rows.Count > 0)
             {
                 pnlothervehicle.Visible = true;
@@ -786,10 +780,10 @@ namespace GvkFMSAPP.PL.VAS
         }
         public void getAggregates()
         {
-            vehallobj.Aggregates = ddlAggregates.SelectedValue;
+            _vehallobj.Aggregates = ddlAggregates.SelectedValue;
             DataSet ds = new DataSet();
-            vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
-            ds = vehallobj.GetAggregatesOffRoad();
+            _vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
+            ds = _vehallobj.GetAggregatesOffRoad();
             ddlAggregates.DataSource = ds.Tables[0];
             ddlAggregates.DataValueField = "Aggregate_Id";
             ddlAggregates.DataTextField = "Aggregates";
@@ -813,16 +807,16 @@ namespace GvkFMSAPP.PL.VAS
                 divAggre.Visible = false;
                 grdvwBreakdownDetails.DataSource = null;
                 grdvwBreakdownDetails.DataBind();
-                dtBreakdown = null;
+                _dtBreakdown = null;
             }
 
         }
         public void getCategories()
         {
-            vehallobj.Aggregates2 = Convert.ToInt16(ddlAggregates.SelectedValue);
-            vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
+            _vehallobj.Aggregates2 = Convert.ToInt16(ddlAggregates.SelectedValue);
+            _vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
             DataSet ds = new DataSet();
-            ds = vehallobj.GetCategories();
+            ds = _vehallobj.GetCategories();
             ddlCategories.DataSource = ds.Tables[0];
             ddlCategories.DataValueField = "Category_Id";
             ddlCategories.DataTextField = "Categories";
@@ -847,9 +841,9 @@ namespace GvkFMSAPP.PL.VAS
         }
         public void getSubCategories()
         {
-            vehallobj.Categories2 = Convert.ToInt16(ddlCategories.SelectedValue);
+            _vehallobj.Categories2 = Convert.ToInt16(ddlCategories.SelectedValue);
             DataSet ds = new DataSet();
-            ds = vehallobj.GetSubcategories();
+            ds = _vehallobj.GetSubcategories();
             ddlSubCategories.DataSource = ds.Tables[0];
             ddlSubCategories.DataValueField = "SubCategory_Id";
             ddlSubCategories.DataTextField = "SubCategories";
@@ -878,8 +872,8 @@ namespace GvkFMSAPP.PL.VAS
             txtEstCost.Text = "";
             if (ddlSubCategories.SelectedIndex != 0)
             {
-                vehallobj.SubCategories2 = Convert.ToInt16(ddlSubCategories.SelectedValue);
-                string text = vehallobj.GetEstCost();
+                _vehallobj.SubCategories2 = Convert.ToInt16(ddlSubCategories.SelectedValue);
+                string text = _vehallobj.GetEstCost();
                 txtEstCost.Text = text;
             }
         }
@@ -893,19 +887,19 @@ namespace GvkFMSAPP.PL.VAS
             subcategories = ddlSubCategories.SelectedItem.ToString();
             estimatedCost = txtEstCost.Text;
             if (ViewState["dtBreakdown"] != null)
-                dtBreakdown = (DataTable)ViewState["dtBreakdown"];
-            if (dtBreakdown == null || dtBreakdown.Columns.Count == 0)
+                _dtBreakdown = (DataTable)ViewState["dtBreakdown"];
+            if (_dtBreakdown == null || _dtBreakdown.Columns.Count == 0)
             {
-                dtBreakdown.Columns.Add("Aggregates", typeof(string));
-                dtBreakdown.Columns.Add("Categories", typeof(string));
-                dtBreakdown.Columns.Add("Subcategories", typeof(string));
-                dtBreakdown.Columns.Add("EstimatedCost", typeof(string));
+                _dtBreakdown.Columns.Add("Aggregates", typeof(string));
+                _dtBreakdown.Columns.Add("Categories", typeof(string));
+                _dtBreakdown.Columns.Add("Subcategories", typeof(string));
+                _dtBreakdown.Columns.Add("EstimatedCost", typeof(string));
 
             }
 
-            dtBreakdown.Rows.Add(aggregates, categories, subcategories, estimatedCost);
-            ViewState["dtBreakdown"] = dtBreakdown;
-            grdvwBreakdownDetails.DataSource = dtBreakdown;
+            _dtBreakdown.Rows.Add(aggregates, categories, subcategories, estimatedCost);
+            ViewState["dtBreakdown"] = _dtBreakdown;
+            grdvwBreakdownDetails.DataSource = _dtBreakdown;
             grdvwBreakdownDetails.DataBind();
             foreach (GridViewRow item in grdvwBreakdownDetails.Rows)
             {

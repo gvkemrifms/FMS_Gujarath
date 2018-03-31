@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class InvoiceTrackingReport : System.Web.UI.Page
+public partial class InvoiceTrackingReport : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,35 +21,12 @@ public partial class InvoiceTrackingReport : System.Web.UI.Page
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_GetVehicleNumber";
-
-
-            //ImageButton1.Enabled = true;
-           // cmd.Parameters.AddWithValue("@districtID", ddldistrict.SelectedItem.Value);
-            //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-            // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            ddlvehicle.DataSource = ds.Tables[0];
-            ddlvehicle.DataTextField = "VehicleNumber";
-            ddlvehicle.DataValueField = "VehicleID";
-            ddlvehicle.DataBind();
-            ddlvehicle.Items.Insert(0, new ListItem("--Select--", "0"));
-            conn.Close();
-
-
-
+            AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
+ 
         }
-        catch (Exception ex)
+        catch 
         {
-
+//
         }
     }
     protected void ddlvehicle_SelectedIndexChanged(object sender, EventArgs e)
@@ -90,8 +64,9 @@ public partial class InvoiceTrackingReport : System.Web.UI.Page
 
 
             }
-            catch (Exception ex)
-            {
+            catch
+            { 
+                //
 
             }
         }
@@ -104,14 +79,8 @@ public partial class InvoiceTrackingReport : System.Web.UI.Page
     {
         try
         {
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=VehicleSummaryDistrictwise.xls");
-            Response.ContentType = "application/excel";
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            Panel2.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+            var report = new AccidentReport();
+            report.LoadExcelSpreadSheet(Panel2);
         }
         catch (Exception ex)
         {
@@ -121,9 +90,9 @@ public partial class InvoiceTrackingReport : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        loaddata();
+        Loaddata();
     }
-    public void loaddata()
+    public void Loaddata()
     {
         try
         {
@@ -156,9 +125,9 @@ public partial class InvoiceTrackingReport : System.Web.UI.Page
             }
 
         }
-        catch (Exception ex)
+        catch 
         {
-
+            //
         }
     }
     public override void VerifyRenderingInServerForm(Control control)

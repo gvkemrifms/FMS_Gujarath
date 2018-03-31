@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class CardTypeReport : System.Web.UI.Page
+public partial class CardTypeReport : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -16,25 +9,13 @@ public partial class CardTypeReport : System.Web.UI.Page
         {
             ddlstation.Enabled = false;
             BindDistrictdropdown();
-           // withoutdist();
+            // withoutdist();
         }
     }
     private void BindDistrictdropdown()
     {
-        using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString()))
-        {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select district_id,district_name from m_district  where state_id= 24 and is_active = 1", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            ddldistrict.DataSource = ds;
-            ddldistrict.DataTextField = "district_name";
-            ddldistrict.DataValueField = "district_id";
-            ddldistrict.DataBind();
-            ddldistrict.Items.Insert(0, new ListItem("--Select--", "0"));
-            con.Close();
-        }
+        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -45,35 +26,14 @@ public partial class CardTypeReport : System.Web.UI.Page
 
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "P_PMS_GetServiceStns";
-
-
-                //ImageButton1.Enabled = true;
-                cmd.Parameters.AddWithValue("@DistrictID", ddldistrict.SelectedItem.Value);
-                //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-                // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-                adp.Fill(ds);
-                ddlstation.DataSource = ds.Tables[0];
-                ddlstation.DataTextField = "ServiceStation_Name";
-                ddlstation.DataValueField = "Id";
-                ddlstation.DataBind();
-                ddlstation.Items.Insert(0, new ListItem("--Select--", "0"));
-                conn.Close();
+                AccidentReport.FillDropDownHelperMethodWithSp("P_PMS_GetServiceStns", "ServiceStation_Name", "Id", ddldistrict, ddlstation, null, null, "@DistrictID");
 
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                // ignored
             }
         }
         else
@@ -81,47 +41,22 @@ public partial class CardTypeReport : System.Web.UI.Page
             ddlstation.Enabled = false;
         }
     }
-        protected void btnsubmit_Click(object sender, EventArgs e)
+    protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        loaddata();
+        Loaddata();
     }
 
-    public void loaddata()
+    public void Loaddata()
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_FMSReports_GetCardType";
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            cmd.Parameters.AddWithValue("@DistrictID", ddldistrict.SelectedItem.Value);
-            cmd.Parameters.AddWithValue("@BunkID", ddlstation.SelectedItem.Value);
-            //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-            // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                GrdcardData.DataSource = dt;
-                GrdcardData.DataBind();
-            }
-            else
-            {
-                GrdcardData.DataSource = null;
-                GrdcardData.DataBind();
-            }
+            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_GetCardType", null, null, ddldistrict, ddlstation, null, null, "@DistrictID", "@BunkID", null, null, null, GrdcardData);
+
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-
+            // ignored
         }
     }
     public override void VerifyRenderingInServerForm(Control control)
@@ -129,57 +64,15 @@ public partial class CardTypeReport : System.Web.UI.Page
         /*Tell the compiler that the control is rendered
          * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-    //public void withoutdist()
-    //{
-    //    try
-    //    {
-    //        SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-    //        DataSet ds = new DataSet();
-    //        DataTable dt = new DataTable();
-    //        conn.Open();
-    //        SqlCommand cmd = new SqlCommand();
-    //        cmd.Connection = conn;
-    //        SqlDataAdapter adp = new SqlDataAdapter(cmd);
-    //        cmd.CommandType = CommandType.StoredProcedure;
-    //        cmd.CommandText = "P_FMSReports_GetCardType";
-    //        conn.Close();
-    //        //ImageButton1.Enabled = true;
-    //        //cmd.Parameters.AddWithValue("@dsid", ddldistrict.SelectedItem.Value);
-    //        //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-    //        // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-    //        adp.Fill(ds);
-    //        dt = ds.Tables[0];
-    //        if (dt.Rows.Count > 0)
-    //        {
-    //            GrdcardData.DataSource = dt;
-    //            GrdcardData.DataBind();
-    //        }
-    //        else
-    //        {
-    //            GrdcardData.DataSource = null;
-    //            GrdcardData.DataBind();
-    //        }
 
-    //    }
-    //    catch (Exception ex)
-    //    {
-
-    //    }
-    //}
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=VehicleSummaryDistrictwise.xls");
-            Response.ContentType = "application/excel";
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            Panel2.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+            var report = new AccidentReport();
+            report.LoadExcelSpreadSheet(Panel2);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Response.Write(ex.Message.ToString());
         }

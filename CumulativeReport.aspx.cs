@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class CumulativeReport : System.Web.UI.Page
+public partial class CumulativeReport : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-if (!IsPostBack)
-            {
-btnShow_Click();}
+        if (!IsPostBack)
+        {
+            btnShow_Click();
+
+        }
     }
     protected void btnShow_Click()
     {
-      
+
         var c = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
         var dataAdapter = new SqlDataAdapter("CumulativeReportOnRO", c);
 
         var commandBuilder = new SqlCommandBuilder(dataAdapter);
         var ds = new DataSet();
         dataAdapter.Fill(ds);
-
         GridView1.DataSource = ds.Tables[0];
         GridView1.DataBind();
 

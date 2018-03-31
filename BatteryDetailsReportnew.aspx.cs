@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class BatteryDetailsReportnew : System.Web.UI.Page
+public partial class BatteryDetailsReportnew : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             BindDistrictdropdown();
-            withoutdist();
+            Withoutdist();
         }
 
 
@@ -23,112 +16,46 @@ public partial class BatteryDetailsReportnew : System.Web.UI.Page
     }
     private void BindDistrictdropdown()
     {
-        using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString()))
-        {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select ds_dsid,ds_lname from M_FMS_Districts", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            ddldistrict.DataSource = ds;
-            ddldistrict.DataTextField = "ds_lname";
-            ddldistrict.DataValueField = "ds_dsid";
-            ddldistrict.DataBind();
-            ddldistrict.Items.Insert(0, new ListItem("--Select--", "0"));
-            con.Close();
-        }
+        string sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
+        AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid ", ddldistrict);
+
     }
-    public void withoutdist()
+    public void Withoutdist()
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_FMSReport_BatteryDetails";
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            //cmd.Parameters.AddWithValue("@dsid", ddldistrict.SelectedItem.Value);
-            //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-            // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                GrdBataryData.DataSource = dt;
-                GrdBataryData.DataBind();
-            }
-            else
-            {
-                GrdBataryData.DataSource = null;
-                GrdBataryData.DataBind();
-            }
+            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReport_BatteryDetails", null, null, null, null, null, null, null, null, null, null, null, GrdBataryData);
+
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-
+            // ignored
         }
     }
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=VehicleSummaryDistrictwise.xls");
-            Response.ContentType = "application/excel";
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            Panel2.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+            var report = new AccidentReport();
+            report.LoadExcelSpreadSheet(Panel2);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Response.Write(ex.Message.ToString());
         }
 
     }
-    public void loaddata()
+    public void Loaddata()
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_FMSReport_BatteryDetails";
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            cmd.Parameters.AddWithValue("@DistrictID", ddldistrict.SelectedItem.Value);
-            //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-            // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                GrdBataryData.DataSource = dt;
-                GrdBataryData.DataBind();
-            }
-            else
-            {
-                GrdBataryData.DataSource = null;
-                GrdBataryData.DataBind();
-            }
+            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReport_BatteryDetails", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, GrdBataryData);
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-
+            // ignored
         }
     }
     public override void VerifyRenderingInServerForm(Control control)
@@ -138,13 +65,13 @@ public partial class BatteryDetailsReportnew : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedValue == "0")
+        if (ddldistrict != null && ddldistrict.SelectedValue == "0")
         {
-            withoutdist();
+            Withoutdist();
         }
         else
         {
-            loaddata();
+            Loaddata();
         }
     }
 }

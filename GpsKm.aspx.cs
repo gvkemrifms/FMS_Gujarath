@@ -1,19 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class GpsKm : System.Web.UI.Page
+public partial class GpsKm : Page
 {
     string connectionString = ConfigurationManager.AppSettings["Str"].ToString();
     string LogLocation = @"D:\Log_IOCL_update\";
@@ -26,13 +22,14 @@ public partial class GpsKm : System.Web.UI.Page
         if (!IsPostBack)
         {
             bindVehicles();
-            bindData();
+            BindData();
         }
     }
 
-    private void bindData()
+    private void BindData()
     {
-        DataTable dtData = executeSelectStmt("select id, vehiclenumber,fuelentrydate, kmpl, unitprice, GpsKms, entrydate,    expprice ,petrocardnum, canpush from t_expfuelDump");
+        string query ="select id, vehiclenumber,fuelentrydate, kmpl, unitprice, GpsKms, entrydate,expprice,petrocardnum,canpush from t_expfuelDump";
+        DataTable dtData = ExecuteSelectStmt(query);
         if (dtData.Rows.Count > 0)
         {
             grdRepData.DataSource = dtData;
@@ -62,7 +59,7 @@ public partial class GpsKm : System.Web.UI.Page
         //ddlvehicleNo.DataBind();
         //ddlvehicleNo.Items.Insert(0, new ListItem("--All--", "0"));
     }
-    private DataTable executeSelectStmt(string selectStmt)
+    private DataTable ExecuteSelectStmt(string selectStmt)
     {
         DataTable dtSyncData = new DataTable();
         SqlConnection connection = null;
@@ -70,8 +67,7 @@ public partial class GpsKm : System.Web.UI.Page
         {
             connection = new SqlConnection(connectionString);
             connection.Open();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter();
-            dataAdapter.SelectCommand = new SqlCommand(selectStmt, connection);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter {SelectCommand = new SqlCommand(selectStmt, connection)};
             dataAdapter.Fill(dtSyncData);
             TraceService(selectStmt);
             return dtSyncData;
@@ -89,15 +85,15 @@ public partial class GpsKm : System.Web.UI.Page
     private void TraceService(string content)
     {
         string str = @"C:\fmslog_1\Log.txt";
-        string path1 = str.Substring(0, str.LastIndexOf("\\"));
-        string path2 = str.Substring(0, str.LastIndexOf(".txt")) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        string path1 = str.Substring(0, str.LastIndexOf("\\", StringComparison.Ordinal));
+        string path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
         try
         {
             if (!Directory.Exists(path1))
                 Directory.CreateDirectory(path1);
             if (path2.Length >= Convert.ToInt32(4000000))
             {
-                path2 = str.Substring(0, str.LastIndexOf(".txt")) + "-" + "2" + ".txt";
+                path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + "2" + ".txt";
             }
             StreamWriter streamWriter = File.AppendText(path2);
             streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
@@ -106,7 +102,7 @@ public partial class GpsKm : System.Web.UI.Page
             streamWriter.Close();
         }
 
-        catch (Exception ex)
+        catch
         {
             // traceService(ex.ToString());
         }
@@ -142,22 +138,14 @@ public partial class GpsKm : System.Web.UI.Page
         if (e.CommandName == "change")
         {
             string vehicleNumber = e.CommandArgument.ToString();
-            DataTable dtVehicleDetails = new DataTable();
-            dtVehicleDetails = executeSelectStmt("select * from t_expfuelDump where vehiclenumber = '" + vehicleNumber + "'");
+            var dtVehicleDetails = ExecuteSelectStmt("select * from t_expfuelDump where vehiclenumber = '" + vehicleNumber + "'");
             if (dtVehicleDetails != null && dtVehicleDetails.Rows.Count > 0)
             {
                 dvSearch.Visible = true;
                 txtVehicleNumber.Text = dtVehicleDetails.Rows[0]["vehiclenumber"].ToString();
                 txtCardNumber.Text = dtVehicleDetails.Rows[0]["petrocardnum"].ToString();
                 txtLimit.Text = dtVehicleDetails.Rows[0]["expprice"].ToString();
-                if (dtVehicleDetails.Rows[0]["canpush"].ToString() == "true")
-                {
-                    chkpush.Checked = true;
-                }
-                else
-                {
-                    chkpush.Checked = false;
-                }
+                chkpush.Checked = dtVehicleDetails.Rows[0]["canpush"].ToString() == "true";
             }
         }
     }
@@ -166,27 +154,27 @@ public partial class GpsKm : System.Web.UI.Page
     {
 
         int l = 0;
-        if (chkpush.Checked == true)
+        if (chkpush.Checked )
         {
             l = 1;
         }
-        int i = executeInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
+        int i = ExecuteInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
         TraceService(txtVehicleNumber.Text + "~~~~~~" + i.ToString() + "~~~~~~" + txtLimit.Text);
-        pushDatatoIoc();
+        PushDatatoIoc();
         Clear();
     }
    
 
 
-    private void pushDatatoIoc()
+    private void PushDatatoIoc()
     {
-        DataTable dtCredentials = executeSelectStmt("select * from M_IOC_API_updateCurrency where isactive = 1;");
+        DataTable dtCredentials = ExecuteSelectStmt("select * from M_IOC_API_updateCurrency where isactive = 1;");
         if (dtCredentials.Rows.Count > 0)
         {
             var request = (HttpWebRequest)WebRequest.Create(dtCredentials.Rows[0]["url"].ToString());
-            var postData = "UserName=" + dtCredentials.Rows[0]["username"].ToString();
-            postData += "&Password=" + dtCredentials.Rows[0]["Password"].ToString();
-            postData += "&CustomerId=" + dtCredentials.Rows[0]["CustomerId"].ToString();
+            var postData = "UserName=" + dtCredentials.Rows[0]["username"];
+            postData += "&Password=" + dtCredentials.Rows[0]["Password"];
+            postData += "&CustomerId=" + dtCredentials.Rows[0]["CustomerId"];
             postData += "&CardNumber=" + txtCardNumber.Text;
             postData += "&CCMSLimitType=" + dtCredentials.Rows[0]["CCMSLimitType"].ToString();
             postData += "&CCMSLimitAmount="+ txtLimit.Text;
@@ -208,12 +196,12 @@ public partial class GpsKm : System.Web.UI.Page
                 if (jObj.StatusCode == "0")
                 {
                     string insertstmt = "update t_expfuelDump set ReferenceNo = '" + jObj.ReferenceNo + "', StatusCode = '" + jObj.StatusCode + "', Message ='" + jObj.Message + "' where petrocardnum = '" + txtCardNumber.Text.ToString() + "'";
-                    executeInsertStatement(insertstmt);
+                    ExecuteInsertStatement(insertstmt);
                 }
                 else
                 {
                     string insertstmt = "update t_expfuelDump set ReferenceNo = '" + jObj.ReferenceNo + "', StatusCode = '" + jObj.StatusCode + "' where petrocardnum = '" + txtCardNumber.Text.ToString() + "'";
-                    executeInsertStatement(insertstmt);
+                    ExecuteInsertStatement(insertstmt);
                 }
             }
             catch (Exception ex)
@@ -239,15 +227,15 @@ public partial class GpsKm : System.Web.UI.Page
     {
 
         string str = LogLocation + DateTime.Today.ToString("yyyy-MM-dd") + @"\TraceService_Result.txt";
-        string path1 = str.Substring(0, str.LastIndexOf("\\"));
-        string path2 = str.Substring(0, str.LastIndexOf(".txt")) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        string path1 = str.Substring(0, str.LastIndexOf("\\", StringComparison.Ordinal));
+        string path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
         try
         {
             if (!Directory.Exists(path1))
                 Directory.CreateDirectory(path1);
             if (path2.Length >= Convert.ToInt32(4000000))
             {
-                path2 = str.Substring(0, str.LastIndexOf(".txt")) + "-" + "2" + ".txt";
+                path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + "2" + ".txt";
             }
             StreamWriter streamWriter = File.AppendText(path2);
             streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
@@ -270,11 +258,11 @@ public partial class GpsKm : System.Web.UI.Page
     {
         txtVehicleNumber.Text = txtLimit.Text = txtCardNumber.Text = "";
         chkpush.Checked = false;
-        bindData();
+        BindData();
         dvSearch.Visible = false;
     }
 
-    private int executeInsertStatement(string insertStmt)
+    private int ExecuteInsertStatement(string insertStmt)
     {
         try
         {

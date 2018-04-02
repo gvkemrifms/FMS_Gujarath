@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -33,7 +34,7 @@ public partial class AccidentReport : Page
 
             try
             {
-                FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict,null,null,null,"@districtID");
+                FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict,ddlvehicle,null,null,"@districtID");
             }
             catch (Exception)
             {
@@ -45,6 +46,57 @@ public partial class AccidentReport : Page
             ddlvehicle.Enabled = false;
         }
     }
+    public static DataTable ExecuteSelectStmt(string query)
+    {
+        string cs = ConfigurationManager.AppSettings["Str"];
+        DataTable dtSyncData = new DataTable();
+        SqlConnection connection = null;
+        try
+        {
+            connection = new SqlConnection(cs);
+            connection.Open();
+            var dataAdapter = new SqlDataAdapter { SelectCommand = new SqlCommand(query, connection) };
+            dataAdapter.Fill(dtSyncData);
+            TraceService(query);
+            return dtSyncData;
+        }
+        catch (Exception ex)
+        {
+            TraceService("executeSelectStmt() " + ex + query);
+            return null;
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public static void TraceService(string content)
+    {
+        string str = @"C:\smslog_1\Log.txt";
+        string path1 = str.Substring(0, str.LastIndexOf("\\", StringComparison.Ordinal));
+        string path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        try
+        {
+            if (!Directory.Exists(path1))
+                Directory.CreateDirectory(path1);
+            if (path2.Length >= Convert.ToInt32(4000000))
+            {
+                path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + "2" + ".txt";
+            }
+            StreamWriter streamWriter = File.AppendText(path2);
+            streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
+            streamWriter.WriteLine(content);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+
+        catch
+        {
+            // traceService(ex.ToString());
+        }
+    }
+
 
     public static void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = "", string valueField = "", DropDownList dropDownValue = null, DropDownList dropDownValue2 = null,TextBox txtBox=null,TextBox txtBox1=null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null)
     {
@@ -126,7 +178,17 @@ public partial class AccidentReport : Page
             con.Close();
         }
     }
-
+    public static void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId)
+    {
+            dropdownId.Items.Clear();
+            dropdownId.DataSource = dataSet.Tables[0];
+            dropdownId.DataTextField = textFieldValue;
+            dropdownId.DataValueField = valueField;
+            dropdownId.DataBind();
+            dropdownId.Items.Insert(0, new ListItem("--Select--", "0"));
+     
+        
+    }
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
@@ -140,14 +202,17 @@ public partial class AccidentReport : Page
 
     }
 
-    public void LoadExcelSpreadSheet(Panel panel)
+    public void LoadExcelSpreadSheet(Panel panel=null,string fileName=null, GridView gridView = null)
     {
         Response.ClearContent();
-        Response.AddHeader("content-disposition", "attachment; filename=VehicleSummaryDistrictwise.xls");
+        Response.AddHeader("content-disposition", "attachment; filename="+fileName);
         Response.ContentType = "application/excel";
-        System.IO.StringWriter sw = new System.IO.StringWriter();
+        var sw = new StringWriter();
         HtmlTextWriter htw = new HtmlTextWriter(sw);
-        panel.RenderControl(htw);
+        if (gridView != null)
+            gridView.RenderControl(htw);
+        else
+            panel.RenderControl(htw);
         Response.Write(sw.ToString());
         Response.End();
     }

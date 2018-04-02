@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Configuration;
 using System.Data;
-using System.Globalization;
-using System.Data.Sql;
 using System.Data.SqlClient;
 
-public partial class OnroadReport : System.Web.UI.Page
+public partial class OnroadReport : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -35,14 +28,9 @@ public partial class OnroadReport : System.Web.UI.Page
     }
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        Response.ClearContent();
-        Response.AddHeader("content-disposition", "attachment; filename=gvtoexcel.xls");
-        Response.ContentType = "application/excel";
-        System.IO.StringWriter sw = new System.IO.StringWriter();
-        HtmlTextWriter htw = new HtmlTextWriter(sw);
-        GridView1.RenderControl(htw);
-        Response.Write(sw.ToString());
-        Response.End();
+        AccidentReport report = new AccidentReport();
+        report.LoadExcelSpreadSheet(null, "gvtoexcel.xls",GridView1);
+       
     }
     public override void VerifyRenderingInServerForm(Control control)
     {

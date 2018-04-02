@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#"  Debug="true" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelEntry.aspx.cs" Inherits="FuelEntry" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <%-- <div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7;

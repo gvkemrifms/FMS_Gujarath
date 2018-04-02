@@ -17,7 +17,7 @@ public partial class CumulativeReport : Page
     protected void btnShow_Click()
     {
 
-        var c = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
+        var c = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
         var dataAdapter = new SqlDataAdapter("CumulativeReportOnRO", c);
 
         var commandBuilder = new SqlCommandBuilder(dataAdapter);

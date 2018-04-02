@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BillProcessingManagementReport.aspx.cs" Inherits="BillProcessingManagementReport" %>
+<%@ Reference Page="~/AccidentReport.aspx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">

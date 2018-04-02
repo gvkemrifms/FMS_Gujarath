@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 public partial class GpsKm : Page
 {
-    string connectionString = ConfigurationManager.AppSettings["Str"].ToString();
+    readonly string _connectionString = ConfigurationManager.AppSettings["Str"];
     string LogLocation = @"D:\Log_IOCL_update\";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -30,16 +30,16 @@ public partial class GpsKm : Page
     {
         string query ="select id, vehiclenumber,fuelentrydate, kmpl, unitprice, GpsKms, entrydate,expprice,petrocardnum,canpush from t_expfuelDump";
         DataTable dtData = ExecuteSelectStmt(query);
-        if (dtData.Rows.Count > 0)
-        {
-            grdRepData.DataSource = dtData;
-            grdRepData.DataBind();
-        }
-        else
+        if (dtData.Rows.Count <= 0)
         {
             grdRepData.DataSource = null;
             grdRepData.DataBind();
             Show("No Records Found");
+        }
+        else
+        {
+            grdRepData.DataSource = dtData;
+            grdRepData.DataBind();
         }
     }
     public void Show(string message)
@@ -51,13 +51,7 @@ public partial class GpsKm : Page
 
     private void bindVehicles()
     {
-        //DataTable dtvehData = new DataTable();
-        //dtvehData = executeSelectStmt("select * from m_fms_vehicles order by vehicleNumber");
-        //ddlvehicleNo.DataSource = dtvehData;
-        //ddlvehicleNo.DataTextField = "vehicleNumber";
-        //ddlvehicleNo.DataValueField = "vehicleid";
-        //ddlvehicleNo.DataBind();
-        //ddlvehicleNo.Items.Insert(0, new ListItem("--All--", "0"));
+    
     }
     private DataTable ExecuteSelectStmt(string selectStmt)
     {
@@ -65,16 +59,19 @@ public partial class GpsKm : Page
         SqlConnection connection = null;
         try
         {
-            connection = new SqlConnection(connectionString);
+            connection = new SqlConnection(_connectionString);
             connection.Open();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter {SelectCommand = new SqlCommand(selectStmt, connection)};
-            dataAdapter.Fill(dtSyncData);
+            using (SqlDataAdapter dataAdapter = new SqlDataAdapter {SelectCommand = new SqlCommand(selectStmt, connection)})
+            {
+                dataAdapter.Fill(dtSyncData);
+            }
+
             TraceService(selectStmt);
             return dtSyncData;
         }
         catch (Exception ex)
         {
-            TraceService(" executeSelectStmt() " + ex.ToString() + selectStmt);
+            TraceService(" executeSelectStmt() " + ex + selectStmt);
             return null;
         }
         finally
@@ -97,7 +94,7 @@ public partial class GpsKm : Page
             }
             StreamWriter streamWriter = File.AppendText(path2);
             streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
-            streamWriter.WriteLine(content.ToString());
+            streamWriter.WriteLine(content);
             streamWriter.Flush();
             streamWriter.Close();
         }
@@ -108,14 +105,12 @@ public partial class GpsKm : Page
         }
     }
 
-
-
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         Response.ClearContent();
         Response.AddHeader("content-disposition", "attachment; filename=gvtoexcel.xls");
         Response.ContentType = "application/excel";
-        System.IO.StringWriter sw = new System.IO.StringWriter();
+        StringWriter sw = new StringWriter();
         HtmlTextWriter htw = new HtmlTextWriter(sw);
         grdRepData.RenderControl(htw);
         Response.Write(sw.ToString());
@@ -159,7 +154,7 @@ public partial class GpsKm : Page
             l = 1;
         }
         int i = ExecuteInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
-        TraceService(txtVehicleNumber.Text + "~~~~~~" + i.ToString() + "~~~~~~" + txtLimit.Text);
+        TraceService(txtVehicleNumber.Text + "~~~~~~" + i + "~~~~~~" + txtLimit.Text);
         PushDatatoIoc();
         Clear();
     }
@@ -206,7 +201,7 @@ public partial class GpsKm : Page
             }
             catch (Exception ex)
             {
-                TraceService("Exception Raised ~ 1123~2 : " + ex.ToString());
+                TraceService("Exception Raised ~ 1123~2 : " + ex);
             }
 
         }
@@ -218,38 +213,13 @@ public partial class GpsKm : Page
         protected override WebRequest GetWebRequest(Uri uri)
         {
             WebRequest lWebRequest = base.GetWebRequest(uri);
-            lWebRequest.Timeout = Timeout;
-            ((HttpWebRequest)lWebRequest).ReadWriteTimeout = Timeout;
-            return lWebRequest;
-        }
-    }
-    private void TraceService_Result(string content)
-    {
-
-        string str = LogLocation + DateTime.Today.ToString("yyyy-MM-dd") + @"\TraceService_Result.txt";
-        string path1 = str.Substring(0, str.LastIndexOf("\\", StringComparison.Ordinal));
-        string path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
-        try
-        {
-            if (!Directory.Exists(path1))
-                Directory.CreateDirectory(path1);
-            if (path2.Length >= Convert.ToInt32(4000000))
+            if (lWebRequest != null)
             {
-                path2 = str.Substring(0, str.LastIndexOf(".txt", StringComparison.Ordinal)) + "-" + "2" + ".txt";
+                lWebRequest.Timeout = Timeout;
+                ((HttpWebRequest) lWebRequest).ReadWriteTimeout = Timeout;
+                
             }
-            StreamWriter streamWriter = File.AppendText(path2);
-            streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
-            streamWriter.WriteLine(content.ToString());
-            streamWriter.WriteLine("=======================================================================");
-            streamWriter.WriteLine();
-            streamWriter.WriteLine();
-            streamWriter.WriteLine();
-            streamWriter.Flush();
-            streamWriter.Close();
-        }
-        catch (Exception ex)
-        {
-            TraceService(ex.ToString());
+            return lWebRequest;
         }
     }
 
@@ -267,7 +237,7 @@ public partial class GpsKm : Page
         try
         {
             int i = 0;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 using (SqlCommand comm = new SqlCommand())
                 {
@@ -282,7 +252,7 @@ public partial class GpsKm : Page
                     }
                     catch (SqlException ex)
                     {
-                        TraceService(" executeInsertStatement " + ex.ToString() + insertStmt);
+                        TraceService(" executeInsertStatement " + ex + insertStmt);
                         return i;
                     }
                     finally
@@ -294,7 +264,7 @@ public partial class GpsKm : Page
         }
         catch (Exception ex)
         {
-            TraceService(" executeInsertStatement " + ex.ToString());
+            TraceService(" executeInsertStatement " + ex);
             return 0;
         }
     }

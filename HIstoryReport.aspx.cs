@@ -33,29 +33,25 @@ public partial class HIstoryReport : Page
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedIndex > 0)
+        if (ddldistrict.SelectedIndex <= 0)
+        {
+            ddlvehicle.Enabled = false;
+        }
+        else
         {
             ddlvehicle.Enabled = true;
 
 
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
-
-
-
+                AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID",
+                    ddldistrict, ddlvehicle, null, null, "@DistrictID");
             }
             catch
             {
                 //
             }
         }
-        else
-        {
-            ddlvehicle.Enabled = false;
-        }
-
-
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {

@@ -1,5 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictVehicleMapping.aspx.cs" Inherits="GvkFMSAPP.PL.Prior_MaintenanceStage.DistrictVehicleMapping" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictVehicleMapping.aspx.cs" Inherits="DistrictVehicleMapping" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <%--<script src="js/jquery-1.10.2.min.js"></script>--%>

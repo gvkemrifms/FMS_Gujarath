@@ -19,24 +19,21 @@ public partial class CostingAnalysisReport : Page
     }
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedIndex > 0)
+        if (ddldistrict.SelectedIndex <= 0)
+        {
+            ddlvehicle.Enabled = false;
+        }
+        else
         {
             ddlvehicle.Enabled = true;
-
-
             try
             {
                 AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
-
             }
             catch (Exception)
             {
                 // ignored
             }
-        }
-        else
-        {
-            ddlvehicle.Enabled = false;
         }
     }
     protected void btntoExcel_Click(object sender, EventArgs e)
@@ -44,7 +41,7 @@ public partial class CostingAnalysisReport : Page
         try
         {
             var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {

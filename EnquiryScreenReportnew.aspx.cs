@@ -6,13 +6,13 @@ public partial class EnquiryScreenReportnew : System.Web.UI.Page
     {
         BindVehicledropdown();
     }
+
     private void BindVehicledropdown()
     {
         try
         {
-            string sqlQuery = "select vehicleid,vehicleNumber from M_FMS_Vehicles";
+            var sqlQuery = "select vehicleid,vehicleNumber from M_FMS_Vehicles";
             AccidentReport.FillDropDownHelperMethod(sqlQuery, "VehicleNumber", "VehicleID", ddlvehicle);
-           
         }
         catch (Exception)
         {

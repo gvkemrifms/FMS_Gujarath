@@ -18,33 +18,23 @@ public partial class DetailedReport : Page
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
             var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
             // Response.Write(ex.Message.ToString());
         }
-
     }
-
-
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         Loaddata();
     }
-
-
-
-
     public void Loaddata()
     {
         try
@@ -57,6 +47,4 @@ public partial class DetailedReport : Page
             // ignored
         }
     }
-
-
 }

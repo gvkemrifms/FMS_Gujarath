@@ -28,7 +28,7 @@ public partial class AgeingReportnew : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, null,null,null,null,null,null,null,null,null,Grdtyre);
+            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
         catch (Exception)
         {
@@ -41,8 +41,8 @@ public partial class AgeingReportnew : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, ddldistrict,null,null,null,"@DistrictID",null,null,null,null,Grdtyre);
-           
+            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
+
         }
         catch (Exception)
         {
@@ -51,31 +51,27 @@ public partial class AgeingReportnew : Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-
-        if (ddldistrict.SelectedValue == "0")
+        switch (ddldistrict.SelectedValue)
         {
-            Withoutdist();
-
+            case "0":
+                Withoutdist();
+                break;
+            default:
+                Loaddata();
+                break;
         }
-        else
-        {
-            Loaddata();
-
-
-        }
-
     }
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-           AccidentReport report=new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
-           
+            AccidentReport report = new AccidentReport();
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+
         }
-        catch (Exception)
+        catch 
         {
-            // Response.Write(ex.Message.ToString());
+            //
         }
 
     }

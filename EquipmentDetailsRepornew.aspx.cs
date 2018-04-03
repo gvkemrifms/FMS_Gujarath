@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Web.UI;
 
-public partial class EquipmentDetailsRepornew : System.Web.UI.Page
+public partial class EquipmentDetailsRepornew : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
             BindDistrictdropdown();
@@ -17,7 +16,7 @@ public partial class EquipmentDetailsRepornew : System.Web.UI.Page
     {
         try
         {
-            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
             AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception)
@@ -25,20 +24,18 @@ public partial class EquipmentDetailsRepornew : System.Web.UI.Page
             // ignored
         }
     }
+
     public void Withoutdist()
     {
         try
         {
             AccidentReport.FillDropDownHelperMethodWithSp("P_Report_VehicleEquipmentDetails", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
-
-
         }
         catch (Exception)
         {
             // ignored
         }
     }
-
 
     public void Loaddata()
     {
@@ -51,40 +48,34 @@ public partial class EquipmentDetailsRepornew : System.Web.UI.Page
             // ignored
         }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-
-        if (ddldistrict.SelectedValue == "0")
+        switch (ddldistrict.SelectedValue)
         {
-            Withoutdist();
-
+            case "0":
+                Withoutdist();
+                break;
+            default:
+                Loaddata();
+                break;
         }
-        else
-        {
-            Loaddata();
-
-
-        }
-
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
             var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch
         {
             // Response.Write(ex.Message.ToString());
         }
-
     }
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-
 }

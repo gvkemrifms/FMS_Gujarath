@@ -23,13 +23,9 @@ public partial class CardTypeReport : Page
         {
             ddlstation.Enabled = true;
 
-
             try
             {
                 AccidentReport.FillDropDownHelperMethodWithSp("P_PMS_GetServiceStns", "ServiceStation_Name", "Id", ddldistrict, ddlstation, null, null, "@DistrictID");
-
-
-
             }
             catch (Exception)
             {
@@ -45,7 +41,6 @@ public partial class CardTypeReport : Page
     {
         Loaddata();
     }
-
     public void Loaddata()
     {
         try
@@ -76,7 +71,5 @@ public partial class CardTypeReport : Page
         {
             // Response.Write(ex.Message.ToString());
         }
-
     }
-
 }

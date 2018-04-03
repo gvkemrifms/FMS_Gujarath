@@ -12,23 +12,22 @@ public partial class AnalysisHourwiseReport : Page
             // withoutdist();
         }
     }
+
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
         AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
+
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex > 0)
         {
             ddlvehicle.Enabled = true;
-
-
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle, null, null, null, "@districtID");
-
-
+                AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID",
+                    ddlvehicle, null, null, null, "@districtID");
             }
             catch (Exception)
             {
@@ -40,36 +39,38 @@ public partial class AnalysisHourwiseReport : Page
             ddlvehicle.Enabled = false;
         }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            AccidentReport report=new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
-            
+            var report = new AccidentReport();
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {
             // Response.Write(ex.Message.ToString());
         }
-
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         Loaddata();
     }
+
     public void Loaddata()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisHourwise", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
-            
+            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisHourwise", null, null, ddldistrict,
+                ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
         catch (Exception)
         {
             // ignored
         }
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
         /*Tell the compiler that the control is rendered

@@ -5,55 +5,49 @@ public partial class DistrictwiseLedgerReport : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            BindDistrictdropdown();
-            // withoutdist();
-        }
+        if (!IsPostBack) BindDistrictdropdown();
     }
+
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
         AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
             var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {
             // Response.Write(ex.Message.ToString());
         }
-
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
+
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedIndex > 0)
+        if (ddldistrict.SelectedIndex <= 0)
+        {
+            ddlvendor.Enabled = false;
+        }
+        else
         {
             ddlvendor.Enabled = true;
-
-
             try
             {
                 AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, null, null, "@DistrictID");
-
             }
             catch (Exception)
             {
                 // ignored
             }
-        }
-        else
-        {
-            ddlvendor.Enabled = false;
         }
     }
 
@@ -61,18 +55,16 @@ public partial class DistrictwiseLedgerReport : Page
     {
         Loaddata();
     }
+
     public void Loaddata()
     {
         try
         {
             AccidentReport.FillDropDownHelperMethodWithSp("P_ReportsVendorDistrictWise", null, null, ddldistrict, ddlvendor, txtfrmDate, txttodate, "@districtID", "@VendorID", "@From", "@To", null, Grddetails);
-
-
         }
         catch (Exception)
         {
             // ignored
         }
     }
-
 }

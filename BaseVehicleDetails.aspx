@@ -1,39 +1,33 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.BaseVehicleDetails, App_Web_m0x5b0wx" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BaseVehicleDetails.aspx.cs" Inherits="BaseVehicleDetails" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <%--<link href="css/newStyles.css" rel="stylesheet" />--%>
  <script language="javascript" type="text/javascript">
-
-        //        function DecrementStep() {
-        //            stepNo--;
-        //        }
         var publicData;
         var vehcostdata;
         var inVoiceDate;
         var purchaseDate;
         var manFactDate;
         var trDate;
-        var inscStartDate
+        var inscStartDate;
         var inscFeeDate;
         var inspectionDate;
-        var valid
-
-
-        var now = new Date();
+        var valid;
+var now = new Date();
         function vehicleCostAddition(obj) {
             if (parseFloat(obj.value)) {
-                var BasicPrice = document.getElementById('<%=txtBasicPrice.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtBasicPrice.ClientID %>').value;
-                var HandlingCharges = document.getElementById('<%=txtHandlingCharges.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtHandlingCharges.ClientID %>').value;
-                var ExciseDuty = document.getElementById('<%=txtExciseDuty.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtExciseDuty.ClientID %>').value;
-                var EC = document.getElementById('<%=txtEC.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtEC.ClientID %>').value;
-                var VAT = document.getElementById('<%=txtVAT.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtVAT.ClientID %>').value;
-                var UAV = document.getElementById('<%=txtUAV.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtUAV.ClientID %>').value;
-                var SHEC = document.getElementById('<%=txtSHEC.ClientID %>').value == '' ? 0 : document.getElementById('<%=txtSHEC.ClientID %>').value;
-                var VehCost = document.getElementById('<%=txtVehCost.ClientID %>');
+                var basicPrice = document.getElementById('<%=txtBasicPrice.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtBasicPrice.ClientID %>').value;
+                var handlingCharges = document.getElementById('<%=txtHandlingCharges.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtHandlingCharges.ClientID %>').value;
+                var exciseDuty = document.getElementById('<%=txtExciseDuty.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtExciseDuty.ClientID %>').value;
+                var ec = document.getElementById('<%=txtEC.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtEC.ClientID %>').value;
+                var vat = document.getElementById('<%=txtVAT.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtVAT.ClientID %>').value;
+                var uav = document.getElementById('<%=txtUAV.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtUAV.ClientID %>').value;
+                var shec = document.getElementById('<%=txtSHEC.ClientID %>').value === '' ? 0 : document.getElementById('<%=txtSHEC.ClientID %>').value;
+                var vehCost = document.getElementById('<%=txtVehCost.ClientID %>');
 
-                VehCost.value = (parseFloat(BasicPrice) + parseFloat(HandlingCharges) + parseFloat(ExciseDuty) + parseFloat(EC) + parseFloat(VAT) + parseFloat(UAV) + parseFloat(SHEC)).toFixed(2);
-                document.getElementById('<%=txtVehicleCost.ClientID%>').value = VehCost.value;
+                vehCost.value = (parseFloat(basicPrice) + parseFloat(handlingCharges) + parseFloat(exciseDuty) + parseFloat(ec) + parseFloat(vat) + parseFloat(uav) + parseFloat(shec)).toFixed(2);
+                document.getElementById('<%=txtVehicleCost.ClientID%>').value = vehCost.value;
             }
             else {
                 alert('The value should be a valid decimal value and cannot be zero');
@@ -44,495 +38,478 @@
 
 
         function validation() {
-            var EngineNo = document.getElementById('<%= ddlEngineNo.ClientID %>');
+            var engineNo = document.getElementById('<%= ddlEngineNo.ClientID %>');
             //  var ChassisNo = document.getElementById('<%= txtChassisNo.ClientID %>');
-            var InvoiceNo = document.getElementById('<%= txtInvoiceNo.ClientID %>');
-            var InvoiceDate = document.getElementById('<%=txtInvoiceDate.ClientID %>');
-            var BasicPrice = document.getElementById('<%=txtBasicPrice.ClientID %>');
-            var HandlingCharges = document.getElementById('<%=txtHandlingCharges.ClientID %>');
-            var ExciseDuty = document.getElementById('<%=txtExciseDuty.ClientID %>');
-            var EC = document.getElementById('<%=txtEC.ClientID %>');
-            var VAT = document.getElementById('<%=txtVAT.ClientID %>');
-            var UAV = document.getElementById('<%=txtUAV.ClientID %>');
-            var SHEC = document.getElementById('<%=txtSHEC.ClientID %>');
-            var VehCost = document.getElementById('<%=txtVehCost.ClientID %>');
-            publicData = VehCost;
-            if (EngineNo.selectedIndex == 0) {
+            var invoiceNo = document.getElementById('<%= txtInvoiceNo.ClientID %>');
+            var invoiceDate = document.getElementById('<%=txtInvoiceDate.ClientID %>');
+            var basicPrice = document.getElementById('<%=txtBasicPrice.ClientID %>');
+            var handlingCharges = document.getElementById('<%=txtHandlingCharges.ClientID %>');
+            var exciseDuty = document.getElementById('<%=txtExciseDuty.ClientID %>');
+            var ec = document.getElementById('<%=txtEC.ClientID %>');
+            var vat = document.getElementById('<%=txtVAT.ClientID %>');
+            var uav = document.getElementById('<%=txtUAV.ClientID %>');
+            var shec = document.getElementById('<%=txtSHEC.ClientID %>');
+            var vehCost = document.getElementById('<%=txtVehCost.ClientID %>');
+            publicData = vehCost;
+            if (engineNo.selectedIndex === 0) {
                 alert("Please select the Engine Number");
-                EngineNo.focus();
+                engineNo.focus();
                 return false;
             }
 
 
-            if (!RequiredValidation(InvoiceNo, "Invoice Number Cannot be Blank"))
+            if (!RequiredValidation(invoiceNo, "Invoice Number Cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(InvoiceDate, "Invoice Date cannot be Blank"))
+            if (!RequiredValidation(invoiceDate, "Invoice Date cannot be Blank"))
                 return false;
 
 
-            if (trim(InvoiceDate.value) != "") {
-                if (!isValidDate(InvoiceDate.value)) {
+            if (trim(invoiceDate.value) !== "") {
+                if (!isValidDate(invoiceDate.value)) {
                     alert("Enter the Valid Date");
-                    InvoiceDate.focus();
+                    invoiceDate.focus();
                     return false;
                 }
             }
 
-            inVoiceDate = InvoiceDate.value;
+            inVoiceDate = invoiceDate.value;
 
-            if (Date.parse(InvoiceDate.value) > Date.parse(now)) {
+            if (Date.parse(invoiceDate.value) > Date.parse(now)) {
                 alert("Invoice Date should not be greater than Current Date");
-                InvoiceDate.focus();
+                invoiceDate.focus();
                 return false;
             }
 
 
-            if (!RequiredValidation(BasicPrice, "Basic Price cannot be Blank"))
+            if (!RequiredValidation(basicPrice, "Basic Price cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(HandlingCharges, "Handling Charges cannot be Blank"))
+            if (!RequiredValidation(handlingCharges, "Handling Charges cannot be Blank"))
                 return false;
 
-            if (parseFloat(HandlingCharges.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(handlingCharges.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than Handling Charges");
-                HandlingCharges.focus();
+                handlingCharges.focus();
                 return false;
             }
 
-            if (!RequiredValidation(ExciseDuty, "Excise Duty cannot be Blank"))
+            if (!RequiredValidation(exciseDuty, "Excise Duty cannot be Blank"))
                 return false;
 
-            if (parseFloat(ExciseDuty.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(exciseDuty.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than Excise Duty");
-                ExciseDuty.focus();
+                exciseDuty.focus();
                 return false;
             }
 
-            if (!RequiredValidation(EC, "EC cannot be Blank"))
+            if (!RequiredValidation(ec, "EC cannot be Blank"))
                 return false;
 
-            if (parseFloat(EC.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(ec.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than EC");
-                EC.focus();
+                ec.focus();
                 return false;
             }
 
 
-            if (!RequiredValidation(VAT, "VAT cannot be Blank"))
+            if (!RequiredValidation(vat, "VAT cannot be Blank"))
                 return false;
 
-            if (parseFloat(VAT.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(vat.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than VAT");
-                VAT.focus();
+                vat.focus();
                 return false;
             }
 
-            if (!RequiredValidation(UAV, "UAV cannot be Blank"))
+            if (!RequiredValidation(uav, "UAV cannot be Blank"))
                 return false;
 
-            if (parseFloat(UAV.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(uav.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than UAV");
-                UAV.focus();
+                uav.focus();
                 return false;
             }
 
-            if (!RequiredValidation(SHEC, "SHEC cannot be Blank"))
+            if (!RequiredValidation(shec, "SHEC cannot be Blank"))
                 return false;
 
-            if (parseFloat(SHEC.value) > parseFloat(BasicPrice.value)) {
+            if (parseFloat(shec.value) > parseFloat(basicPrice.value)) {
                 alert("Basic Price should be greater than SHEC");
-                SHEC.focus();
+                shec.focus();
                 return false;
             }
 
-            VehCost.value = (parseFloat(BasicPrice.value) + parseFloat(HandlingCharges.value) + parseFloat(ExciseDuty.value) + parseFloat(EC.value) + parseFloat(VAT.value) + parseFloat(UAV.value) + parseFloat(SHEC.value)).toFixed(2);
+            vehCost.value = (parseFloat(basicPrice.value) + parseFloat(handlingCharges.value) + parseFloat(exciseDuty.value) + parseFloat(ec.value) + parseFloat(vat.value) + parseFloat(uav.value) + parseFloat(shec.value)).toFixed(2);
 
-            var VehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
-            var Kmpl = document.getElementById('<%=txtKmpl.ClientID %>')
-            var VehicleType = document.getElementById('<%=ddlVehicleType.ClientID %>');
-            var VehicleEmissionType = document.getElementById('<%=txtVehicleEmissionType.ClientID %>');
-            var PurchaseDate = document.getElementById('<%=txtPurchaseDate.ClientID %>');
-            var OwnerName = document.getElementById('<%=txtOwnerName.ClientID %>');
-            var ManufacturerName = document.getElementById('<%=ddlManufacturerName.ClientID %>');
-            var VehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
+            var vehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
+            var kmpl = document.getElementById('<%=txtKmpl.ClientID %>');
+            var vehicleType = document.getElementById('<%=ddlVehicleType.ClientID %>');
+            var vehicleEmissionType = document.getElementById('<%=txtVehicleEmissionType.ClientID %>');
+            var purchaseDate = document.getElementById('<%=txtPurchaseDate.ClientID %>');
+            var ownerName = document.getElementById('<%=txtOwnerName.ClientID %>');
+            var manufacturerName = document.getElementById('<%=ddlManufacturerName.ClientID %>');
+            var vehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
 
-            var ManufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
-            var EngineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
-            var FuelType = document.getElementById('<%=ddlFuelType.ClientID%>');
+            var manufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
+            var engineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
+            var fuelType = document.getElementById('<%=ddlFuelType.ClientID%>');
 
-            if (VehicleModel.selectedIndex == 0) {
+            if (vehicleModel.selectedIndex === 0) {
                 alert("Please select the Vehicle Model");
-                VehicleModel.focus();
+                vehicleModel.focus();
                 return false;
             }
 
 
-            if (!RequiredValidation(Kmpl, "Kmpl cannot be Blank"))
+            if (!RequiredValidation(kmpl, "Kmpl cannot be Blank"))
                 return false;
 
-            if (VehicleType.selectedIndex == 0) {
+            if (vehicleType.selectedIndex === 0) {
                 alert("Please select the Vehicle Type");
-                VehicleType.focus();
+                vehicleType.focus();
                 return false;
             }
 
-            if (!RequiredValidation(VehicleEmissionType, "Vehicle Emission Type cannot be Blank"))
+            if (!RequiredValidation(vehicleEmissionType, "Vehicle Emission Type cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(PurchaseDate, "Purchase Date cannot be Blank"))
+            if (!RequiredValidation(purchaseDate, "Purchase Date cannot be Blank"))
                 return false;
 
-            if (trim(PurchaseDate.value) != "") {
-                if (!isValidDate(PurchaseDate.value)) {
+            if (trim(purchaseDate.value) !== "") {
+                if (!isValidDate(purchaseDate.value)) {
                     alert("Enter the Purchase Date");
-                    PurchaseDate.focus();
+                    purchaseDate.focus();
                     return false;
                 }
             }
 
-            purchaseDate = PurchaseDate.value;
+            purchaseDate = purchaseDate.value;
 
-            if (Date.parse(PurchaseDate.value) > Date.parse(now)) {
+            if (Date.parse(purchaseDate.value) > Date.parse(now)) {
                 alert("Purchase Date should not be greater than Current Date");
-                PurchaseDate.focus();
+                purchaseDate.focus();
                 return false;
             }
 
-            if (Date.parse(PurchaseDate.value) > Date.parse(inVoiceDate)) {
+            if (Date.parse(purchaseDate.value) > Date.parse(inVoiceDate)) {
                 alert("Purchase Date should not be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-                PurchaseDate.focus();
+                purchaseDate.focus();
                 return false;
             }
 
-            if (!RequiredValidation(OwnerName, "Owner Name cannot be Blank"))
+            if (!RequiredValidation(ownerName, "Owner Name cannot be Blank"))
                 return false;
 
-            if (ManufacturerName.selectedIndex == 0) {
+            if (manufacturerName.selectedIndex === 0) {
                 alert("Please select the Manufacturer Name");
-                ManufacturerName.focus();
+                manufacturerName.focus();
                 return false;
             }
 
-            if (!RequiredValidation(VehicleCost, "Vehicle Cost cannot be Blank"))
+            if (!RequiredValidation(vehicleCost, "Vehicle Cost cannot be Blank"))
                 return false;
 
-            if (parseInt(VehicleCost.value) > parseInt(publicData.value)) {
+            if (parseInt(vehicleCost.value) > parseInt(publicData.value)) {
                 alert("Vehicle Cost should be less than Total Value of the Vehicle.(Total Value-" + publicData.value + ")");
-                VehicleCost.focus();
+                vehicleCost.focus();
                 return false;
             }
 
-            if (!RequiredValidation(ManufacturingDate, "Manufacturing Date cannot be Blank"))
+            if (!RequiredValidation(manufacturingDate, "Manufacturing Date cannot be Blank"))
                 return false;
 
-            if (trim(ManufacturingDate.value) != "") {
-                if (!isValidDate(ManufacturingDate.value)) {
+            if (trim(manufacturingDate.value) !== "") {
+                if (!isValidDate(manufacturingDate.value)) {
                     alert("Enter the Manufacturing Date");
-                    ManufacturingDate.focus();
+                    manufacturingDate.focus();
                     return false;
                 }
             }
 
-            if (Date.parse(ManufacturingDate.value) > Date.parse(now)) {
+            if (Date.parse(manufacturingDate.value) > Date.parse(now)) {
                 alert("Manufacturing Date should not be greater than Current Date");
-                ManufacturingDate.focus();
+                manufacturingDate.focus();
                 return false;
             }
 
-            if (Date.parse(ManufacturingDate.value) > Date.parse(purchaseDate)) {
+            if (Date.parse(manufacturingDate.value) > Date.parse(purchaseDate)) {
                 alert("Manufacturing Date should be less than Purchase Date");
-                ManufacturingDate.focus();
+                manufacturingDate.focus();
                 return false;
             }
 
-            if (!RequiredValidation(EngineCapacity, "Engine Capacity cannot be Blank"))
+            if (!RequiredValidation(engineCapacity, "Engine Capacity cannot be Blank"))
                 return false;
 
 
-            if (FuelType.selectedIndex == 0) {
+            if (fuelType.selectedIndex === 0) {
                 alert("Please select the Fuel Type");
-                FuelType.focus();
+                fuelType.focus();
                 return false;
             }
 
-            var District = document.getElementById('<%=ddlDistrict.ClientID %>');
-            var InPolicyNo = document.getElementById('<%=txtInPolicyNo.ClientID %>')
-            var InsType = document.getElementById('<%=ddlInsType.ClientID %>');
-            var InsFee = document.getElementById('<%=txtInsFee.ClientID %>');
-            var InsuranceReceiptNo = document.getElementById('<%=txtInsuranceReceiptNo.ClientID %>');
-            var InsuranceFeesPaidDate = document.getElementById('<%=txtInsuranceFeesPaidDate.ClientID %>');
-            var Agency = document.getElementById('<%=ddlAgency.ClientID%>');
-            // var VehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
-            //var ManufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
-            // var EngineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
-            var ValiSDate = document.getElementById('<%=txtValiSDate.ClientID %>');
-            var PolicyValidityPeriod = document.getElementById('<%=ddlPolicyValidityPeriod.ClientID %>');
+            var district = document.getElementById('<%=ddlDistrict.ClientID %>');
+            var inPolicyNo = document.getElementById('<%=txtInPolicyNo.ClientID %>');
+            var insType = document.getElementById('<%=ddlInsType.ClientID %>');
+            var insFee = document.getElementById('<%=txtInsFee.ClientID %>');
+            var insuranceReceiptNo = document.getElementById('<%=txtInsuranceReceiptNo.ClientID %>');
+            var insuranceFeesPaidDate = document.getElementById('<%=txtInsuranceFeesPaidDate.ClientID %>');
+            var agency = document.getElementById('<%=ddlAgency.ClientID%>');
+            var valiSDate = document.getElementById('<%=txtValiSDate.ClientID %>');
+            var policyValidityPeriod = document.getElementById('<%=ddlPolicyValidityPeriod.ClientID %>');
 
-            if (District.selectedIndex == 0) {
+            if (district.selectedIndex === 0) {
                 alert("Please select the District");
-                District.focus();
+                district.focus();
                 return false;
             }
 
-            if (!RequiredValidation(InPolicyNo, "Insurance Policy No cannot be Blank"))
+            if (!RequiredValidation(inPolicyNo, "Insurance Policy No cannot be Blank"))
                 return false;
 
-            if (InsType.selectedIndex == 0) {
+            if (insType.selectedIndex === 0) {
                 alert("Please select the Insurance Type");
-                InsType.focus();
+                insType.focus();
                 return false;
             }
 
-            if (!RequiredValidation(InsFee, "Insurance Fee No cannot be Blank"))
+            if (!RequiredValidation(insFee, "Insurance Fee No cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(InsuranceReceiptNo, "Insurance Receipt No cannot be Blank"))
+            if (!RequiredValidation(insuranceReceiptNo, "Insurance Receipt No cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(InsuranceFeesPaidDate, "InsuranceFees PaidDate No cannot be Blank"))
+            if (!RequiredValidation(insuranceFeesPaidDate, "InsuranceFees PaidDate No cannot be Blank"))
                 return false;
 
-            if (trim(InsuranceFeesPaidDate.value) != "") {
-                if (!isValidDate(InsuranceFeesPaidDate.value)) {
+            if (trim(insuranceFeesPaidDate.value) !== "") {
+                if (!isValidDate(insuranceFeesPaidDate.value)) {
                     alert("Enter the valid InsuranceFees PaidDate");
-                    InsuranceFeesPaidDate.focus();
+                    insuranceFeesPaidDate.focus();
                     return false;
                 }
             }
 
-            if (Date.parse(InsuranceFeesPaidDate.value) > Date.parse(now)) {
+            if (Date.parse(insuranceFeesPaidDate.value) > Date.parse(now)) {
                 alert("Insurance Fees Paid Date should not be greater than Current Date");
-                InsuranceFeesPaidDate.focus();
+                insuranceFeesPaidDate.focus();
                 return false;
             }
 
-            if (Date.parse(InsuranceFeesPaidDate.value) < Date.parse(purchaseDate)) {
+            if (Date.parse(insuranceFeesPaidDate.value) < Date.parse(purchaseDate)) {
                 alert("Insurance Fees Paid Date should be greater than Purchase Date.(Purchase Date-" + purchaseDate + ")");
-                InsuranceFeesPaidDate.focus();
+                insuranceFeesPaidDate.focus();
                 return false;
             }
 
-            if (Date.parse(InsuranceFeesPaidDate.value) < Date.parse(inVoiceDate)) {
+            if (Date.parse(insuranceFeesPaidDate.value) < Date.parse(inVoiceDate)) {
                 alert("Insurance Fees Paid Date should be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-                InsuranceFeesPaidDate.focus();
+                insuranceFeesPaidDate.focus();
                 return false;
             }
 
-            if (Agency.selectedIndex == 0) {
+            if (agency.selectedIndex === 0) {
                 alert("Please select the Agency");
-                Agency.focus();
+                agency.focus();
                 return false;
             }
 
-            if (!RequiredValidation(ValiSDate, "Validity Start Date cannot be Blank"))
+            if (!RequiredValidation(valiSDate, "Validity Start Date cannot be Blank"))
                 return false;
 
-            if (trim(ValiSDate.value) != "") {
-                if (!isValidDate(ValiSDate.value)) {
+            if (trim(valiSDate.value) !== "") {
+                if (!isValidDate(valiSDate.value)) {
                     alert("Enter the validity start date");
-                    ValiSDate.focus();
+                    valiSDate.focus();
                     return false;
                 }
             }
 
-            if (Date.parse(ValiSDate.value) > Date.parse(now)) {
+            if (Date.parse(valiSDate.value) > Date.parse(now)) {
                 alert("Validity Start Date should not be greater than Current Date");
-                ValiSDate.focus();
+                valiSDate.focus();
                 return false;
             }
 
-            inscStartDate = ValiSDate.value;
+            inscStartDate = valiSDate.value;
 
-            if (Date.parse(ValiSDate.value) < Date.parse(InsuranceFeesPaidDate.value)) {
+            if (Date.parse(valiSDate.value) < Date.parse(insuranceFeesPaidDate.value)) {
                 alert("Validity Start Date should not be less than Insurance Fees Paid Date");
-                ValiSDate.focus();
+                valiSDate.focus();
                 return false;
             }
 
-            if (PolicyValidityPeriod.selectedIndex == 0) {
+            if (policyValidityPeriod.selectedIndex === 0) {
                 alert("Please select the Policy Validity Period");
-                PolicyValidityPeriod.focus();
+                policyValidityPeriod.focus();
                 return false;
             }
 
-            var InspectionDate = document.getElementById('<%=txtInspectionDate.ClientID %>');
-            var InspectedBy = document.getElementById('<%=txtInspectedBy.ClientID %>');
+            var inspectionDate = document.getElementById('<%=txtInspectionDate.ClientID %>');
+            var inspectedBy = document.getElementById('<%=txtInspectedBy.ClientID %>');
 
-            if (!RequiredValidation(InspectionDate, "Inspection Date cannot be Blank"))
+            if (!RequiredValidation(inspectionDate, "Inspection Date cannot be Blank"))
                 return false;
 
-            if (trim(InspectionDate.value) != "") {
-                if (!isValidDate(InspectionDate.value)) {
+            if (trim(inspectionDate.value) !== "") {
+                if (!isValidDate(inspectionDate.value)) {
                     alert("Enter the valid Inspection Date");
-                    InspectionDate.focus();
+                    inspectionDate.focus();
                     return false;
                 }
             }
 
-            if (Date.parse(InspectionDate.value) > Date.parse(now)) {
+            if (Date.parse(inspectionDate.value) > Date.parse(now)) {
                 alert("Inspection Date should not be greater than Current Date");
-                InspectionDate.focus();
+                inspectionDate.focus();
                 return false;
             }
-            if (Date.parse(InspectionDate.value) < Date.parse(inscStartDate)) {
+            if (Date.parse(inspectionDate.value) < Date.parse(inscStartDate)) {
                 alert("Inspection Date should be greater than Insurance Validity Start Date.(Insurance Start Date-" + inscStartDate + ")");
-                InspectionDate.focus();
+                inspectionDate.focus();
                 return false;
             }
 
-            inspectionDate = InspectionDate.value;
+            inspectionDate = inspectionDate.value;
 
-            if (!RequiredValidation(InspectedBy, "Inspected By cannot be Blank"))
+            if (!RequiredValidation(inspectedBy, "Inspected By cannot be Blank"))
                 return false;
 
-            var TRNo = document.getElementById('<%=txtTRNo.ClientID %>');
-            var TRDate = document.getElementById('<%=txtTRDate.ClientID %>');
-            var TRDistrict = document.getElementById('<%=ddlTRDistrict.ClientID %>');
-            var VeRTACircle = document.getElementById('<%=txtVeRTACircle.ClientID %>');
-            var RoadTaxFee = document.getElementById('<%=txtRoadTaxFee.ClientID %>');
-            var SittingCapacity = document.getElementById('<%=txtSittingCapacity.ClientID %>');
+            var trNo = document.getElementById('<%=txtTRNo.ClientID %>');
+            var trDate = document.getElementById('<%=txtTRDate.ClientID %>');
+            var trDistrict = document.getElementById('<%=ddlTRDistrict.ClientID %>');
+            var veRtaCircle = document.getElementById('<%=txtVeRTACircle.ClientID %>');
+            var roadTaxFee = document.getElementById('<%=txtRoadTaxFee.ClientID %>');
+            var sittingCapacity = document.getElementById('<%=txtSittingCapacity.ClientID %>');
 
-            if (!RequiredValidation(TRNo, "TR No cannot be Blank"))
+            if (!RequiredValidation(trNo, "TR No cannot be Blank"))
                 return false;
 
-            if (!isValidVehicleNumber(TRNo.value)) {
-                TRNo.value = "";
-                TRNo.focus();
+            if (!isValidVehicleNumber(trNo.value)) {
+                trNo.value = "";
+                trNo.focus();
                 return false;
             }
 
-            if (!RequiredValidation(TRDate, "TR Date cannot be Blank"))
+            if (!RequiredValidation(trDate, "TR Date cannot be Blank"))
                 return false;
 
-            if (trim(TRDate.value) != "") {
-                if (!isValidDate(TRDate.value)) {
+            if (trim(trDate.value) !== "") {
+                if (!isValidDate(trDate.value)) {
                     alert("Enter the valid Inspection Date");
-                    TRDate.focus();
+                    trDate.focus();
                     return false;
                 }
             }
 
-            if (Date.parse(TRDate.value) > Date.parse(now)) {
+            if (Date.parse(trDate.value) > Date.parse(now)) {
                 alert("TR Date should not be greater than Current Date");
-                TRDate.focus();
+                trDate.focus();
                 return false;
             }
 
-            ////                if (Date.parse(TRDate.value) < Date.parse(inVoiceDate)) {
-            ////                    alert("TR Date should be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-            ////                    TRDate.focus();
-            ////                    return false;
-            ////                }
-
-            if (Date.parse(TRDate.value) < Date.parse(inspectionDate)) {
+            if (Date.parse(trDate.value) < Date.parse(inspectionDate)) {
                 alert("TR Date should be greater than Inspection Date.(Inspection Date-" + inspectionDate + ")");
-                TRDate.focus();
+                trDate.focus();
                 return false;
             }
-
-            //                if (Date.parse(TRDate.value) < Date.parse(inscStartDate)) {
-            //                    alert("TR Date should be greater than Insurance Start Date.(Insurance Start Date-" + inscStartDate + ")");
-            //                    TRDate.focus();
-            //                    return false;
-            //                }
-
-
-            if (TRDistrict.selectedIndex == 0) {
+            if (trDistrict.selectedIndex === 0) {
                 alert("Please select the District");
-                TRDistrict.focus();
+                trDistrict.focus();
                 return false;
             }
 
-            if (!RequiredValidation(VeRTACircle, "Vehicle RTA Circle cannot be Blank"))
+            if (!RequiredValidation(veRtaCircle, "Vehicle RTA Circle cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(RoadTaxFee, "Road Tax Fee cannot be Blank"))
+            if (!RequiredValidation(roadTaxFee, "Road Tax Fee cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(SittingCapacity, "Seating Capacity cannot be Blank"))
+            if (!RequiredValidation(sittingCapacity, "Seating Capacity cannot be Blank"))
                 return false;
-            var FL = document.getElementById('<%=txtFL.ClientID %>');
-            var FR = document.getElementById('<%=txtFR.ClientID %>');
-            var RL = document.getElementById('<%=txtRL.ClientID %>');
-            var RR = document.getElementById('<%=txtRR.ClientID %>');
-            var SpareWheel = document.getElementById('<%=txtSpareWheel.ClientID %>');
-            var TyreMake = document.getElementById('<%=ddlTyreMake.ClientID %>');
-            var ModelSize = document.getElementById('<%=ddlModelSize.ClientID %>');
-            var OdometerReading = document.getElementById('<%=txtOdometerReading.ClientID %>');
-            var Tyre = [FL.value, FR.value, RL.value, RR.value, SpareWheel.value];
+            var fl = document.getElementById('<%=txtFL.ClientID %>');
+            var fr = document.getElementById('<%=txtFR.ClientID %>');
+            var rl = document.getElementById('<%=txtRL.ClientID %>');
+            var rr = document.getElementById('<%=txtRR.ClientID %>');
+            var spareWheel = document.getElementById('<%=txtSpareWheel.ClientID %>');
+            var tyreMake = document.getElementById('<%=ddlTyreMake.ClientID %>');
+            var modelSize = document.getElementById('<%=ddlModelSize.ClientID %>');
+            var odometerReading = document.getElementById('<%=txtOdometerReading.ClientID %>');
+            var tyre = [fl.value, fr.value, rl.value, rr.value, spareWheel.value];
 
-            if (!RequiredValidation(FL, "Front Left cannot be Blank"))
-                return false;
-
-            if (!RequiredValidation(FR, "Front Right cannot be Blank"))
+            if (!RequiredValidation(fl, "Front Left cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(RL, "Rear Left cannot be Blank"))
+            if (!RequiredValidation(fr, "Front Right cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(RR, "Rear Right cannot be Blank"))
+            if (!RequiredValidation(rl, "Rear Left cannot be Blank"))
+                return false;
+
+            if (!RequiredValidation(rr, "Rear Right cannot be Blank"))
                 return false;
 
 
-            if (!RequiredValidation(SpareWheel, "Spare Wheel cannot be Blank"))
+            if (!RequiredValidation(spareWheel, "Spare Wheel cannot be Blank"))
                 return false;
 
-            for (var i = 0; i < (Tyre.length - 1); i++) {
-                for (var j = i + 1; j < Tyre.length; j++) {
-                    if (Tyre[i] == Tyre[j]) {
+            for (var i = 0; i < (tyre.length - 1); i++) {
+                for (var j = i + 1; j < tyre.length; j++) {
+                    if (tyre[i] === tyre[j]) {
                         alert("Tyre numbers should be unique");
                         return false;
                     }
                 }
             }
 
-            if (TyreMake.selectedIndex == 0) {
+            if (tyreMake.selectedIndex === 0) {
                 alert("Please select the Tyre Make");
-                TyreMake.focus();
+                tyreMake.focus();
                 return false;
             }
 
-            if (ModelSize.selectedIndex == 0) {
+            if (modelSize.selectedIndex === 0) {
                 alert("Please select the Model Size");
-                ModelSize.focus();
+                modelSize.focus();
                 return false;
             }
 
-            if (!RequiredValidation(OdometerReading, "Odometer Reading cannot be Blank"))
+            if (!RequiredValidation(odometerReading, "Odometer Reading cannot be Blank"))
                 return false;
 
-            var Battery1 = document.getElementById('<%=txtBattery1.ClientID %>');
-            var Battery2 = document.getElementById('<%=txtBattery2.ClientID %>');
-            var BatteryMake = document.getElementById('<%=ddlBatteryMake.ClientID %>');
-            var ModelCapacity = document.getElementById('<%=ddlModelCapacity.ClientID %>');
+            var battery1 = document.getElementById('<%=txtBattery1.ClientID %>');
+            var battery2 = document.getElementById('<%=txtBattery2.ClientID %>');
+            var batteryMake = document.getElementById('<%=ddlBatteryMake.ClientID %>');
+            var modelCapacity = document.getElementById('<%=ddlModelCapacity.ClientID %>');
 
-            if (!RequiredValidation(Battery1, "Battery1 cannot be Blank"))
+            if (!RequiredValidation(battery1, "Battery1 cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(Battery2, "Battery2 cannot be Blank"))
+            if (!RequiredValidation(battery2, "Battery2 cannot be Blank"))
                 return false;
 
-            if (Battery1.value == Battery2.value) {
+            if (battery1.value === battery2.value) {
                 alert("Battery Numbers should be unique");
-                Battery2.focus();
+                battery2.focus();
                 return false;
             }
 
-            if (BatteryMake.selectedIndex == 0) {
+            if (batteryMake.selectedIndex === 0) {
                 alert("Please select the Battery Make");
-                BatteryMake.focus();
+                batteryMake.focus();
                 return false;
             }
-            if (ModelCapacity.selectedIndex == 0) {
+            if (modelCapacity.selectedIndex === 0) {
                 alert("Please select the Model Capacity");
-                ModelCapacity.focus();
+                modelCapacity.focus();
                 return false;
             }
         }
 
         function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) == '') {
+            if (trim(ctrl.value) === '') {
                 alert(msg);
                 ctrl.focus();
                 return false;
@@ -555,111 +532,112 @@
             ////-----------------Start of Validation of General Information----------------////
 
 
-            if (stepNo == 0) {
-                var VehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
-                var Kmpl = document.getElementById('<%=txtKmpl.ClientID %>')
-                var VehicleType = document.getElementById('<%=ddlVehicleType.ClientID %>');
-                var VehicleEmissionType = document.getElementById('<%=txtVehicleEmissionType.ClientID %>');
-                var PurchaseDate = document.getElementById('<%=txtPurchaseDate.ClientID %>');
-                var OwnerName = document.getElementById('<%=txtOwnerName.ClientID %>');
-                var ManufacturerName = document.getElementById('<%=ddlManufacturerName.ClientID %>');
-                var VehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
-                var ManufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
-                var EngineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
-                var FuelType = document.getElementById('<%=ddlFuelType.ClientID%>');
+            var purchaseDate;
+            if (stepNo === 0) {
+                var vehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
+                var kmpl = document.getElementById('<%=txtKmpl.ClientID %>');
+                var vehicleType = document.getElementById('<%=ddlVehicleType.ClientID %>');
+                var vehicleEmissionType = document.getElementById('<%=txtVehicleEmissionType.ClientID %>');
+                purchaseDate = document.getElementById('<%=txtPurchaseDate.ClientID %>');
+                var ownerName = document.getElementById('<%=txtOwnerName.ClientID %>');
+                var manufacturerName = document.getElementById('<%=ddlManufacturerName.ClientID %>');
+                var vehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
+                var manufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
+                var engineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
+                var fuelType = document.getElementById('<%=ddlFuelType.ClientID%>');
 
-                if (VehicleModel.selectedIndex == 0) {
+                if (vehicleModel.selectedIndex === 0) {
                     alert("Please select the Vehicle Model");
-                    VehicleModel.focus();
+                    vehicleModel.focus();
                     return false;
                 }
 
 
-                if (!RequiredValidation(Kmpl, "Kmpl cannot be Blank"))
+                if (!RequiredValidation(kmpl, "Kmpl cannot be Blank"))
                     return false;
 
-                if (VehicleType.selectedIndex == 0) {
+                if (vehicleType.selectedIndex === 0) {
                     alert("Please select the Vehicle Type");
-                    VehicleType.focus();
+                    vehicleType.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(VehicleEmissionType, "Vehicle Emission Type cannot be Blank"))
+                if (!RequiredValidation(vehicleEmissionType, "Vehicle Emission Type cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(PurchaseDate, "Purchase Date cannot be Blank"))
+                if (!RequiredValidation(purchaseDate, "Purchase Date cannot be Blank"))
                     return false;
 
-                if (trim(PurchaseDate.value) != "") {
-                    if (!isValidDate(PurchaseDate.value)) {
+                if (trim(purchaseDate.value) !== "") {
+                    if (!isValidDate(purchaseDate.value)) {
                         alert("Enter the Purchase Date");
-                        PurchaseDate.focus();
+                        purchaseDate.focus();
                         return false;
                     }
                 }
 
-                purchaseDate = PurchaseDate.value;
+                purchaseDate = purchaseDate.value;
 
-                if (Date.parse(PurchaseDate.value) > Date.parse(now)) {
+                if (Date.parse(purchaseDate.value) > Date.parse(now)) {
                     alert("Purchase Date should not be greater than Current Date");
-                    PurchaseDate.focus();
+                    purchaseDate.focus();
                     return false;
                 }
 
-                if (Date.parse(PurchaseDate.value) > Date.parse(inVoiceDate)) {
+                if (Date.parse(purchaseDate.value) > Date.parse(inVoiceDate)) {
                     alert("Purchase Date should not be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-                    PurchaseDate.focus();
+                    purchaseDate.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(OwnerName, "Owner Name cannot be Blank"))
+                if (!RequiredValidation(ownerName, "Owner Name cannot be Blank"))
                     return false;
 
-                if (ManufacturerName.selectedIndex == 0) {
+                if (manufacturerName.selectedIndex === 0) {
                     alert("Please select the Manufacturer Name");
-                    ManufacturerName.focus();
+                    manufacturerName.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(VehicleCost, "Vehicle Cost cannot be Blank"))
+                if (!RequiredValidation(vehicleCost, "Vehicle Cost cannot be Blank"))
                     return false;
 
-                if (parseInt(VehicleCost.value) > parseInt(publicData.value)) {
+                if (parseInt(vehicleCost.value) > parseInt(publicData.value)) {
                     alert("Vehicle Cost should be less than Total Value of the Vehicle.(Total Value-" + publicData.value + ")");
-                    VehicleCost.focus();
+                    vehicleCost.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(ManufacturingDate, "Manufacturing Date cannot be Blank"))
+                if (!RequiredValidation(manufacturingDate, "Manufacturing Date cannot be Blank"))
                     return false;
 
-                if (trim(ManufacturingDate.value) != "") {
-                    if (!isValidDate(ManufacturingDate.value)) {
+                if (trim(manufacturingDate.value) !== "") {
+                    if (!isValidDate(manufacturingDate.value)) {
                         alert("Enter the Manufacturing Date");
-                        ManufacturingDate.focus();
+                        manufacturingDate.focus();
                         return false;
                     }
                 }
 
-                if (Date.parse(ManufacturingDate.value) > Date.parse(now)) {
+                if (Date.parse(manufacturingDate.value) > Date.parse(now)) {
                     alert("Manufacturing Date should not be greater than Current Date");
-                    ManufacturingDate.focus();
+                    manufacturingDate.focus();
                     return false;
                 }
 
-                if (Date.parse(ManufacturingDate.value) > Date.parse(purchaseDate)) {
+                if (Date.parse(manufacturingDate.value) > Date.parse(purchaseDate)) {
                     alert("Manufacturing Date should be less than Purchase Date");
-                    ManufacturingDate.focus();
+                    manufacturingDate.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(EngineCapacity, "Engine Capacity cannot be Blank"))
+                if (!RequiredValidation(engineCapacity, "Engine Capacity cannot be Blank"))
                     return false;
 
 
-                if (FuelType.selectedIndex == 0) {
+                if (fuelType.selectedIndex === 0) {
                     alert("Please select the Fuel Type");
-                    FuelType.focus();
+                    fuelType.focus();
                     return false;
                 }
 
@@ -667,263 +645,247 @@
             }
 
             //Insurance Information
-            else if (stepNo == 1) {
-                var District = document.getElementById('<%=ddlDistrict.ClientID %>');
-                var InPolicyNo = document.getElementById('<%=txtInPolicyNo.ClientID %>')
-                var InsType = document.getElementById('<%=ddlInsType.ClientID %>');
-                var InsFee = document.getElementById('<%=txtInsFee.ClientID %>');
-                var InsuranceReceiptNo = document.getElementById('<%=txtInsuranceReceiptNo.ClientID %>');
-                var InsuranceFeesPaidDate = document.getElementById('<%=txtInsuranceFeesPaidDate.ClientID %>');
-                var Agency = document.getElementById('<%=ddlAgency.ClientID%>');
-                // var VehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
-                //var ManufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
-                // var EngineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
-                var ValiSDate = document.getElementById('<%=txtValiSDate.ClientID %>');
-                var PolicyValidityPeriod = document.getElementById('<%=ddlPolicyValidityPeriod.ClientID %>');
+            else if (stepNo === 1) {
+                var district = document.getElementById('<%=ddlDistrict.ClientID %>');
+                var inPolicyNo = document.getElementById('<%=txtInPolicyNo.ClientID %>');
+                var insType = document.getElementById('<%=ddlInsType.ClientID %>');
+                var insFee = document.getElementById('<%=txtInsFee.ClientID %>');
+                var insuranceReceiptNo = document.getElementById('<%=txtInsuranceReceiptNo.ClientID %>');
+                var insuranceFeesPaidDate = document.getElementById('<%=txtInsuranceFeesPaidDate.ClientID %>');
+                var agency = document.getElementById('<%=ddlAgency.ClientID%>');
+                var valiSDate = document.getElementById('<%=txtValiSDate.ClientID %>');
+                var policyValidityPeriod = document.getElementById('<%=ddlPolicyValidityPeriod.ClientID %>');
 
-                if (District.selectedIndex == 0) {
+                if (district.selectedIndex === 0) {
                     alert("Please select the District");
-                    District.focus();
+                    district.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(InPolicyNo, "Insurance Policy No cannot be Blank"))
+                if (!RequiredValidation(inPolicyNo, "Insurance Policy No cannot be Blank"))
                     return false;
 
-                if (InsType.selectedIndex == 0) {
+                if (insType.selectedIndex === 0) {
                     alert("Please select the Insurance Type");
-                    InsType.focus();
+                    insType.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(InsFee, "Insurance Fee No cannot be Blank"))
+                if (!RequiredValidation(insFee, "Insurance Fee No cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(InsuranceReceiptNo, "Insurance Receipt No cannot be Blank"))
+                if (!RequiredValidation(insuranceReceiptNo, "Insurance Receipt No cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(InsuranceFeesPaidDate, "InsuranceFees PaidDate No cannot be Blank"))
+                if (!RequiredValidation(insuranceFeesPaidDate, "InsuranceFees PaidDate No cannot be Blank"))
                     return false;
 
-                if (trim(InsuranceFeesPaidDate.value) != "") {
-                    if (!isValidDate(InsuranceFeesPaidDate.value)) {
+                if (trim(insuranceFeesPaidDate.value) !== "") {
+                    if (!isValidDate(insuranceFeesPaidDate.value)) {
                         alert("Enter the valid InsuranceFees PaidDate");
-                        InsuranceFeesPaidDate.focus();
+                        insuranceFeesPaidDate.focus();
                         return false;
                     }
                 }
 
-                if (Date.parse(InsuranceFeesPaidDate.value) > Date.parse(now)) {
+                if (Date.parse(insuranceFeesPaidDate.value) > Date.parse(now)) {
                     alert("Insurance Fees Paid Date should not be greater than Current Date");
-                    InsuranceFeesPaidDate.focus();
+                    insuranceFeesPaidDate.focus();
                     return false;
                 }
 
-                if (Date.parse(InsuranceFeesPaidDate.value) < Date.parse(purchaseDate)) {
+                if (Date.parse(insuranceFeesPaidDate.value) < Date.parse(purchaseDate)) {
                     alert("Insurance Fees Paid Date should be greater than Purchase Date.(Purchase Date-" + purchaseDate + ")");
-                    InsuranceFeesPaidDate.focus();
+                    insuranceFeesPaidDate.focus();
                     return false;
                 }
 
-                if (Date.parse(InsuranceFeesPaidDate.value) < Date.parse(inVoiceDate)) {
+                if (Date.parse(insuranceFeesPaidDate.value) < Date.parse(inVoiceDate)) {
                     alert("Insurance Fees Paid Date should be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-                    InsuranceFeesPaidDate.focus();
+                    insuranceFeesPaidDate.focus();
                     return false;
                 }
 
-                if (Agency.selectedIndex == 0) {
+                if (agency.selectedIndex === 0) {
                     alert("Please select the Agency");
-                    Agency.focus();
+                    agency.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(ValiSDate, "Validity Start Date cannot be Blank"))
+                if (!RequiredValidation(valiSDate, "Validity Start Date cannot be Blank"))
                     return false;
 
-                if (trim(ValiSDate.value) != "") {
-                    if (!isValidDate(ValiSDate.value)) {
+                if (trim(valiSDate.value) !== "") {
+                    if (!isValidDate(valiSDate.value)) {
                         alert("Enter the validity start date");
-                        ValiSDate.focus();
+                        valiSDate.focus();
                         return false;
                     }
                 }
 
-                if (Date.parse(ValiSDate.value) > Date.parse(now)) {
+                if (Date.parse(valiSDate.value) > Date.parse(now)) {
                     alert("Validity Start Date should not be greater than Current Date");
-                    ValiSDate.focus();
+                    valiSDate.focus();
                     return false;
                 }
 
-                inscStartDate = ValiSDate.value;
+                inscStartDate = valiSDate.value;
 
-                if (Date.parse(ValiSDate.value) < Date.parse(InsuranceFeesPaidDate.value)) {
+                if (Date.parse(valiSDate.value) < Date.parse(insuranceFeesPaidDate.value)) {
                     alert("Validity Start Date should not be less than Insurance Fees Paid Date");
-                    ValiSDate.focus();
+                    valiSDate.focus();
                     return false;
                 }
 
-                if (PolicyValidityPeriod.selectedIndex == 0) {
+                if (policyValidityPeriod.selectedIndex === 0) {
                     alert("Please select the Policy Validity Period");
-                    PolicyValidityPeriod.focus();
+                    policyValidityPeriod.focus();
                     return false;
                 }
 
                 stepNo++;
             }
             //Inspection Information
-            else if (stepNo == 2) {
+            else if (stepNo === 2) {
 
-                var InspectionDate = document.getElementById('<%=txtInspectionDate.ClientID %>');
-                var InspectedBy = document.getElementById('<%=txtInspectedBy.ClientID %>');
+                inspectionDate = document.getElementById('<%=txtInspectionDate.ClientID %>');
+                var inspectedBy = document.getElementById('<%=txtInspectedBy.ClientID %>');
 
-                if (!RequiredValidation(InspectionDate, "Inspection Date cannot be Blank"))
+                if (!RequiredValidation(inspectionDate, "Inspection Date cannot be Blank"))
                     return false;
 
-                if (trim(InspectionDate.value) != "") {
-                    if (!isValidDate(InspectionDate.value)) {
+                if (trim(inspectionDate.value) !== "") {
+                    if (!isValidDate(inspectionDate.value)) {
                         alert("Enter the valid Inspection Date");
-                        InspectionDate.focus();
+                        inspectionDate.focus();
                         return false;
                     }
                 }
 
-                if (Date.parse(InspectionDate.value) > Date.parse(now)) {
+                if (Date.parse(inspectionDate.value) > Date.parse(now)) {
                     alert("Inspection Date should not be greater than Current Date");
-                    InspectionDate.focus();
+                    inspectionDate.focus();
                     return false;
                 }
-                if (Date.parse(InspectionDate.value) < Date.parse(inscStartDate)) {
+                if (Date.parse(inspectionDate.value) < Date.parse(inscStartDate)) {
                     alert("Inspection Date should be greater than Insurance Validity Start Date.(Insurance Start Date-" + inscStartDate + ")");
-                    InspectionDate.focus();
+                    inspectionDate.focus();
                     return false;
                 }
 
-                inspectionDate = InspectionDate.value;
+                inspectionDate = inspectionDate.value;
 
-                if (!RequiredValidation(InspectedBy, "Inspected By cannot be Blank"))
+                if (!RequiredValidation(inspectedBy, "Inspected By cannot be Blank"))
                     return false;
 
                 stepNo++;
 
             }
-            else if (stepNo == 3) {
-                var TRNo = document.getElementById('<%=txtTRNo.ClientID %>');
-                var TRDate = document.getElementById('<%=txtTRDate.ClientID %>');
-                var TRDistrict = document.getElementById('<%=ddlTRDistrict.ClientID %>');
-                var VeRTACircle = document.getElementById('<%=txtVeRTACircle.ClientID %>');
-                var RoadTaxFee = document.getElementById('<%=txtRoadTaxFee.ClientID %>');
-                var SittingCapacity = document.getElementById('<%=txtSittingCapacity.ClientID %>');
+            else if (stepNo === 3) {
+                var trNo = document.getElementById('<%=txtTRNo.ClientID %>');
+                var trDate = document.getElementById('<%=txtTRDate.ClientID %>');
+                var trDistrict = document.getElementById('<%=ddlTRDistrict.ClientID %>');
+                var veRtaCircle = document.getElementById('<%=txtVeRTACircle.ClientID %>');
+                var roadTaxFee = document.getElementById('<%=txtRoadTaxFee.ClientID %>');
+                var sittingCapacity = document.getElementById('<%=txtSittingCapacity.ClientID %>');
 
-                if (!RequiredValidation(TRNo, "TR No cannot be Blank"))
+                if (!RequiredValidation(trNo, "TR No cannot be Blank"))
                     return false;
 
-                if (!isValidVehicleNumber(TRNo.value)) {
-                    TRNo.value = "";
-                    TRNo.focus();
+                if (!isValidVehicleNumber(trNo.value)) {
+                    trNo.value = "";
+                    trNo.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(TRDate, "TR Date cannot be Blank"))
+                if (!RequiredValidation(trDate, "TR Date cannot be Blank"))
                     return false;
 
-                if (trim(TRDate.value) != "") {
-                    if (!isValidDate(TRDate.value)) {
+                if (trim(trDate.value) !== "") {
+                    if (!isValidDate(trDate.value)) {
                         alert("Enter the valid Inspection Date");
-                        TRDate.focus();
+                        trDate.focus();
                         return false;
                     }
                 }
 
-                if (Date.parse(TRDate.value) > Date.parse(now)) {
+                if (Date.parse(trDate.value) > Date.parse(now)) {
                     alert("TR Date should not be greater than Current Date");
-                    TRDate.focus();
+                    trDate.focus();
                     return false;
                 }
 
-                ////                if (Date.parse(TRDate.value) < Date.parse(inVoiceDate)) {
-                ////                    alert("TR Date should be greater than Invoice Date.(Invoice Date-" + inVoiceDate + ")");
-                ////                    TRDate.focus();
-                ////                    return false;
-                ////                }
-
-                if (Date.parse(TRDate.value) < Date.parse(inspectionDate)) {
+                if (Date.parse(trDate.value) < Date.parse(inspectionDate)) {
                     alert("TR Date should be greater than Inspection Date.(Inspection Date-" + inspectionDate + ")");
-                    TRDate.focus();
+                    trDate.focus();
                     return false;
                 }
 
-                //                if (Date.parse(TRDate.value) < Date.parse(inscStartDate)) {
-                //                    alert("TR Date should be greater than Insurance Start Date.(Insurance Start Date-" + inscStartDate + ")");
-                //                    TRDate.focus();
-                //                    return false;
-                //                }
-
-
-                if (TRDistrict.selectedIndex == 0) {
+                if (trDistrict.selectedIndex === 0) {
                     alert("Please select the District");
-                    TRDistrict.focus();
+                    trDistrict.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(VeRTACircle, "Vehicle RTA Circle cannot be Blank"))
+                if (!RequiredValidation(veRtaCircle, "Vehicle RTA Circle cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(RoadTaxFee, "Road Tax Fee cannot be Blank"))
+                if (!RequiredValidation(roadTaxFee, "Road Tax Fee cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(SittingCapacity, "Seating Capacity cannot be Blank"))
+                if (!RequiredValidation(sittingCapacity, "Seating Capacity cannot be Blank"))
                     return false;
                 stepNo++;
             }
-            else if (stepNo == 4) {
-                var FL = document.getElementById('<%=txtFL.ClientID %>');
-                var FR = document.getElementById('<%=txtFR.ClientID %>');
-                var RL = document.getElementById('<%=txtRL.ClientID %>');
-                var RR = document.getElementById('<%=txtRR.ClientID %>');
-                var SpareWheel = document.getElementById('<%=txtSpareWheel.ClientID %>');
-                var TyreMake = document.getElementById('<%=ddlTyreMake.ClientID %>');
-                var ModelSize = document.getElementById('<%=ddlModelSize.ClientID %>');
-                var OdometerReading = document.getElementById('<%=txtOdometerReading.ClientID %>');
-                var Tyre = [FL.value, FR.value, RL.value, RR.value, SpareWheel.value];
+            else if (stepNo === 4) {
+                var fl = document.getElementById('<%=txtFL.ClientID %>');
+                var fr = document.getElementById('<%=txtFR.ClientID %>');
+                var rl = document.getElementById('<%=txtRL.ClientID %>');
+                var rr = document.getElementById('<%=txtRR.ClientID %>');
+                var spareWheel = document.getElementById('<%=txtSpareWheel.ClientID %>');
+                var tyreMake = document.getElementById('<%=ddlTyreMake.ClientID %>');
+                var modelSize = document.getElementById('<%=ddlModelSize.ClientID %>');
+                var odometerReading = document.getElementById('<%=txtOdometerReading.ClientID %>');
+                var tyre = [fl.value, fr.value, rl.value, rr.value, spareWheel.value];
 
-                if (!RequiredValidation(FL, "Front Left cannot be Blank"))
+                if (!RequiredValidation(fl, "Front Left cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(FR, "Front Right cannot be Blank"))
+                if (!RequiredValidation(fr, "Front Right cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(RL, "Rear Left cannot be Blank"))
+                if (!RequiredValidation(rl, "Rear Left cannot be Blank"))
                     return false;
 
-                if (!RequiredValidation(RR, "Rear Right cannot be Blank"))
+                if (!RequiredValidation(rr, "Rear Right cannot be Blank"))
                     return false;
 
 
-                if (!RequiredValidation(SpareWheel, "Spare Wheel cannot be Blank"))
+                if (!RequiredValidation(spareWheel, "Spare Wheel cannot be Blank"))
                     return false;
 
-                for (var i = 0; i < (Tyre.length - 1); i++) {
-                    for (var j = i + 1; j < Tyre.length; j++) {
-                        if (Tyre[i] == Tyre[j]) {
+                for (var i = 0; i < (tyre.length - 1); i++) {
+                    for (var j = i + 1; j < tyre.length; j++) {
+                        if (tyre[i] === tyre[j]) {
                             alert("Tyre numbers should be unique");
                             return false;
                         }
                     }
                 }
 
-                if (TyreMake.selectedIndex == 0) {
+                if (tyreMake.selectedIndex === 0) {
                     alert("Please select the Tyre Make");
-                    TyreMake.focus();
+                    tyreMake.focus();
                     return false;
                 }
 
-                if (ModelSize.selectedIndex == 0) {
+                if (modelSize.selectedIndex === 0) {
                     alert("Please select the Model Size");
-                    ModelSize.focus();
+                    modelSize.focus();
                     return false;
                 }
 
-                if (!RequiredValidation(OdometerReading, "Odometer Reading cannot be Blank"))
+                if (!RequiredValidation(odometerReading, "Odometer Reading cannot be Blank"))
                     return false;
 
                 stepNo++;
@@ -931,31 +893,31 @@
         }
 
         function finalStepValidation() {
-            var Battery1 = document.getElementById('<%=txtBattery1.ClientID %>');
-            var Battery2 = document.getElementById('<%=txtBattery2.ClientID %>');
-            var BatteryMake = document.getElementById('<%=ddlBatteryMake.ClientID %>');
-            var ModelCapacity = document.getElementById('<%=ddlModelCapacity.ClientID %>');
+            var battery1 = document.getElementById('<%=txtBattery1.ClientID %>');
+            var battery2 = document.getElementById('<%=txtBattery2.ClientID %>');
+            var batteryMake = document.getElementById('<%=ddlBatteryMake.ClientID %>');
+            var modelCapacity = document.getElementById('<%=ddlModelCapacity.ClientID %>');
 
-            if (!RequiredValidation(Battery1, "Battery1 cannot be Blank"))
+            if (!RequiredValidation(battery1, "Battery1 cannot be Blank"))
                 return false;
 
-            if (!RequiredValidation(Battery2, "Battery2 cannot be Blank"))
+            if (!RequiredValidation(battery2, "Battery2 cannot be Blank"))
                 return false;
 
-            if (Battery1.value == Battery2.value) {
+            if (battery1.value === battery2.value) {
                 alert("Battery Numbers should be unique");
-                Battery2.focus();
+                battery2.focus();
                 return false;
             }
 
-            if (BatteryMake.selectedIndex == 0) {
+            if (batteryMake.selectedIndex === 0) {
                 alert("Please select the Battery Make");
-                BatteryMake.focus();
+                batteryMake.focus();
                 return false;
             }
-            if (ModelCapacity.selectedIndex == 0) {
+            if (modelCapacity.selectedIndex === 0) {
                 alert("Please select the Model Capacity");
-                ModelCapacity.focus();
+                modelCapacity.focus();
                 return false;
             }
         }
@@ -975,11 +937,11 @@
             }
         }
         function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode
+            var charCode = (event.which) ? event.which : event.keyCode;
             //debugger;
-            if (charCode == 190 || charCode == 46) {
+            if (charCode === 190 || charCode === 46) {
                 var txtBox = document.getElementById(event.srcElement.id);
-                if (txtBox.value.indexOf('.') == -1)
+                if (txtBox.value.indexOf('.') === -1)
                     return true;
                 else
                     return false;
@@ -991,11 +953,10 @@
         }
 
         function numeric(event) {
-            var charCode = (event.which) ? event.which : event.keyCode
-            //debugger;
-            if (charCode == 190) {
+            var charCode = (event.which) ? event.which : event.keyCode;
+            if (charCode === 190) {
                 var txtBox = document.getElementById(event.srcElement.id);
-                if (txtBox.value.indexOf('.') == -1)
+                if (txtBox.value.indexOf('.') === -1)
                     return true;
                 else
                     return false;
@@ -1011,13 +972,14 @@
             if (window.event) keycode = window.event.keyCode;
             else if (event) keycode = event.keyCode;
             else if (e) keycode = e.which;
-            else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
+            else return true;
+            if ((keycode >= 48 && keycode <= 57) ||
+                (keycode >= 65 && keycode <= 90) ||
+                (keycode >= 97 && keycode <= 122)) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-            return true;
         }
 
         function alpha_only(e) {
@@ -1031,7 +993,6 @@
             else {
                 return false;
             }
-            return true;
         }
 
         function alphanumeric_withspace_only(e) {
@@ -1045,7 +1006,6 @@
             else {
                 return false;
             }
-            return true;
         }
 
         function alpha_only_withspace(e) {
@@ -1059,11 +1019,10 @@
             else {
                 return false;
             }
-            return true;
         }
 
-        function isValidVehicleNumber(VehicleNo) {
-            if (VehicleNo.match(/^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{1,4}$/)) {
+        function isValidVehicleNumber(vehicleNo) {
+            if (vehicleNo.match(/^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{1,4}$/)) {
                 return true;
             }
             else {
@@ -1185,12 +1144,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 164px">
                                 &nbsp;
                             </td>
@@ -1223,12 +1177,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 164px">
                                 &nbsp;
                             </td>
@@ -1261,12 +1210,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                            
                             <td style="width: 164px">
                                 &nbsp;
                             </td>
@@ -1300,12 +1244,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                          
                             <td style="width: 164px">
                                 &nbsp;
                             </td>
@@ -1350,12 +1289,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 150px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 37px">
                                 &nbsp;
                             </td>
@@ -1389,12 +1323,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 150px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 37px">
                                 &nbsp;
                             </td>
@@ -1432,12 +1361,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 150px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 37px">
                                 &nbsp;
                             </td>
@@ -1471,12 +1395,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 150px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 37px">
                                 &nbsp;
                             </td>
@@ -1514,12 +1433,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 150px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 37px">
                                 &nbsp;
                             </td>
@@ -1586,12 +1500,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 152px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                          
                             <td style="width: 35px">
                                 &nbsp;
                             </td>
@@ -1624,12 +1533,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 152px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 35px">
                                 &nbsp;
                             </td>
@@ -1648,29 +1552,7 @@
                             <td class="rowseparator" style="width: 69px">
                             </td>
                         </tr>
-                        <%-- <tr>
-                                        <td style="width: 152px">
-                                            &nbsp;
-                                        </td>
-                                        <td>
-                                            Current Policy End Date<span style="color: Red">*</span>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtCurrentPolicyEndDate" runat="server" Width="100px" onkeypress="return false"></asp:TextBox>
-                                            <asp:ImageButton ID="imgbtCurrentPolicyEndDate" runat="server" alt="" src="images/Calendar.gif"
-                                                Style="vertical-align: top" />
-                                            <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Enabled="True" PopupButtonID="imgbtCurrentPolicyEndDate"
-                                                TargetControlID="txtCurrentPolicyEndDate" Format="MM/dd/yyyy">
-                                            </cc1:CalendarExtender>
-                                        </td>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rowseparator" style="width: 152px">
-                                        </td>
-                                    </tr>--%>
+                      
                         <tr>
                             <td style="width: 69px">
                                 &nbsp;
@@ -1685,12 +1567,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 152px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                            
                             <td style="width: 35px">
                                 &nbsp;
                             </td>
@@ -1729,12 +1606,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 152px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                            
                             <td style="width: 35px">
                                 &nbsp;
                             </td>
@@ -1780,12 +1652,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 152px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 35px">
                                 &nbsp;
                             </td>
@@ -1795,9 +1662,7 @@
                             <td>
                                 <asp:TextBox ID="txtValEDate" runat="server" oncut="return false;" onpaste="return false;"
                                     Width="100px" BackColor="DarkGray" ReadOnly="True" TabIndex="37"></asp:TextBox>
-                                <%--   <cc1:CalendarExtender ID="calextValEDate" runat="server" Enabled="True" PopupButtonID="imgbtValEDate"
-                                                TargetControlID="txtValEDate" Format="MM/dd/yyyy">
-                                            </cc1:CalendarExtender>--%>
+                               
                             </td>
                             <td>
                                 &nbsp;
@@ -1841,16 +1706,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- <tr>
-                            <td class="rowseparator" style="width: 183px">
-                            </td>
-                        </tr>
-                        
-                        <tr>--%>
-                            <%--  <td class="rowseparator" style="width: 183px">
-                        </td>
-                        </tr>
-                        <tr>--%>
+                            
                             <td style="width: 27px">
                                 &nbsp;
                             </td>
@@ -1898,12 +1754,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 157px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 52px">
                                 &nbsp;
                             </td>
@@ -1941,12 +1792,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 157px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                           
                             <td style="width: 52px">
                                 &nbsp;
                             </td>
@@ -1979,12 +1825,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 157px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                         
                             <td style="width: 52px">
                                 &nbsp;
                             </td>
@@ -2032,12 +1873,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 170px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                       
                             <td style="width: 67px">
                                 &nbsp;
                             </td>
@@ -2070,12 +1906,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--  </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 170px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                        
                             <td style="width: 67px">
                                 &nbsp;
                             </td>
@@ -2108,12 +1939,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--  </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 170px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                       
                             <td style="width: 67px">
                                 &nbsp;
                             </td>
@@ -2146,12 +1972,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--  </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 170px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                        
                             <td style="width: 67px">
                                 &nbsp;
                             </td>
@@ -2199,12 +2020,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%-- </tr>--%>
-                            <%-- <tr>
-                            <td class="rowseparator" style="width: 169px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+                        
                             <td style="width: 70px;">
                                 &nbsp;
                             </td>
@@ -2238,12 +2054,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 169px">
-                            </td>
-                        </tr>
-                        <tr>--%>
+
                             <td style="width: 70px">
                                 &nbsp;
                             </td>

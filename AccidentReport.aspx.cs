@@ -209,9 +209,9 @@ public partial class AccidentReport : Page
         }
     }
 
-    public static void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null)
+    public static void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null,DropDownList dropdownId1=null)
     {
-        if (dropdownId == null)
+        if (dropdownId == null && dropdownId1==null)
         {
             if (combo != null)
             {
@@ -223,7 +223,7 @@ public partial class AccidentReport : Page
                 combo.Items.Insert(0, new ListItem("--Select--", "0"));
             }
         }
-        else
+        else if(dropdownId1==null && combo==null)
         {
             dropdownId.Items.Clear();
             dropdownId.DataSource = dataSet.Tables[0];
@@ -231,6 +231,16 @@ public partial class AccidentReport : Page
             dropdownId.DataValueField = valueField;
             dropdownId.DataBind();
             dropdownId.Items.Insert(0, new ListItem("--Select--", "0"));
+        }
+        else
+        {
+            if (dropdownId1 == null || dropdownId != null || combo != null) return;
+            dropdownId1.Items.Clear();
+            dropdownId1.DataSource = dataSet.Tables[0];
+            dropdownId1.DataTextField = textFieldValue;
+            dropdownId1.DataValueField = valueField;
+            dropdownId1.DataBind();
+            dropdownId1.Items.Insert(0, new ListItem("--Select--", "0"));
         }
     }
 

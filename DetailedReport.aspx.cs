@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class DetailedReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -13,7 +14,7 @@ public partial class DetailedReport : Page
     private void BindDistrictdropdown()
     {
         string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
 
     public override void VerifyRenderingInServerForm(Control control)
@@ -23,8 +24,7 @@ public partial class DetailedReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
@@ -39,7 +39,7 @@ public partial class DetailedReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, null, null, "@DistrictID", "@From", "@To", null, null, Grddtreport);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, null, null, "@DistrictID", "@From", "@To", null, null, Grddtreport);
 
         }
         catch (Exception)

@@ -1,4 +1,4 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Prior_MaintenanceStage_PriorMaintenanceStage, App_Web_fbb3hqmh" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="PriorMaintenanceStage.aspx.cs" Inherits="PriorMaintenanceStage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table cellspacing="0" cellpadding="0" width="100%" align="center">
@@ -10,4 +10,3 @@
         </tr>
     </table>
 </asp:Content>
-

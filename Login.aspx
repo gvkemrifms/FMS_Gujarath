@@ -1,21 +1,20 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="GvkFMSAPP.UI.Login, App_Web_1vs54cas" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
 
 <!DOCTYPE html>
-<!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
-<!--[if gt IE 9]><!-->
+
+
 <html class="no-js">
-<!--<![endif]-->
+
 <head>
     <meta charset="utf-8">
 
     <title>:::GVK EMRI:::</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
+
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <meta name="description" content="AppUI is a Web App Bootstrap Admin Template created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="noindex, nofollow">
-
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 
     <!-- Icons -->
@@ -63,10 +62,6 @@
         <div class="block animation-fadeInQuickInv">
             <!-- Login Title -->
             <div class="block-title">
-                <%--<div class="block-options pull-right">
-                        <a href="#" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Forgot your password?"><i class="fa fa-exclamation-circle"></i></a>
-                        <a href="#" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Create new account"><i class="fa fa-plus"></i></a>
-                    </div>--%>
                 <h2>Please Login</h2>
             </div>
             <!-- END Login Title -->
@@ -75,8 +70,7 @@
             <form id="formlogin" runat="server" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <%--<input type="text" id="login-email" name="login-email" class="form-control" placeholder="Your email..">--%>
-                        <%--<asp:TextBox ID="txtloginemail" runat="server" placeholder="Your LoginID.." class="form-control"></asp:TextBox>--%>
+                        
                         <asp:TextBox ID="txtFmsUsername" placeholder="Your LoginID.." runat="server" class="form-control"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFmsUsername"
                             Display="Dynamic" ErrorMessage="Enter The User Name"></asp:RequiredFieldValidator>
@@ -84,8 +78,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <%--<input type="password" id="login-password" name="login-password" class="form-control" placeholder="Your password..">--%>
-                        <%--<asp:TextBox ID="txtPassword" runat="server" placeholder="Your Password.." class="form-control" TextMode="Password"></asp:TextBox>--%>
+                       
                         <asp:TextBox ID="txtFmsPassword" runat="server" placeholder="Your Password.." TextMode="Password" class="form-control"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFmsPassword"
                             Display="Dynamic" ErrorMessage="Enter The Password"></asp:RequiredFieldValidator>
@@ -93,17 +86,11 @@
                 </div>
                 <div class="form-group form-actions">
                     <div class="col-xs-8">
-                        <%--<label class="csscheckbox csscheckbox-primary">
-                                <input type="checkbox" id="login-remember-me" name="login-remember-me">
-                                <span></span>
-                            </label>
-                            Remember Me?--%>
                         <asp:Label ID="lblResult" runat="server" class="csscheckbox csscheckbox-primary"></asp:Label>
                     </div>
                     <div class="col-xs-4 text-right">
-                        <%--<button type="submit" class="btn btn-effect-ripple btn-sm btn-primary"><i class="fa fa-check"></i> Let's Go</button>--%>
-                        <%--<asp:Button runat="server" CssClass="btn btn-effect-ripple btn-sm btn-primary" ID="btnsubmit" Text="Let's Go" OnClick="btnsubmit_Click" />--%>
-                                                    <asp:Button ID="btnFmsLoginSubmit" runat="server" CssClass="btn btn-effect-ripple btn-sm btn-primary" Text="Login" OnClick="btnFmsLoginSubmit_Click" />
+                       
+           <asp:Button ID="btnFmsLoginSubmit" runat="server" CssClass="btn btn-effect-ripple btn-sm btn-primary" Text="Login" OnClick="btnFmsLoginSubmit_Click" />
 
                     </div>
                 </div>

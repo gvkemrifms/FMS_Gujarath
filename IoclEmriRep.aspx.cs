@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 
 public partial class IoclEmriRep : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("login.aspx");
@@ -19,19 +20,18 @@ public partial class IoclEmriRep : Page
     private void BindVehicles()
     {
         var sqlQuery = "select * from m_fms_vehicles  order by vehicleNumber";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "vehicleNumber", "vehicleid", ddlvehicleNo);
+        _helper.FillDropDownHelperMethod(sqlQuery, "vehicleNumber", "vehicleid", ddlvehicleNo);
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        var report = new AccidentReport();
-        report.LoadExcelSpreadSheet(Panel4, "gvtoexcel.xls");
+        _helper.LoadExcelSpreadSheet(this,Panel4, "gvtoexcel.xls");
     }
 
     protected void btnShow_Click(object sender, EventArgs e)
     {
         //  getdates
-        var dtData = AccidentReport.ExecuteSelectStmt("exec getdates '" + txtfromdate.Text + "','" + txttodate.Text + "','" + ddlvehicleNo.SelectedValue + "'");
+        var dtData = _helper.ExecuteSelectStmt("exec getdates '" + txtfromdate.Text + "','" + txttodate.Text + "','" + ddlvehicleNo.SelectedValue + "'");
         if (dtData.Rows.Count <= 0)
         {
             grdRepData.DataSource = null;

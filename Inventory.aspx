@@ -1,4 +1,4 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Inventory.Inventory, App_Web_m0x5b0wx" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="Inventory.aspx.cs" Inherits="Inventory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <table cellspacing="0" cellpadding="0" width="100%" align="center">
@@ -10,4 +10,3 @@
         </tr>
     </table>
 </asp:Content>
-

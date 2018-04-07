@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class InvoiceTrackingReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -17,7 +18,7 @@ public partial class InvoiceTrackingReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
+            _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
         }
         catch
         {
@@ -36,7 +37,7 @@ public partial class InvoiceTrackingReport : Page
             ddlbillno.Enabled = true;
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "Billno", ddlvehicle, ddlbillno, null, null, "@vehNo");
+                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "Billno", ddlvehicle, ddlbillno, null, null, "@vehNo");
             }
             catch
             {
@@ -49,8 +50,7 @@ public partial class InvoiceTrackingReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
@@ -67,7 +67,7 @@ public partial class InvoiceTrackingReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Reports_VenwiseInvoiceTracking", "", "", ddlvehicle, ddlbillno, null, null, "@VehicleNo", "@BillNo", null, null, null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_Reports_VenwiseInvoiceTracking", "", "", ddlvehicle, ddlbillno, null, null, "@VehicleNo", "@BillNo", null, null, null, Grddetails);
         }
         catch
         {

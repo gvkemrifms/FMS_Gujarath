@@ -3,19 +3,19 @@ using System.Web.UI;
 
 public partial class AnalysisReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
-            // withoutdist();
         }
     }
     private void BindDistrictdropdown()
     {
         string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,7 +29,7 @@ public partial class AnalysisReport : Page
             ddlvehicle.Enabled = true;
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID",
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID",
                 ddlvehicle, null, null, null, "@districtID");
             }
             catch (Exception)
@@ -42,8 +42,7 @@ public partial class AnalysisReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {
@@ -60,7 +59,7 @@ public partial class AnalysisReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
         catch (Exception)
         {

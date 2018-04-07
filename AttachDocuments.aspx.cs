@@ -7,6 +7,7 @@ using GvkFMSAPP.DLL;
 
 public partial class AttachDocuments : Page
 {
+    readonly Helper _helper = new Helper();
     private readonly AttachmentForVehiclesBLL _attachmentForVehicle = new AttachmentForVehiclesBLL();
     private readonly GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance _vehicleInsurance = new GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance();
     private readonly GvkFMSAPP.BLL.FMSGeneral _fmsGeneral = new GvkFMSAPP.BLL.FMSGeneral();
@@ -76,7 +77,7 @@ public partial class AttachDocuments : Page
         _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _fmsGeneral.GetVehicleNumber();
         if (ds == null) return;
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
     }
 
     protected void ClearControls()

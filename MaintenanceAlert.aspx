@@ -1,5 +1,6 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Alerts.MaintenanceAlert, App_Web_fbb3hqmh" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceAlert.aspx.cs" Inherits="MaintenanceAlert" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
      <asp:UpdatePanel ID="updtpnlMaintAlert" runat="server">
@@ -67,7 +68,6 @@
                                         </asp:GridView>
                                     </td>
                                 </tr>
-                                <%--as 'ValidityEndDate'--%>
                                 <tr>
                                     <td class="rowseparator">
                                     </td>

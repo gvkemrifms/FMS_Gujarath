@@ -9,6 +9,7 @@ public partial class BatteryIssue : Page
 {
     public IInventory ObjFmsInvBatIss = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
+    readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -48,7 +49,7 @@ public partial class BatteryIssue : Page
     {
         _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
+        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
     }
 
     protected void ddlInventoryBatteryIssueVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,13 +119,11 @@ public partial class BatteryIssue : Page
         if (res > 0)
         {
             var strFmsScript = "<script language=JavaScript>alert('" + "Battery ISSUED" + "')</script>";
-            // Page.RegisterStartupScript("Success", strFmsScript);
             ClientScript.RegisterStartupScript(GetType(), "Success", strFmsScript);
         }
         else
         {
             var strFmsScript = "<script language=JavaScript>alert('" + "Failure " + "')</script>";
-            //Page.RegisterStartupScript("failure", strFmsScript);
             ClientScript.RegisterStartupScript(GetType(), "failure", strFmsScript);
         }
     }
@@ -139,7 +138,7 @@ public partial class BatteryIssue : Page
                 //Filling Drop Down in Popup Gridview
                 var ds = ObjFmsInvBatIss.IFillNewBatteryNumbers();
                 var ddl = (DropDownList) e.Row.FindControl("ddlNewBatteryNumber");
-                AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "Battery Number", "Battery_Id", ddl);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Battery Number", "Battery_Id", ddl);
                 break;
         }
     }

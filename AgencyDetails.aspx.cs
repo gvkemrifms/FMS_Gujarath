@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
@@ -9,7 +8,7 @@ using GvkFMSAPP.PL;
 public partial class AgencyDetails : Page
 {
     public IFleetMaster ObjFleetMaster = new FMSFleetMaster();
-
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -47,8 +46,7 @@ public partial class AgencyDetails : Page
 
     private void FillStates()
     {
-        var ds = ObjFleetMaster.IFillStates();
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlState);
+       _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillStates(), "sc_lname", "sc_scid", ddlState);
         ddlState.Items[0].Value = "0";
         ddlState.SelectedIndex = 0;
         ddlDistrict.Enabled = true;
@@ -61,8 +59,7 @@ public partial class AgencyDetails : Page
 
     private void FillDistricts(int stateId)
     {
-        var ds = ObjFleetMaster.IFillDistricts(stateId);
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillDistricts(stateId), "district_name", "district_id", ddlDistrict);
         ddlDistrict.Items[0].Value = "0";
         ddlDistrict.SelectedIndex = 0;
         ddlDistrict.Enabled = true;
@@ -78,9 +75,6 @@ public partial class AgencyDetails : Page
         btnSaveAgencyDetails.Text = "Update";
         var index = e.NewEditIndex;
         var lblId = (Label) grvAgencyDetails.Rows[index].FindControl("lblId");
-        var cmd = new SqlCommand();
-
-        //int AgencyID = Convert.ToInt16(grvAgencyDetails.Rows[index].Cells[0].Text);
         hidAgencyId.Value = lblId.Text;
         int agencyId = Convert.ToInt16(hidAgencyId.Value);
         var ds = ObjFleetMaster.IEditAgencyDetails(agencyId);
@@ -90,7 +84,6 @@ public partial class AgencyDetails : Page
         int sid = Convert.ToInt16(ddlState.SelectedValue);
         FillDistricts(sid);
         ddlDistrict.SelectedValue = ds.Tables[0].Rows[0]["DistrictID"].ToString();
-        int did = Convert.ToInt16(ddlDistrict.SelectedValue);
         txtAddress.Text = ds.Tables[0].Rows[0]["Address"].ToString();
         txtContactNo.Text = ds.Tables[0].Rows[0]["ContactNum"].ToString();
         txtPanNo.Text = ds.Tables[0].Rows[0]["PANNum"].ToString();
@@ -101,14 +94,11 @@ public partial class AgencyDetails : Page
     {
         {
             Clearfields();
-            var result = 0;
             var index = e.RowIndex;
             var lblId = (Label) grvAgencyDetails.Rows[index].FindControl("lblId");
-            var cmd = new SqlCommand();
-            var ds = new DataSet();
             hidAgencyId.Value = lblId.Text;
             int agencyId = Convert.ToInt16(hidAgencyId.Value);
-            result = ObjFleetMaster.IDeleteAgencyDetails(agencyId);
+            var result = ObjFleetMaster.IDeleteAgencyDetails(agencyId);
             Show(result == 1 ? "Agency Details Deleted Successfully" : "Agency Details Deletion Failure");
             FillGridAgencyDetails();
         }
@@ -129,7 +119,6 @@ public partial class AgencyDetails : Page
             {
                 case "Save":
                 {
-                    var cmd = new SqlCommand();
                     var ds = ObjFleetMaster.IFillGridAgencyDetails();
                     if (ds.Tables[0].Select("AgencyName='" + txtAgencyName.Text + "'").Length <= 0)
                         InsertAgencyDetails(Convert.ToString(txtAgencyName.Text), Convert.ToInt32(ddlState.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), Convert.ToInt32(0), Convert.ToInt32(0), Convert.ToInt64(txtContactNo.Text), Convert.ToString(txtPanNo.Text), Convert.ToInt64(txtTin.Text), Convert.ToString(txtAddress.Text));
@@ -139,7 +128,6 @@ public partial class AgencyDetails : Page
                 }
                 default:
                 {
-                    var cmd = new SqlCommand();
                     var ds = ObjFleetMaster.IFillGridAgencyDetails();
                     if (ds.Tables[0].Select("AgencyName='" + txtAgencyName.Text + "' And AgencyID<>'" + txtEdit.Text + "'").Length <= 0)
                         UpdateAgencyDetails(Convert.ToInt32(txtEdit.Text), Convert.ToString(txtAgencyName.Text), Convert.ToInt32(ddlState.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), Convert.ToInt32(0), Convert.ToInt32(0), Convert.ToInt64(txtContactNo.Text), Convert.ToString(txtPanNo.Text), Convert.ToInt64(txtTin.Text), Convert.ToString(txtAddress.Text));

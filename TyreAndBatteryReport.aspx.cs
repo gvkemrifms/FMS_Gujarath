@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class TyreAndBatteryReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -16,7 +17,7 @@ public partial class TyreAndBatteryReport : Page
         try
         {
             string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
             
         }
         catch 
@@ -28,7 +29,7 @@ public partial class TyreAndBatteryReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_TyreReportBattery1", null, null, null, null, null, null, null, null, null, null, null, GrdtyreBattery);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_TyreReportBattery1", null, null, null, null, null, null, null, null, null, null, null, GrdtyreBattery);
             
 
         }
@@ -41,7 +42,7 @@ public partial class TyreAndBatteryReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_TyreReportBattery1", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, GrdtyreBattery);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_TyreReportBattery1", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, GrdtyreBattery);
             
         }
         catch 
@@ -65,8 +66,7 @@ public partial class TyreAndBatteryReport : Page
     {
         try
         {
-            AccidentReport report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
             
         }
         catch
@@ -78,8 +78,7 @@ public partial class TyreAndBatteryReport : Page
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
+
     }
 
 }

@@ -54,7 +54,7 @@
     <%--<link href="css/newStyles.css" rel="stylesheet" />--%>
     <script type="text/javascript" language="javascript">
 
-        function valiation() {
+        function validation() {
 
             var fld_District = document.getElementById('<%= ddlDistrict.ClientID %>');
             var fld_VehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');

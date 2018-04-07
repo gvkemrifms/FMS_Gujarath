@@ -6,6 +6,7 @@ using System.Web.UI;
 
 public partial class SparePartwiseReport : Page
 {
+    readonly  Helper _helper=new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -21,7 +22,7 @@ public partial class SparePartwiseReport : Page
         {
 
             string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
 
         }
         catch
@@ -39,8 +40,7 @@ public partial class SparePartwiseReport : Page
     {
         try
         {
-            AccidentReport report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
 
         }
         catch
@@ -56,7 +56,7 @@ public partial class SparePartwiseReport : Page
             ddlvehicle.Enabled = true;
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
 
             }
             catch
@@ -79,7 +79,7 @@ public partial class SparePartwiseReport : Page
 
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, txtfrmDate, txttodate, "@DistrictID");
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, txtfrmDate, txttodate, "@DistrictID");
                 SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
 
             }

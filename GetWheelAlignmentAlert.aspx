@@ -1,4 +1,4 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Alerts.GetWheelAlignmentAlert, App_Web_m0x5b0wx" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="GetWheelAlignmentAlert.aspx.cs" Inherits="GetWheelAlignmentAlert" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
       <table>
@@ -45,7 +45,6 @@
                                         </asp:GridView>
                                     </td>
                                 </tr>
-                                <%--as 'ValidityEndDate'--%>
                                 <tr>
                                     <td class="rowseparator">
                                     </td>

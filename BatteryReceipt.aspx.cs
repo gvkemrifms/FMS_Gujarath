@@ -9,7 +9,7 @@ public partial class BatteryReceipt : Page
 {
     public IInventory ObjFmsInvBatRecp = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
-
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -50,7 +50,7 @@ public partial class BatteryReceipt : Page
     {
         _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
+        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
     }
 
     private void FillGrid_BatteryDetailsForReceipt(int fleetInventoryItemId, int vehicleId)
@@ -90,13 +90,11 @@ public partial class BatteryReceipt : Page
         if (res > 0)
         {
             var strFmsScript = "<script language=JavaScript>alert('" + "Battery Receipt Details Submitted" + "')</script>";
-            //Page.RegisterStartupScript("Success", strFmsScript);
             ClientScript.RegisterStartupScript(GetType(), "Success", strFmsScript);
         }
         else
         {
             var strFmsScript = "<script language=JavaScript>alert('" + "Failure " + "')</script>";
-            //Page.RegisterStartupScript("failure", strFmsScript);
             ClientScript.RegisterStartupScript(GetType(), "failure", strFmsScript);
         }
     }

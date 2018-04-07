@@ -2,6 +2,7 @@
 
 public partial class EnquiryScreenReportnew : System.Web.UI.Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         BindVehicledropdown();
@@ -12,7 +13,7 @@ public partial class EnquiryScreenReportnew : System.Web.UI.Page
         try
         {
             var sqlQuery = "select vehicleid,vehicleNumber from M_FMS_Vehicles";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "VehicleNumber", "VehicleID", ddlvehicle);
+            _helper.FillDropDownHelperMethod(sqlQuery, "VehicleNumber", "VehicleID", ddlvehicle);
         }
         catch (Exception)
         {

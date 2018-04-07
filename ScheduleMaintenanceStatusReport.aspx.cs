@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class ScheduleMaintenanceStatusReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -15,7 +16,7 @@ public partial class ScheduleMaintenanceStatusReport : Page
     private void BindDistrictdropdown()
     {
         string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
 
     }
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -31,7 +32,7 @@ public partial class ScheduleMaintenanceStatusReport : Page
 
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", null, null, ddldistrict, ddlvehicle,
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", null, null, ddldistrict, ddlvehicle,
                     null, null, "@districtID");
             }
             catch
@@ -44,8 +45,7 @@ public partial class ScheduleMaintenanceStatusReport : Page
     {
         try
         {
-            AccidentReport report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
 
         }
         catch
@@ -62,7 +62,7 @@ public partial class ScheduleMaintenanceStatusReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Reports_Sch_Maint_Status", null, null, ddldistrict, ddlvehicle, null, null, "@DistrictID", "@VehicleID", null, null, null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_Reports_Sch_Maint_Status", null, null, ddldistrict, ddlvehicle, null, null, "@DistrictID", "@VehicleID", null, null, null, Grddetails);
 
 
         }
@@ -73,7 +73,5 @@ public partial class ScheduleMaintenanceStatusReport : Page
     }
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 }

@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 public partial class GpsKm : Page
 {
     private readonly string _connectionString = ConfigurationManager.AppSettings["Str"];
-
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("login.aspx");
@@ -24,7 +24,7 @@ public partial class GpsKm : Page
     private void BindData()
     {
         var query = "select id, vehiclenumber,fuelentrydate, kmpl, unitprice, GpsKms, entrydate,expprice,petrocardnum,canpush from t_expfuelDump";
-        var dtData = AccidentReport.ExecuteSelectStmt(query);
+        var dtData = _helper.ExecuteSelectStmt(query);
         if (dtData.Rows.Count <= 0)
         {
             grdRepData.DataSource = null;
@@ -49,8 +49,7 @@ public partial class GpsKm : Page
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        var report = new AccidentReport();
-        report.LoadExcelSpreadSheet(null, "gvtoexcel.xls", grdRepData);
+        _helper.LoadExcelSpreadSheet(this,null, "gvtoexcel.xls", grdRepData);
     }
 
     public override void VerifyRenderingInServerForm(Control control)
@@ -67,7 +66,7 @@ public partial class GpsKm : Page
         {
             case "change":
                 var vehicleNumber = e.CommandArgument.ToString();
-                var dtVehicleDetails = AccidentReport.ExecuteSelectStmt("select * from t_expfuelDump where vehiclenumber = '" + vehicleNumber + "'");
+                var dtVehicleDetails = _helper.ExecuteSelectStmt("select * from t_expfuelDump where vehiclenumber = '" + vehicleNumber + "'");
                 if (dtVehicleDetails != null && dtVehicleDetails.Rows.Count > 0)
                 {
                     dvSearch.Visible = true;
@@ -85,15 +84,15 @@ public partial class GpsKm : Page
     {
         var l = 0;
         if (chkpush.Checked) l = 1;
-        var i = AccidentReport.ExecuteInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
-        AccidentReport.TraceService(txtVehicleNumber.Text + "~~~~~~" + i + "~~~~~~" + txtLimit.Text);
+        var i = _helper.ExecuteInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
+        _helper.TraceService(txtVehicleNumber.Text + "~~~~~~" + i + "~~~~~~" + txtLimit.Text);
         PushDatatoIoc();
         Clear();
     }
 
     private void PushDatatoIoc()
     {
-        var dtCredentials = AccidentReport.ExecuteSelectStmt("select * from M_IOC_API_updateCurrency where isactive = 1;");
+        var dtCredentials = _helper.ExecuteSelectStmt("select * from M_IOC_API_updateCurrency where isactive = 1;");
         if (dtCredentials.Rows.Count <= 0) return;
         var request = (HttpWebRequest) WebRequest.Create(dtCredentials.Rows[0]["url"].ToString());
         var postData = "UserName=" + dtCredentials.Rows[0]["username"];
@@ -119,17 +118,17 @@ public partial class GpsKm : Page
             if (jObj.StatusCode != "0")
             {
                 string insertstmt = "update t_expfuelDump set ReferenceNo = '" + jObj.ReferenceNo + "', StatusCode = '" + jObj.StatusCode + "' where petrocardnum = '" + txtCardNumber.Text + "'";
-                AccidentReport.ExecuteInsertStatement(insertstmt);
+                _helper.ExecuteInsertStatement(insertstmt);
             }
             else
             {
                 string insertstmt = "update t_expfuelDump set ReferenceNo = '" + jObj.ReferenceNo + "', StatusCode = '" + jObj.StatusCode + "', Message ='" + jObj.Message + "' where petrocardnum = '" + txtCardNumber.Text + "'";
-                AccidentReport.ExecuteInsertStatement(insertstmt);
+                _helper.ExecuteInsertStatement(insertstmt);
             }
         }
         catch (Exception ex)
         {
-            AccidentReport.TraceService("Exception Raised ~ 1123~2 : " + ex);
+            _helper.TraceService("Exception Raised ~ 1123~2 : " + ex);
         }
     }
 

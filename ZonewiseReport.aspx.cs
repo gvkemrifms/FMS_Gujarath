@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class ZonewiseReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) BindDistrictdropdown();
@@ -13,7 +14,7 @@ public partial class ZonewiseReport : Page
         try
         {
             var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
         catch
         {
@@ -31,8 +32,7 @@ public partial class ZonewiseReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
@@ -49,7 +49,7 @@ public partial class ZonewiseReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_ZonewiseReport", null, null, ddldistrict, ddlmonth, null, null, "@dsid", "@Month", "@Year", null, null, Grddetails, ddlyear);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_ZonewiseReport", null, null, ddldistrict, ddlmonth, null, null, "@dsid", "@Month", "@Year", null, null, Grddetails, ddlyear);
         }
         catch
         {

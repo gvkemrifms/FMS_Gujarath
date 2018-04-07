@@ -8,7 +8,6 @@ using GvkFMSAPP.PL;
 public partial class BatteryDetails : Page
 {
     public IFleetMaster ObjFmsBatDet = new FMSFleetMaster();
-
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)

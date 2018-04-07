@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class BillProcessingManagementReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -16,12 +17,14 @@ public partial class BillProcessingManagementReport : Page
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+            var sqlQuery = "select district_id,district_name from m_district  where state_id= 30";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            var exMessage = ex.Message;
+            Response.Write(exMessage);
+       
         }
     }
 
@@ -29,7 +32,7 @@ public partial class BillProcessingManagementReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
         catch (Exception)
         {
@@ -41,7 +44,7 @@ public partial class BillProcessingManagementReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
         }
         catch (Exception)
         {
@@ -61,8 +64,7 @@ public partial class BillProcessingManagementReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {

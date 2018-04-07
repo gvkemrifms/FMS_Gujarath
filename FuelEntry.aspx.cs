@@ -16,7 +16,7 @@ public partial class FuelEntry : Page
     private bool _flag;
     private string _bunkname;
     private readonly FMSGeneral _fmsg = new FMSGeneral();
-
+    readonly Helper _helper = new Helper();
     protected void Page_PreInit(object sender, EventArgs e)
     {
         if (Session["Role_Id"] != null)
@@ -57,21 +57,7 @@ public partial class FuelEntry : Page
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
-            if (p.Add)
-            {
-            }
-
-            if (p.Modify)
-            {
-            }
-
-            if (p.View)
-            {
-            }
-
-            if (p.Approve)
-            {
-            }
+            
         }
     }
 
@@ -83,7 +69,7 @@ public partial class FuelEntry : Page
         var ds = ObjFuelEntry.IFillVehiclesWithMappedCards(districtId);
         if (ds != null)
         {
-            AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDistrict);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDistrict);
             ddlDistrict.Items[0].Value = "0";
             ddlDistrict.SelectedIndex = 0;
         }
@@ -109,7 +95,7 @@ public partial class FuelEntry : Page
 
         var ds = _fmsg.GetVehicleNumber();
         if (ds == null) return;
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
         ddlVehicleNumber.Items[0].Value = "0";
         ddlVehicleNumber.SelectedIndex = 0;
         ddlVehicleNumber.Enabled = true;
@@ -128,7 +114,7 @@ public partial class FuelEntry : Page
         _fmsg.ServiceStn = lblDistrict.Text;
         var dsServiceStn = _fmsg.GetServiceStns();
         if (dsServiceStn == null) return;
-        AccidentReport.FillDropDownHelperMethodWithDataSet(dsServiceStn, "ServiceStnName", "Id", ddlBunkName);
+        _helper.FillDropDownHelperMethodWithDataSet(dsServiceStn, "ServiceStnName", "Id", ddlBunkName);
         ddlBunkName.Items[0].Value = "0";
         ddlBunkName.SelectedIndex = 0;
         ddlBunkName.Enabled = true;
@@ -175,7 +161,7 @@ public partial class FuelEntry : Page
     {
         var ds = ObjFuelEntry.IFillPayMode();
         if (ds == null) return;
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "PayMode", "PayModeID", ddlPaymode);
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "PayMode", "PayModeID", ddlPaymode);
         ddlPaymode.Items[0].Value = "0";
         ddlPaymode.SelectedIndex = 0;
         ddlPaymode.Enabled = true;
@@ -213,7 +199,7 @@ public partial class FuelEntry : Page
                 ddlPetroCardNumber.SelectedIndex = -1;
                 break;
             default:
-                AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                 }
@@ -231,7 +217,7 @@ public partial class FuelEntry : Page
     private void FillFuelAgency(int petroCardIssueId)
     {
         var ds = ObjFuelEntry.IFillFuelAgency(petroCardIssueId);
-        AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
         if (ds.Tables[0].Rows.Count > 0)
         {
         }
@@ -695,7 +681,6 @@ public partial class FuelEntry : Page
                 txtFuelEntryDate.Text = ds.Tables[0].Rows[0]["EntryDate"].ToString();
                 txtBillNumber.Text = ds.Tables[0].Rows[0]["BillNumber"].ToString();
                 txtOdometer.Text = ds.Tables[0].Rows[0]["Odometer"].ToString();
-                //  txtOdometer.Enabled = false;
                 txtBunkName.Text = ds.Tables[0].Rows[0]["BunkName"].ToString();
                 var coBGrade = Convert.ToString(ds.Tables[0].Rows[0]["Quantity"].ToString()).Split('.');
                 txtQuantity.Text = coBGrade[0] + '.' + coBGrade[1].Substring(0, 2);

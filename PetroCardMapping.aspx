@@ -1,84 +1,62 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.PetroCardMapping, App_Web_m0x5b0wx" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="PetroCardMapping.aspx.cs" Inherits="PetroCardMapping" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script language="javascript" type="text/javascript">
-        
-        
-        function isMandatory(evt)
-        {
-         
-            var id = document.getElementById('<%=ddlVehicleNumber.ClientID %>');
+        function isMandatory(evt) {
+            var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
             var inputs = id.getElementsByTagName('input');
             var i;
             for (i = 0; i < inputs.length; i++) {
-                if (inputs[i].type == 'text') {
-                    if (inputs[i].value != "" && inputs[i].value != null)
-                        if (inputs[i].value == "--Select--") {
-                            alert('Select the Vehicle');
-                            return false;
+                switch (inputs[i].type) {
+                case 'text':
+                    if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
+                        alert('Select the Vehicle');
+                        return false;
                     }
-                   
                     break;
                 }
             }
-           if(document.getElementById("<%=ddlPetroCardNumber.ClientID %>").selectedIndex==0)
-                 {
-                    alert("Please Select PetroCardNumber");
-                    document.getElementById("<%=ddlPetroCardNumber.ClientID %>").focus();
-                    return false;
-                 }
-         
-           if(document.getElementById("<%=txtIssDate.ClientID %>").value==0)
-                 {
-                    alert("Please enter Issued Date");
-                    document.getElementById("<%=txtIssDate.ClientID %>").focus();
-                    return false;
-                 }  
-              var IssuedDate = document.getElementById('<%=txtIssDate.ClientID %>');   
-                 var now = new Date();
-            if(Date.parse(IssuedDate.value) > Date.parse(now))
-            {
-                alert("Issued Date should not be greater than Current Date");
-                IssuedDate.focus();
+            switch (document.getElementById("<%= ddlPetroCardNumber.ClientID %>").selectedIndex) {
+            case 0:
+                alert("Please Select PetroCardNumber");
+                document.getElementById("<%= ddlPetroCardNumber.ClientID %>").focus();
                 return false;
-            } 
-           
-          } 
-          
-          function isNumberKey(evt)
-              {
-                var charCode = (evt.which) ? evt.which : event.keyCode
-                if (charCode > 31 && (charCode < 48 || charCode > 57))
-                    return false;
-                else
-                    return true;
-                }
-                
-                
-                function OnlyAlphabets(myfield, e, dec) 
-              {
-	            var key;
-	            var keychar;
-	            if (window.event)
-		            key = window.event.keyCode;
-	            else if ( e )
-		            key = e.which;
-	            else
-		            return true;
-	            keychar = String.fromCharCode(key);
-	            if (((" !@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) > -1))
-		        return false;
-	            else
-		        return true;
-              }   
-          
-    </script>
+            }
 
-  <%--  <div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7;
-        border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
+            switch (document.getElementById("<%= txtIssDate.ClientID %>").value) {
+            case 0:
+                alert("Please enter Issued Date");
+                document.getElementById("<%= txtIssDate.ClientID %>").focus();
+                return false;
+            }
+            var issuedDate = document.getElementById('<%= txtIssDate.ClientID %>');
+            var now = new Date();
+            if (Date.parse(issuedDate.value) > Date.parse(now)) {
+                alert("Issued Date should not be greater than Current Date");
+                issuedDate.focus();
+                return false;
+            }
+            return true;
+        }
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
+        }
+
+
+        function OnlyAlphabets(myfield, e, dec) {
+            var key;
+            if (window.event || e)
+                key = window.event.keyCode;
+            else return true;
+            var keychar = String.fromCharCode(key);
+            return (" !@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) <= -1;
+        }
+
+    </script>
     <asp:UpdatePanel ID="UpdPanel1" runat="server">
         <ContentTemplate>
             <table>
@@ -98,26 +76,26 @@
                                 <tr>
                                     <td style="width: 100px">
                                         <asp:GridView ID="gvPetroCardMapping" runat="server" Width="459px" CellPadding="3"
-                                            CellSpacing="2" GridLines="None" class="table table-striped table-bordered table-hover" OnPageIndexChanging="gvPetroCardMapping_PageIndexChanging"
-                                            OnRowEditing="gvPetroCardMapping_RowEditing" AutoGenerateColumns="False" OnRowCommand="gvPetroCardMapping_RowCommand" EmptyDataText="No Records Found">
-                                            <RowStyle CssClass="rowStyleGrid" />
+                                                      CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnPageIndexChanging="gvPetroCardMapping_PageIndexChanging"
+                                                      OnRowEditing="gvPetroCardMapping_RowEditing" AutoGenerateColumns="False" OnRowCommand="gvPetroCardMapping_RowCommand" EmptyDataText="No Records Found">
+                                            <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
-                                                <asp:BoundField HeaderText="Vehicle" DataField="Vehicle" />
-                                                <asp:BoundField HeaderText="CardNo" DataField="CardNo" />
-                                                <asp:BoundField HeaderText="IssuedDate" DataField="IssuedToAmbyDate" />
-                                                <asp:BoundField HeaderText="Agency" DataField="Agency" />
-                                                <asp:BoundField HeaderText="Card" DataField="Card" />
-                                                <asp:BoundField HeaderText="Validity" DataField="Validity" />
+                                                <asp:BoundField HeaderText="Vehicle" DataField="Vehicle"/>
+                                                <asp:BoundField HeaderText="CardNo" DataField="CardNo"/>
+                                                <asp:BoundField HeaderText="IssuedDate" DataField="IssuedToAmbyDate"/>
+                                                <asp:BoundField HeaderText="Agency" DataField="Agency"/>
+                                                <asp:BoundField HeaderText="Card" DataField="Card"/>
+                                                <asp:BoundField HeaderText="Validity" DataField="Validity"/>
                                                 <asp:TemplateField HeaderText="Edit">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="Edit" CommandArgument='<%#DataBinder.Eval(Container.DataItem,"MapID") %>'></asp:LinkButton>
+                                                        <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="Edit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "MapID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                            <FooterStyle CssClass="footerStylegrid" />
-                                            <PagerStyle CssClass="pagerStylegrid" />
-                                            <SelectedRowStyle CssClass="selectedRowStyle" />
-                                            <HeaderStyle CssClass="headerStyle" />
+                                            <FooterStyle CssClass="footerStylegrid"/>
+                                            <PagerStyle CssClass="pagerStylegrid"/>
+                                            <SelectedRowStyle CssClass="selectedRowStyle"/>
+                                            <HeaderStyle CssClass="headerStyle"/>
                                         </asp:GridView>
                                     </td>
                                 </tr>
@@ -139,7 +117,7 @@
                                     </td>
                                     <td style="width: 109px; height: 19px">
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True" DropDownStyle="DropDownList" Width="154px"
-                                            OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
+                                                      OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
                                         </cc1:ComboBox>
                                     </td>
                                     <td style="width: 100px; height: 19px">
@@ -151,7 +129,7 @@
                                     </td>
                                     <td style="width: 109px">
                                         <asp:DropDownList ID="ddlPetroCardNumber" runat="server" AutoPostBack="True" Width="154px"
-                                            OnSelectedIndexChanged="ddlPetroCardNumber_SelectedIndexChanged">
+                                                          OnSelectedIndexChanged="ddlPetroCardNumber_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="width: 100px">
@@ -194,22 +172,23 @@
                                     </td>
                                     <td align="left" style="width: 109px">
                                         <asp:TextBox ID="txtIssDate" runat="server" oncut="return false;" onpaste="return false;"
-                                            oncopy="return false;" onkeypress="return false" MaxLength="15"></asp:TextBox>
+                                                     oncopy="return false;" onkeypress="return false" MaxLength="15">
+                                        </asp:TextBox>
                                         <cc1:CalendarExtender ID="IssDate" runat="server" TargetControlID="txtIssDate" Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
-                                        </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top" />
+                                        </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
                                     </td>
                                     <td nowrap="nowrap" style="width: 51px">
-                                                    
-                                                    </td>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td align="right" style="width: 155px">
                                         <asp:RadioButton ID="Deactivate" runat="server" Text="Deactivate" OnCheckedChanged="Deactivate_CheckedChanged"
-                                            AutoPostBack="true" Visible="false" GroupName="kk" />
+                                                         AutoPostBack="true" Visible="false" GroupName="kk"/>
                                     </td>
                                     <td style="width: 109px">
                                         <asp:RadioButton ID="TransfertoNewVehicle" runat="server" OnCheckedChanged="TransfertoNewVehicle_CheckedChanged"
-                                            Text="Transfer" AutoPostBack="true" Visible="false" GroupName="kk" />
+                                                         Text="Transfer" AutoPostBack="true" Visible="false" GroupName="kk"/>
                                     </td>
                                     <td style="width: 100px">
                                         &nbsp;
@@ -221,12 +200,13 @@
                                     </td>
                                     <td style="width: 109px; height: 19px">
                                         <asp:DropDownList ID="ddlReason" runat="server" AutoPostBack="True" Width="154px"
-                                            Visible="false" OnSelectedIndexChanged="ddlReason_SelectedIndexChanged">
+                                                          Visible="false" OnSelectedIndexChanged="ddlReason_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="width: 100px; height: 19px">
                                         <asp:TextBox ID="txtRemarks" runat="server" Visible="False" onkeypress="return OnlyAlphabets(event);"
-                                            MaxLength="15"></asp:TextBox>
+                                                     MaxLength="15">
+                                        </asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -235,7 +215,7 @@
                                     </td>
                                     <td style="width: 109px">
                                         <asp:DropDownList ID="ddlNewVehicleNumber" runat="server" AutoPostBack="True" Width="154px"
-                                            Visible="False" OnSelectedIndexChanged="ddlNewVehicleNumber_SelectedIndexChanged">
+                                                          Visible="False" OnSelectedIndexChanged="ddlNewVehicleNumber_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="width: 100px">
@@ -260,10 +240,10 @@
                                 <tr>
                                     <td align="right" style="width: 100px; height: 19px">
                                         <asp:Button ID="Save" runat="server" Text="Save" OnClientClick="return isMandatory();"
-                                            OnClick="Save_Click" />&nbsp;
+                                                    OnClick="Save_Click"/>&nbsp;
                                     </td>
                                     <td align="left" style="width: 99px; height: 19px">
-                                        &nbsp;<asp:Button ID="Reset" runat="server" Text="Reset" OnClick="Reset_Click" />
+                                        &nbsp;<asp:Button ID="Reset" runat="server" Text="Reset" OnClick="Reset_Click"/>
                                     </td>
                                 </tr>
                             </table>

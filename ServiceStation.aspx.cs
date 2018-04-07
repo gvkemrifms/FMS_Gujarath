@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 
 public partial class ServiceStation : Page
 {
+    readonly Helper _helper = new Helper();
     DataSet _ds = new DataSet();
     readonly GvkFMSAPP.BLL.BaseVehicleDetails _fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
     readonly GvkFMSAPP.BLL.FMSGeneral _fmsg = new GvkFMSAPP.BLL.FMSGeneral();
@@ -37,7 +38,7 @@ public partial class ServiceStation : Page
         }
         _ds = null;
         _ds = _fmsg.GetVehicleNumber();
-        AccidentReport.FillDropDownHelperMethodWithDataSet(_ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+        _helper.FillDropDownHelperMethodWithDataSet(_ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
         ViewState["dsVehicles"] = _ds;
 
     }
@@ -46,7 +47,7 @@ public partial class ServiceStation : Page
         //DataSet dsDistricts = new DataSet();
         _ds = null;
         _ds = _fmsobj.GetDistricts_new();
-        AccidentReport.FillDropDownHelperMethodWithDataSet(_ds, "district_name", "district_id", ddlDistricts);
+        _helper.FillDropDownHelperMethodWithDataSet(_ds, "district_name", "district_id", ddlDistricts);
         ViewState["dsDistricts"] = _ds;
     }
 

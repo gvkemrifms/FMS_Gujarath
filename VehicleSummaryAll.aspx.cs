@@ -3,11 +3,12 @@ using System.Web.UI;
 
 public partial class VehicleSummaryAll : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("vas_allvehicleregin", null, null, null, null, null, null, null, null, null, null, null, GrdtotalData);
+            _helper.FillDropDownHelperMethodWithSp("vas_allvehicleregin", null, null, null, null, null, null, null, null, null, null, null, GrdtotalData);
         }
         catch
         {
@@ -23,8 +24,7 @@ public partial class VehicleSummaryAll : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryAll.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryAll.xls");
         }
         catch
         {

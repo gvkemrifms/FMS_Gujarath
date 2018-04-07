@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class OutstandingSummaryReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -16,14 +17,14 @@ public partial class OutstandingSummaryReport : Page
     private void BindDistrictdropdown()
     {
         string sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
 
     }
     public void Withoutdist()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_VendorWiseBillsOutstandingSummaryReport", null, null, null, null, null, null, null, null, null, null, null, Grdsummary);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_VendorWiseBillsOutstandingSummaryReport", null, null, null, null, null, null, null, null, null, null, null, Grdsummary);
 
         }
         catch
@@ -35,8 +36,7 @@ public partial class OutstandingSummaryReport : Page
     {
         try
         {
-            AccidentReport report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
 
         }
         catch
@@ -49,7 +49,7 @@ public partial class OutstandingSummaryReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_VendorWiseBillsOutstandingSummaryReport", null, null, ddldistrict, null, null, null, "@districtID", null, null, null, null, Grdsummary);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_VendorWiseBillsOutstandingSummaryReport", null, null, ddldistrict, null, null, null, "@districtID", null, null, null, null, Grdsummary);
 
         }
         catch
@@ -59,20 +59,19 @@ public partial class OutstandingSummaryReport : Page
     }
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
+  
+
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedValue == "0")
+        switch (ddldistrict.SelectedValue)
         {
-            Withoutdist();
-
-        }
-        else
-        {
-            Loaddata();
-
+            case "0":
+                Withoutdist();
+                break;
+            default:
+                Loaddata();
+                break;
         }
     }
 }

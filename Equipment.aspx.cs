@@ -5,13 +5,12 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.BLL.Admin;
 
 public partial class Equipment : Page
 {
-    private readonly DistrictVehicleMapping _distvehmapp = new DistrictVehicleMapping();
+    readonly Helper _helper = new Helper();
     public IFleetMaster ObjFleetMaster = new FMSFleetMaster();
-
+    readonly GvkFMSAPP.BLL.Admin.DistrictVehicleMapping _distvehmapp = new GvkFMSAPP.BLL.Admin.DistrictVehicleMapping();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,47 +19,48 @@ public partial class Equipment : Page
         if (!IsPostBack)
         {
             BtnSave.Attributes.Add("onclick", "return validation()");
-            GetVehicles();
+            DataSet ds = _distvehmapp.GetVehicles();
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber","VehicleID", ddlistVehicleNumber);
             var numbers = new List<int> {1, 2, 3, 4, 5, 6};
             foreach (var number in numbers)
             {
-                var ds = ObjFleetMaster.GetSelectAllMedicalEquipmentByEquipmentTypeID(number);
-                switch (number)
-                {
-                    case 1:
-                        grdviewMedicalEqupment.DataSource = ds;
-                        grdviewMedicalEqupment.DataBind();
-                        break;
-                    case 2:
-                        grdviewMedicalDisposables.DataSource = ds;
-                        grdviewMedicalDisposables.DataBind();
-                        break;
-                    case 3:
-                        grdviewExtricationTools.DataSource = ds;
-                        grdviewExtricationTools.DataBind();
-                        break;
-                    case 4:
-                        grdviewCOmmunicationTechnology.DataSource = ds;
-                        grdviewCOmmunicationTechnology.DataBind();
-                        break;
-                    case 5:
-                        grdviewMedicines.DataSource = ds;
-                        grdviewMedicines.DataBind();
-                        break;
-                    case 6:
-                        grdviewNoMedicalSupplies.DataSource = ds;
-                        grdviewNoMedicalSupplies.DataBind();
-                        break;
-                }
+                BindGrid(number);
             }
         }
     }
 
-    public void GetVehicles()
+    private void BindGrid(int number)
     {
-        var ds = _distvehmapp.GetVehicles();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+        var ds = ObjFleetMaster.GetSelectAllMedicalEquipmentByEquipmentTypeID(number);
+        switch (number)
+        {
+            case 1:
+                grdviewMedicalEqupment.DataSource = ds;
+                grdviewMedicalEqupment.DataBind();
+                break;
+            case 2:
+                grdviewMedicalDisposables.DataSource = ds;
+                grdviewMedicalDisposables.DataBind();
+                break;
+            case 3:
+                grdviewExtricationTools.DataSource = ds;
+                grdviewExtricationTools.DataBind();
+                break;
+            case 4:
+                grdviewCOmmunicationTechnology.DataSource = ds;
+                grdviewCOmmunicationTechnology.DataBind();
+                break;
+            case 5:
+                grdviewMedicines.DataSource = ds;
+                grdviewMedicines.DataBind();
+                break;
+            case 6:
+                grdviewNoMedicalSupplies.DataSource = ds;
+                grdviewNoMedicalSupplies.DataBind();
+                break;
+        }
     }
+
 
     protected void BtnSave_Click(object sender, EventArgs e)
     {

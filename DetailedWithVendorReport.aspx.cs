@@ -3,6 +3,7 @@ using System.Web.UI;
 
 public partial class DetailedWithVendorReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -15,14 +16,14 @@ public partial class DetailedWithVendorReport : Page
     private void BindDistrictdropdown()
     {
         var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-        AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
     }
 
     public void Withoutdist()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVendor", null, null, null, null, null, null, null, null, null, null, null, Grdvendor);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVendor", null, null, null, null, null, null, null, null, null, null, null, Grdvendor);
         }
         catch (Exception)
         {
@@ -34,8 +35,8 @@ public partial class DetailedWithVendorReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+           
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
@@ -47,7 +48,7 @@ public partial class DetailedWithVendorReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVendor", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdvendor);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVendor", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdvendor);
         }
         catch (Exception)
         {

@@ -9,38 +9,22 @@ public partial class DistrictVehicleMapping : Page
 {
     private readonly GvkFMSAPP.BLL.Admin.DistrictVehicleMapping _distvehmapp = new GvkFMSAPP.BLL.Admin.DistrictVehicleMapping();
     private readonly GvkFMSAPP.BLL.VAS_BLL.VASGeneral _vehallobj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
-
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", "abc()", true);
-            btnSave.Attributes.Add("onclick", "return validation()");
-            GetVehicles();
-            GetDistrict();
-            GetVehicleTypes();
+             btnSave.Attributes.Add("onclick", "return validation()");
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType);//Fill VehicleTypes
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlVehicleNumber);//GetVehicleNumber
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetDistrict(), "district_name", "district_id", ddlDistrict);//GetDistricts
+          
         }
     }
 
-    private void GetVehicleTypes()
-    {
-        var ds = _distvehmapp.GetVehicleTypes();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "vehicle_type_name", "vehicle_type_id", ddlVehType);
-    }
-
-    public void GetVehicles()
-    {
-        var ds = _distvehmapp.GetVehicles();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);
-    }
-
-    public void GetDistrict()
-    {
-        var ds = _distvehmapp.GetDistrict();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
-    }
-
+   
     protected void lnkbtnNewBaseLoc_Click(object sender, EventArgs e)
     {
         ddlBaseLocation.Visible = false;
@@ -79,36 +63,25 @@ public partial class DistrictVehicleMapping : Page
         ddlCity.Items.Clear();
         ddlCity.Items.Insert(0, new ListItem("--Select--", "0"));
         txtContactNumber.Text = "";
-        GetMandals();
-    }
-
-    public void GetMandals()
-    {
         _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        var ds = _vehallobj.GetMandals_new();
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "mandal_name", "mandal_id", ddlMandal);
+        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal);//GetMandals
+
     }
 
-    public void GetCity()
-    {
-        _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
-        var ds = _vehallobj.GetCities_new();
-        ddlCity.DataSource = ds;
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "ct_lname", "city_id", ddlCity);
-    }
+
 
     public void GetBaseLocation()
     {
         _vehallobj.CityId = Convert.ToInt32(ddlCity.SelectedItem.Value);
         var ds = _vehallobj.GetBaseLocation();
         ViewState["ContactNumber"] = ds;
-        ddlBaseLocation.DataSource = ds;
-        if (ds != null) AccidentReport.FillDropDownHelperMethodWithDataSet(ds, "Base_Location", "Location_ID", ddlBaseLocation);
+        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Base_Location", "Location_ID", ddlBaseLocation);
     }
 
     protected void ddlSegments_SelectedIndexChanged(object sender, EventArgs e)
     {
-        GetMandals();
+        _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal);//GetMandals
         GetDistrictMandals();
     }
 
@@ -120,7 +93,8 @@ public partial class DistrictVehicleMapping : Page
 
     protected void ddlMandal_SelectedIndexChanged(object sender, EventArgs e)
     {
-        GetCity();
+        _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
+        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetCities_new(), "ct_lname", "city_id", ddlCity);
     }
 
     protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,7 +176,7 @@ public partial class DistrictVehicleMapping : Page
         var statement = "";
         statement = statement + "update m_vehicle set  `contact_number` = '" + contactNumber + "',`latitude`= '" + latitude + "',`longitude` = '" + longitude + "',`mandal_id`  = '" + mandal + "',`location_name`  = '" + baseLocation + "', district_id= '" + district + "'";
         statement = statement + "  where `vehicle_no` = '" + vehicleNumber.SelectedItem.Text + "' ;";
-        AccidentReport.ExecuteInsertStatement(statement);
+        _helper.ExecuteInsertStatement(statement);
     }
 
     public void Show(string message)

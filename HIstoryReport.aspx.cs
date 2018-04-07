@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Web.UI;
 
-public partial class HIstoryReport : Page
+public partial class HistoryReport : Page
 {
+    readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -17,7 +18,7 @@ public partial class HIstoryReport : Page
         try
         {
             var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
         catch
         {
@@ -36,7 +37,7 @@ public partial class HIstoryReport : Page
             ddlvehicle.Enabled = true;
             try
             {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
             }
             catch
             {
@@ -54,7 +55,7 @@ public partial class HIstoryReport : Page
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID", "@Month", "@Year", null, Grddetails, ddlmonth, ddlyear);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID", "@Month", "@Year", null, Grddetails, ddlmonth, ddlyear);
         }
         catch
         {
@@ -66,8 +67,7 @@ public partial class HIstoryReport : Page
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {

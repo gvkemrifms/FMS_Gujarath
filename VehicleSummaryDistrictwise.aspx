@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleSummaryDistrictwise.aspx.cs" Inherits="VehicleSummaryDistrictwise" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleSummaryDistrictwise.aspx.cs" Inherits="VehicleSummaryDistrictwise" %>
+
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
@@ -42,7 +43,7 @@
             <asp:GridView ID="GridInactive" runat="server"></asp:GridView>
         </asp:Panel>
     </div>
-     <div>
+    <div>
         <asp:Panel ID="Panel1" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="GridActive" runat="server"></asp:GridView>
         </asp:Panel>

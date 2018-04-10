@@ -3,7 +3,8 @@ using System.Web.UI;
 
 public partial class VehicleSummaryDistrictwise : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) BindDistrictdropdown();
@@ -36,7 +37,7 @@ public partial class VehicleSummaryDistrictwise : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {

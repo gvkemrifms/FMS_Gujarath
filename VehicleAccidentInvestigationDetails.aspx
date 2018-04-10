@@ -1,4 +1,4 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.VehicleAccidentInvestigationDetails, App_Web_fbb3hqmh" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleAccidentInvestigationDetails.aspx.cs" Inherits="VehicleAccidentInvestigationDetails" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
@@ -6,118 +6,81 @@
     <script language="javascript" type="text/javascript">
 
         function vehicleCostAddition(obj) {
-            if (parseFloat(obj.value)) {
-                var TotalCostofRepairs = document.getElementById('<%=TxtTotalCostofRepairs.ClientID %>').value == '' ? 0 : document.getElementById('<%=TxtTotalCostofRepairs.ClientID %>').value;
-                var AmountRecievedFromInsurance = document.getElementById('<%=TxtAmountRecievedFromInsurance.ClientID %>').value == '' ? 0 : document.getElementById('<%=TxtAmountRecievedFromInsurance.ClientID %>').value;
-                var CostToCompany = document.getElementById('<%=TxtCostToCompany.ClientID %>');
-
-                CostToCompany.value = (parseFloat(TotalCostofRepairs) - parseFloat(AmountRecievedFromInsurance)).toFixed(2);
-            }
-            else {
+            if (!parseFloat(obj.value)) {
                 alert('The value should be a valid decimal value and cannot be zero');
                 obj.value = '';
-            }
-
-        }
-        function validation() {
-            var CostToCompany = document.getElementById('<%=TxtCostToCompany.ClientID %>');
-            CostToCompany.value = (parseFloat(TotalCostofRepairs) - parseFloat(AmountRecievedFromInsurance)).toFixed(2);
-
-        }
-
-        function isValidDate(subject) {
-            if (subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/)) {
-                return true;
             } else {
-                return false;
+                var totalCostofRepairs = document.getElementById('<%= TxtTotalCostofRepairs.ClientID %>').value === ''
+                    ? 0
+                    : document.getElementById('<%= TxtTotalCostofRepairs.ClientID %>').value;
+                var amountRecievedFromInsurance =
+                    document.getElementById('<%= TxtAmountRecievedFromInsurance.ClientID %>').value === ''
+                    ? 0
+                    : document.getElementById('<%= TxtAmountRecievedFromInsurance.ClientID %>').value;
+            var costToCompany = document.getElementById('<%= TxtCostToCompany.ClientID %>');
+                costToCompany.value = (parseFloat(totalCostofRepairs) - parseFloat(amountRecievedFromInsurance)).toFixed(2);
             }
         }
 
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
+        function validation() {
+            var costToCompany = document.getElementById('<%= TxtCostToCompany.ClientID %>');
+        costToCompany.value =
+            (parseFloat(window.TotalCostofRepairs) - parseFloat(window.AmountRecievedFromInsurance)).toFixed(2);
 
-        }
+    }
 
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function isValidDate(subject) {
+        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
+    }
 
-        function alphanumeric_only_withspace(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function trim(value) {
+        value = value.replace(/^\s+/, '');
+        value = value.replace(/\s+$/, '');
+        return value;
 
+    }
 
-        function alpha_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function alphanumeric_only(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 48 && keycode <= 57) ||
+            (keycode >= 65 && keycode <= 90) ||
+            (keycode >= 97 && keycode <= 122);
+    }
 
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function alphanumeric_only_withspace(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 48 && keycode <= 57) ||
+            (keycode >= 65 && keycode <= 90) ||
+            (keycode >= 97 && keycode <= 122) ||
+            (keycode === 32);
+    }
 
+    function alpha_only(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
+    }
 
-        function remark(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode != 34) && (keycode != 39)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function alpha_only_withspace(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
+    }
+
+    function remark(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode !== 34) && (keycode !== 39);
+    }
 
     </script>
-
-
- <%--   <div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7; border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <table cellpadding="1em" cellspacing="2em" width="100%">
@@ -161,16 +124,6 @@
                                             PopupButtonID="imgPODate" TargetControlID="TxtAccidentDateTime">
                                         </cc1:CalendarExtender>
                                     </td>
-                                    <%-- <td>
-                                        <asp:DropDownList ID="ddlistHour" runat="server" Width="50px">
-                                            <asp:ListItem Selected="True" Text="--hh--" Value="--hh--"></asp:ListItem>
-                                        </asp:DropDownList>
-                                    </td>
-                                    <td>
-                                        <asp:DropDownList ID="ddlistMinute" runat="server" Width="50px">
-                                            <asp:ListItem Selected="True" Text="--mm--" Value="--hh--"></asp:ListItem>
-                                        </asp:DropDownList>
-                                    </td>--%>
                                     <td></td>
                                     <td></td>
                                     <td>
@@ -362,7 +315,8 @@
                                 </td>
                                 <td style="padding-top: 4px">
                                     <asp:TextBox ID="txtRemarks" runat="server" MaxLength="250" TextMode="MultiLine"
-                                        Width="150px"></asp:TextBox>
+                                        Width="150px">
+                                    </asp:TextBox>
                                 </td>
                                 <td></td>
                             </tr>
@@ -405,9 +359,7 @@
                                 <td>
                                     <asp:TextBox ID="TxtCostToCompany" runat="server" onkeypress="return false"></asp:TextBox>
                                 </td>
-                                <td>
-                                    <%--   <asp:LinkButton ID="LnkCostComparision" runat="server">Cost Comparision</asp:LinkButton>--%>
-                                </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -424,9 +376,7 @@
                                     <asp:Button ID="BtnReset" runat="server" Text="Reset" Width="70px"
                                         OnClick="BtnReset_Click" />
                                 </td>
-                                <td>
-                                    <%-- <asp:Button ID="Button1" runat="server" Text="Canc" />--%>
-                                </td>
+                                <td></td>
                             </tr>
                         </table>
                         <table>
@@ -454,8 +404,8 @@
                                             <asp:BoundField DataField="PayStatus" HeaderText="Status" />
                                             <asp:TemplateField>
                                                 <ItemTemplate>
-                                                    <asp:LinkButton runat="server" CommandName="_Details" Text="View Details" CommandArgument=' <%# Container.DataItemIndex %>' />
-                                                    <asp:HiddenField ID="hdnvehicelvalue" runat="server" Value='<%#Eval("VehicelInsuranceDetId")%>' />
+                                                    <asp:LinkButton runat="server" CommandName="_Details" Text="View Details" CommandArgument=" <%# Container.DataItemIndex %>" />
+                                                    <asp:HiddenField ID="hdnvehicelvalue" runat="server" Value='<%#Eval("VehicelInsuranceDetId") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -473,4 +423,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

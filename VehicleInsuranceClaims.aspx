@@ -1,54 +1,54 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.StatutoryCompliance.VehicleInsuranceClaims, App_Web_m0x5b0wx" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleInsuranceClaims.aspx.cs" Inherits="VehicleInsuranceClaims" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <style>
         .mydatagrid {
-            width: 80%;
             border: solid 2px black;
             min-width: 80%;
+            width: 80%;
         }
 
         .header {
             background-color: #646464;
-            font-family: Arial;
-            color: White;
             border: none 0px transparent;
+            color: White;
+            font-family: Arial;
+            font-size: 16px;
             height: 25px;
             text-align: center;
-            font-size: 16px;
         }
 
         .rows {
             background-color: #fff;
+            border: none 0px transparent;
+            color: #000;
             font-family: Arial;
             font-size: 14px;
-            color: #000;
             min-height: 25px;
             text-align: left;
-            border: none 0px transparent;
         }
 
             .rows:hover {
                 background-color: #ff8000;
-                font-family: Arial;
                 color: #fff;
+                font-family: Arial;
                 text-align: left;
             }
 
         .selectedrow {
             background-color: #ff8000;
-            font-family: Arial;
             color: #fff;
+            font-family: Arial;
             font-weight: bold;
             text-align: left;
         }
 
         .mydatagrid a /** FOR THE PAGING ICONS  **/ {
             background-color: Transparent;
-            padding: 5px 5px 5px 5px;
             color: #fff;
-            text-decoration: none;
             font-weight: bold;
+            padding: 5px 5px 5px 5px;
+            text-decoration: none;
         }
 
             .mydatagrid a:hover /** FOR THE PAGING ICONS  HOVER STYLES**/ {
@@ -64,8 +64,8 @@
 
         .pager {
             background-color: #646464;
-            font-family: Arial;
             color: White;
+            font-family: Arial;
             height: 30px;
             text-align: left;
         }
@@ -102,33 +102,34 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Vehicle Number" Visible="True">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkBtnVehicleNumber" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"VehicleNumber") %>'
-                                                            CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleID")%>' CommandName="EditInsurance"></asp:LinkButton>
+                                                        <asp:LinkButton ID="lnkBtnVehicleNumber" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>'
+                                                            CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleID") %>' CommandName="EditInsurance">
+                                                        </asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Accident Title">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblAccidentTitle" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"AccidentTitle") %>'></asp:Label>
+                                                        <asp:Label ID="lblAccidentTitle" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "AccidentTitle") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Accident Date/Time">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblAccidentDateTime" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"AccidentDateTime","{0:dd-MM-yyyy}") %>'></asp:Label>
+                                                        <asp:Label ID="lblAccidentDateTime" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "AccidentDateTime", "{0:dd-MM-yyyy}") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Claim Date">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblClaimDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ClaimDate","{0:dd-MM-yyyy}") %>'></asp:Label>
+                                                        <asp:Label ID="lblClaimDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ClaimDate", "{0:dd-MM-yyyy}") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Claim Amount">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblClaimAmount" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ClaimAmount") %>'></asp:Label>
+                                                        <asp:Label ID="lblClaimAmount" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ClaimAmount") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Status">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblStatus" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"InsuranceClaimsStatus") %>'></asp:Label>
+                                                        <asp:Label ID="lblStatus" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "InsuranceClaimsStatus") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -154,4 +155,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

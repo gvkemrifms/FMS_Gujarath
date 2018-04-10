@@ -1,311 +1,184 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.VehicleInsurance, App_Web_fbb3hqmh" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleInsurance.aspx.cs" Inherits="VehicleInsurance" %>
+
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <%--<link href="css/bootstrap.min.css" rel="stylesheet" />--%>
-
-    <%--<style>
-        .button {
-            display: inline-block;
-            border-radius: 4px;
-            border: none;
-            color: #FFFFFF;
-            text-align: center;
-            font-size: 28px;
-            padding: 0px;
-            width: 122px;
-            transition: all 0.5s;
-            cursor: pointer;
-            margin: 5px;
-        }
-
-            .button span {
-                cursor: pointer;
-                display: inline-block;
-                position: relative;
-                transition: 0.5s;
-            }
-
-                .button span:after {
-                    content: '\00bb';
-                    position: absolute;
-                    opacity: 0;
-                    top: 0;
-                    right: -20px;
-                    transition: 0.5s;
-                }
-
-            .button:hover span {
-                padding-right: 25px;
-            }
-
-                .button:hover span:after {
-                    opacity: 1;
-                    right: 0;
-                }
-    </style>
-    <style>
-        .text1 {
-            border: 2px solid rgb(173, 204, 204);
-            height: 31px;
-            width: 223px;
-            box-shadow: 0px 0px 27px rgb(204, 204, 204) inset;
-            transition: 500ms all ease;
-            padding: 3px 3px 3px 3px;
-        }
-
-            .text1:hover, #text1:focus {
-                width: 260px;
-                transition: 500ms all ease;
-                background: url(msg.png) no-repeat right;
-                background-size: 25px 25px;
-                background-position: 96% 62%;
-                padding: 3px 32px 3px 3px;
-            }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        input[type=text] {
-            width: 100%;
-            padding: 4px 20px;
-            margin: 2px 0;
-            box-sizing: border-box;
-        }
-    </style>--%>
-
     <script language="javascript" type="text/javascript">
 
         function validation() {
-
-
-            var District = document.getElementById('<%= txtDistrict.ClientID %>');
-            var InsuranceType = document.getElementById('<%= txtInsuranceType.ClientID %>');
-            var InsuranceTypeDdl = document.getElementById('<%= ddlInsuranceType.ClientID %>');
-            var InsuranceAgency = document.getElementById('<%= txtInsuranceAgency.ClientID %>');
-            var InsuranceAgencyDdl = document.getElementById('<%= ddlInsuranceAgency.ClientID %>');
-            var InsurancePolicyNo = document.getElementById('<%= txtInsurancePolicyNo.ClientID %>');
-            var CurrentPolicyEndDate = document.getElementById('<%= txtCurrentPolicyEndDate.ClientID %>');
-            var ReceiptNumber = document.getElementById('<%= txtReceiptNumber.ClientID %>');
-            var FeesPaid = document.getElementById('<%= txtFeesPaid.ClientID %>');
-            var FeesPaidDate = document.getElementById('<%= txtFeesPaidDate.ClientID %>');
-            var PolicyStartDate = document.getElementById('<%= txtPolicyStartDate.ClientID %>');
-            var PolicyValidityPeriod = document.getElementById('<%= ddlPolicyValidityPeriod.ClientID %>');
-            var vehiclePurchaseDate = document.getElementById('<%= vehiclePurchaseDate.ClientID %>');
-            //var PolicyEndDate = document.getElementById('<%= txtPolicyEndDate.ClientID %>');
-
-            var now = new Date();
-            var id = document.getElementById('<%= ddlVehicleNo.ClientID %>');
-            var inputs = id.getElementsByTagName('input');
-            var i;
-            for (i = 0; i < inputs.length; i++) {
-                if (inputs[i].type == 'text') {
-                    if (inputs[i].value != "" && inputs[i].value != null)
-                        if (inputs[i].value == "--Select--") {
-                            alert('Select the Vehicle');
-                            return false;
-                        }
-
+            var district = document.getElementById('<%= txtDistrict.ClientID %>');
+        var insuranceType = document.getElementById('<%= txtInsuranceType.ClientID %>');
+        var insuranceTypeDdl = document.getElementById('<%= ddlInsuranceType.ClientID %>');
+        var insuranceAgency = document.getElementById('<%= txtInsuranceAgency.ClientID %>');
+        var insuranceAgencyDdl = document.getElementById('<%= ddlInsuranceAgency.ClientID %>');
+        var insurancePolicyNo = document.getElementById('<%= txtInsurancePolicyNo.ClientID %>');
+        var currentPolicyEndDate = document.getElementById('<%= txtCurrentPolicyEndDate.ClientID %>');
+        var receiptNumber = document.getElementById('<%= txtReceiptNumber.ClientID %>');
+        var feesPaid = document.getElementById('<%= txtFeesPaid.ClientID %>');
+        var feesPaidDate = document.getElementById('<%= txtFeesPaidDate.ClientID %>');
+        var policyStartDate = document.getElementById('<%= txtPolicyStartDate.ClientID %>');
+        var policyValidityPeriod = document.getElementById('<%= ddlPolicyValidityPeriod.ClientID %>');
+        var now = new Date();
+        var id = document.getElementById('<%= ddlVehicleNo.ClientID %>');
+        var inputs = id.getElementsByTagName('input');
+        var i;
+        for (i = 0; i < inputs.length; i++) {
+            switch (inputs[i].type) {
+                case 'text':
+                    if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
+                        alert('Select the Vehicle');
+                        return false;
+                    }
                     break;
-                }
             }
-
-            if (!RequiredValidation(District, "District Cannot be Blank"))
-                return false;
-
-
-            if (document.getElementById('<%= chkBoxChangeInsuranceDetails.ClientID %>').checked) {
-
-                if (InsuranceTypeDdl.selectedIndex == 0) {
-                    alert("Please select Insurance Type");
-                    InsuranceTypeDdl.focus();
-                    return false;
-                }
-
-                if (InsuranceAgencyDdl.selectedIndex == 0) {
-                    alert("Please select Insurance Agency");
-                    InsuranceAgencyDdl.focus();
-                    return false;
-                }
-            }
-            else {
-                if (!RequiredValidation(InsuranceType, "Insurance Type Cannot be Blank"))
-                    return false;
-                if (!RequiredValidation(InsuranceAgency, "Insurance Agency Cannot be Blank"))
-                    return false;
-            }
-
-            if (!RequiredValidation(InsurancePolicyNo, "Insurance Policy Number Cannot be Blank"))
-                return false;
-
-            if (!RequiredValidation(CurrentPolicyEndDate, "Current Policy End Date Cannot be Blank"))
-                return false;
-
-            if (!isValidDate(CurrentPolicyEndDate.value)) {
-                alert("Enter Valid Current Policy End Date");
-                CurrentPolicyEndDate.focus();
-                return false;
-            }
-
-            if (!RequiredValidation(ReceiptNumber, "Receipt Number Cannot be Blank"))
-                return false;
-
-            if (!RequiredValidation(FeesPaid, "Fees Paid Cannot be Blank"))
-                return false;
-
-            if (!RequiredValidation(FeesPaidDate, "Fees Paid Date Cannot be Blank"))
-                return false;
-
-            if (!isValidDate(FeesPaidDate.value)) {
-                alert("Enter Valid Fees Paid Date");
-                FeesPaidDate.focus();
-                return false;
-            }
-
-            if (Date.parse(FeesPaidDate.value) > Date.parse(now)) {
-                alert("Fees Paid Date should not be greater than Current Date");
-                PolicyStartDate.focus();
-                return false;
-            }
-
-            //            if (Date.parse(FeesPaidDate.value) > Date.parse(vehiclePurchaseDate.value)) {
-            //                alert("Fees Paid Date should not be less than Purchase Date.(PurchaseDate-" + vehiclePurchaseDate.value + ")");
-            //                PolicyStartDate.focus();
-            //                return false;
-            //            }
-
-            if (!RequiredValidation(PolicyStartDate, "Policy Start Date Cannot be Blank"))
-                return false;
-
-            if (!isValidDate(PolicyStartDate.value)) {
-                alert("Enter Valid Policy Start Date");
-                PolicyStartDate.focus();
-                return false;
-            }
-
-            if (Date.parse(PolicyStartDate.value) > Date.parse(now)) {
-                alert("Policy Start Date should not be greater than Current Date");
-                PolicyStartDate.focus();
-                return false;
-            }
-
-            if (Date.parse(PolicyStartDate.value) < Date.parse(FeesPaidDate.value)) {
-                alert("Policy Start Date should not be less than Fees Paid Date");
-                PolicyStartDate.focus();
-                return false;
-            }
-
-            if (Date.parse(PolicyStartDate.value) <= Date.parse(CurrentPolicyEndDate.value)) {
-                alert("Policy Start Date should  be greater than Current Policy End Date");
-                PolicyStartDate.focus();
-                return false;
-            }
-
-            if (PolicyValidityPeriod.selectedIndex == 0) {
-                alert("Please select Policy Validity Period");
-                PolicyValidityPeriod.focus();
-                return false;
-            }
-
-            //            if (!RequiredValidation(PolicyEndDate, "Policy End Date Cannot be Blank"))
-            //                return false;
-
-            //            if (!isValidDate(PolicyEndDate.value)) {
-            //                alert("Enter Valid Policy End Date");
-            //                PolicyEndDate.focus();
-            //                return false;
-            //            }
-
         }
 
-        function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) == '') {
+        if (!RequiredValidation(district, "District Cannot be Blank"))
+            return false;
+
+
+        if (document.getElementById('<%= chkBoxChangeInsuranceDetails.ClientID %>').checked) {
+
+            switch (insuranceTypeDdl.selectedIndex) {
+                case 0:
+                    alert("Please select Insurance Type");
+                    insuranceTypeDdl.focus();
+                    return false;
+            }
+
+            switch (insuranceAgencyDdl.selectedIndex) {
+                case 0:
+                    alert("Please select Insurance Agency");
+                    insuranceAgencyDdl.focus();
+                    return false;
+            }
+        } else {
+            if (!RequiredValidation(insuranceType, "Insurance Type Cannot be Blank"))
+                return false;
+            if (!RequiredValidation(insuranceAgency, "Insurance Agency Cannot be Blank"))
+                return false;
+        }
+
+        if (!RequiredValidation(insurancePolicyNo, "Insurance Policy Number Cannot be Blank"))
+            return false;
+
+        if (!RequiredValidation(currentPolicyEndDate, "Current Policy End Date Cannot be Blank"))
+            return false;
+
+        if (!isValidDate(currentPolicyEndDate.value)) {
+            alert("Enter Valid Current Policy End Date");
+            currentPolicyEndDate.focus();
+            return false;
+        }
+
+        if (!RequiredValidation(receiptNumber, "Receipt Number Cannot be Blank"))
+            return false;
+
+        if (!RequiredValidation(feesPaid, "Fees Paid Cannot be Blank"))
+            return false;
+
+        if (!RequiredValidation(feesPaidDate, "Fees Paid Date Cannot be Blank"))
+            return false;
+
+        if (!isValidDate(feesPaidDate.value)) {
+            alert("Enter Valid Fees Paid Date");
+            feesPaidDate.focus();
+            return false;
+        }
+
+        if (Date.parse(feesPaidDate.value) > Date.parse(now)) {
+            alert("Fees Paid Date should not be greater than Current Date");
+            policyStartDate.focus();
+            return false;
+        }
+
+        if (!RequiredValidation(policyStartDate, "Policy Start Date Cannot be Blank"))
+            return false;
+
+        if (!isValidDate(policyStartDate.value)) {
+            alert("Enter Valid Policy Start Date");
+            policyStartDate.focus();
+            return false;
+        }
+
+        if (Date.parse(policyStartDate.value) > Date.parse(now)) {
+            alert("Policy Start Date should not be greater than Current Date");
+            policyStartDate.focus();
+            return false;
+        }
+
+        if (Date.parse(policyStartDate.value) < Date.parse(feesPaidDate.value)) {
+            alert("Policy Start Date should not be less than Fees Paid Date");
+            policyStartDate.focus();
+            return false;
+        }
+
+        if (Date.parse(policyStartDate.value) <= Date.parse(currentPolicyEndDate.value)) {
+            alert("Policy Start Date should  be greater than Current Policy End Date");
+            policyStartDate.focus();
+            return false;
+        }
+
+        switch (policyValidityPeriod.selectedIndex) {
+            case 0:
+                alert("Please select Policy Validity Period");
+                policyValidityPeriod.focus();
+                return false;
+        }
+        return true;
+    }
+
+    function RequiredValidation(ctrl, msg) {
+        switch (trim(ctrl.value)) {
+            case '':
                 alert(msg);
                 ctrl.focus();
                 return false;
-            }
-            else
+            default:
                 return true;
         }
+    }
 
 
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
+    function trim(value) {
+        value = value.replace(/^\s+/, '');
+        value = value.replace(/\s+$/, '');
+        return value;
 
-        }
+    }
 
+    function isDecimalNumberKey(event) {
+        var charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
+            var txtBox = document.getElementById(event.srcElement.id);
+            return txtBox.value.indexOf('.') === -1;
+        } else return true;
+    }
 
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode
-            //debugger;
-            if (charCode == 190 || charCode == 46) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                if (txtBox.value.indexOf('.') == -1)
-                    return true;
-                else
-                    return false;
-            }
-            else if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            else
-                return true;
-        }
+    function isValidDate(subject) {
+        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
+    }
 
-        function isValidDate(subject) {
-            if (subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function alphanumeric_only(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 48 && keycode <= 57) ||
+            (keycode >= 65 && keycode <= 90) ||
+            (keycode >= 97 && keycode <= 122);
+    }
 
-        function alpha_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
+    function alpha_only(e) {
+        var keycode;
+        if (window.event || event || e) keycode = window.event.keyCode;
+        else return true;
+        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
+    }
 
     </script>
-
-    <%--<div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7; border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-   
+
         <ContentTemplate>
             <div class="dropdown">
                 <table style="width: 103%" cellpadding="2" cellspacing="2" align="right">
@@ -349,7 +222,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtDistrict" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                         </td>
                                         <td rowspan="2">
                                             <asp:CheckBox ID="chkBoxChangeInsuranceDetails" runat="server" AutoPostBack="True"
@@ -363,7 +237,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtInsuranceType" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                             <asp:DropDownList ID="ddlInsuranceType" class="text1" runat="server" OnSelectedIndexChanged="ddlInsuranceType_SelectedIndexChanged"
                                                 Visible="False" Width="150px">
                                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
@@ -376,7 +251,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtInsuranceAgency" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                             <asp:DropDownList ID="ddlInsuranceAgency" class="text1" runat="server" OnSelectedIndexChanged="ddlInsuranceAgency_SelectedIndexChanged"
                                                 Visible="False" Width="150px">
                                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
@@ -390,7 +266,8 @@
                                         <td align="left">
                                             <asp:TextBox ID="txtInsurancePolicyNo" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
                                                 Width="145px" onkeypress="return alphanumeric_only(event);" onpaste="return false;"
-                                                MaxLength="20"></asp:TextBox>
+                                                MaxLength="20">
+                                            </asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -399,7 +276,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtCurrentPolicyEndDate" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -418,7 +296,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtFeesPaid" runat="server" class="text1" MaxLength="10" onkeypress="return isDecimalNumberKey(event);"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -478,7 +357,8 @@
                                         </td>
                                         <td align="left">
                                             <asp:TextBox ID="txtPolicyEndDate" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                                Width="145px"></asp:TextBox>
+                                                Width="145px">
+                                            </asp:TextBox>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -503,8 +383,6 @@
                                     </tr>
                                 </table>
                             </asp:Panel>
-
-                            <%-- </fieldset>--%>
                         </td>
                     </tr>
                     <tr>
@@ -516,4 +394,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

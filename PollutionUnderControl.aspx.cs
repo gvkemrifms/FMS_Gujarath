@@ -46,10 +46,6 @@ public partial class PollutionUnderControl : Page
                 gvPollutionUnderControl.Visible = true;
                 gvPollutionUnderControl.Columns[6].Visible = true;
             }
-
-            if (p.Approve)
-            {
-            }
         }
     }
 

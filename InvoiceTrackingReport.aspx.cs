@@ -4,13 +4,13 @@ using System.Web.UI;
 public partial class InvoiceTrackingReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             ddlbillno.Enabled = false;
             Bindvehiclesdropdown();
-            // withoutdist();
         }
     }
 
@@ -29,9 +29,7 @@ public partial class InvoiceTrackingReport : Page
     protected void ddlvehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlvehicle.SelectedIndex <= 0)
-        {
             ddlbillno.Enabled = false;
-        }
         else
         {
             ddlbillno.Enabled = true;
@@ -50,7 +48,7 @@ public partial class InvoiceTrackingReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {

@@ -125,13 +125,11 @@ public partial class TyreRequisition : System.Web.UI.Page
                 dtAddRequisition.Rows.Add(dr);
             }
         }
+
         if (chk > 0)
-        {
             Show("Please Fill The Remarks");
-        }
         else
         {
-
             switch (dtAddRequisition.Rows.Count)
             {
                 case 0:

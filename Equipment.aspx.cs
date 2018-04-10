@@ -15,17 +15,12 @@ public partial class Equipment : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             BtnSave.Attributes.Add("onclick", "return validation()");
-            DataSet ds = _distvehmapp.GetVehicles();
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber","VehicleID", ddlistVehicleNumber);
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlistVehicleNumber);
             var numbers = new List<int> {1, 2, 3, 4, 5, 6};
-            foreach (var number in numbers)
-            {
-                BindGrid(number);
-            }
+            foreach (var number in numbers) BindGrid(number);
         }
     }
 
@@ -61,11 +56,9 @@ public partial class Equipment : Page
         }
     }
 
-
     protected void BtnSave_Click(object sender, EventArgs e)
     {
         var equipmentArray = new ArrayList();
-
         foreach (GridViewRow row in grdviewMedicalEqupment.Rows)
         {
             if (!((CheckBox) row.FindControl("chkMedicalEquipment")).Checked) continue;
@@ -109,15 +102,11 @@ public partial class Equipment : Page
         }
 
         if (equipmentArray.Count <= 0)
-        {
             Show("Please Select The Equipments");
-        }
         else
         {
             ObjFleetMaster.IDeleteVehicleEquipmentMapping(int.Parse(ddlistVehicleNumber.SelectedItem.Value));
-
             foreach (string equipmentArrayId in equipmentArray) ObjFleetMaster.IInsertVehicleEquipmentMapping(int.Parse(equipmentArrayId), int.Parse(ddlistVehicleNumber.SelectedItem.Value));
-
             Show("Vehicle Mapped to Equipment Successfully");
             Clearcontrols();
         }
@@ -137,71 +126,54 @@ public partial class Equipment : Page
         }
 
         var mapping = new ArrayList();
-
         var ds = ObjFleetMaster.GetSelectAllVehicleEquipmentByVehicleId(Convert.ToInt32(ddlistVehicleNumber.SelectedItem.Value));
-
         foreach (DataRow dr in ds.Tables[0].Rows) mapping.Add(dr[1].ToString());
-
         foreach (GridViewRow row in grdviewMedicalEqupment.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkMedicalEquipment");
-
             var lblMedicalEquipmentName = (Label) row.FindControl("LblMedicalEquipmentId");
-
             chk.Checked = mapping.Contains(lblMedicalEquipmentName.Text);
         }
-
 
         foreach (GridViewRow row in grdviewMedicalDisposables.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkMedicalDisposables");
-
             var lblDisposableName = (Label) row.FindControl("LblDisposableId");
-
             chk.Checked = mapping.Contains(lblDisposableName.Text);
         }
 
         foreach (GridViewRow row in grdviewExtricationTools.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkExtricationTools");
-
             var lblExtricationName = (Label) row.FindControl("LblExtricationId");
-
             chk.Checked = mapping.Contains(lblExtricationName.Text);
         }
 
         foreach (GridViewRow row in grdviewCOmmunicationTechnology.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkCommunicationTechnology");
-
             var lblCommunicationName = (Label) row.FindControl("LblCommunicationId");
-
             chk.Checked = mapping.Contains(lblCommunicationName.Text);
         }
 
         foreach (GridViewRow row in grdviewMedicines.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkMedicines");
-
             var lblMedicineId = (Label) row.FindControl("LblMedicineId");
-
             chk.Checked = mapping.Contains(lblMedicineId.Text);
         }
 
         foreach (GridViewRow row in grdviewNoMedicalSupplies.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkNoMedicalSupplies");
-
             var lblNoMedicalId = (Label) row.FindControl("LblNoMedicalId");
-
             chk.Checked = mapping.Contains(lblNoMedicalId.Text);
         }
     }
 
     public void Clearcontrols()
     {
-        ddlistVehicleNumber.SelectedIndex = 0;
-
+        if (ddlistVehicleNumber != null) ddlistVehicleNumber.SelectedIndex = 0;
         foreach (GridViewRow row in grdviewMedicalEqupment.Rows)
         {
             var chk = (CheckBox) row.FindControl("chkMedicalEquipment");

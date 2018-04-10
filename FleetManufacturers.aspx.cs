@@ -9,12 +9,12 @@ public partial class FleetManufacturers : Page
 {
     public IFleetMaster ObjFmsMan = new FMSFleetMaster();
     readonly Helper _helper = new Helper();
+
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             grvManufacturerDetails.Columns[0].Visible = false;
@@ -55,10 +55,6 @@ public partial class FleetManufacturers : Page
         {
             grvManufacturerDetails.Visible = true;
             grvManufacturerDetails.Columns[5].Visible = true;
-        }
-
-        if (p.Approve)
-        {
         }
     }
 
@@ -138,9 +134,6 @@ public partial class FleetManufacturers : Page
 
     protected void ddlFleetManufacturerDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlFleetManufacturerDistrict.SelectedIndex == 0)
-        {
-        }
     }
 
     #endregion
@@ -153,84 +146,86 @@ public partial class FleetManufacturers : Page
 
     protected void btnManufacturerSave_Click(object sender, EventArgs e)
     {
-        if (btnManufacturerSave.Text == "Save")
+        switch (btnManufacturerSave.Text)
         {
-            var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
+            case "Save":
+            {
+                var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
+                if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "'").Length <= 0)
+                {
+                    var mfname = txtManufacturerName.Text;
+                    var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
+                    var mfmodel = txtManufacturerModel.Text;
+                    var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
+                    var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
+                    var mfmandal = 0;
+                    var mfcity = 0;
+                    var mfaddress = txtManufacturerAddress.Text;
+                    var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
+                    var mfcontper = txtManufacturerContactPerson.Text;
+                    var mfmail = txtManufacturerEmailId.Text;
+                    var mftin = Convert.ToInt64(txtManufacturerTin.Text);
+                    var mfern = Convert.ToInt64(txtManufacturerErn.Text);
+                    var mfstatus = 1;
+                    var mfinactby = Convert.ToString(Session["User_Id"]);
+                    var mfinactdate = DateTime.Today;
+                    var mfcreatedate = DateTime.Today;
+                    var mfcreateby = Convert.ToString(Session["User_Id"]);
+                    var mfupdtdate = DateTime.Today;
+                    var mfupdateby = Convert.ToString(Session["User_Id"]);
+                    ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Manufacturer Details added successfully");
+                            FleetManufacturerDetailsReset();
+                            break;
+                        default:
+                            Show("This Manufacturer details already exists");
+                            break;
+                    }
+                }
+                else
+                    Show("Manufacturer Name Already Exists");
 
-            if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "'").Length <= 0)
+                break;
+            }
+            default:
             {
-                var mfname = txtManufacturerName.Text;
-                var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
-                var mfmodel = txtManufacturerModel.Text;
-                var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
-                var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
-                var mfmandal = 0;
-                var mfcity = 0;
-                var mfaddress = txtManufacturerAddress.Text;
-                var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
-                var mfcontper = txtManufacturerContactPerson.Text;
-                var mfmail = txtManufacturerEmailId.Text;
-                var mftin = Convert.ToInt64(txtManufacturerTin.Text);
-                var mfern = Convert.ToInt64(txtManufacturerErn.Text);
-                var mfstatus = 1;
-                var mfinactby = Convert.ToString(Session["User_Id"]);
-                var mfinactdate = DateTime.Today;
-                var mfcreatedate = DateTime.Today;
-                var mfcreateby = Convert.ToString(Session["User_Id"]);
-                var mfupdtdate = DateTime.Today;
-                var mfupdateby = Convert.ToString(Session["User_Id"]);
-                ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
-                switch (ds.Tables.Count)
+                var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
+                if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "' And FleetManufacturer_Id<>'" + hidManId.Value + "'").Length <= 0)
                 {
-                    case 0:
-                        Show("Manufacturer Details added successfully");
-                        FleetManufacturerDetailsReset();
-                        break;
-                    default:
-                        Show("This Manufacturer details already exists");
-                        break;
+                    int mfId = Convert.ToInt16(hidManId.Value);
+                    var mfname = txtManufacturerName.Text;
+                    var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
+                    var mfmodel = txtManufacturerModel.Text;
+                    var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
+                    var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
+                    var mfmandal = 0;
+                    var mfcity = 0;
+                    var mfaddress = txtManufacturerAddress.Text;
+                    var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
+                    var mfcontper = txtManufacturerContactPerson.Text;
+                    var mfmail = txtManufacturerEmailId.Text;
+                    var mftin = Convert.ToInt64(txtManufacturerTin.Text);
+                    var mfern = Convert.ToInt64(txtManufacturerErn.Text);
+                    //UpdateManufacturerDetails interface object
+                    ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Manufacturer Details Updated successfully");
+                            FleetManufacturerDetailsReset();
+                            break;
+                        default:
+                            Show("This Manufacturer details already exists ");
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                Show("Manufacturer Name Already Exists");
-            }
-        }
-        else
-        {
-            var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
-            if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "' And FleetManufacturer_Id<>'" + hidManId.Value + "'").Length <= 0)
-            {
-                int mfId = Convert.ToInt16(hidManId.Value);
-                var mfname = txtManufacturerName.Text;
-                var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
-                var mfmodel = txtManufacturerModel.Text;
-                var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
-                var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
-                var mfmandal = 0;
-                var mfcity = 0;
-                var mfaddress = txtManufacturerAddress.Text;
-                var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
-                var mfcontper = txtManufacturerContactPerson.Text;
-                var mfmail = txtManufacturerEmailId.Text;
-                var mftin = Convert.ToInt64(txtManufacturerTin.Text);
-                var mfern = Convert.ToInt64(txtManufacturerErn.Text);
-                //UpdateManufacturerDetails interface object
-                ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
-                switch (ds.Tables.Count)
-                {
-                    case 0:
-                        Show("Manufacturer Details Updated successfully");
-                        FleetManufacturerDetailsReset();
-                        break;
-                    default:
-                        Show("This Manufacturer details already exists ");
-                        break;
-                }
-            }
-            else
-            {
-                Show("Manufacturer Name Already Exists");
+                else
+                    Show("Manufacturer Name Already Exists");
+
+                break;
             }
         }
 
@@ -262,7 +257,6 @@ public partial class FleetManufacturers : Page
         else
         {
             var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
-            //Page.RegisterStartupScript("Success", strScript1);
             ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
         }
     }

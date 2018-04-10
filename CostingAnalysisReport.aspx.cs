@@ -10,7 +10,6 @@ public partial class CostingAnalysisReport : Page
         {
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
-            // withoutdist();
         }
     }
     private void BindDistrictdropdown()
@@ -21,9 +20,7 @@ public partial class CostingAnalysisReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
-        {
             ddlvehicle.Enabled = false;
-        }
         else
         {
             ddlvehicle.Enabled = true;
@@ -67,7 +64,5 @@ public partial class CostingAnalysisReport : Page
     }
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 }

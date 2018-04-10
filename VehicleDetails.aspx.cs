@@ -37,9 +37,7 @@ public partial class VehicleDetails : Page
                 break;
             case 3:
                 if (txtVehicleNumber.Text != "")
-                {
                     Show("Vehicle Number is already present");
-                }
                 else
                 {
                     ret = _vehdet.InsVehicleDetails();

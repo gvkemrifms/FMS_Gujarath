@@ -16,7 +16,6 @@ public partial class FabricatedVehicleDetails : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
-
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
@@ -27,10 +26,8 @@ public partial class FabricatedVehicleDetails : Page
             GetTrNo();
             GetFabricatorName();
             ViewState["Add"] = 0;
-
             pnlFabricatedVehicleDetails.Visible = false;
             gvFabricatedVehicleDetails.Visible = false;
-
             if (p.View)
             {
                 gvFabricatedVehicleDetails.Visible = true;
@@ -52,10 +49,6 @@ public partial class FabricatedVehicleDetails : Page
                 gvFabricatedVehicleDetails.Visible = true;
                 gvFabricatedVehicleDetails.Columns[6].Visible = true;
                 gvFabricatedVehicleDetails.Columns[5].Visible = true;
-            }
-
-            if (p.Approve)
-            {
             }
         }
     }
@@ -85,7 +78,6 @@ public partial class FabricatedVehicleDetails : Page
         try
         {
             if (ViewState["FabricatedVehicleDetID"] != null) _fabricatedvehicledet.FabricatedVehicleDetID = int.Parse(ViewState["FabricatedVehicleDetID"].ToString());
-
             _fabricatedvehicledet.FabricatorName = ddlFabricatorName.SelectedItem.Value;
             _fabricatedvehicledet.InvoiceNo = txtInvoiceNo.Text;
             _fabricatedvehicledet.InvoiceDate = DateTime.Parse(txtInvoiceDate.Text);
@@ -94,13 +86,9 @@ public partial class FabricatedVehicleDetails : Page
             _fabricatedvehicledet.FabricationCompletionDate = DateTime.Parse(txtFabricationCompDate.Text);
             _fabricatedvehicledet.FVDInspectedBy = txtInspecetedBy.Text;
             _fabricatedvehicledet.FVDInspectedDate = DateTime.Parse(txtInspectionDate.Text);
-
             var valfabvel = _fabricatedvehicledet.ValidateFabricatedVehicleDet();
-
             if (valfabvel.Tables[0].Rows.Count > 0)
-            {
                 Show("Data is already present for this vehicle");
-            }
             else
             {
                 switch (btSave.Text)
@@ -115,15 +103,12 @@ public partial class FabricatedVehicleDetails : Page
                         btSave.Text = "Save";
                         ddlTRNo.Visible = true;
                         txtTrNo.Visible = false;
-                        if (int.Parse(ViewState["Add"].ToString()) == 0)
-                            pnlFabricatedVehicleDetails.Visible = false;
+                        if (int.Parse(ViewState["Add"].ToString()) == 0) pnlFabricatedVehicleDetails.Visible = false;
                         break;
                 }
 
                 if (ViewState["FabricatedVehicleDetID"] == null)
-                {
                     Show("Record Inserted Successfully");
-                }
                 else
                 {
                     Show("Record Updated Successfully");
@@ -162,29 +147,8 @@ public partial class FabricatedVehicleDetails : Page
     protected void gridView_Sorting(object sender, GridViewSortEventArgs e)
     {
         var dataTable = gvFabricatedVehicleDetails.DataSource as DataTable;
-
         if (dataTable == null) return;
-        var dataView = new DataView(dataTable) {Sort = e.SortExpression + " " + ConvertSortDirectionToSql(e.SortDirection)};
-
         GetFabricatedVehicleDetails();
-    }
-
-    private string ConvertSortDirectionToSql(SortDirection sortDirection)
-    {
-        var newSortDirection = string.Empty;
-
-        switch (sortDirection)
-        {
-            case SortDirection.Ascending:
-                newSortDirection = "ASC";
-                break;
-
-            case SortDirection.Descending:
-                newSortDirection = "DESC";
-                break;
-        }
-
-        return newSortDirection;
     }
 
     protected void ClearControls()

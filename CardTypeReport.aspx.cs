@@ -3,7 +3,7 @@ using System.Web.UI;
 
 public partial class CardTypeReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -15,7 +15,7 @@ public partial class CardTypeReport : Page
     }
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
         _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,8 +47,6 @@ public partial class CardTypeReport : Page
         try
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReports_GetCardType", null, null, ddldistrict, ddlstation, null, null, "@DistrictID", "@BunkID", null, null, null, GrdcardData);
-
-
         }
         catch (Exception)
         {

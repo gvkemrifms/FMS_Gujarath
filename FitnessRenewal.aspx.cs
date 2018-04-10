@@ -46,10 +46,6 @@ public partial class FitnessRenewal : Page
                 gvFitnessRenewal.Visible = true;
                 gvFitnessRenewal.Columns[7].Visible = true;
             }
-
-            if (p.Approve)
-            {
-            }
         }
     }
 
@@ -69,7 +65,6 @@ public partial class FitnessRenewal : Page
     protected void btSave_Click(object sender, EventArgs e)
     {
         if (ViewState["FitnessRenewalID"] != null) _fitnessren.FitnessRenewalID = int.Parse(ViewState["FitnessRenewalID"].ToString());
-
         _fitnessren.FRValidityStartDate = DateTime.Parse(txtFitnessValidityStartDate.Text);
         _fitnessren.FRValidityPeriod = ddlFitnessValidityPeriod.SelectedItem.Value;
         _fitnessren.FRValidityEndDate = DateTime.Parse(txtFitnessValidityEndDate.Text);

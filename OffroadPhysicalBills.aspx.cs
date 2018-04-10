@@ -124,9 +124,7 @@ public partial class OffroadPhysicalBills : Page
         _obj.VenName = HiddenField1.Value;
         _obj.BillDetailsID = ddlBillNo.SelectedValue;
         if (_obj.ReceiptDate < _obj.OffRoadDate)
-        {
             Show("Receipt date cannot be less than down time");
-        }
         else
         {
             var x = _obj.InsertOffroadPhysicalBills();
@@ -215,9 +213,7 @@ public partial class OffroadPhysicalBills : Page
         _obj.CityId = Convert.ToInt32(lblBreakdwn.Text);
         var datedown = DateTime.Parse(txtDownTime.Text);
         if (_obj.ReceiptDate < datedown)
-        {
             Show("Receipt date cannot be less than down time");
-        }
         else
         {
             var i = _obj.UpdateOffroadPhysicalBills();

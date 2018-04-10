@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class ZonewiseReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) BindDistrictdropdown();
@@ -24,19 +25,17 @@ public partial class ZonewiseReport : Page
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
-            // Response.Write(ex.Message.ToString());
+            // 
         }
     }
 

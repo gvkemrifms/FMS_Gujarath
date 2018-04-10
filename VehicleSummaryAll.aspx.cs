@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class VehicleSummaryAll : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -24,11 +25,11 @@ public partial class VehicleSummaryAll : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryAll.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryAll.xls");
         }
         catch
         {
-            // Response.Write(ex.Message.ToString());
+            // 
         }
     }
 }

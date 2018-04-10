@@ -28,9 +28,7 @@ public partial class AttachDocuments : Page
         {
             if (!Directory.Exists(Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text)) Directory.CreateDirectory(Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text);
             if (fileAttachmentPurpose.PostedFile == null)
-            {
                 Show("Please select a file to upload.");
-            }
             else
             {
                 var filename = Path.GetFileName(fileAttachmentPurpose.PostedFile.FileName);
@@ -38,9 +36,7 @@ public partial class AttachDocuments : Page
                 _attachmentForVehicle.VehicleID = int.Parse(ddlistVehicleNumber.SelectedItem.Value);
                 _attachmentForVehicle.AttachmentPurposeFile = filename;
                 if (_attachmentForVehicle.CheckAttachmentFileExistByVehicleId())
-                {
                     Show("File Already been Uploaded for the existing Vehicle .");
-                }
                 else
                 {
                     var saveLocation = Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text + "\\" + filename.Split('.')[0] + "_" + DateTime.Now.ToString("ddMMyyhhmmss") + "." + filename.Split('.')[1];

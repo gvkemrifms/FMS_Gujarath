@@ -12,7 +12,6 @@ public partial class InsuranceAgencies : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
-
         if (!IsPostBack)
         {
             grvInsuranceAgencyDetails.Columns[0].Visible = false;
@@ -68,7 +67,6 @@ public partial class InsuranceAgencies : Page
                     Show("Insurance Agency Already Exist");
                 else
                     result = ObjInsAgency.IInsertInsuranceAgency(txtInsuranceAgency.Text, txtAddress.Text, txtContactPerson.Text, Convert.ToInt64(txtContactNo.Text));
-
                 if (result != 0)
                 {
                     Show("Insurance agency added successfully");
@@ -90,9 +88,7 @@ public partial class InsuranceAgencies : Page
                     InsuranceAgencyDetailsReset();
                 }
                 else
-                {
                     Show("This insurance Agency  already exists");
-                }
 
                 break;
         }

@@ -96,9 +96,7 @@ public partial class VasOffroadFleetManager : Page
             txtrejectReason.Text = "";
         }
         else
-        {
             Show("Rejection Declined");
-        }
     }
 
     protected void btnDoWork_Click(object sender, EventArgs e)

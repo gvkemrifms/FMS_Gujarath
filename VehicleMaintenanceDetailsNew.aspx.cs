@@ -54,18 +54,10 @@ public partial class VehicleMaintenanceDetailsNew : Page
         var hour = Convert.ToInt32(timenow[1].Split(':')[0]);
         var minute = Convert.ToInt32(timenow[1].Split(':')[1]);
         if (timenow[2] != "PM")
-        {
             ddlUpHour.Items.FindByValue(timenow[1].Split(':')[0]).Selected = hour < 10;
-        }
         else
         {
-            switch (hour)
-            {
-                case 12:
-                    hour = 0;
-                    break;
-            }
-
+            if (hour == 12) hour = 0;
             hour = hour + 12;
             ddlUpHour.Items.FindByValue(hour.ToString()).Selected = true;
         }
@@ -211,9 +203,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
                     _fmsVas.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
                     var insres = _fmsVas.InsertOffRoadVehcileMaintenance();
                     if (Convert.ToString(insres.Tables[0].Rows[0]["Result"].ToString()) != string.Empty)
-                    {
                         Show(Convert.ToString(insres.Tables[0].Rows[0]["Result"]));
-                    }
                     else
                     {
                         Show("Records Inserted Successfully");
@@ -229,9 +219,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
                     _fmsVas.OffRoadId = Convert.ToInt32(ViewState["OffRoadId"]);
                     var insres = _fmsVas.UpdateOffRoadVehcileMaintenance();
                     if (Convert.ToString(insres.Tables[0].Rows[0]["Result"].ToString()) != string.Empty)
-                    {
                         Show(Convert.ToString(insres.Tables[0].Rows[0]["Result"]));
-                    }
                     else
                     {
                         Show("Records Updated Successfully");
@@ -418,12 +406,10 @@ public partial class VehicleMaintenanceDetailsNew : Page
         dt.Columns.Add(new DataColumn("ColSpItemDescription", typeof(string)));
         dt.Columns.Add(new DataColumn("ColSpQuantity", typeof(string)));
         dt.Columns.Add(new DataColumn("Column3", typeof(string)));
-
         //Add a Dummy Data on Initial Load
         var dr = dt.NewRow();
         dr["RowNumber"] = 1;
         dt.Rows.Add(dr);
-
         //Store the DataTable in ViewState
         ViewState["CurrentTable"] = dt;
         //Bind the DataTable to the Grid
@@ -502,9 +488,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             ////AddRowToGridSummary();
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataSp();
     }
@@ -692,9 +676,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             ////AddRowToGridSummary();
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataLubri();
     }
@@ -999,9 +981,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             }
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataLabour();
     }
@@ -1252,9 +1232,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             //SetInitialRowSP();
         }
         else
-        {
             SetInitialRowSp();
-        }
 
         if (chkbxlistBillType.Items[1].Selected)
             pnlLubricantBillDetails.Visible = true;
@@ -1275,10 +1253,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
 
             SetInitialRowLabour();
         }
-        else if (chkbxlistBillType.Items[2].Selected && !pnlLabourBillDetails.Visible)
-        {
-            pnlLabourBillDetails.Visible = true;
-        }
+        else if (chkbxlistBillType.Items[2].Selected && !pnlLabourBillDetails.Visible) pnlLabourBillDetails.Visible = true;
 
         if (chkbxlistBillType.Items[0].Selected || chkbxlistBillType.Items[1].Selected || chkbxlistBillType.Items[2].Selected) pnlBillDetailsSummaryBtn.Visible = true;
         txtTotalBillAmt.Text = "";
@@ -1560,24 +1535,26 @@ public partial class VehicleMaintenanceDetailsNew : Page
     {
         try
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            switch (e.Row.RowType)
             {
-                var ddlLubricantVendorName = e.Row.FindControl("ddlLubricantVendorName") as DropDownList;
-                var ds = _vehMain.IFillVendorsMaintenance();
-                if (ds != null && ddlLubricantVendorName != null)
-                {
-                    _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlLubricantVendorName);
-                    ViewState["Vendor"] = ds;
-                }
+                case DataControlRowType.DataRow:
+                    var ddlLubricantVendorName = e.Row.FindControl("ddlLubricantVendorName") as DropDownList;
+                    var ds = _vehMain.IFillVendorsMaintenance();
+                    if (ds != null && ddlLubricantVendorName != null)
+                    {
+                        _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlLubricantVendorName);
+                        ViewState["Vendor"] = ds;
+                    }
 
-                if (_isedit)
-                    if (ds != null)
+                    if (_isedit && ds != null)
                     {
                         var dv = ds.Tables[0].DefaultView;
                         dv.RowFilter = "AgencyName='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[4]) + "'";
                         var selectedId = Convert.ToString(dv.ToTable().Rows[0]["AgencyId"]);
                         ((DropDownList) e.Row.FindControl("ddlLubricantVendorName")).SelectedValue = selectedId;
                     }
+
+                    break;
             }
         }
         catch (Exception)
@@ -1633,16 +1610,16 @@ public partial class VehicleMaintenanceDetailsNew : Page
                 var ddlLabourVendorName = e.Row.FindControl("ddlLabourVendorName") as DropDownList;
                 var ds = _vehMain.IFillVendorsMaintenance();
                 if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlLabourVendorName);
-                var dv = new DataView(ds.Tables[0]);
-                dv.RowFilter = "AgencyName='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[1]) + "'";
-                if (dv.Count > 0)
+                if (ds != null)
                 {
-                    var selectedId = Convert.ToString(dv.ToTable().Rows[0]["AgencyId"]);
-                    ((DropDownList) e.Row.FindControl("ddlLabourVendorName")).SelectedValue = selectedId;
-                }
-                else
-                {
-                    return;
+                    var dv = new DataView(ds.Tables[0]) {RowFilter = "AgencyName='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[1]) + "'"};
+                    if (dv.Count > 0)
+                    {
+                        var selectedId = Convert.ToString(dv.ToTable().Rows[0]["AgencyId"]);
+                        ((DropDownList) e.Row.FindControl("ddlLabourVendorName")).SelectedValue = selectedId;
+                    }
+                    else
+                        return;
                 }
 
                 _dslabourAggregates = new DataSet();
@@ -1658,9 +1635,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
                         ((ComboBox) e.Row.FindControl("ddlLabourAggregates")).SelectedValue = selectedId1;
                     }
                     else
-                    {
                         return;
-                    }
                 }
 
                 _dsLabourCategories = new DataSet();
@@ -1669,17 +1644,14 @@ public partial class VehicleMaintenanceDetailsNew : Page
                 if (_dsLabourCategories != null) _helper.FillDropDownHelperMethodWithDataSet(_dsLabourCategories, "Categories", "Category_Id", null, ddlLabourCategories);
                 if (_dsLabourCategories != null)
                 {
-                    var dv2 = new DataView(_dsLabourCategories.Tables[0]);
-                    dv2.RowFilter = "Categories='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[5]) + "'";
+                    var dv2 = new DataView(_dsLabourCategories.Tables[0]) {RowFilter = "Categories='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[5]) + "'"};
                     if (dv2.Count > 0)
                     {
                         var selectedId2 = Convert.ToString(dv2.ToTable().Rows[0]["Category_Id"]);
                         ((ComboBox) e.Row.FindControl("ddlLabourCategories")).SelectedValue = selectedId2;
                     }
                     else
-                    {
                         return;
-                    }
                 }
 
                 _dsLabourSubCategories = new DataSet();

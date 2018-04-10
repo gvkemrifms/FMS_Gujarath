@@ -82,7 +82,6 @@ public partial class VehicleDecommissionProposal : Page
     protected void FillVehicleDecommissionApproval()
     {
         grdViewVehicleDecomissionApproval.DataSource = _vehicleApprovalBol.FillVehicleDecommissionApproval();
-        ;
         grdViewVehicleDecomissionApproval.DataBind();
     }
 

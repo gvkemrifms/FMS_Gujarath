@@ -7,12 +7,11 @@ using GvkFMSAPP.PL;
 public partial class BaseVehicleDetails : Page
 {
     private readonly GvkFMSAPP.BLL.BaseVehicleDetails _basevehdet = new GvkFMSAPP.BLL.BaseVehicleDetails();
-    //float TotalValue;
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
-
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
@@ -21,21 +20,7 @@ public partial class BaseVehicleDetails : Page
             pnlBaseVehicleDetails.Visible = false;
             var items = new List<string> {"getEngineNumber", "getVehicleType", "getManufacturerName", "getTyreMake", "getTyreModelSize", "getBatteryMake", "getBatteryModelCapacity", "getDistrict", "getAgency", "getFuelType", "getVehicleModel", "GetInsuranceType"};
             foreach (var item in items) FillDifferentDropDowns(item);
-
-            if (p.View)
-            {
-            }
-
             if (p.Add) pnlBaseVehicleDetails.Visible = true;
-
-            if (p.Modify)
-            {
-            }
-
-            if (p.Approve)
-            {
-            }
-
             ViewState["VehNo"] = "Not Present";
         }
     }
@@ -194,18 +179,23 @@ public partial class BaseVehicleDetails : Page
                 txtVehicleCost.Text = txtVehCost.Text;
                 break;
             default:
-                if (ddlPolicyValidityPeriod.SelectedIndex != 0)
+                switch (ddlPolicyValidityPeriod.SelectedIndex)
                 {
-                    txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(ddlPolicyValidityPeriod.SelectedItem.Value)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                    txtVehicleCost.Text = txtVehCost.Text;
-                    ViewState["ValidityPeriod"] = Convert.ToString(ddlPolicyValidityPeriod.SelectedItem.Value);
-                }
-                else if (txtValiSDate.Text == "")
-                {
-                    Show("Enter the Valid Start Date");
-                    ddlPolicyValidityPeriod.SelectedIndex = 0;
-                    txtValEDate.Text = "";
-                    txtVehicleCost.Text = txtVehCost.Text;
+                    case 0:
+                        if (txtValiSDate.Text == "")
+                        {
+                            Show("Enter the Valid Start Date");
+                            ddlPolicyValidityPeriod.SelectedIndex = 0;
+                            txtValEDate.Text = "";
+                            txtVehicleCost.Text = txtVehCost.Text;
+                        }
+
+                        break;
+                    default:
+                        txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(ddlPolicyValidityPeriod.SelectedItem.Value)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                        txtVehicleCost.Text = txtVehCost.Text;
+                        ViewState["ValidityPeriod"] = Convert.ToString(ddlPolicyValidityPeriod.SelectedItem.Value);
+                        break;
                 }
 
                 break;
@@ -410,7 +400,6 @@ public partial class BaseVehicleDetails : Page
                         break;
                     }
                 }
-
             if (batteryOut > 0)
                 switch (batteryOut)
                 {

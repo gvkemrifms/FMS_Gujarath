@@ -3,19 +3,16 @@ using System.Web.UI;
 
 public partial class FuelEntryDetailsReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {
             BindDistrictdropdown();
-            // withoutdist();
-        }
     }
     private void BindDistrictdropdown()
     {
 
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
         _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
 

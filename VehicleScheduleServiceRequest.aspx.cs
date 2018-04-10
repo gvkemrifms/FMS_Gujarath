@@ -87,9 +87,7 @@ public partial class VehicleScheduleServiceRequest : Page
                     FillScheduleServiceRequestGrid(vehicleId);
                 }
                 else
-                {
                     Show("Please select scheduled plan date greater than vehicle registration date ");
-                }
 
                 break;
             case "Update":
@@ -136,9 +134,7 @@ public partial class VehicleScheduleServiceRequest : Page
         else
         {
             if (ds.Tables[0].Rows.Count <= 0)
-            {
                 pnlDisplayDetails.Visible = false;
-            }
             else
             {
                 pnlDisplayDetails.Visible = true;

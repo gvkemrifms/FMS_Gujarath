@@ -36,10 +36,8 @@ public partial class VehicleMaintenanceEdit : Page
     public void GetVehicleNumber()
     {
         _fmsVas.District = ddlDistrict.SelectedItem.Text;
-        ddlVehicleNumber.DataSource = _fmsVas.GetOffRoadVehiclesall(); // .GetVehicleNumber();
-        ddlVehicleNumber.DataTextField = "OffRoadVehicle_No";
-        ddlVehicleNumber.DataBind();
-        ddlVehicleNumber.Items.Insert(0, new ListItem("--Select--", "0"));
+        DataSet ds = (DataSet) _fmsVas.GetOffRoadVehiclesall();
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "OffRoadVehicle_No", "", ddlVehicleNumber);
     }
 
     public void GetDistrict()
@@ -394,16 +392,13 @@ public partial class VehicleMaintenanceEdit : Page
                 grdvwSPBillDetails.DataSource = dtCurrentTable;
                 grdvwSPBillDetails.DataBind();
                 pnlBillSummaryDetails.Visible = false;
-                //btnSave.Enabled = false;
                 txtTotalBillAmt.Text = "";
             }
 
             ////AddRowToGridSummary();
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataSp();
     }
@@ -414,7 +409,6 @@ public partial class VehicleMaintenanceEdit : Page
     {
         var dtspbilldet = (DataTable) ViewState["SPBillDetails"];
         var dt = new DataTable();
-
         //Define the Columns
         dt.Columns.Add(new DataColumn("RowNumber", typeof(string)));
         dt.Columns.Add(new DataColumn("ColSpVendorName", typeof(string)));
@@ -603,16 +597,13 @@ public partial class VehicleMaintenanceEdit : Page
                 grdvwLubricantBillDetails.DataSource = dtCurrentTableLubri;
                 grdvwLubricantBillDetails.DataBind();
                 pnlBillSummaryDetails.Visible = false;
-                // btnSave.Enabled = false;
                 txtTotalBillAmt.Text = "";
             }
 
             ////AddRowToGridSummary();
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataLubri();
     }
@@ -1005,9 +996,7 @@ public partial class VehicleMaintenanceEdit : Page
             //AddRowToGridSummary();
         }
         else
-        {
             Response.Write("ViewState is null");
-        }
 
         SetPreviousDataLabour();
     }
@@ -1294,10 +1283,7 @@ public partial class VehicleMaintenanceEdit : Page
         SetInitialRowLubricant();
         SetInitialRowLabour();
         if (!chkAmount.Checked)
-        //btnSave.Enabled = false;
-        {
             chkbxlistBillType.Enabled = true;
-        }
         else
         {
             foreach (ListItem item in chkbxlistBillType.Items) item.Selected = false;
@@ -1431,11 +1417,9 @@ public partial class VehicleMaintenanceEdit : Page
                 }
 
                 var txtbxlubriamt = grdvwLubricantBillDetails.Rows[i].FindControl("txtLubricantBillAmount") as TextBox;
-                if (txtbxlubriamt != null && txtbxlubriamt.Text == "")
-                {
-                    Show("Please Enter Lubricant Bill Amount");
-                    return false;
-                }
+                if (txtbxlubriamt == null || txtbxlubriamt.Text != "") continue;
+                Show("Please Enter Lubricant Bill Amount");
+                return false;
             }
 
         return true;
@@ -1502,11 +1486,9 @@ public partial class VehicleMaintenanceEdit : Page
                 }
 
                 var txtbxlabouramt = grdvwLabourBillDetails.Rows[i].FindControl("txtLabourBillAmount") as TextBox;
-                if (txtbxlabouramt != null && txtbxlabouramt.Text == "")
-                {
-                    Show("Please Enter Labour Bill Amount");
-                    return false;
-                }
+                if (txtbxlabouramt == null || txtbxlabouramt.Text != "") continue;
+                Show("Please Enter Labour Bill Amount");
+                return false;
             }
 
         return true;
@@ -1572,14 +1554,13 @@ public partial class VehicleMaintenanceEdit : Page
                     ViewState["Vendor"] = ds;
                 }
 
-                if (_isedit)
-                    if (ds != null)
-                    {
-                        var dv = ds.Tables[0].DefaultView;
-                        dv.RowFilter = "AgencyName='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[4]) + "'";
-                        var selectedId = Convert.ToString(dv.ToTable().Rows[0]["AgencyId"]);
-                        ((DropDownList) e.Row.FindControl("ddlLubricantVendorName")).SelectedValue = selectedId;
-                    }
+                if (_isedit && ds != null)
+                {
+                    var dv = ds.Tables[0].DefaultView;
+                    dv.RowFilter = "AgencyName='" + Convert.ToString(((DataRowView) e.Row.DataItem).Row.ItemArray[4]) + "'";
+                    var selectedId = Convert.ToString(dv.ToTable().Rows[0]["AgencyId"]);
+                    ((DropDownList) e.Row.FindControl("ddlLubricantVendorName")).SelectedValue = selectedId;
+                }
             }
         }
         catch (Exception)
@@ -1645,9 +1626,7 @@ public partial class VehicleMaintenanceEdit : Page
                             ((DropDownList) e.Row.FindControl("ddlLabourVendorName")).SelectedValue = selectedId;
                         }
                         else
-                        {
                             return;
-                        }
                     }
 
                     _dslabourAggregates = new DataSet();
@@ -1663,9 +1642,7 @@ public partial class VehicleMaintenanceEdit : Page
                             ((ComboBox) e.Row.FindControl("ddlLabourAggregates")).SelectedValue = selectedId1;
                         }
                         else
-                        {
                             return;
-                        }
                     }
 
                     _dsLabourCategories = new DataSet();
@@ -1681,9 +1658,7 @@ public partial class VehicleMaintenanceEdit : Page
                             ((ComboBox) e.Row.FindControl("ddlLabourCategories")).SelectedValue = selectedId2;
                         }
                         else
-                        {
                             return;
-                        }
                     }
 
                     _dsLabourSubCategories = new DataSet();

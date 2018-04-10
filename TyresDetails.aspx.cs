@@ -81,9 +81,7 @@ public partial class TyresDetails : Page
             {
                 var ds = ObjTyresDetails.IFillGrid_TyresDetails();
                 if (ds.Tables[0].Select("TyreNumber='" + txtTyreNumber.Text + "' or Tyre_Item_Code='" + txtTyreItemCode.Text + "'").Length > 0)
-                {
                     Show("Tyre Number and Tyre Item Code already exists");
-                }
                 else
                 {
                     var tyreItemCode = txtTyreItemCode.Text;
@@ -116,9 +114,7 @@ public partial class TyresDetails : Page
             {
                 var ds = ObjTyresDetails.IFillGrid_TyresDetails();
                 if (ds.Tables[0].Select("TyreNumber='" + txtTyreNumber.Text + "' And Tyre_Id<>'" + hidTyresId.Value + "'").Length > 0)
-                {
                     Show("Tyre Number and Tyre Item Code already exists");
-                }
                 else
                 {
                     int tyreId = Convert.ToInt16(hidTyresId.Value);

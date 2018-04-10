@@ -24,9 +24,7 @@ public partial class VehicleAllocation : Page
             if (Session["Role_Id"].ToString() == "120") MasterPageFile = "~/MasterERO.master";
         }
         else
-        {
             Response.Redirect("Login.aspx");
-        }
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -37,7 +35,6 @@ public partial class VehicleAllocation : Page
             btnSubmit.Attributes.Add("onclick", "return validation()");
             GetDistrict();
             FillHoursandMins();
-            //FillRequestedBy();
             if (Session["User_Name"] != null) txtReqBy.Text = Session["User_Name"].ToString();
             GetTime();
             btnSubmit.Enabled = true;

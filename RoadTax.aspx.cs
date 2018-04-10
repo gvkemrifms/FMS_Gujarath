@@ -46,10 +46,6 @@ public partial class RoadTax : Page
                 gvRoadTax.Visible = true;
                 gvRoadTax.Columns[7].Visible = true;
             }
-
-            if (p.Approve)
-            {
-            }
         }
 
         if (chkbxTaxExempted.Checked == false)
@@ -75,7 +71,6 @@ public partial class RoadTax : Page
 
     public void GetVehicleNumber()
     {
-        //roadtax.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _roadtax.GetVehicleNumber();
         if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
     }

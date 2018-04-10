@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class AgeingReportnew : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -12,20 +13,20 @@ public partial class AgeingReportnew : Page
             Withoutdist();
         }
     }
+
     private void BindDistrictdropdown()
     {
         try
         {
-
             string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-
         catch (Exception)
         {
             // ignored
         }
     }
+
     public void Withoutdist()
     {
         try
@@ -38,19 +39,18 @@ public partial class AgeingReportnew : Page
         }
     }
 
-
     public void Loaddata()
     {
         try
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
-
         }
         catch (Exception)
         {
             // ignored
         }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         switch (ddldistrict.SelectedValue)
@@ -63,25 +63,20 @@ public partial class AgeingReportnew : Page
                 break;
         }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
-
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch 
+        catch
         {
             //
         }
-
     }
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-
 }

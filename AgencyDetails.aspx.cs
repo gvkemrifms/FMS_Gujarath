@@ -9,6 +9,7 @@ public partial class AgencyDetails : Page
 {
     public IFleetMaster ObjFleetMaster = new FMSFleetMaster();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -46,7 +47,7 @@ public partial class AgencyDetails : Page
 
     private void FillStates()
     {
-       _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillStates(), "sc_lname", "sc_scid", ddlState);
+        _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillStates(), "sc_lname", "sc_scid", ddlState);
         ddlState.Items[0].Value = "0";
         ddlState.SelectedIndex = 0;
         ddlDistrict.Enabled = true;

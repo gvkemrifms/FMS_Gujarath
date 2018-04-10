@@ -50,10 +50,6 @@ public partial class PreDeliveryInspection : Page
                 gvPreDeliveryInspection.Columns[6].Visible = true;
                 gvPreDeliveryInspection.Columns[5].Visible = true;
             }
-
-            if (p.Approve)
-            {
-            }
         }
     }
 

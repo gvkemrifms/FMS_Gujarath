@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class BillsOutstandingSummaryReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) BindDistrictdropdown();
@@ -19,7 +20,7 @@ public partial class BillsOutstandingSummaryReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {
@@ -34,9 +35,7 @@ public partial class BillsOutstandingSummaryReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
-        {
             ddlvendor.Enabled = false;
-        }
         else
         {
             ddlvendor.Enabled = true;

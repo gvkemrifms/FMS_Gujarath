@@ -75,42 +75,25 @@ public partial class VehicleHistoryReport : Page
 
     protected void btnShowRpt_Click(object sender, EventArgs e)
     {
-        switch (ddlDistrict.SelectedIndex)
+        if (ddlDistrict.SelectedIndex == 0)
+            Show("Select District");
+        else if (ddlVehNumber.SelectedIndex == 0)
+            Show("Select Vehicle");
+        else
         {
-            case 0:
-                Show("Select District");
-                break;
-            default:
-                switch (ddlVehNumber.SelectedIndex)
+            if (ddlMonth.SelectedIndex == 0)
+                Show("Select Month");
+            else
+                switch (ddlYear.SelectedIndex)
                 {
                     case 0:
-                        Show("Select Vehicle");
+                        Show("Select Year");
                         break;
                     default:
-                        switch (ddlMonth.SelectedIndex)
-                        {
-                            case 0:
-                                Show("Select Month");
-                                break;
-                            default:
-                                switch (ddlYear.SelectedIndex)
-                                {
-                                    case 0:
-                                        Show("Select Year");
-                                        break;
-                                    default:
-                                        _vehreg.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-                                        GetVehicleHistoryReport();
-                                        break;
-                                }
-
-                                break;
-                        }
-
+                        _vehreg.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+                        GetVehicleHistoryReport();
                         break;
                 }
-
-                break;
         }
     }
 

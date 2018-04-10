@@ -3,7 +3,6 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.PL;
 
 public partial class PetroCardMapping : Page
 {
@@ -21,7 +20,6 @@ public partial class PetroCardMapping : Page
             FillddlReasons();
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
         }
     }
 
@@ -29,8 +27,6 @@ public partial class PetroCardMapping : Page
     {
         var ds = Objpetmap.IFillddlReasons();
         _helper.FillDropDownHelperMethodWithDataSet(ds, "Reason", "ReasonsID", ddlReason);
-        ddlReason.Items[0].Value = "0";
-        ddlReason.SelectedIndex = 0;
         ddlReason.Enabled = true;
     }
 
@@ -174,9 +170,7 @@ public partial class PetroCardMapping : Page
                     var petroCardId = Convert.ToInt32(ddlPetroCardNumber.SelectedValue);
                     var ds = Objpetmap.ICheckPetroCard(petroCardId);
                     if (ds.Tables[0].Rows.Count == 0 && ddlReason.SelectedIndex != 0)
-                    {
                         UpdMapping2(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(ddlReason.SelectedValue), Convert.ToString(txtRemarks.Text));
-                    }
                     else if (ds.Tables[0].Rows.Count == 0 && ddlReason.SelectedIndex == 0)
                     {
                         var strFmsScript = "Please Select A Reason and Deactivate";

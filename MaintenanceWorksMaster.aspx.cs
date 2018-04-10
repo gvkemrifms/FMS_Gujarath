@@ -10,6 +10,7 @@ public partial class MaintenanceWorksMaster : Page
 {
     public IFleetMaster ObjFmsMaintenanceWorksMaster = new FMSFleetMaster();
     readonly Helper _helper = new Helper();
+
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
@@ -47,10 +48,6 @@ public partial class MaintenanceWorksMaster : Page
             {
                 grvMaintenanceWorksMasterDetails.Visible = true;
                 grvMaintenanceWorksMasterDetails.Columns[4].Visible = true;
-            }
-
-            if (p.Approve)
-            {
             }
         }
     }
@@ -101,7 +98,6 @@ public partial class MaintenanceWorksMaster : Page
         else
         {
             var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
-            //Page.RegisterStartupScript("Success", strScript1);
             ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
         }
     }
@@ -209,9 +205,7 @@ public partial class MaintenanceWorksMaster : Page
             GetSubService(subservice);
         }
         else
-        {
             _helper.FillDropDownHelperMethodWithSp("P_GetCategories", "Categories", "Category_Id", ddlServiceGroupName, ddlMaintenanceManufacturerName, null, null, "@Aggre", "@VehicleManufacturer", null, null, null, null, ddlSSName);
-        }
     }
 
     #endregion
@@ -238,8 +232,8 @@ public partial class MaintenanceWorksMaster : Page
         Session["Aggregates"] = ds.Tables[0].Rows[0].ItemArray[0].ToString();
         var manufacturerName = string.Empty;
         foreach (DataRow item in ds.Tables[1].Rows)
-            if (item["Manufacturer_Id"].ToString() == ds.Tables[0].Rows[0]["Manufacturer_Id"].ToString()) manufacturerName = item["Manufacturer_Id"].ToString();
-
+            if (item["Manufacturer_Id"].ToString() == ds.Tables[0].Rows[0]["Manufacturer_Id"].ToString())
+                manufacturerName = item["Manufacturer_Id"].ToString();
         linkCat.Visible = false;
         ddlServiceGroupName.SelectedItem.Text = ds.Tables[0].Rows[0]["Aggregates"].ToString();
         GetSubService(ds.Tables[0].Rows[0]["Aggregates"].ToString());

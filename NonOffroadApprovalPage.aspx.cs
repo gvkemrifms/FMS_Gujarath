@@ -37,10 +37,8 @@ public partial class NonOffroadApprovalPage : Page
                 _objBll.SrcVehNo = ((Label) row.FindControl("lblVehicle_No")).Text;
                 _objBll.NonOffBillNo = ((Label) row.FindControl("lblBillNo")).Text;
                 _objBll.NonOffBillDate = Convert.ToDateTime(((Label) row.FindControl("lblBillDate")).Text);
-                if (((Label) row.FindControl("lblDownTime")).Text != "NA")
-                    _objBll.OffRoadDate = Convert.ToDateTime(((Label) row.FindControl("lblDownTime")).Text);
-                if (((Label) row.FindControl("lblUpTime")).Text != "NA")
-                    _objBll.UpTime = Convert.ToDateTime(((Label) row.FindControl("lblUpTime")).Text);
+                if (((Label) row.FindControl("lblDownTime")).Text != "NA") _objBll.OffRoadDate = Convert.ToDateTime(((Label) row.FindControl("lblDownTime")).Text);
+                if (((Label) row.FindControl("lblUpTime")).Text != "NA") _objBll.UpTime = Convert.ToDateTime(((Label) row.FindControl("lblUpTime")).Text);
                 _objBll.NonOffAmount = ((Label) row.FindControl("lblAmount")).Text;
                 _objBll.BaseLocId = Convert.ToInt64(((Label) row.FindControl("lblBrkDwn")).Text);
                 _objBll.VenName = ((Label) row.FindControl("lblVendorName")).Text;
@@ -68,10 +66,8 @@ public partial class NonOffroadApprovalPage : Page
                 ViewState["VehNo"] = ((Label) row.FindControl("lblVehicle_No")).Text;
                 ViewState["BillNo"] = ((Label) row.FindControl("lblBillNo")).Text;
                 ViewState["BillDate"] = ((Label) row.FindControl("lblBillDate")).Text;
-                if (((Label) row.FindControl("lblDownTime")).Text != "NA")
-                    ViewState["downtime"] = ((Label) row.FindControl("lblDownTime")).Text;
-                if (((Label) row.FindControl("lblUpTime")).Text != "NA")
-                    ViewState["Uptime"] = ((Label) row.FindControl("lblUpTime")).Text;
+                if (((Label) row.FindControl("lblDownTime")).Text != "NA") ViewState["downtime"] = ((Label) row.FindControl("lblDownTime")).Text;
+                if (((Label) row.FindControl("lblUpTime")).Text != "NA") ViewState["Uptime"] = ((Label) row.FindControl("lblUpTime")).Text;
                 ViewState["Amount"] = ((Label) row.FindControl("lblAmount")).Text;
                 ViewState["brkdwn"] = ((Label) row.FindControl("lblBrkDwn")).Text;
                 mpeReasonDetails.Show();

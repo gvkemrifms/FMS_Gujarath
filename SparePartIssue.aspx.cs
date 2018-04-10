@@ -37,14 +37,6 @@ public partial class SparePartIssue : Page
                 gvApprovedRequisition.Visible = true;
                 gvApprovedRequisition.Columns[4].Visible = true;
             }
-
-            if (p.Modify)
-            {
-            }
-
-            if (p.Approve)
-            {
-            }
         }
     }
 

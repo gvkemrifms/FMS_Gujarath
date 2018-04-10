@@ -13,9 +13,7 @@ public partial class MaintenanceAlert : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-           
-        GetVehicles();          
+        if (!IsPostBack) GetVehicles();
     }
 
     protected void FillGrid()
@@ -71,10 +69,8 @@ public partial class MaintenanceAlert : Page
 
     protected void btnSendMail_Click1(object sender, EventArgs e)
     {
-        var subject = "";
-        var mailBody = "";
-        subject = "Vehicle Maintenance Alert";
-        mailBody = CreateHtml((DataSet) ViewState["ds"]);
+        var subject = "Vehicle Maintenance Alert";
+        var mailBody = CreateHtml((DataSet) ViewState["ds"]);
         MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
     }
 

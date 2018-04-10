@@ -28,7 +28,6 @@ public partial class PetroCardIssue : Page
             txtPetroCardNumber.Attributes.Add("onkeypress", "return isNumberKey(this,event)");
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
         }
     }
 

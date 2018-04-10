@@ -10,6 +10,7 @@ public partial class FuelDetailsVerification : Page
     public IFuelManagement Objfuelver = new FuelManagement();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -19,17 +20,11 @@ public partial class FuelDetailsVerification : Page
             FillVehicles();
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
-            
         }
     }
 
     private void FillVehicles()
     {
-        if (Session["UserdistrictId"] != null)
-        {
-        }
-
         var ds = _fmsg.GetVehicleNumber();
         if (ds == null) return;
         _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);

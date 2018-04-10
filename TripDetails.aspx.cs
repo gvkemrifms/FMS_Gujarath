@@ -34,10 +34,6 @@ public partial class TripDetails : Page
 
     private void FillVehicles()
     {
-        if (Session["UserdistrictId"] != null)
-        {
-        }
-
         var ds = _fmsg.GetVehicleNumber();
         _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlAmbulanceID);
         ddlAmbulanceID.Enabled = true;

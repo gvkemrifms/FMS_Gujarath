@@ -84,7 +84,7 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null ,string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null)
+    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null ,string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null,DropDownList dropDownValue5=null)
     {
         var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
         var ds = new DataSet();
@@ -115,6 +115,7 @@ public class Helper
             if (dropDownValue2 != null) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
             if (dropDownValue3 != null) cmd.Parameters.AddWithValue(parameterValue3, dropDownValue3.SelectedItem.Value);
             if (dropDownValue4 != null) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
+            if (dropDownValue5 != null) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
             if (txtBox != null) cmd.Parameters.AddWithValue(parameterValue3, txtBox.Text + " 00:00:00");
             if (txtBox1 != null) cmd.Parameters.AddWithValue(parameterValue4, txtBox1.Text + " 23:59:59");
             var da = new SqlDataAdapter(cmd);

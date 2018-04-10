@@ -13,7 +13,6 @@ public partial class HandOverToOwner : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
@@ -84,7 +83,6 @@ public partial class HandOverToOwner : System.Web.UI.Page
         try
         {
             if (Session["UserdistrictId"] != null) _handOvertoOwner.UserdistrictID = int.Parse(Session["UserdistrictId"].ToString());
-
             var dv = _handOvertoOwner.FillTemporaryHandOverVehicle().Tables[0].DefaultView;
             grdTemporaryVehicle.DataSource = dv;
             grdTemporaryVehicle.DataBind();

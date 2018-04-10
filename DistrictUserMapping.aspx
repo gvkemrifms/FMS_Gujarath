@@ -1,25 +1,18 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Admin.DistrictUserMapping, App_Web_fbb3hqmh" %>
-
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictUserMapping.aspx.cs" Inherits="DistrictUserMapping" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <script language="javascript" type="text/javascript">
-function validation()
-{
-var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
-           
-             if (UserList.selectedIndex == 0) 
-             {
-                alert("Please select User Name");
-                UserList.focus();
-                return false;
-             }
-        
-}
-    </script>
+    <script language="javascript" type="text/javascript">
+        function validation() {
+            var userList = document.getElementById('<%= ddlUserList.ClientID %>');
 
-    <%--<div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7;
-        border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
+            switch (userList.selectedIndex) {
+            case 0:
+                alert("Please select User Name");
+                userList.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <fieldset style="padding: 10px">
@@ -44,7 +37,7 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
                                     </td>
                                     <td valign="top">
                                         <asp:DropDownList ID="ddlUserList" runat="server" OnSelectedIndexChanged="ddlUserList_SelectedIndexChanged"
-                                            AutoPostBack="True">
+                                                          AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="width: 5%">
@@ -53,8 +46,7 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
                                         <asp:Label ID="lblDistrict" runat="server" Text="District Name: "></asp:Label>
                                     </td>
                                     <td valign="top" align="left">
-                                        <%-- <asp:CheckBoxList ID="chkDistrictList" runat="server">
-                                        </asp:CheckBoxList>--%><asp:RadioButtonList ID="chkDistrictList" runat="server">
+                                        <asp:RadioButtonList ID="chkDistrictList" runat="server">
                                         </asp:RadioButtonList>
                                     </td>
                                 </tr>
@@ -63,8 +55,8 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
                     </tr>
                     <tr>
                         <td align="center" valign="top">
-                            <asp:Button ID="btnMapping" runat="server" Text="Save" OnClick="btnMapping_Click" />
-                            <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
+                            <asp:Button ID="btnMapping" runat="server" Text="Save" OnClick="btnMapping_Click"/>
+                            <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
                         </td>
                     </tr>
                 </table>

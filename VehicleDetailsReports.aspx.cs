@@ -79,17 +79,11 @@ public partial class VehicleDetailsReports : Page
                 break;
             default:
                 if (ddlVehNumber.SelectedIndex == 0)
-                {
                     Show("Select Vehicle");
-                }
                 else if (txtFrom.Text == "" || txtEnd.Text == "")
-                {
                     Show("Select Dates");
-                }
                 else if (Convert.ToDateTime(txtFrom.Text) > DateTime.Now)
-                {
                     Show(" Selected Date should less than today date ");
-                }
                 else
                 {
                     _vehreg.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);

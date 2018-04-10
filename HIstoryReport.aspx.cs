@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class HistoryReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -29,9 +30,7 @@ public partial class HistoryReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
-        {
             ddlvehicle.Enabled = false;
-        }
         else
         {
             ddlvehicle.Enabled = true;
@@ -67,7 +66,7 @@ public partial class HistoryReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {

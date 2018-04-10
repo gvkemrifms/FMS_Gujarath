@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
@@ -225,9 +224,7 @@ public partial class SparePartsRequisiton : Page
             }
 
             if (quantitySatus)
-            {
                 Show("Quantity cannnot be 0");
-            }
             else
             {
                 var updResult = ObjInventory.InsInventoryRequestion(dtSpareParts);
@@ -386,7 +383,6 @@ public partial class SparePartsRequisiton : Page
 
     public void FillGrid_RequisitionHistory(int vehicleId, int districtId, int fleetInventoryItemId)
     {
-        var cmd = new SqlCommand();
         var ds = ObjInventory.IFillFleetInventoryRequisitionHistory(vehicleId, districtId, 2);
         grvRequisitionHistory.DataSource = ds.Tables[0];
         grvRequisitionHistory.DataBind();

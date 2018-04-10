@@ -16,7 +16,6 @@ public partial class Inventory : Page
     public string CreateChart1()
     {
         var ds = _fmsgrph.GetInventoryGraph();
-
         var strXml = "";
         strXml += "<graph caption='Approved and Rejected Requisitions' YAxisName='No. of Requisitions' numDivLines='6' formatNumberScale='0' decimalPrecision='0' anchorSides='10' anchorRadius='3' anchorBorderColor='009900' rotateNames='1' animation='1' yAxisMinValue='0'>";
         strXml += "<categories>";

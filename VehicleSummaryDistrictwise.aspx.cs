@@ -41,7 +41,7 @@ public partial class VehicleSummaryDistrictwise : Page
         }
         catch
         {
-            // Response.Write(ex.Message.ToString());
+            //
         }
     }
 }

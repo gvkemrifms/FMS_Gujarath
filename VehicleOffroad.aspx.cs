@@ -20,6 +20,7 @@ public partial class VehicleOffroad : Page
     private readonly FMSGeneral _fmsgeneral = new FMSGeneral();
     private DataTable _dtBreakdown = new DataTable();
     readonly Helper _helper = new Helper();
+
     protected void Page_PreInit(object sender, EventArgs e)
     {
         if (Session["Role_Id"] == null)
@@ -39,7 +40,6 @@ public partial class VehicleOffroad : Page
         txtEMEId.Attributes.Add("onKeyPress", "javascript: return Integersonly(event);");
         txtPilotId.Attributes.Add("onKeyPress", "javascript: return Integersonly(event);");
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             divAggre.Visible = false;
@@ -67,7 +67,6 @@ public partial class VehicleOffroad : Page
         var timenow = DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ');
         txtOfftimeDate.Text = timenow[0];
         var hour = Convert.ToInt32(timenow[1].Split(':')[0]);
-        var minute = Convert.ToInt32(timenow[1].Split(':')[1]);
         if (timenow.Length <= 2)
         {
             if (hour == 12)
@@ -107,12 +106,6 @@ public partial class VehicleOffroad : Page
 
     public void Insertdata(string smsContent, string name, string mobileno)
     {
-        smsContent = smsContent.Replace("{name}", name);
-        var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
-        conn.Open();
-        var cmd = new SqlCommand {CommandType = CommandType.Text, CommandText = "insert into t_SMS(smsContent ,mobileno) values ('" + smsContent + "', '" + mobileno + "')", Connection = conn};
-        // cmd.ExecuteNonQuery();
-        conn.Close();
     }
 
     public void InsertAgent(string offroadid, string vehicleNo, string agentId)
@@ -127,7 +120,6 @@ public partial class VehicleOffroad : Page
 
     public void SendSms(string vehicleno, string breakdownid, string reason)
     {
-        var dtPenData = new DataTable();
         try
         {
             var query = "select * from m_vehicle_supervisors where VehicleNo = '" + vehicleno + "'";
@@ -296,7 +288,6 @@ public partial class VehicleOffroad : Page
                 case AddressFamily.InterNetwork:
                     return ip.ToString();
             }
-
         throw new Exception("Local IP Address Not Found!");
     }
 
@@ -307,7 +298,6 @@ public partial class VehicleOffroad : Page
             var conn = new MySqlConnection(ConfigurationManager.AppSettings["MySqlConn"]);
             conn.Open();
             var cmd = new MySqlCommand {CommandType = CommandType.StoredProcedure, CommandText = "UpdateVehicleStatus", Connection = conn};
-            //piliot_gid VARCHAR(10)
             cmd.Parameters.AddWithValue("VehicleNumber", vehicleNumber);
             cmd.Parameters.AddWithValue("offroaddate", offroaddate);
             cmd.Parameters.AddWithValue("offroadtype", offroadtype);
@@ -453,16 +443,11 @@ public partial class VehicleOffroad : Page
                 txtContactNumber.Text = "";
                 var ds = ObjInventory.GetVehicleContactNumber(ddlVehicleNumber.SelectedItem.Text, ConfigurationManager.AppSettings["StrCTIAPPS"]);
                 foreach (DataRow dr in ds.Tables[0].Rows) txtContactNumber.Text = dr["vi_VehicleContact"].ToString();
-
                 foreach (DataRow dr in ds.Tables[1].Rows) txtOdo.Text = dr["Odometer"].ToString();
-
                 break;
         }
 
         lblmsg.Visible = false;
-        if (ddlVehicleNumber.SelectedIndex != 0)
-        {
-        }
     }
 
     protected void rdbtnlstOption_SelectedIndexChanged(object sender, EventArgs e)
@@ -500,15 +485,11 @@ public partial class VehicleOffroad : Page
     {
         _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
         var dssegmentgot = _vehallobj.GetMappedSegments();
-        var dv = new DataView(dssegmentgot.Tables[0], "Sg_Segid <>" + Convert.ToInt32(Session["segmentid"]), "Sg_SName", DataViewRowState.CurrentRows);
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
                 var ddl = (DropDownList) e.Row.FindControl("DropDownList1");
-                ddl.DataSource = dv;
-                ddl.DataTextField = "Sg_SName";
-                ddl.DataValueField = "Sg_Segid";
-                ddl.DataBind();
+                _helper.FillDropDownHelperMethodWithDataSet(dssegmentgot, "Sg_SName", "Sg_Segid", ddl);
                 break;
         }
     }
@@ -547,9 +528,7 @@ public partial class VehicleOffroad : Page
         _vehallobj.SegmentId = Convert.ToInt32(Session["othersegmentid"]);
         var ds = _vehallobj.GetMandals();
         if (ds.Tables[0].Rows.Count <= 0)
-        {
             grdvothervehicle.Visible = false;
-        }
         else
         {
             pnlothervehicle.Visible = true;
@@ -628,7 +607,6 @@ public partial class VehicleOffroad : Page
 
     protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //ddlSubCategories.SelectedIndex = 0;
         txtEstCost.Text = "";
         switch (ddlCategories.SelectedIndex)
         {
@@ -680,7 +658,6 @@ public partial class VehicleOffroad : Page
         grdvwBreakdownDetails.DataSource = _dtBreakdown;
         grdvwBreakdownDetails.DataBind();
         foreach (GridViewRow item in grdvwBreakdownDetails.Rows) sum = Convert.ToDouble(item.Cells[4].Text) + sum;
-
         txtAllEstimatedCost.Text = sum.ToString(CultureInfo.InvariantCulture);
         ddlAggregates.SelectedIndex = 0;
         ddlCategories.SelectedIndex = 0;

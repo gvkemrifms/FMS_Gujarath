@@ -10,10 +10,10 @@ public partial class BatteryReceipt : Page
     public IInventory ObjFmsInvBatRecp = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             FillInventoryVehicles();
@@ -34,14 +34,6 @@ public partial class BatteryReceipt : Page
             {
                 grvBatteryDetailsForReceipt.Visible = true;
                 grvBatteryDetailsForReceipt.Columns[6].Visible = true;
-            }
-
-            if (p.Modify)
-            {
-            }
-
-            if (p.Approve)
-            {
             }
         }
     }

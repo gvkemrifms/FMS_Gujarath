@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class TyreAndBatteryDistrictWise : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -12,6 +13,7 @@ public partial class TyreAndBatteryDistrictWise : Page
             Withoutdist();
         }
     }
+
     private void BindDistrictdropdown()
     {
         try
@@ -24,31 +26,31 @@ public partial class TyreAndBatteryDistrictWise : Page
             //
         }
     }
+
     public void Withoutdist()
     {
         try
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_TyreReportAndBatteryDistrictWise", null, null, null, null, null, null, null, null, null, null, null, GrdtyreBattery);
-
-
         }
         catch
         {
             //
         }
     }
+
     public void Loaddata()
     {
         try
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_TyreReportAndBatteryDistrictWise", null, null, ddldistrict, null, null, null, "@districtID", null, null, null, null, GrdtyreBattery);
-
         }
         catch
         {
             //
         }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         switch (ddldistrict.SelectedValue)
@@ -61,18 +63,17 @@ public partial class TyreAndBatteryDistrictWise : Page
                 break;
         }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
-
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch
         {
-            // Response.Write(ex.Message.ToString());
+            //
         }
-
     }
 
     public override void VerifyRenderingInServerForm(Control control)

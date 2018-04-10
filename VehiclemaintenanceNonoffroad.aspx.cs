@@ -41,7 +41,6 @@ public partial class VehiclemaintenanceNonoffroad : Page
     public void SetInitialMaintenanceDetails()
     {
         var dt = new DataTable();
-        DataRow dr = null;
 
         //Define the Columns
         dt.Columns.Add(new DataColumn("RowNumber", typeof(string)));
@@ -56,7 +55,7 @@ public partial class VehiclemaintenanceNonoffroad : Page
         dt.Columns.Add(new DataColumn("ColQuantity", typeof(string)));
         dt.Columns.Add(new DataColumn("Column3", typeof(string)));
         //Add a Dummy Data on Initial Load
-        dr = dt.NewRow();
+        var dr = dt.NewRow();
         dr["RowNumber"] = 1;
         dt.Rows.Add(dr);
 
@@ -106,7 +105,6 @@ public partial class VehiclemaintenanceNonoffroad : Page
             default:
                 Show("Records inserted successfully");
                 SetInitialMaintenanceDetails();
-                // grdvwMaintenanceDetails.Enabled = false;
                 ddlVehicles.SelectedIndex = 0;
                 txtDistrict.Text = "";
                 txtLocation.Text = "";

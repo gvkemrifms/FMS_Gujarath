@@ -9,12 +9,12 @@ public partial class Fabricator : Page
 {
     public IFleetMaster ObjFmsFab = new FMSFleetMaster();
     readonly Helper _helper = new Helper();
+
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             grvFabricatorDetails.Columns[0].Visible = false;
@@ -31,15 +31,12 @@ public partial class Fabricator : Page
         txtFabricatorTin.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
         txtFabricatorErn.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
         txtFabricatorPanNo.Attributes.Add("onkeypress", "javascript:return  OnlyAlphaNumeric(this,event)");
-
         //Permissions
         var dsPerms = (DataSet) Session["PermissionsDS"];
         dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
-
         pnlfabricator.Visible = false;
         grvFabricatorDetails.Visible = false;
-
         if (p.View)
         {
             grvFabricatorDetails.Visible = true;
@@ -57,10 +54,6 @@ public partial class Fabricator : Page
         {
             grvFabricatorDetails.Visible = true;
             grvFabricatorDetails.Columns[7].Visible = true;
-        }
-
-        if (p.Approve)
-        {
         }
     }
 
@@ -140,9 +133,6 @@ public partial class Fabricator : Page
 
     protected void ddlFabricatorDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlFabricatorDistrict.SelectedIndex == 0)
-        {
-        }
     }
 
     #endregion
@@ -151,86 +141,87 @@ public partial class Fabricator : Page
 
     protected void btnFabricatorSave_Click(object sender, EventArgs e)
     {
-        if (btnFabricatorSave.Text == "Save")
+        switch (btnFabricatorSave.Text)
         {
-            var ds = ObjFmsFab.IFillGrid_FabricatorDetails();
-            if (ds.Tables[0].Select("FleetFabricator_Name='" + txtFabricatorName.Text + "'").Length <= 0)
+            case "Save":
             {
-                var fname = txtFabricatorName.Text;
-                var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
-                var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
-                var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
-                var fmandal = 0;
-                var fcity = 0;
-                var faddress = txtFabricatorAddress.Text;
-                var fcontno = Convert.ToInt64(txtFabricatorContactNumber.Text);
-                var fcontper = txtFabricatorContactPerson.Text;
-                var fpan = txtFabricatorPanNo.Text;
-                var femail = txtFabricatorEmailId.Text;
-                var ftin = Convert.ToInt64(txtFabricatorTin.Text);
-                var fern = Convert.ToInt64(txtFabricatorErn.Text);
-                var fstatus = 1;
-                var finactby = Convert.ToString(Session["User_Id"]);
-                var finactdate = DateTime.Today;
-                var fcreatedate = DateTime.Today;
-                var fcreateby = Convert.ToString(Session["User_Id"]);
-                var fupdtdate = DateTime.Today;
-                var fupdateby = Convert.ToString(Session["User_Id"]);
-                //InsertFabricatorDetails()
-                ds = ObjFmsFab.InsertFabricatorDetails(fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, femail, ftin, fern, fstatus, finactby, finactdate, fcreatedate, fcreateby, fupdtdate, fupdateby);
-                switch (ds.Tables.Count)
+                var ds = ObjFmsFab.IFillGrid_FabricatorDetails();
+                if (ds.Tables[0].Select("FleetFabricator_Name='" + txtFabricatorName.Text + "'").Length <= 0)
                 {
-                    case 0:
-                        Show("Fabricator Details Added successfully");
-                        FabricatorDetailsReset();
-                        break;
-                    default:
-                        Show("This Fabricator Details already exists ");
-                        break;
+                    var fname = txtFabricatorName.Text;
+                    var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
+                    var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
+                    var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
+                    var fmandal = 0;
+                    var fcity = 0;
+                    var faddress = txtFabricatorAddress.Text;
+                    var fcontno = Convert.ToInt64(txtFabricatorContactNumber.Text);
+                    var fcontper = txtFabricatorContactPerson.Text;
+                    var fpan = txtFabricatorPanNo.Text;
+                    var femail = txtFabricatorEmailId.Text;
+                    var ftin = Convert.ToInt64(txtFabricatorTin.Text);
+                    var fern = Convert.ToInt64(txtFabricatorErn.Text);
+                    var fstatus = 1;
+                    var finactby = Convert.ToString(Session["User_Id"]);
+                    var finactdate = DateTime.Today;
+                    var fcreatedate = DateTime.Today;
+                    var fcreateby = Convert.ToString(Session["User_Id"]);
+                    var fupdtdate = DateTime.Today;
+                    var fupdateby = Convert.ToString(Session["User_Id"]);
+                    //InsertFabricatorDetails()
+                    ds = ObjFmsFab.InsertFabricatorDetails(fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, femail, ftin, fern, fstatus, finactby, finactdate, fcreatedate, fcreateby, fupdtdate, fupdateby);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Fabricator Details Added successfully");
+                            FabricatorDetailsReset();
+                            break;
+                        default:
+                            Show("This Fabricator Details already exists ");
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                Show("Fabricator Name already exists");
-            }
-        }
-        else
-        {
-            var ds = ObjFmsFab.IFillGrid_FabricatorDetails();
-            if (ds.Tables[0].Select("FleetFabricator_Name='" + txtFabricatorName.Text + "' And FleetFabricator_Id<>'" + hidFabId.Value + "'").Length <= 0)
-            {
-                int fId = Convert.ToInt16(hidFabId.Value);
-                var fname = txtFabricatorName.Text;
-                ;
-                var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
-                var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
-                var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
-                var fmandal = 0;
-                var fcity = 0;
-                var faddress = txtFabricatorAddress.Text;
-                var fcontno = Convert.ToInt64(txtFabricatorContactNumber.Text);
-                var fcontper = txtFabricatorContactPerson.Text;
-                var fpan = txtFabricatorPanNo.Text;
-                var fmail = txtFabricatorEmailId.Text;
-                var ftin = Convert.ToInt64(txtFabricatorTin.Text);
-                var fern = Convert.ToInt64(txtFabricatorErn.Text);
-                //UpdateFAbricatorDetails
-                ds = ObjFmsFab.UpdateFabricatorDetails(fId, fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, fmail, ftin, fern);
-                switch (ds.Tables.Count)
-                {
-                    case 0:
-                        Show("Fabricator Details Updated successfully");
+                else
+                    Show("Fabricator Name already exists");
 
-                        FabricatorDetailsReset();
-                        break;
-                    default:
-                        Show("This Fabricator details already exists ");
-                        break;
-                }
+                break;
             }
-            else
+            default:
             {
-                Show("Fabricator Name already exists");
+                var ds = ObjFmsFab.IFillGrid_FabricatorDetails();
+                if (ds.Tables[0].Select("FleetFabricator_Name='" + txtFabricatorName.Text + "' And FleetFabricator_Id<>'" + hidFabId.Value + "'").Length <= 0)
+                {
+                    int fId = Convert.ToInt16(hidFabId.Value);
+                    var fname = txtFabricatorName.Text;
+                    var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
+                    var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
+                    var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
+                    var fmandal = 0;
+                    var fcity = 0;
+                    var faddress = txtFabricatorAddress.Text;
+                    var fcontno = Convert.ToInt64(txtFabricatorContactNumber.Text);
+                    var fcontper = txtFabricatorContactPerson.Text;
+                    var fpan = txtFabricatorPanNo.Text;
+                    var fmail = txtFabricatorEmailId.Text;
+                    var ftin = Convert.ToInt64(txtFabricatorTin.Text);
+                    var fern = Convert.ToInt64(txtFabricatorErn.Text);
+                    //UpdateFAbricatorDetails
+                    ds = ObjFmsFab.UpdateFabricatorDetails(fId, fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, fmail, ftin, fern);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Fabricator Details Updated successfully");
+                            FabricatorDetailsReset();
+                            break;
+                        default:
+                            Show("This Fabricator details already exists ");
+                            break;
+                    }
+                }
+                else
+                    Show("Fabricator Name already exists");
+
+                break;
             }
         }
 
@@ -262,7 +253,6 @@ public partial class Fabricator : Page
         else
         {
             var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
-            //Page.RegisterStartupScript("Success", strScript1);
             ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
         }
     }
@@ -309,7 +299,6 @@ public partial class Fabricator : Page
     }
 
     #endregion
-
 
     public void Show(string message)
     {

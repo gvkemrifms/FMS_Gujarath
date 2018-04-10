@@ -14,7 +14,6 @@ public partial class BatteryIssue : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             FillInventoryVehicles();
@@ -37,10 +36,6 @@ public partial class BatteryIssue : Page
             {
                 grvBatteryPendingForIssue.Visible = true;
                 grvBatteryPendingForIssue.Columns[4].Visible = true;
-            }
-
-            if (p.Approve)
-            {
             }
         }
     }

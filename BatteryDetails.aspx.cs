@@ -3,11 +3,11 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.PL;
 
 public partial class BatteryDetails : Page
 {
     public IFleetMaster ObjFmsBatDet = new FMSFleetMaster();
+
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
@@ -24,7 +24,6 @@ public partial class BatteryDetails : Page
             //Permissions
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
         }
     }
 
@@ -68,9 +67,7 @@ public partial class BatteryDetails : Page
             {
                 var ds = ObjFmsBatDet.IFillGrid_BatteryDetails();
                 if (ds.Tables[0].Select("Battery_Item_Code='" + txtBatteryItemCode.Text + "'").Length > 0)
-                {
                     Show("Battery Item Code already exists");
-                }
                 else
                 {
                     var mbatteryitemcode = txtBatteryItemCode.Text;
@@ -92,9 +89,7 @@ public partial class BatteryDetails : Page
                         FleetBatteryDetailsReset();
                     }
                     else
-                    {
                         Show("This Battery details already exists");
-                    }
                 }
 
                 break;
@@ -123,9 +118,7 @@ public partial class BatteryDetails : Page
                     }
                 }
                 else
-                {
                     Show("Battery Item Code already exists");
-                }
 
                 break;
             }

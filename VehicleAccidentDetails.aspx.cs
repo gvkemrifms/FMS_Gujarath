@@ -92,7 +92,6 @@ public partial class VehicleAccidentDetails : Page
             _vehicleAccidentDetail.DamageToAmbulance = txtDamagetoAmbulance.Text;
             _vehicleAccidentDetail.Damageto3rdPartyProperty = txtDamageto3rdPartyProperty.Text;
             _vehicleAccidentDetail.PilotName = txtPilotName.Text;
-            ;
             _vehicleAccidentDetail.DrivingLicenseNumber = txtDrivingLicenseNumber.Text;
             _vehicleAccidentDetail.ExpiryDate = DateTime.Parse(txtExpiryDate.Text);
             _vehicleAccidentDetail.EMTName = txtEmtName.Text;
@@ -112,9 +111,7 @@ public partial class VehicleAccidentDetails : Page
                 ClearControls();
             }
             else
-            {
                 Show("Error");
-            }
         }
         catch (Exception ex)
         {
@@ -182,21 +179,22 @@ public partial class VehicleAccidentDetails : Page
 
     protected void ddlistVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlistVehicleNumber.SelectedIndex != 0)
+        switch (ddlistVehicleNumber.SelectedIndex)
         {
-            var dtManufacturer = _fmsg.GetManufactureDate(Convert.ToInt32(ddlistVehicleNumber.SelectedItem.Value));
-            txtAgeofVehicle.Text = dtManufacturer.Tables[0].Rows[0]["differenc"].ToString();
-            txtKilometerRun.Text = dtManufacturer.Tables[1].Rows[0]["ODO"].ToString();
-            var dtNames = _fmsg.GetNames(ddlistVehicleNumber.SelectedItem.Text);
-            txtPilotName.Text = dtNames.Tables[0].Rows[0]["PilotName"].ToString();
-            txtEmtName.Text = dtNames.Tables[0].Rows[0]["EMTName"].ToString();
-        }
-        else
-        {
-            txtAgeofVehicle.Text = "";
-            txtKilometerRun.Text = "";
-            txtPilotName.Text = "";
-            txtEmtName.Text = "";
+            case 0:
+                txtAgeofVehicle.Text = "";
+                txtKilometerRun.Text = "";
+                txtPilotName.Text = "";
+                txtEmtName.Text = "";
+                break;
+            default:
+                var dtManufacturer = _fmsg.GetManufactureDate(Convert.ToInt32(ddlistVehicleNumber.SelectedItem.Value));
+                txtAgeofVehicle.Text = dtManufacturer.Tables[0].Rows[0]["differenc"].ToString();
+                txtKilometerRun.Text = dtManufacturer.Tables[1].Rows[0]["ODO"].ToString();
+                var dtNames = _fmsg.GetNames(ddlistVehicleNumber.SelectedItem.Text);
+                txtPilotName.Text = dtNames.Tables[0].Rows[0]["PilotName"].ToString();
+                txtEmtName.Text = dtNames.Tables[0].Rows[0]["EMTName"].ToString();
+                break;
         }
     }
 }

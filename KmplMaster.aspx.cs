@@ -80,9 +80,7 @@ public partial class KmplMaster : Page
         {
             var output = _fmsobj.UpdVehKMPL();
             if (output <= 0)
-            {
                 Show("Not Updated");
-            }
             else
             {
                 Show("Updated Succesfully");

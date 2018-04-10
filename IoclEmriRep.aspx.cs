@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 public partial class IoclEmriRep : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("login.aspx");
@@ -25,7 +26,7 @@ public partial class IoclEmriRep : Page
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        _helper.LoadExcelSpreadSheet(this,Panel4, "gvtoexcel.xls");
+        _helper.LoadExcelSpreadSheet(this, Panel4, "gvtoexcel.xls");
     }
 
     protected void btnShow_Click(object sender, EventArgs e)

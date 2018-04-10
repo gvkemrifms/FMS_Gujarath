@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class AnalysisHourwiseReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -26,8 +27,7 @@ public partial class AnalysisHourwiseReport : Page
             ddlvehicle.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID",
-                    ddlvehicle, null, null, null, "@districtID");
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle, null, null, null, "@districtID");
             }
             catch (Exception)
             {
@@ -44,7 +44,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception)
         {
@@ -61,8 +61,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisHourwise", null, null, ddldistrict,
-                ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisHourwise", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
         catch (Exception)
         {

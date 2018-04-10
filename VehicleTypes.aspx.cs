@@ -52,53 +52,56 @@ public partial class VehicleTypes : Page
 
     protected void vehicleTypeSave_Click(object sender, EventArgs e)
     {
-        if (btnvehicleTypeSave.Text == "Save")
+        switch (btnvehicleTypeSave.Text)
         {
-            var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
-            if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "'").Length > 0)
+            case "Save":
             {
-                Show("Vehicle Type already exists");
-            }
-            else
-            {
-                var vehicleType = txtVehicleType.Text;
-                var vehicleTypeDescription = txtVehicleDescription.Text;
-                ds = ObjFmsVehicleType.InsertVehicleTypes(vehicleType, vehicleTypeDescription);
-                switch (ds.Tables.Count)
+                var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
+                if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "'").Length > 0)
+                    Show("Vehicle Type already exists");
+                else
                 {
-                    case 0:
-                        Show("Vehicle Type Details added successfully");
-                        VehicleTypesReset();
-                        break;
-                    default:
-                        Show("This Vehicle Type details already exists ");
-                        break;
+                    var vehicleType = txtVehicleType.Text;
+                    var vehicleTypeDescription = txtVehicleDescription.Text;
+                    ds = ObjFmsVehicleType.InsertVehicleTypes(vehicleType, vehicleTypeDescription);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Vehicle Type Details added successfully");
+                            VehicleTypesReset();
+                            break;
+                        default:
+                            Show("This Vehicle Type details already exists ");
+                            break;
+                    }
                 }
+
+                break;
             }
-        }
-        else
-        {
-            var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
-            if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "' And VehicleType_Id<>'" + hidVehicleType.Value + "'").Length > 0)
+            default:
             {
-                Show("Vehicle Type already exists");
-            }
-            else
-            {
-                int vehicleId = Convert.ToInt16(hidVehicleType.Value);
-                var vehicleType = txtVehicleType.Text;
-                var vehicleDescription = txtVehicleDescription.Text;
-                ds = ObjFmsVehicleType.UpdateVehicleTypes(vehicleId, vehicleType, vehicleDescription);
-                switch (ds.Tables.Count)
+                var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
+                if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "' And VehicleType_Id<>'" + hidVehicleType.Value + "'").Length > 0)
+                    Show("Vehicle Type already exists");
+                else
                 {
-                    case 0:
-                        Show("Vehicle Type Details updated successfully");
-                        VehicleTypesReset();
-                        break;
-                    default:
-                        Show("This Vehicle Type details already exists ");
-                        break;
+                    int vehicleId = Convert.ToInt16(hidVehicleType.Value);
+                    var vehicleType = txtVehicleType.Text;
+                    var vehicleDescription = txtVehicleDescription.Text;
+                    ds = ObjFmsVehicleType.UpdateVehicleTypes(vehicleId, vehicleType, vehicleDescription);
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Vehicle Type Details updated successfully");
+                            VehicleTypesReset();
+                            break;
+                        default:
+                            Show("This Vehicle Type details already exists ");
+                            break;
+                    }
                 }
+
+                break;
             }
         }
 
@@ -109,9 +112,7 @@ public partial class VehicleTypes : Page
     {
         var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
         if (ds == null)
-        {
             Show("No record found");
-        }
         else
         {
             if (ds.Tables[0].Rows.Count <= 0) return;

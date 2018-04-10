@@ -10,12 +10,10 @@ public partial class NonOffRoadPhysicalBills : Page
     DataSet _dsDistricts, _dsBillNo;
     readonly GvkFMSAPP.BLL.BaseVehicleDetails _fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
     readonly GvkFMSAPP.BLL.VAS_BLL.VASGeneral _obj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null)
-        {
-            Response.Redirect("Error.aspx");
-        }
+        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
         if (!IsPostBack)
         {
             ddlVehicleno.Enabled = false;
@@ -23,8 +21,8 @@ public partial class NonOffRoadPhysicalBills : Page
             BindData();
             BindGridView();
         }
-
     }
+
     public void BindData()
     {
         _dsDistricts = new DataSet();
@@ -55,7 +53,6 @@ public partial class NonOffRoadPhysicalBills : Page
         }
     }
 
-
     protected void ddlVehicleno_SelectedIndexChanged1(object sender, EventArgs e)
     {
         switch (ddlVehicleno.SelectedIndex)
@@ -75,6 +72,7 @@ public partial class NonOffRoadPhysicalBills : Page
                 break;
         }
     }
+
     protected void btnSave_Click(object sender, EventArgs e)
     {
         _obj.District = ddlDistricts.SelectedItem.ToString();
@@ -87,7 +85,6 @@ public partial class NonOffRoadPhysicalBills : Page
         _obj.MandalId = int.Parse(lblBrkdwn.Text);
         _obj.VenName = HiddenField1.Value;
         int i = _obj.InsertNonoffroadPhysicalBills();
-
         switch (i)
         {
             case 0:
@@ -107,13 +104,15 @@ public partial class NonOffRoadPhysicalBills : Page
                 break;
         }
     }
+
     public void BindGridView()
     {
-       var ds = _obj.GetNonOffPhysicalBills();
+        var ds = _obj.GetNonOffPhysicalBills();
         ViewState["VehiclePhyBill"] = ds.Tables[0];
         gvVehiclePhysicalBillDetails.DataSource = ds.Tables[0];
         gvVehiclePhysicalBillDetails.DataBind();
     }
+
     public void Show(string message)
     {
         ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('" + message + "');", true);
@@ -129,29 +128,28 @@ public partial class NonOffRoadPhysicalBills : Page
     {
         if (e.CommandName.ToUpper() == "VEHMAINEDIT")
         {
-            GridViewRow row = (GridViewRow)((WebControl)e.CommandSource).Parent.Parent;
+            GridViewRow row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
             btnSave.Visible = false;
             btnUpdate.Visible = true;
-            DateTime dt = Convert.ToDateTime(((Label)((row.FindControl("lblReceiptDate")))).Text);
+            DateTime dt = Convert.ToDateTime(((Label) ((row.FindControl("lblReceiptDate")))).Text);
             txtReceiptDate.Text = dt.ToString("dd/MM/yyyy");
-            txtCourierName.Text = ((Label)row.FindControl("lblCourier_Name")).Text;
-            txtDocketNo.Text = ((Label)row.FindControl("lblDocketNo")).Text;
-            lblBrkdwn.Text = ((Label)row.FindControl("lblBrkDwnID")).Text;
-            DataSet dsDist = (DataSet)ViewState["dsDistricts"];
+            txtCourierName.Text = ((Label) row.FindControl("lblCourier_Name")).Text;
+            txtDocketNo.Text = ((Label) row.FindControl("lblDocketNo")).Text;
+            lblBrkdwn.Text = ((Label) row.FindControl("lblBrkDwnID")).Text;
+            DataSet dsDist = (DataSet) ViewState["dsDistricts"];
             DataView dvDistrict = dsDist.Tables[0].DefaultView;
-            dvDistrict.RowFilter = "ds_lname='" + ((Label)((row.FindControl("lblDistrict")))).Text + "'";
+            dvDistrict.RowFilter = "ds_lname='" + ((Label) ((row.FindControl("lblDistrict")))).Text + "'";
             ddlDistricts.SelectedValue = Convert.ToString(dvDistrict.ToTable().Rows[0]["ds_dsid"]);
             ddlDistricts.Enabled = false;
             ddlDistricts_SelectedIndexChanged(this, null);
-            ddlVehicleno.Items.Insert(1, new ListItem(((Label)row.FindControl("lblVehicle_No")).Text, "1"));
+            ddlVehicleno.Items.Insert(1, new ListItem(((Label) row.FindControl("lblVehicle_No")).Text, "1"));
             ddlVehicleno.SelectedIndex = 1;
-            ddlVehicleno.Enabled = false;           
+            ddlVehicleno.Enabled = false;
             ddlVehicleno_SelectedIndexChanged1(this, null);
-            ddlBillNo.Items.Insert(1, new ListItem(((Label)row.FindControl("lblBillNo")).Text, "1"));
+            ddlBillNo.Items.Insert(1, new ListItem(((Label) row.FindControl("lblBillNo")).Text, "1"));
             ddlBillNo.SelectedIndex = 1;
             ddlBillNo.Enabled = false;
-            txtBillAmount.Text = ((Label)row.FindControl("lblBillAmount")).Text;
-            
+            txtBillAmount.Text = ((Label) row.FindControl("lblBillAmount")).Text;
         }
     }
 
@@ -164,12 +162,9 @@ public partial class NonOffRoadPhysicalBills : Page
         _obj.CourierName = txtCourierName.Text;
         _obj.DocketNo = txtDocketNo.Text;
         _obj.NonOffAmount = txtBillAmount.Text;
-
         int i = _obj.UpdateNonoffroadPhysicalBills();
-
         if (i != 0)
         {
-
             Show("Records Updated successfully");
             BindGridView();
             ddlDistricts.SelectedIndex = 0;
@@ -187,9 +182,7 @@ public partial class NonOffRoadPhysicalBills : Page
             lblBrkdwn.Text = "";
         }
         else
-        {
             Show("Records not Updated successfully");
-        }
     }
 
     protected void ddlBillNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -205,10 +198,7 @@ public partial class NonOffRoadPhysicalBills : Page
             HiddenField1.Value = ds.Tables[1].Rows[0][1].ToString();
         }
         else
-        {
             txtBillAmount.Text = "";
-        }
-
     }
 
     protected void btnReset_Click(object sender, EventArgs e)
@@ -227,8 +217,4 @@ public partial class NonOffRoadPhysicalBills : Page
         txtBillAmount.Text = "";
         lblBrkdwn.Text = "";
     }
-
- 
-
-
 }

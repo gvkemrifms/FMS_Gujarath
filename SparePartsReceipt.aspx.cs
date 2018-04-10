@@ -10,17 +10,17 @@ public partial class SparePartsReceipt : Page
     public IInventory ObjInventory = new FMSInventory();
     readonly GvkFMSAPP.BLL.FMSGeneral _fmsg = new GvkFMSAPP.BLL.FMSGeneral();
     private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null)
-            Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
         if (!IsPostBack)
         {
             FillVehicles();
             btReceive.Attributes.Add("onclick", "return validation()");
             txtInvoiceNo.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
             txtReceiptRemarks.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
-            DataSet dsPerms = (DataSet)Session["PermissionsDS"];
+            DataSet dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             PagePermissions p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             gvIssueDetails.Visible = false;
@@ -29,11 +29,12 @@ public partial class SparePartsReceipt : Page
                 gvIssueDetails.Visible = true;
                 gvIssueDetails.Columns[8].Visible = false;
             }
+
             if (p.Add)
             {
                 gvIssueDetails.Visible = true;
                 gvIssueDetails.Columns[8].Visible = true;
-            }        
+            }
         }
     }
 
@@ -41,8 +42,7 @@ public partial class SparePartsReceipt : Page
     {
         _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         DataSet ds = _fmsg.GetVehicleNumber();
-        if (ds != null)
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
     }
 
     protected void ddlVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,9 +69,7 @@ public partial class SparePartsReceipt : Page
     protected void gvIssueDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvIssueDetails.PageIndex = e.NewPageIndex;
-        DataSet ds = new DataSet();
         FillGridIssueDetails(Convert.ToInt32(ddlVehicles.SelectedValue), 2);
-
     }
 
     protected void btnViewDetails_Click(object sender, EventArgs e)
@@ -89,13 +87,13 @@ public partial class SparePartsReceipt : Page
     {
         foreach (GridViewRow item in gvReceiptDetails.Rows)
         {
-            int receivedQuantity = Convert.ToInt32(((TextBox)item.FindControl("txtReceivedQty")).Text);
-            int detId = Convert.ToInt32(((Label)item.FindControl("LbDetID")).Text);
+            int receivedQuantity = Convert.ToInt32(((TextBox) item.FindControl("txtReceivedQty")).Text);
+            int detId = Convert.ToInt32(((Label) item.FindControl("LbDetID")).Text);
             InsertReceiptDetails(Convert.ToInt32(txtInvReqID.Text), receivedQuantity, Convert.ToInt32(txtInvoiceNo.Text), Convert.ToDateTime(txtInvoiceDate.Text), Convert.ToDateTime(txtReceiptDate.Text), Convert.ToString(txtReceiptRemarks.Text), detId);
         }
+
         FillGridIssueDetails(Convert.ToInt32(ddlVehicles.SelectedValue), 2);
         Reset();
-
     }
 
     private void InsertReceiptDetails(int issueId, int receivedQuantity, int invoiceNumber, DateTime invoiceDate, DateTime receiptDate, string remarks, int detId)
@@ -118,8 +116,8 @@ public partial class SparePartsReceipt : Page
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
-                ((TextBox)e.Row.FindControl("txtReceivedQty")).Attributes.Add("onblur", "javascript:ValidateIssueQty('" + ((TextBox)e.Row.FindControl("txtReceivedQty")).ClientID + "','" + e.Row.Cells[2].Text + "')");
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "dsad", "var ReceivedQuantity = '" + ((TextBox)e.Row.FindControl("txtReceivedQty")).ClientID + "'", true);
+                ((TextBox) e.Row.FindControl("txtReceivedQty")).Attributes.Add("onblur", "javascript:ValidateIssueQty('" + ((TextBox) e.Row.FindControl("txtReceivedQty")).ClientID + "','" + e.Row.Cells[2].Text + "')");
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "dsad", "var ReceivedQuantity = '" + ((TextBox) e.Row.FindControl("txtReceivedQty")).ClientID + "'", true);
                 break;
         }
     }
@@ -129,12 +127,9 @@ public partial class SparePartsReceipt : Page
         ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('" + message + "');", true);
     }
 
-
     protected void btCancel_Click(object sender, EventArgs e)
     {
         Reset();
-
-
     }
 
     private void Reset()
@@ -143,7 +138,6 @@ public partial class SparePartsReceipt : Page
         txtInvoiceNo.Text = "";
         txtReceiptDate.Text = "";
         txtReceiptRemarks.Text = "";
-
     }
 
     protected void gvIssueDetails_RowCommand(object sender, GridViewCommandEventArgs e)

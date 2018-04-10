@@ -10,21 +10,20 @@ public partial class DistrictVehicleMapping : Page
     private readonly GvkFMSAPP.BLL.Admin.DistrictVehicleMapping _distvehmapp = new GvkFMSAPP.BLL.Admin.DistrictVehicleMapping();
     private readonly GvkFMSAPP.BLL.VAS_BLL.VASGeneral _vehallobj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", "abc()", true);
-             btnSave.Attributes.Add("onclick", "return validation()");
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType);//Fill VehicleTypes
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlVehicleNumber);//GetVehicleNumber
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetDistrict(), "district_name", "district_id", ddlDistrict);//GetDistricts
-          
+            btnSave.Attributes.Add("onclick", "return validation()");
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType); //Fill VehicleTypes
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlVehicleNumber); //GetVehicleNumber
+            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetDistrict(), "district_name", "district_id", ddlDistrict); //GetDistricts
         }
     }
 
-   
     protected void lnkbtnNewBaseLoc_Click(object sender, EventArgs e)
     {
         ddlBaseLocation.Visible = false;
@@ -64,11 +63,8 @@ public partial class DistrictVehicleMapping : Page
         ddlCity.Items.Insert(0, new ListItem("--Select--", "0"));
         txtContactNumber.Text = "";
         _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal);//GetMandals
-
+        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
     }
-
-
 
     public void GetBaseLocation()
     {
@@ -81,7 +77,7 @@ public partial class DistrictVehicleMapping : Page
     protected void ddlSegments_SelectedIndexChanged(object sender, EventArgs e)
     {
         _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal);//GetMandals
+        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
         GetDistrictMandals();
     }
 
@@ -110,9 +106,7 @@ public partial class DistrictVehicleMapping : Page
     protected void btnSave_Click(object sender, EventArgs e)
     {
         if (ddlVehType.SelectedIndex <= 0)
-        {
             Show("Please Select vehicle type");
-        }
         else
         {
             _vehallobj.OffRoadVehcileId = Convert.ToInt32(ddlVehicleNumber.SelectedItem.Value);

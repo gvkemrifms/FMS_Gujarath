@@ -10,8 +10,6 @@ public partial class InsuranceClaimsPaymentStatus : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
-       
         if (!IsPostBack)
         {
             var vehsts = Session["VehicleStatus"].ToString();
@@ -83,13 +81,9 @@ public partial class InsuranceClaimsPaymentStatus : Page
     {
         var ds = _vehinsclaimpend.GetInsuranceDetails();
         txtPolicyNumber.Text = ds.Tables[0].Rows[0]["InsurancePolicyNo"].ToString();
-
         txtAgency.Text = ds.Tables[0].Rows[0]["InsuranceAgency"].ToString();
-
         txtInsuranceStartDate.Text = ds.Tables[0].Rows[0]["PolicyStartDate"].ToString();
-
         txtInsuranceEndDate.Text = ds.Tables[0].Rows[0]["PolicyEndDate"].ToString();
-
         txtDateInsurance.Text = ds.Tables[0].Rows[0]["PolicyValidityPeriod"].ToString();
     }
 
@@ -153,8 +147,6 @@ public partial class InsuranceClaimsPaymentStatus : Page
         _vehinsclaimpend.CheckNo = txtChequeNo.Text;
         _vehinsclaimpend.AmountReceivedFromInsurance = float.Parse(txtAmountReceivedFromInsurance.Text);
         _vehinsclaimpend.CostToCompany = float.Parse(txtCostToCompany.Text);
-
-
         var ret = _vehinsclaimpend.InsInsuranceClaimsPaymentStatusPending();
         _vehinsclaimpend.InsInsuranceClaimDet();
         Show(ret == 1 ? "Record Inserted Successfully" : "Error");

@@ -30,14 +30,6 @@ public partial class SparePartDiscrepancy : Page
                 pnlSparePartDiscrepancy.Visible = true;
                 pnlButtons.Visible = true;
             }
-
-            if (p.Modify)
-            {
-            }
-
-            if (p.Approve)
-            {
-            }
         }
     }
 

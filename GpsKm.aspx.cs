@@ -11,6 +11,7 @@ public partial class GpsKm : Page
 {
     private readonly string _connectionString = ConfigurationManager.AppSettings["Str"];
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("login.aspx");
@@ -49,7 +50,7 @@ public partial class GpsKm : Page
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        _helper.LoadExcelSpreadSheet(this,null, "gvtoexcel.xls", grdRepData);
+        _helper.LoadExcelSpreadSheet(this, null, "gvtoexcel.xls", grdRepData);
     }
 
     public override void VerifyRenderingInServerForm(Control control)
@@ -105,11 +106,7 @@ public partial class GpsKm : Page
         request.Method = "POST";
         request.ContentType = "application/x-www-form-urlencoded";
         request.ContentLength = data.Length;
-        using (var stream = request.GetRequestStream())
-        {
-            stream.Write(data, 0, data.Length);
-        }
-
+        using (var stream = request.GetRequestStream()) stream.Write(data, 0, data.Length);
         var response = (HttpWebResponse) request.GetResponse();
         var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
         dynamic jObj = JsonConvert.DeserializeObject(responseString);

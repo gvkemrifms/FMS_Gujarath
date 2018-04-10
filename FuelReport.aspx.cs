@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using System.Web.UI;
-using System.Data;
-using System.Data.SqlClient;
 
 public partial class FuelReport : Page
 {

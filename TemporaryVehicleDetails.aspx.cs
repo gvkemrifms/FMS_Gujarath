@@ -285,7 +285,6 @@ public partial class TemporaryVehicleDetails : Page
         ddlModelSizeFR.SelectedIndex = 0;
         ddlTyreMakeRL.SelectedIndex = 0;
         ddlModelSizeRL.SelectedIndex = 0;
-        ;
         ddlTyreMakeRR.SelectedIndex = 0;
         ddlModelSizeRR.SelectedIndex = 0;
         ddlTyreMakeSpareWheel.SelectedIndex = 0;

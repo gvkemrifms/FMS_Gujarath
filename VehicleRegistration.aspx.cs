@@ -100,9 +100,7 @@ public partial class VehicleRegistration : Page
                             GetTrNo();
                         }
                         else
-                        {
                             Show("Error");
-                        }
 
                         break;
                     default:

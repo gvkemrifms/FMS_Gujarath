@@ -6,10 +6,10 @@ public partial class HrDisciplinaryActions : Page
 {
     private readonly VAS _obj = new VAS();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
-
         if (!IsPostBack)
         {
             BindData();

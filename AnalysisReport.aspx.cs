@@ -16,8 +16,15 @@ public partial class AnalysisReport : Page
 
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        try
+        {
+            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)

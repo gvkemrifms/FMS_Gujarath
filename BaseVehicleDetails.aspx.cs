@@ -28,56 +28,63 @@ public partial class BaseVehicleDetails : Page
     private void FillDifferentDropDowns(string item)
     {
         if (item != null)
-            switch (item)
+            try
             {
-                case "getEngineNumber":
-                    var ds = _basevehdet.GetEngineNo();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "EngineNumber", "VehicleID", ddlEngineNo);
-                    break;
-                case "getVehicleType":
-                    ds = _basevehdet.GetVehicleType();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle_Type", "VehicleType_Id", ddlVehicleType);
-                    break;
-                case "getManufacturerName":
-                    ds = _basevehdet.GetManufacturerName();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
-                    break;
-                case "getTyreMake":
-                    ds = _basevehdet.GetTyreMake();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMake);
-                    break;
-                case "getTyreModelSize":
-                    ds = _basevehdet.GetTyreModelSize();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSize);
-                    break;
-                case "getBatteryMake":
-                    ds = _basevehdet.GetBatteryMake();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMake);
-                    break;
-                case "getBatteryModelCapacity":
-                    ds = _basevehdet.GetBatteryModelCapacity();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlBatteryMake);
-                    break;
-                case "getDistrict":
-                    ds = _basevehdet.GetDistricts_new();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict, null, ddlTRDistrict);
-                    break;
-                case "getAgency":
-                    ds = _basevehdet.GetAgency();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlAgency);
-                    break;
-                case "getFuelType":
-                    ds = _basevehdet.GetFuelType();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FuelTypeName", "FuelTypeId", ddlFuelType);
-                    break;
-                case "getVehicleModel":
-                    ds = _basevehdet.GetVehicleModel();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleModelName", "VehicleModelId", ddlVehicleModel);
-                    break;
-                case "GetInsuranceType":
-                    ds = _basevehdet.GetInsuranceType();
-                    if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsType);
-                    break;
+                switch (item)
+                {
+                    case "getEngineNumber":
+                        var ds = _basevehdet.GetEngineNo();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "EngineNumber", "VehicleID", ddlEngineNo);
+                        break;
+                    case "getVehicleType":
+                        ds = _basevehdet.GetVehicleType();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle_Type", "VehicleType_Id", ddlVehicleType);
+                        break;
+                    case "getManufacturerName":
+                        ds = _basevehdet.GetManufacturerName();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
+                        break;
+                    case "getTyreMake":
+                        ds = _basevehdet.GetTyreMake();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMake);
+                        break;
+                    case "getTyreModelSize":
+                        ds = _basevehdet.GetTyreModelSize();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSize);
+                        break;
+                    case "getBatteryMake":
+                        ds = _basevehdet.GetBatteryMake();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMake);
+                        break;
+                    case "getBatteryModelCapacity":
+                        ds = _basevehdet.GetBatteryModelCapacity();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlBatteryMake);
+                        break;
+                    case "getDistrict":
+                        ds = _basevehdet.GetDistricts_new();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict, null, ddlTRDistrict);
+                        break;
+                    case "getAgency":
+                        ds = _basevehdet.GetAgency();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlAgency);
+                        break;
+                    case "getFuelType":
+                        ds = _basevehdet.GetFuelType();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FuelTypeName", "FuelTypeId", ddlFuelType);
+                        break;
+                    case "getVehicleModel":
+                        ds = _basevehdet.GetVehicleModel();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleModelName", "VehicleModelId", ddlVehicleModel);
+                        break;
+                    case "GetInsuranceType":
+                        ds = _basevehdet.GetInsuranceType();
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsType);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
             }
     }
 
@@ -94,6 +101,7 @@ public partial class BaseVehicleDetails : Page
                 txtTRNo.ReadOnly = false;
                 _basevehdet.VehicleID = int.Parse(ddlEngineNo.SelectedItem.Value);
                 var ds = _basevehdet.GetChassisNo();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 txtChassisNo.Text = ds.Tables[0].Rows[0]["ChasisNumber"].ToString();
                 if (ds.Tables[0].Rows[0]["VehicleNumber"].ToString() != "")
                 {

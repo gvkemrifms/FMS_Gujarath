@@ -41,16 +41,22 @@ public partial class AgencyDetails : Page
     private void FillGridAgencyDetails()
     {
         var ds = ObjFleetMaster.IFillGridAgencyDetails();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvAgencyDetails.DataSource = ds;
         grvAgencyDetails.DataBind();
     }
 
     private void FillStates()
     {
-        _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillStates(), "sc_lname", "sc_scid", ddlState);
-        ddlState.Items[0].Value = "0";
-        ddlState.SelectedIndex = 0;
-        ddlDistrict.Enabled = true;
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillStates(), "sc_lname", "sc_scid", ddlState);
+            ddlDistrict.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlState_SelectedIndexChanged(object sender, EventArgs e)
@@ -60,8 +66,15 @@ public partial class AgencyDetails : Page
 
     private void FillDistricts(int stateId)
     {
-        if (ObjFleetMaster != null) _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillDistricts(stateId), "district_name", "district_id", ddlDistrict);
-        ddlDistrict.Enabled = true;
+        try
+        {
+            if (ObjFleetMaster != null) _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillDistricts(stateId), "district_name", "district_id", ddlDistrict);
+            ddlDistrict.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -107,6 +120,7 @@ public partial class AgencyDetails : Page
     {
         grvAgencyDetails.PageIndex = e.NewPageIndex;
         var ds = ObjFleetMaster.IFillGridAgencyDetails();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvAgencyDetails.DataSource = ds;
         grvAgencyDetails.DataBind();
     }

@@ -70,12 +70,19 @@ public partial class AttachDocuments : Page
 
     public void GetVehicleNumber()
     {
-        if (_fmsGeneral != null)
+        try
         {
-            _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-            var ds = _fmsGeneral.GetVehicleNumber();
-            if (ds == null) return;
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+            if (_fmsGeneral != null)
+            {
+                _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+                var ds = _fmsGeneral.GetVehicleNumber();
+                if (ds == null) return;
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

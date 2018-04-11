@@ -21,10 +21,6 @@ public partial class BatteryDetails : Page
             txtBatteryModel.Attributes.Add("onkeypress", "javascript:return OnlyAlphaNumeric(this,event)");
             txtBatteryCapacity.Attributes.Add("onkeypress", "javascript:return OnlyAlphaNumeric(this,event)");
             FillGrid_BatteryDetails();
-            //Permissions
-            var dsPerms = (DataSet) Session["PermissionsDS"];
-            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
-            dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
 

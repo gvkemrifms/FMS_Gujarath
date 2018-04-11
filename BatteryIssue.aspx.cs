@@ -9,7 +9,7 @@ public partial class BatteryIssue : Page
 {
     public IInventory ObjFmsInvBatIss = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -43,10 +43,17 @@ public partial class BatteryIssue : Page
 
     private void FillInventoryVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlInventoryBatteryIssueVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -90,7 +97,9 @@ public partial class BatteryIssue : Page
                 var ds = _fmsg.GetRegistrationDate(Convert.ToInt32(ddlInventoryBatteryIssueVehicles.SelectedValue));
                 if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (DateTime.Parse(ds.Tables[0].Rows[0]["RegDate"].ToString()) < DateTime.Parse(txtDcDate.Text))
+                {
                     InsertBatteryIssueDetails(Convert.ToInt32(txtInvReqIdPopUp.Text), Convert.ToInt32(txtDcNumberPopup.Text), Convert.ToDateTime(txtDcDate.Text), Convert.ToString(txtCourierName.Text), Convert.ToString(txtRemarks.Text), issuedQuantity, Convert.ToInt32(txtBatIssVehicleID.Text), newBatteryNumber, batteryPosition);
+                }
                 else
                 {
                     Show("Dc Date should be greater than Registration Date " + ds.Tables[0].Rows[0]["RegDate"]);
@@ -128,16 +137,24 @@ public partial class BatteryIssue : Page
 
     protected void grvBatteryIssueDetailsPopup_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        switch (e.Row.RowType)
+        try
         {
-            case DataControlRowType.DataRow:
-                ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).Attributes.Add("onblur", "javascript:ValidateIssueQty('" + ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).ClientID + "','" + e.Row.Cells[3].Text + "')");
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), "dsad", "var IssuedQuantity = '" + ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).ClientID + "'", true);
-                //Filling Drop Down in Popup Gridview
-                var ds = ObjFmsInvBatIss.IFillNewBatteryNumbers();
-                var ddl = (DropDownList) e.Row.FindControl("ddlNewBatteryNumber");
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "Battery Number", "Battery_Id", ddl);
-                break;
+            switch (e.Row.RowType)
+            {
+                case DataControlRowType.DataRow:
+                    ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).Attributes.Add("onblur", "javascript:ValidateIssueQty('" + ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).ClientID + "','" + e.Row.Cells[3].Text + "')");
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "dsad", "var IssuedQuantity = '" + ((TextBox) e.Row.FindControl("txtBatteryIssuedQty")).ClientID + "'", true);
+                    //Filling Drop Down in Popup Gridview
+                    var ds = ObjFmsInvBatIss.IFillNewBatteryNumbers();
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    var ddl = (DropDownList) e.Row.FindControl("ddlNewBatteryNumber");
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "Battery Number", "Battery_Id", ddl);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

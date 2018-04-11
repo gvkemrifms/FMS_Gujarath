@@ -40,11 +40,18 @@ public partial class BatteryReceipt : Page
 
     private void FillInventoryVehicles()
     {
-        if (_fmsg != null)
+        try
         {
-            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-            var ds = _fmsg.GetVehicleNumber();
-            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
+            if (_fmsg != null)
+            {
+                _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+                var ds = _fmsg.GetVehicleNumber();
+                if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

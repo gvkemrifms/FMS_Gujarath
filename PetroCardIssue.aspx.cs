@@ -27,22 +27,36 @@ public partial class PetroCardIssue : Page
             btSave.Attributes.Add("onclick", "return isMandatory()");
             txtPetroCardNumber.Attributes.Add("onkeypress", "return isNumberKey(this,event)");
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
 
     protected void FillFeUsers()
     {
-        var client = new ACLServiceClient();
-        var ds = client.GetRoleBasedUsersList(int.Parse(ConfigurationManager.AppSettings["roleID"]));
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "LOGIN_NAME", "PK_USER_ID", dd_listFe);
+        try
+        {
+            var client = new ACLServiceClient();
+            var ds = client.GetRoleBasedUsersList(int.Parse(ConfigurationManager.AppSettings["roleID"]));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "LOGIN_NAME", "PK_USER_ID", dd_listFe);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillDistricts()
     {
-        var ds = _objFuelMan.IFillDistricts();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlFeuserDistrict);
-        ddlFeuserDistrict.SelectedIndex = 0;
+        try
+        {
+            var ds = _objFuelMan.IFillDistricts();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlFeuserDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDistricts_SelectedIndexChanged(object sender, EventArgs e)
@@ -51,20 +65,33 @@ public partial class PetroCardIssue : Page
 
     private void FillCardType()
     {
-        var ds = _objFuelMan.IFillCardType();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "CardType", "CardTypeID", ddlCardType);
-        ddlCardType.SelectedIndex = 0;
-        ddlCardType.Enabled = true;
+        try
+        {
+            var ds = _objFuelMan.IFillCardType();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "CardType", "CardTypeID", ddlCardType);
+            ddlCardType.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillAgency()
     {
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _objFuelMan.IFillAgency(districtId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
-        ddlAgency.SelectedIndex = 0;
-        ddlAgency.Enabled = true;
+        try
+        {
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _objFuelMan.IFillAgency(districtId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
+            ddlAgency.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlAgency_SelectedIndexChanged(object sender, EventArgs e)
@@ -138,6 +165,7 @@ public partial class PetroCardIssue : Page
         var districtId = -1;
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _objFuelMan.IFillGridPetroCard(districtId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvPetroCardIssue.DataSource = ds;
         gvPetroCardIssue.DataBind();
         foreach (GridViewRow item in gvPetroCardIssue.Rows)
@@ -154,6 +182,7 @@ public partial class PetroCardIssue : Page
         var districtId = -1;
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _objFuelMan.IFillGridPetroCard(districtId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvPetroCardIssue.DataSource = ds;
         gvPetroCardIssue.DataBind();
         foreach (GridViewRow item in gvPetroCardIssue.Rows)
@@ -200,6 +229,7 @@ public partial class PetroCardIssue : Page
 
     protected void gvPetroCardIssue_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName)
         {
             case "Edit":
@@ -256,32 +286,48 @@ public partial class PetroCardIssue : Page
 
     private void FillUserDistrictandVehicle()
     {
-        var ds = _objFuelMan.IGetDistrictforUser(Convert.ToInt32(dd_listFe.SelectedValue));
-        switch (ds.Tables[0].Rows.Count)
+        try
         {
-            case 0:
-                Show("Please map the Fe to some District and then issue Petro Cards");
-                break;
-            default:
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlFeuserDistrict);
-                ddlFeuserDistrict.SelectedIndex = 0;
-                break;
-        }
+            var ds = _objFuelMan.IGetDistrictforUser(Convert.ToInt32(dd_listFe.SelectedValue));
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            switch (ds.Tables[0].Rows.Count)
+            {
+                case 0:
+                    Show("Please map the Fe to some District and then issue Petro Cards");
+                    break;
+                default:
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlFeuserDistrict);
+                    ddlFeuserDistrict.SelectedIndex = 0;
+                    break;
+            }
 
-        var ds1 = _objFuelMan.IGetVehiclesforUser(Convert.ToInt32(dd_listFe.SelectedValue));
-        _helper.FillDropDownHelperMethodWithDataSet(ds1, "VehicleNumber", "VehicleID", null, ddlVehicles);
-        ddlVehicles.SelectedIndex = 0;
-        ddlVehicles.Enabled = true;
+            var ds1 = _objFuelMan.IGetVehiclesforUser(Convert.ToInt32(dd_listFe.SelectedValue));
+            if (ds1 == null) throw new ArgumentNullException(nameof(ds1));
+            _helper.FillDropDownHelperMethodWithDataSet(ds1, "VehicleNumber", "VehicleID", null, ddlVehicles);
+            ddlVehicles.SelectedIndex = 0;
+            ddlVehicles.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillVehicles()
     {
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        _fmsg.UserDistrictId = districtId;
-        var ds = _fmsg.GetVehicleNumberPetroCardEdit();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
-        ddlVehicles.SelectedIndex = 0;
-        ddlVehicles.Enabled = false;
+        try
+        {
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            _fmsg.UserDistrictId = districtId;
+            var ds = _fmsg.GetVehicleNumberPetroCardEdit();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+            ddlVehicles.Enabled = false;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 }

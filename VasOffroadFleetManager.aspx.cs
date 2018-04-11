@@ -6,6 +6,7 @@ using GvkFMSAPP.BLL.VAS_BLL;
 public partial class VasOffroadFleetManager : Page
 {
     private readonly VASGeneral _obj = new VASGeneral();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -16,6 +17,7 @@ public partial class VasOffroadFleetManager : Page
     private void BindGridView()
     {
         var ds = _obj.GetVasOffroadFleetManager();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvVasOffroad.DataSource = ds.Tables[0];
         gvVasOffroad.DataBind();
     }
@@ -33,48 +35,56 @@ public partial class VasOffroadFleetManager : Page
 
     protected void gvVasOffroad_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName.ToUpper())
+        if (e.CommandName == null) return;
+        try
         {
-            case "APPROVE":
+            switch (e.CommandName.ToUpper())
             {
-                var row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
-                var txtMm = row.FindControl("txtApprovedCost") as TextBox;
-                if (txtMm == null || txtMm.Text != "")
+                case "APPROVE":
                 {
-                    _obj.OFFid = int.Parse(((Label) row.FindControl("lblOffroadID")).Text);
-                    _obj.VehicleNumber = ((Label) row.FindControl("lblVehicle_No")).Text;
-                    _obj.District = ((Label) row.FindControl("lblDistrict")).Text;
-                    _obj.OffRoadDate = DateTime.Parse(((Label) row.FindControl("lblDoOffRoad")).Text);
-                    _obj.ReasonForOffRoad = ((Label) row.FindControl("lblReason")).Text;
-                    _obj.totEstimated = ((Label) row.FindControl("lblEstimatedCost")).Text;
-                    _obj.CheqAmt = ((TextBox) row.FindControl("txtApprovedCost")).Text;
-                    var i = _obj.INsertVasOffFM();
-                    if (i != 0)
+                    var row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
+                    var txtMm = row.FindControl("txtApprovedCost") as TextBox;
+                    if (txtMm == null || txtMm.Text != "")
                     {
-                        Show("Approved Successfully");
-                        BindGridView();
+                        _obj.OFFid = int.Parse(((Label) row.FindControl("lblOffroadID")).Text);
+                        _obj.VehicleNumber = ((Label) row.FindControl("lblVehicle_No")).Text;
+                        _obj.District = ((Label) row.FindControl("lblDistrict")).Text;
+                        _obj.OffRoadDate = DateTime.Parse(((Label) row.FindControl("lblDoOffRoad")).Text);
+                        _obj.ReasonForOffRoad = ((Label) row.FindControl("lblReason")).Text;
+                        _obj.totEstimated = ((Label) row.FindControl("lblEstimatedCost")).Text;
+                        _obj.CheqAmt = ((TextBox) row.FindControl("txtApprovedCost")).Text;
+                        var i = _obj.INsertVasOffFM();
+                        if (i != 0)
+                        {
+                            Show("Approved Successfully");
+                            BindGridView();
+                        }
                     }
-                }
-                else
-                {
-                    Show("Please enter Approved Cost");
-                    txtMm.Focus();
-                }
+                    else
+                    {
+                        Show("Please enter Approved Cost");
+                        txtMm.Focus();
+                    }
 
-                break;
+                    break;
+                }
+                case "REJECT":
+                {
+                    var row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
+                    mpeReasonDetails.Show();
+                    ViewState["OFFid"] = int.Parse(((Label) row.FindControl("lblOffroadID")).Text);
+                    ViewState["VehicleNumber"] = ((Label) row.FindControl("lblVehicle_No")).Text;
+                    ViewState["District"] = ((Label) row.FindControl("lblDistrict")).Text;
+                    ViewState["OffRoadDate"] = DateTime.Parse(((Label) row.FindControl("lblDoOffRoad")).Text);
+                    ViewState["ReasonForOffRoad"] = ((Label) row.FindControl("lblReason")).Text;
+                    ViewState["totEstimated"] = ((Label) row.FindControl("lblEstimatedCost")).Text;
+                    break;
+                }
             }
-            case "REJECT":
-            {
-                var row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
-                mpeReasonDetails.Show();
-                ViewState["OFFid"] = int.Parse(((Label) row.FindControl("lblOffroadID")).Text);
-                ViewState["VehicleNumber"] = ((Label) row.FindControl("lblVehicle_No")).Text;
-                ViewState["District"] = ((Label) row.FindControl("lblDistrict")).Text;
-                ViewState["OffRoadDate"] = DateTime.Parse(((Label) row.FindControl("lblDoOffRoad")).Text);
-                ViewState["ReasonForOffRoad"] = ((Label) row.FindControl("lblReason")).Text;
-                ViewState["totEstimated"] = ((Label) row.FindControl("lblEstimatedCost")).Text;
-                break;
-            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

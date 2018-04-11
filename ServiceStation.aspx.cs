@@ -26,18 +26,32 @@ public partial class ServiceStation : Page
 
     private void FillVehicles()
     {
-        _ds = null;
-        _ds = _fmsg.GetVehicleNumber();
-        _helper.FillDropDownHelperMethodWithDataSet(_ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
-        ViewState["dsVehicles"] = _ds;
+        try
+        {
+            _ds = null;
+            _ds = _fmsg.GetVehicleNumber();
+            _helper.FillDropDownHelperMethodWithDataSet(_ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            ViewState["dsVehicles"] = _ds;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void BindData()
     {
-        _ds = null;
-        _ds = _fmsobj.GetDistricts_new();
-        _helper.FillDropDownHelperMethodWithDataSet(_ds, "district_name", "district_id", ddlDistricts);
-        ViewState["dsDistricts"] = _ds;
+        try
+        {
+            _ds = null;
+            _ds = _fmsobj.GetDistricts_new();
+            _helper.FillDropDownHelperMethodWithDataSet(_ds, "district_name", "district_id", ddlDistricts);
+            ViewState["dsDistricts"] = _ds;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void Bindgrid()
@@ -82,6 +96,7 @@ public partial class ServiceStation : Page
 
     protected void gvServiceStationDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName)
         {
             case "MainEdit":
@@ -174,6 +189,7 @@ public partial class ServiceStation : Page
     {
         _fmsg.vehicle = ddlVehicleNumber.SelectedItem.ToString();
         DataSet dsDistrict = _fmsg.GetDistrictLoc();
+        if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
         BindData();
         if (dsDistrict.Tables[0].Rows.Count <= 0)
             ddlDistricts.Enabled = true;

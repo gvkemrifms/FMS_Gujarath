@@ -23,6 +23,7 @@ public partial class BatteryDetails : Page
             FillGrid_BatteryDetails();
             //Permissions
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
@@ -34,11 +35,9 @@ public partial class BatteryDetails : Page
     public void FillGrid_BatteryDetails()
     {
         var ds = ObjFmsBatDet.IFillGrid_BatteryDetails();
-        if (ds != null)
-        {
-            grvBatteryDetails.DataSource = ds.Tables[0];
-            grvBatteryDetails.DataBind();
-        }
+        if (ds == null) return;
+        grvBatteryDetails.DataSource = ds.Tables[0];
+        grvBatteryDetails.DataBind();
     }
 
     #endregion
@@ -66,6 +65,7 @@ public partial class BatteryDetails : Page
             case "Save":
             {
                 var ds = ObjFmsBatDet.IFillGrid_BatteryDetails();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Battery_Item_Code='" + txtBatteryItemCode.Text + "'").Length > 0)
                     Show("Battery Item Code already exists");
                 else
@@ -97,6 +97,7 @@ public partial class BatteryDetails : Page
             default:
             {
                 var ds = ObjFmsBatDet.IFillGrid_BatteryDetails();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Battery_Item_Code='" + txtBatteryItemCode.Text + "' And Battery_Id<>'" + hidManId.Value + "'").Length <= 0)
                 {
                     int ubatid = Convert.ToInt16(hidManId.Value);

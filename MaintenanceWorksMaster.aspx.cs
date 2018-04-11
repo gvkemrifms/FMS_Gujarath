@@ -27,6 +27,7 @@ public partial class MaintenanceWorksMaster : Page
             ddlServiceGroupName.SelectedIndex = 0;
             //Permissions
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             pnlMaintenanceWorksMaster.Visible = false;
@@ -79,8 +80,15 @@ public partial class MaintenanceWorksMaster : Page
 
     private void FillServiceGroupNames()
     {
-        var ds = ObjFmsMaintenanceWorksMaster.IFillServiceGroupNames();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ServiceGroup_Name", "ServiceGroup_Id", ddlServiceGroupName);
+        try
+        {
+            var ds = ObjFmsMaintenanceWorksMaster.IFillServiceGroupNames();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ServiceGroup_Name", "ServiceGroup_Id", ddlServiceGroupName);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     #endregion
@@ -89,16 +97,18 @@ public partial class MaintenanceWorksMaster : Page
 
     public void FillGrid_MaintenanceWorksMaster()
     {
-        var ds = ObjFmsMaintenanceWorksMaster.IFillGrid_MaintenanceWorksMaster();
-        if (ds != null && ds.Tables[0].Rows.Count > 0)
+        using (var ds = ObjFmsMaintenanceWorksMaster.IFillGrid_MaintenanceWorksMaster())
         {
-            grvMaintenanceWorksMasterDetails.DataSource = ds.Tables[0];
-            grvMaintenanceWorksMasterDetails.DataBind();
-        }
-        else
-        {
-            var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
-            ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                grvMaintenanceWorksMasterDetails.DataSource = ds.Tables[0];
+                grvMaintenanceWorksMasterDetails.DataBind();
+            }
+            else
+            {
+                var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
+                ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
+            }
         }
     }
 
@@ -108,75 +118,91 @@ public partial class MaintenanceWorksMaster : Page
 
     protected void btnSaveMaintenanceWorksMaster_Click(object sender, EventArgs e)
     {
-        if (btnSaveMaintenanceWorksMaster.Text == "Save")
+        try
         {
-            if (!ddlSSName.Visible)
+            switch (btnSaveMaintenanceWorksMaster.Text)
             {
-                if (txtSSName.Text == "") Show("Please enter category");
-            }
-            else
-            {
-                switch (ddlSSName.SelectedIndex)
+                case "Save":
                 {
-                    case 0:
-                        Show("Please select category");
-                        break;
+                    if (!ddlSSName.Visible)
+                    {
+                        if (txtSSName.Text == "") Show("Please enter category");
+                    }
+                    else
+                    {
+                        switch (ddlSSName.SelectedIndex)
+                        {
+                            case 0:
+                                Show("Please select category");
+                                break;
+                        }
+                    }
+
+                    string subserviceName;
+                    var serviceGroupId = Convert.ToInt32(ddlServiceGroupName.SelectedValue);
+                    var serviceGroupName = ddlServiceGroupName.SelectedItem.Text;
+                    var serviceName = txtServiceName.Text;
+                    var vehicleManufacturer = Convert.ToInt32(ddlMaintenanceManufacturerName.SelectedValue);
+                    int flag;
+                    if (ddlSSName.Visible)
+                    {
+                        subserviceName = ddlSSName.SelectedItem.ToString();
+                        flag = 1;
+                    }
+                    else
+                    {
+                        subserviceName = txtSSName.Text;
+                        flag = 0;
+                    }
+
+                    var costAGrade = Convert.ToDecimal(txtCostGrade.Text);
+                    var costOtherThanAGrade = Convert.ToDecimal(txtCostOtherGrade.Text);
+                    var timeTaken = txtTimeTaken.Text;
+                    var ds = ObjFmsMaintenanceWorksMaster.InsertMaintenanceWorksMasterDetails(serviceGroupId, vehicleManufacturer, serviceGroupName, serviceName, subserviceName, costAGrade, costOtherThanAGrade, timeTaken, flag);
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Details added successfully");
+                            MaintenanceWorksMasterReset();
+                            break;
+                        default:
+                            Show("Details already exists");
+                            break;
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    int serviceId = Convert.ToInt16(hidWorksMasterId.Value);
+                    var serviceName = txtServiceName.Text;
+                    var serviceGroupId = Convert.ToInt32(ddlServiceGroupName.SelectedValue);
+                    var subserviceName = txtSSName.Text;
+                    var costAGrade = Convert.ToDecimal(txtCostGrade.Text);
+                    var costOtherThanAGrade = Convert.ToDecimal(txtCostOtherGrade.Text);
+                    var timeTaken = txtTimeTaken.Text;
+                    var ds = ObjFmsMaintenanceWorksMaster.UpdateMaintenanceWorksMasterDetails(serviceId, serviceGroupId, serviceName, costAGrade, costOtherThanAGrade, subserviceName, timeTaken);
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    switch (ds.Tables.Count)
+                    {
+                        case 0:
+                            Show("Details updated successfully");
+                            linkCat.Visible = true;
+                            MaintenanceWorksMasterReset();
+                            break;
+                        default:
+                            Show("Details already exists");
+                            break;
+                    }
+
+                    break;
                 }
             }
-
-            string subserviceName;
-            var serviceGroupId = Convert.ToInt32(ddlServiceGroupName.SelectedValue);
-            var serviceGroupName = ddlServiceGroupName.SelectedItem.Text;
-            var serviceName = txtServiceName.Text;
-            var vehicleManufacturer = Convert.ToInt32(ddlMaintenanceManufacturerName.SelectedValue);
-            int flag;
-            if (ddlSSName.Visible)
-            {
-                subserviceName = ddlSSName.SelectedItem.ToString();
-                flag = 1;
-            }
-            else
-            {
-                subserviceName = txtSSName.Text;
-                flag = 0;
-            }
-
-            var costAGrade = Convert.ToDecimal(txtCostGrade.Text);
-            var costOtherThanAGrade = Convert.ToDecimal(txtCostOtherGrade.Text);
-            var timeTaken = txtTimeTaken.Text;
-            var ds = ObjFmsMaintenanceWorksMaster.InsertMaintenanceWorksMasterDetails(serviceGroupId, vehicleManufacturer, serviceGroupName, serviceName, subserviceName, costAGrade, costOtherThanAGrade, timeTaken, flag);
-            switch (ds.Tables.Count)
-            {
-                case 0:
-                    Show("Details added successfully");
-                    MaintenanceWorksMasterReset();
-                    break;
-                default:
-                    Show("Details already exists");
-                    break;
-            }
         }
-        else
+        catch (Exception ex)
         {
-            int serviceId = Convert.ToInt16(hidWorksMasterId.Value);
-            var serviceName = txtServiceName.Text;
-            var serviceGroupId = Convert.ToInt32(ddlServiceGroupName.SelectedValue);
-            var subserviceName = txtSSName.Text;
-            var costAGrade = Convert.ToDecimal(txtCostGrade.Text);
-            var costOtherThanAGrade = Convert.ToDecimal(txtCostOtherGrade.Text);
-            var timeTaken = txtTimeTaken.Text;
-            var ds = ObjFmsMaintenanceWorksMaster.UpdateMaintenanceWorksMasterDetails(serviceId, serviceGroupId, serviceName, costAGrade, costOtherThanAGrade, subserviceName, timeTaken);
-            switch (ds.Tables.Count)
-            {
-                case 0:
-                    Show("Details updated successfully");
-                    linkCat.Visible = true;
-                    MaintenanceWorksMasterReset();
-                    break;
-                default:
-                    Show("Details already exists");
-                    break;
-            }
+            _helper.ErrorsEntry(ex);
         }
 
         FillGrid_MaintenanceWorksMaster();
@@ -205,7 +231,14 @@ public partial class MaintenanceWorksMaster : Page
             GetSubService(subservice);
         }
         else
-            _helper.FillDropDownHelperMethodWithSp("P_GetCategories", "Categories", "Category_Id", ddlServiceGroupName, ddlMaintenanceManufacturerName, null, null, "@Aggre", "@VehicleManufacturer", null, null, null, null, ddlSSName);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithSp("P_GetCategories", "Categories", "Category_Id", ddlServiceGroupName, ddlMaintenanceManufacturerName, null, null, "@Aggre", "@VehicleManufacturer", null, null, null, null, ddlSSName);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
     }
 
     #endregion
@@ -216,7 +249,15 @@ public partial class MaintenanceWorksMaster : Page
         cmd.Parameters.Add("@serviceGroupName", SqlDbType.NVarChar);
         cmd.Parameters["@serviceGroupName"].Value = Convert.ToString(subservice);
         var ds = GvkFMSAPP.DLL.SQLHelper.ExecuteAdapter(cmd, CommandType.StoredProcedure, "[dbo].[P_Get_ManufacturerName_SelectedIndex]");
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlMaintenanceManufacturerName);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlMaintenanceManufacturerName);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     #region Row Editing of Maintenance Works Master Details

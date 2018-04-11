@@ -2,8 +2,8 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
         <ContentTemplate>
             <div>
@@ -13,9 +13,9 @@
                               CellPadding="4" ForeColor="#333333" GridLines="None"
                               Width="630px" AllowPaging="True"
                               EnableSortingAndPagingCallbacks="True"
-                              onpageindexchanging="gvVasOffroad_PageIndexChanging"
-                              onrowcommand="gvVasOffroad_RowCommand"
-                              onrowdatabound="gvVasOffroad_RowDataBound">
+                              OnPageIndexChanging="gvVasOffroad_PageIndexChanging"
+                              OnRowCommand="gvVasOffroad_RowCommand"
+                              OnRowDataBound="gvVasOffroad_RowDataBound">
 
                     <RowStyle CssClass="rowStyleGrid"/>
                     <Columns>
@@ -102,17 +102,16 @@
                         <div style="width: 60%; float: right">
                             <div style="width: 50%; float: left">
                                 <asp:Button runat="server" ID="btnReason" Text="Submit"
-                                            onclick="btnReason_Click1" OnClientClick="return Validation();"/>
+                                            OnClick="btnReason_Click1" OnClientClick="return Validation();"/>
                             </div>
                             <div style="width: 50%; float: right">
                                 <asp:Button runat="server" ID="btnCancel" OnClientClick="PressButton2()" Text="Close"/>
                             </div>
-                        </div >
+                        </div>
                         <div>
-
-                        </div >
+                        </div>
                         <div style="display: none">
-                            <asp:Button runat="server" ID="btnDoWork" Text="TEMP" onclick="btnDoWork_Click"/>
+                            <asp:Button runat="server" ID="btnDoWork" Text="TEMP" OnClick="btnDoWork_Click"/>
                             <asp:Button runat="server" ID="btnPopUp"/>
                         </div>
 
@@ -146,23 +145,6 @@
             if (!RequiredValidation(reason, "Please enter reason for rejection"))
                 return false;
             return true;
-        }
-
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-            }
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
         }
     </script>
 </asp:Content>

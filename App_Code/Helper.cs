@@ -2,13 +2,14 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
+
 public class Helper
 {
- 
     public DataTable ExecuteSelectStmt(string query)
     {
         var cs = ConfigurationManager.AppSettings["Str"];
@@ -84,7 +85,7 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null ,string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null,DropDownList dropDownValue5=null)
+    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null, string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null, DropDownList dropDownValue5 = null)
     {
         var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
         var ds = new DataSet();
@@ -101,7 +102,6 @@ public class Helper
             cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
             cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
             CommonMethod(textFieldValue, valueField, dropDownValue3, ds, cmd);
-            
         }
         else if (dropDownValue != null && dropDownValue2 != null && gridView == null)
         {
@@ -180,7 +180,7 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null, DropDownList dropdownId1 = null)
+    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null, DropDownList dropdownId1 = null,RadioButtonList radiolist=null)
     {
         if (dropdownId == null && dropdownId1 == null)
         {
@@ -218,7 +218,6 @@ public class Helper
             dropdownId1.Items.Insert(0, new ListItem("--Select--", "0"));
             dropdownId1.Items[0].Value = "0";
             dropdownId1.SelectedIndex = 0;
-
         }
     }
 
@@ -229,7 +228,8 @@ public class Helper
         dropDownList.DataTextField = textField;
         dropDownList.DataBind();
     }
-    public void LoadExcelSpreadSheet(Page page,Panel panel = null, string fileName = null, GridView gridView = null)
+
+    public void LoadExcelSpreadSheet(Page page, Panel panel = null, string fileName = null, GridView gridView = null)
     {
         page.Response.ClearContent();
         page.Response.AddHeader("content-disposition", "attachment; filename=" + fileName);
@@ -243,18 +243,32 @@ public class Helper
         page.Response.Write(sw.ToString());
         page.Response.End();
     }
-    public static void ErrorsEntry(string errordes, string errorsource, long errorno)
+
+    public void ErrorsEntry(Exception ex)
     {
         var appSetting = ConfigurationManager.AppSettings["LogLocation"];
+        if (appSetting == null) throw new ArgumentNullException(nameof(appSetting));
         var path = appSetting.Substring(0, appSetting.LastIndexOf("\\", StringComparison.Ordinal));
-        if (!Directory.Exists(path))
-            Directory.CreateDirectory(path);
-        var streamWriter = File.AppendText(ConfigurationManager.AppSettings["LogLocation"]);
-        streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
-        streamWriter.WriteLine(errordes);
-        streamWriter.WriteLine(errorsource);
-        streamWriter.WriteLine(errorno.ToString());
-        streamWriter.Flush();
-        streamWriter.Close();
+        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+        using (var streamWriter = File.AppendText(ConfigurationManager.AppSettings["LogLocation"]))
+        {
+            var trace = new StackTrace(ex, true);
+            // Get the top stack frame
+            var frame = trace.GetFrame(0);
+            if (frame == null) throw new ArgumentNullException(nameof(frame));
+            // Get the line number from the stack frame
+            int errorNo = frame.GetFileLineNumber();
+            //Get  Error Source
+            string errorSource = ex.Source;
+            if (errorSource == null) throw new ArgumentNullException(nameof(errorSource));
+            //Get Error Description
+            string errorDescription = ex.Message;
+            streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
+            streamWriter.WriteLine(errorDescription);
+            streamWriter.WriteLine(errorSource);
+            streamWriter.WriteLine(errorNo.ToString());
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
     }
 }

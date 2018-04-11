@@ -1,17 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyreRequisition.aspx.cs" Inherits="TyreRequisition" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
 <script type="text/javascript">
-
-
-    function CheckLength(text, long) {
-        var maxlength = new Number(long); // Change number to your max length.
-        if (text.value.length > maxlength) {
-            text.value = text.value.substring(0, maxlength);
-            alert(" Only " + long + " chars");
-        }
-    }
 
     function validationInventoryBatteryVehicleType() {
         var id = document.getElementById('<%= ddlVehicles.ClientID %>');
@@ -28,22 +21,6 @@
             }
         }
         return true;
-    }
-
-    function OnlyAlphaNumeric(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-    }
-
-    function remark(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode !== 34) && (keycode !== 39);
     }
 
 </script>
@@ -243,7 +220,8 @@
                                             ID="ConfirmButtonExtender2" runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
                                         </ajaxToolKit:ConfirmButtonExtender>
                                         <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
-                                    </td>>
+                                    </td>
+                                    >
                                 </tr>
                             </table>
                         </fieldset>

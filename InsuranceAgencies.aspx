@@ -3,37 +3,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
-
-        function CheckLength(text, long) {
-            var maxlength = new Number(long); // Change number to your max length.
-            if (text.value.length > maxlength) {
-                text.value = text.value.substring(0, maxlength);
-
-                alert(" Only " + long + " chars");
-
-            }
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode !== 34) && (keycode !== 39);
-        }
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-        }
-
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-        }
-
 
         function validationInsuranceDetails() {
             switch (document.getElementById("<%= txtInsuranceAgency.ClientID %>").value) {
@@ -70,7 +41,7 @@
                 alert("The phone number is the wrong length");
                 return false;
             }
-
+            return true;
         }
 
 
@@ -233,5 +204,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-
-

@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function validation(obj, id) {
@@ -18,15 +19,12 @@
             var handOverDate = document.getElementById(txtHandOverDate);
             var handOverBy = document.getElementById(txtHandOverBy);
             var odoReading = document.getElementById(txtOdoreading);
-
-
             switch (trim(vehicleNumber.value)) {
             case '':
                 alert("VehicleNumber To Cannot be Blank");
                 vehicleNumber.focus();
                 return false;
             }
-
             switch (trim(handOverTo.value)) {
             case '':
                 alert("Hand Over To Cannot be Blank");
@@ -72,17 +70,6 @@
             return true;
         }
 
-        function isValidDate(subject) {
-            return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
         function checkEnter(e) {
 
             var characterCode;
@@ -103,22 +90,6 @@
                 return true;
 
             }
-        }
-
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-        }
-
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else
-                return true;
         }
 
     </script>
@@ -311,5 +282,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-
-

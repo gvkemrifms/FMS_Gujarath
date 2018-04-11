@@ -3,6 +3,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
         function validation() {
             var handOverto = document.getElementById('<%= txtHandOverto.ClientID %>');
@@ -95,61 +96,7 @@
 
             if (!RequiredValidation(remarks, "Remarks Cannot be Blank"))
                 return false;
-        }
-
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-            }
-        }
-
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-
-        function isValidDate(subject) {
-            return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-        }
-
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 48 && keycode <= 57) ||
-                (keycode >= 65 && keycode <= 90) ||
-                (keycode >= 97 && keycode <= 122);
-        }
-
-        function alpha_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-        }
-
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode !== 34) && (keycode !== 39);
+            return true;
         }
 
     </script>

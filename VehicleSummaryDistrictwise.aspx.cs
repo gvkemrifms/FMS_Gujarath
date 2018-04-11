@@ -12,8 +12,15 @@ public partial class VehicleSummaryDistrictwise : Page
 
     private void BindDistrictdropdown()
     {
-        var sqlQuery = "SELECT district_id ds_dsid,district_name ds_lname from [m_district]  where state_id = 24 order by district_name";
-        _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        try
+        {
+            var sqlQuery = "SELECT district_id ds_dsid,district_name ds_lname from [m_district]  where state_id = 24 order by district_name";
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnsubmit_Click(object sender, EventArgs e)
@@ -23,9 +30,9 @@ public partial class VehicleSummaryDistrictwise : Page
             _helper.FillDropDownHelperMethodWithSp("VAS_Districtwise_Vehicles_Inactive", null, null, ddldistrict, null, null, null, "@dsid", null, null, null, null, GridInactive);
             _helper.FillDropDownHelperMethodWithSp("VAS_Districtwise_Vehicles_Active", null, null, ddldistrict, null, null, null, "@dsid", null, null, null, null, GridActive);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -39,9 +46,9 @@ public partial class VehicleSummaryDistrictwise : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 }

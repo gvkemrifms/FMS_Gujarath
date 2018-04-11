@@ -23,8 +23,7 @@ public partial class BillProcessingManagementReport : Page
         }
         catch (Exception ex)
         {
-            var exMessage = ex.Message;
-            Response.Write(exMessage);
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -34,9 +33,9 @@ public partial class BillProcessingManagementReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -46,9 +45,9 @@ public partial class BillProcessingManagementReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -66,9 +65,9 @@ public partial class BillProcessingManagementReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 

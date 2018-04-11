@@ -12,8 +12,15 @@ public partial class DistrictwiseLedgerReport : Page
 
     private void BindDistrictdropdown()
     {
-        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        try
+        {
+            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
@@ -22,9 +29,9 @@ public partial class DistrictwiseLedgerReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -43,9 +50,9 @@ public partial class DistrictwiseLedgerReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, null, null, "@DistrictID");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -61,9 +68,9 @@ public partial class DistrictwiseLedgerReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_ReportsVendorDistrictWise", null, null, ddldistrict, ddlvendor, txtfrmDate, txttodate, "@districtID", "@VendorID", "@From", "@To", null, Grddetails);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 }

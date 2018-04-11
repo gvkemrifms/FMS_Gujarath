@@ -1,44 +1,9 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Fabricator.aspx.cs" Inherits="Fabricator" Language="C#" MasterPageFile="~/temp.master" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
 
-    function CheckLength(text, long) {
-        var maxlength = new Number(long);
-        if (text.value.length > maxlength) {
-            text.value = text.value.substring(0, maxlength);
-            alert(" Only " + long + " chars");
-        }
-    }
-
-
-    function remark(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode !== 34) && (keycode !== 39);
-    }
-
-    function OnlyAlphabets(myfield, e, dec) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-    }
-
-    function OnlyAlphaNumeric(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-    }
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-        return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-    }
 
     function validationFabricator() {
         switch (document.getElementById("<%= txtFabricatorName.ClientID %>").value) {

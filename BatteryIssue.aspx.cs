@@ -22,6 +22,7 @@ public partial class BatteryIssue : Page
             txtCourierName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
             txtRemarks.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             grvBatteryPendingForIssue.Columns[4].Visible = false;
@@ -44,7 +45,8 @@ public partial class BatteryIssue : Page
     {
         _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
+        if (ds == null) return;
+        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryIssueVehicles);
     }
 
     protected void ddlInventoryBatteryIssueVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,6 +66,7 @@ public partial class BatteryIssue : Page
     private void FillGrid_BatteryForIssue(int fleetInventoryItemId, int vehicleId)
     {
         var ds = ObjFmsInvBatIss.GetBatteryPendingForIssue(fleetInventoryItemId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvBatteryPendingForIssue.DataSource = ds.Tables[0];
         grvBatteryPendingForIssue.DataBind();
         grvBatteryPendingForIssue.Visible = true;
@@ -78,16 +81,16 @@ public partial class BatteryIssue : Page
         foreach (GridViewRow item in grvBatteryIssueDetailsPopup.Rows)
         {
             var ddl = (DropDownList) item.FindControl("ddlNewBatteryNumber");
+            if (ddl == null) throw new ArgumentNullException(nameof(ddl));
             if (ddl.SelectedIndex != 0)
             {
                 var newBatteryNumber = Convert.ToString(((DropDownList) item.FindControl("ddlNewBatteryNumber")).SelectedItem);
                 var batteryPosition = Convert.ToString(grvBatteryIssueDetailsPopup.Rows[0].Cells[0].Text);
                 var issuedQuantity = Convert.ToInt32(((TextBox) item.FindControl("txtBatteryIssuedQty")).Text);
                 var ds = _fmsg.GetRegistrationDate(Convert.ToInt32(ddlInventoryBatteryIssueVehicles.SelectedValue));
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (DateTime.Parse(ds.Tables[0].Rows[0]["RegDate"].ToString()) < DateTime.Parse(txtDcDate.Text))
-                {
                     InsertBatteryIssueDetails(Convert.ToInt32(txtInvReqIdPopUp.Text), Convert.ToInt32(txtDcNumberPopup.Text), Convert.ToDateTime(txtDcDate.Text), Convert.ToString(txtCourierName.Text), Convert.ToString(txtRemarks.Text), issuedQuantity, Convert.ToInt32(txtBatIssVehicleID.Text), newBatteryNumber, batteryPosition);
-                }
                 else
                 {
                     Show("Dc Date should be greater than Registration Date " + ds.Tables[0].Rows[0]["RegDate"]);
@@ -167,6 +170,7 @@ public partial class BatteryIssue : Page
     {
         var id = Convert.ToInt32(e.CommandArgument.ToString());
         var ds = ObjFmsInvBatIss.GetGridBatteryIssuePopup(id);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtInvReqIdPopUp.Text = ds.Tables[0].Rows[0][0].ToString();
         txtBatIssVehicleID.Text = ds.Tables[0].Rows[0][1].ToString();
         grvBatteryIssueDetailsPopup.DataSource = ds.Tables[1];

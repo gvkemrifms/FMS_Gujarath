@@ -2,13 +2,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-        return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-    }
-
 
     function isMandatory() {
 
@@ -106,37 +101,6 @@
         return true;
     }
 
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-        default:
-            return true;
-        }
-    }
-
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else return true;
-    }
-
 
 </script>
 <asp:UpdatePanel ID="UpdPanel1" runat="server">
@@ -156,25 +120,25 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px; height: 19px">
+                            <td align="left" style="height: 19px; width: 121px;">
                             </td>
-                            <td style="width: 101px; height: 19px">
+                            <td style="height: 19px; width: 101px;">
                                 <asp:DropDownList ID="ddlDistricts" runat="server" Width="153px" AutoPostBack="True"
                                                   Visible="false" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </td>
-                            <td style="width: 135px; height: 19px">
+                            <td style="height: 19px; width: 135px;">
                                 <asp:TextBox ID="txtEdit" runat="server" Visible="False"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px; height: 19px;">
+                            <td align="left" style="height: 19px; width: 121px;">
                                 PetroCardNumber<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px; height: 19px;">
+                            <td style="height: 19px; width: 101px;">
                                 <asp:TextBox ID="txtPetroCardNumber" runat="server" MaxLength="16"></asp:TextBox>
                             </td>
-                            <td style="width: 135px; height: 19px;">
+                            <td style="height: 19px; width: 135px;">
                             </td>
                         </tr>
                         <tr>
@@ -231,10 +195,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px; height: 19px;">
+                            <td align="left" style="height: 19px; width: 121px;">
                                 Issued Date<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px; height: 19px;">
+                            <td style="height: 19px; width: 101px;">
                                 <asp:TextBox ID="txtIssuedDate" runat="server" MaxLength="15" onkeypress="return false"
                                              oncut="return false;" onpaste="return false;" oncopy="return false;">
                                 </asp:TextBox>
@@ -248,36 +212,36 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="right" style="width: 121px; height: 19px; text-align: left;">
+                            <td align="right" style="height: 19px; text-align: left; width: 121px;">
                                 Issued To Vehicle<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px; height: 19px">
+                            <td style="height: 19px; width: 101px;">
                                 <cc1:ComboBox AutoCompleteMode="Append" DropDownStyle="DropDownList" ID="ddlVehicles" runat="server" AutoPostBack="True"
                                               Enabled="False">
                                 </cc1:ComboBox>
 
 
                             </td>
-                            <td style="width: 135px; height: 19px">
+                            <td style="height: 19px; width: 135px;">
                             </td>
                         </tr>
                         <tr>
-                            <td align="right" style="width: 121px; height: 19px; text-align: left;">
+                            <td align="right" style="height: 19px; text-align: left; width: 121px;">
                                 Issued To District<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px; height: 19px">
+                            <td style="height: 19px; width: 101px;">
                                 <asp:DropDownList ID="ddlFeuserDistrict" runat="server" AutoPostBack="True"
                                                   Enabled="False">
                                 </asp:DropDownList>
                             </td>
-                            <td style="width: 135px; height: 19px">
+                            <td style="height: 19px; width: 135px;">
                                 &nbsp;
                             </td>
                         </tr>
                         <tr>
-                            <td align="right" style="width: 121px; height: 19px">
+                            <td align="right" style="height: 19px; width: 121px;">
                             <asp:Button ID="btSave" runat="server" Text="Save" OnClick="btSave_Click"/>
-                            <td style="width: 135px; height: 19px" align="center">
+                            <td style="height: 19px; width: 135px;" align="center">
                                 <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click"/>
                             </td>
                         </tr>
@@ -292,9 +256,9 @@
         <tr>
             <td>
                 <fieldset style="padding: 10px">
-                    <table style="width: 102px; height: 99px" align="center">
+                    <table style="height: 99px; width: 102px;" align="center">
                         <tr>
-                            <td style="width: 102px; height: 99px">
+                            <td style="height: 99px; width: 102px;">
                                 <asp:GridView ID="gvPetroCardIssue" runat="server" Width="102px" AllowPaging="True"
                                               OnPageIndexChanging="gvPetroCardIssue_PageIndexChanging" PageSize="5" CellPadding="3"
                                               CellSpacing="2" GridLines="None" CssClass="gridviewStyle" HorizontalAlign="Justify"
@@ -342,5 +306,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-
-

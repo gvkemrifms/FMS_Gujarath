@@ -60,9 +60,7 @@ public partial class AgencyDetails : Page
 
     private void FillDistricts(int stateId)
     {
-        _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillDistricts(stateId), "district_name", "district_id", ddlDistrict);
-        ddlDistrict.Items[0].Value = "0";
-        ddlDistrict.SelectedIndex = 0;
+        if (ObjFleetMaster != null) _helper.FillDropDownHelperMethodWithDataSet(ObjFleetMaster.IFillDistricts(stateId), "district_name", "district_id", ddlDistrict);
         ddlDistrict.Enabled = true;
     }
 
@@ -121,6 +119,7 @@ public partial class AgencyDetails : Page
                 case "Save":
                 {
                     var ds = ObjFleetMaster.IFillGridAgencyDetails();
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
                     if (ds.Tables[0].Select("AgencyName='" + txtAgencyName.Text + "'").Length <= 0)
                         InsertAgencyDetails(Convert.ToString(txtAgencyName.Text), Convert.ToInt32(ddlState.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), Convert.ToInt32(0), Convert.ToInt32(0), Convert.ToInt64(txtContactNo.Text), Convert.ToString(txtPanNo.Text), Convert.ToInt64(txtTin.Text), Convert.ToString(txtAddress.Text));
                     else
@@ -130,6 +129,7 @@ public partial class AgencyDetails : Page
                 default:
                 {
                     var ds = ObjFleetMaster.IFillGridAgencyDetails();
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
                     if (ds.Tables[0].Select("AgencyName='" + txtAgencyName.Text + "' And AgencyID<>'" + txtEdit.Text + "'").Length <= 0)
                         UpdateAgencyDetails(Convert.ToInt32(txtEdit.Text), Convert.ToString(txtAgencyName.Text), Convert.ToInt32(ddlState.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), Convert.ToInt32(0), Convert.ToInt32(0), Convert.ToInt64(txtContactNo.Text), Convert.ToString(txtPanNo.Text), Convert.ToInt64(txtTin.Text), Convert.ToString(txtAddress.Text));
                     else

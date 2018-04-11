@@ -19,6 +19,7 @@ public partial class FabricatedVehicleDetails : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btSave.Attributes.Add("onclick", "return validation()");
@@ -55,22 +56,44 @@ public partial class FabricatedVehicleDetails : Page
 
     public void GetFabricatedVehicleDetails()
     {
-        gvFabricatedVehicleDetails.DataSource = _fabricatedvehicledet.GetFabricatedVehicleDetails();
+        if (_fabricatedvehicledet != null) gvFabricatedVehicleDetails.DataSource = _fabricatedvehicledet.GetFabricatedVehicleDetails();
         gvFabricatedVehicleDetails.DataBind();
     }
 
     public void GetTrNo()
     {
-        var ds = _fabricatedvehicledet.GetTRNo();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+        if (_fabricatedvehicledet != null)
+        {
+            try
+            {
+                var ds = _fabricatedvehicledet.GetTRNo();
+                if (ds == null) return;
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+        }
     }
 
     public void GetFabricatorName()
     {
-        var ds = _fabricatedvehicledet.GetFabicatorName();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetFabricator_Name", "FleetFabricator_Id", ddlFabricatorName);
+        if (_fabricatedvehicledet != null)
+        {
+            try
+            {
+                var ds = _fabricatedvehicledet.GetFabicatorName();
+                if (ds == null) return;
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetFabricator_Name", "FleetFabricator_Id", ddlFabricatorName);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+
+            ;
+        }
     }
 
     protected void btSave_Click(object sender, EventArgs e)
@@ -122,7 +145,7 @@ public partial class FabricatedVehicleDetails : Page
         }
         catch (Exception ex)
         {
-            Show(ex.Message);
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -146,7 +169,7 @@ public partial class FabricatedVehicleDetails : Page
 
     protected void gridView_Sorting(object sender, GridViewSortEventArgs e)
     {
-        var dataTable = gvFabricatedVehicleDetails.DataSource as DataTable;
+        var dataTable = (DataTable) gvFabricatedVehicleDetails.DataSource;
         if (dataTable == null) return;
         GetFabricatedVehicleDetails();
     }
@@ -167,56 +190,67 @@ public partial class FabricatedVehicleDetails : Page
 
     protected void gvFabricatedVehicleDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
-        {
-            case "fabVehEdit":
-                ViewState["FabricatedVehicleDetID"] = e.CommandArgument.ToString();
-                var dsedit = _fabricatedvehicledet.GetFabricatedVehicleDetails();
-                var dr = dsedit.Tables[0].Select("FabricatedVehicleDetID=" + e.CommandArgument);
-                ClearControls();
-                ddlTRNo.Visible = false;
-                txtTrNo.Visible = true;
-                txtTrNo.Text = dr[0][11].ToString();
-                ViewState["VehId"] = Convert.ToInt16(dr[0][1].ToString());
-                ddlFabricatorName.Items.FindByValue(dr[0][2].ToString()).Selected = true;
-                txtInvoiceNo.Text = dr[0][3].ToString();
-                txtInvoiceDate.Text = dr[0][4].ToString();
-                txtFabricationCost.Text = dr[0][5].ToString();
-                txtVehicleHandoverDate.Text = dr[0][6].ToString();
-                txtFabricationCompDate.Text = dr[0][7].ToString();
-                txtInspecetedBy.Text = dr[0][8].ToString();
-                txtInspectionDate.Text = dr[0][9].ToString();
-                var dtUp = _fmsGeneral.GetPurchaseDate(int.Parse(ViewState["VehId"].ToString()));
-                vehiclePurchaseDate.Value = dtUp.ToString(CultureInfo.InvariantCulture);
-                pnlFabricatedVehicleDetails.Visible = true;
-                btSave.Text = "Update";
-                break;
-            case "fabVehDelete":
-                _fabricatedvehicledet.FabricatedVehicleDetID = int.Parse(e.CommandArgument.ToString());
-                var output = _fabricatedvehicledet.ValidateRegVehicle();
-                switch (output)
+        if (e.CommandName != null)
+            try
+            {
+                switch (e.CommandName)
                 {
-                    case 0:
-                        _ret = _fabricatedvehicledet.DelFabricatedVehicleDetails();
-                        Show(_ret == 1 ? "Record Deleted Successfully" : "Error");
+                    case "fabVehEdit":
+                        ViewState["FabricatedVehicleDetID"] = e.CommandArgument.ToString();
+                        var dsedit = _fabricatedvehicledet.GetFabricatedVehicleDetails();
+                        var dr = dsedit.Tables[0].Select("FabricatedVehicleDetID=" + e.CommandArgument);
+                        ClearControls();
+                        ddlTRNo.Visible = false;
+                        txtTrNo.Visible = true;
+                        txtTrNo.Text = dr[0][11].ToString();
+                        ViewState["VehId"] = Convert.ToInt16(dr[0][1].ToString());
+                        ddlFabricatorName.Items.FindByValue(dr[0][2].ToString()).Selected = true;
+                        txtInvoiceNo.Text = dr[0][3].ToString();
+                        txtInvoiceDate.Text = dr[0][4].ToString();
+                        txtFabricationCost.Text = dr[0][5].ToString();
+                        txtVehicleHandoverDate.Text = dr[0][6].ToString();
+                        txtFabricationCompDate.Text = dr[0][7].ToString();
+                        txtInspecetedBy.Text = dr[0][8].ToString();
+                        txtInspectionDate.Text = dr[0][9].ToString();
+                        var dtUp = _fmsGeneral.GetPurchaseDate(int.Parse(ViewState["VehId"].ToString()));
+                        vehiclePurchaseDate.Value = dtUp.ToString(CultureInfo.InvariantCulture);
+                        pnlFabricatedVehicleDetails.Visible = true;
+                        btSave.Text = "Update";
                         break;
-                    default:
-                        Show("Vehicle Registation has been completed, can not delete");
+                    case "fabVehDelete":
+                        _fabricatedvehicledet.FabricatedVehicleDetID = int.Parse(e.CommandArgument.ToString());
+                        var output = _fabricatedvehicledet.ValidateRegVehicle();
+                        switch (output)
+                        {
+                            case 0:
+                                _ret = _fabricatedvehicledet.DelFabricatedVehicleDetails();
+                                Show(_ret == 1 ? "Record Deleted Successfully" : "Error");
+                                break;
+                            default:
+                                Show("Vehicle Registation has been completed, can not delete");
+                                break;
+                        }
+
+                        ViewState["FabricatedVehicleDetID"] = null;
+                        ClearControls();
+                        GetFabricatedVehicleDetails();
+                        GetTrNo();
                         break;
                 }
-
-                ViewState["FabricatedVehicleDetID"] = null;
-                ClearControls();
-                GetFabricatedVehicleDetails();
-                GetTrNo();
-                break;
-        }
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
     }
 
     protected void ddlTRNo_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlTRNo.SelectedIndex == 0) return;
-        var dt = _fmsGeneral.GetPurchaseDate(int.Parse(ddlTRNo.SelectedItem.Value));
-        vehiclePurchaseDate.Value = dt.ToString(CultureInfo.InvariantCulture);
+        if (_fmsGeneral != null)
+        {
+            var dt = _fmsGeneral.GetPurchaseDate(int.Parse(ddlTRNo.SelectedItem.Value));
+            vehiclePurchaseDate.Value = dt.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

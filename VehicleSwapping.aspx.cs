@@ -24,8 +24,16 @@ public partial class VehicleSwapping : Page
 
     public void GetDistrict()
     {
-        var ds = _fmsobj.GetDistricts_new();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        try
+        {
+            var ds = _fmsobj.GetDistricts_new();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
@@ -68,31 +76,46 @@ public partial class VehicleSwapping : Page
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _vasbll.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        var ds = _vasbll.GetActiveVehicles();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
-        Session["dsvehicle"] = ds;
+        try
+        {
+            _vasbll.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            var ds = _vasbll.GetActiveVehicles();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
+            Session["dsvehicle"] = ds;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlSrcVehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlSrcVehicle.SelectedIndex == 0) return;
-        var ds = (DataSet) Session["dsvehicle"];
-        var dsVehicle = new DataSet();
-        var dvsrcvehbase = new DataView(ds.Tables[0], "VehicleID ='" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
-        txtSrcBaseLocation.Text = dvsrcvehbase[0][1].ToString();
-        txtSrcContactNo.Text = dvsrcvehbase[0][3].ToString();
-        ViewState["SrcBaseLocationId"] = Convert.ToInt32(dvsrcvehbase[0][4]);
-        var dvdestvehicle = new DataView(ds.Tables[0], "VehicleID <>'" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
-        var dtVehicle = dvdestvehicle.Table;
-        dsVehicle.Tables.Add(dtVehicle);
-        _helper.FillDropDownHelperMethodWithDataSet(dsVehicle, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
+        try
+        {
+            if (ddlSrcVehicle.SelectedIndex == 0) return;
+            var ds = (DataSet) Session["dsvehicle"];
+            var dsVehicle = new DataSet();
+            var dvsrcvehbase = new DataView(ds.Tables[0], "VehicleID ='" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
+            txtSrcBaseLocation.Text = dvsrcvehbase[0][1].ToString();
+            txtSrcContactNo.Text = dvsrcvehbase[0][3].ToString();
+            ViewState["SrcBaseLocationId"] = Convert.ToInt32(dvsrcvehbase[0][4]);
+            var dvdestvehicle = new DataView(ds.Tables[0], "VehicleID <>'" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
+            var dtVehicle = dvdestvehicle.Table;
+            dsVehicle.Tables.Add(dtVehicle);
+            _helper.FillDropDownHelperMethodWithDataSet(dsVehicle, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDestVehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlDestVehicle.SelectedIndex == 0) return;
         var dsDestVeh = (DataSet) Session["dsvehicle"];
+        if (dsDestVeh == null) throw new ArgumentNullException(nameof(dsDestVeh));
         var dvdestvehbase = new DataView(dsDestVeh.Tables[0], "VehicleID ='" + ddlDestVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
         txtDestBaseLocation.Text = dvdestvehbase[0][1].ToString();
         txtDestContactNo.Text = dvdestvehbase[0][3].ToString();

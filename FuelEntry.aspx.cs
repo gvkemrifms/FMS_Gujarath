@@ -61,9 +61,14 @@ public partial class FuelEntry : Page
         var ds = ObjFuelEntry.IFillVehiclesWithMappedCards(districtId);
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDistrict);
-            ddlDistrict.Items[0].Value = "0";
-            ddlDistrict.SelectedIndex = 0;
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDistrict);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
 
         var itemToRemove = ddlDistrict.Items.FindByValue(ddlVehicleNumber.SelectedValue);
@@ -82,14 +87,22 @@ public partial class FuelEntry : Page
     {
         var ds = _fmsg.GetVehicleNumber();
         if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
-        ddlVehicleNumber.Enabled = true;
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            ddlVehicleNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillDistrictLocation()
     {
         _fmsg.vehicle = ddlVehicleNumber.SelectedItem.ToString();
         var dsDistrict = _fmsg.GetDistrictLoc();
+        if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
         lblDistrict.Text = dsDistrict.Tables[0].Rows[0]["District"].ToString();
         lblLocation.Text = dsDistrict.Tables[0].Rows[0]["BaseLocation"].ToString();
     }
@@ -107,6 +120,7 @@ public partial class FuelEntry : Page
     {
         _fmsg.ServiceStnVeh = Convert.ToInt32(ddlVehicleNumber.SelectedValue);
         var dsServiceStn = _fmsg.GetServiceStnsVeh();
+        if (dsServiceStn == null) throw new ArgumentNullException(nameof(dsServiceStn));
         switch (dsServiceStn.Tables[0].Rows.Count)
         {
             case 0:
@@ -125,6 +139,7 @@ public partial class FuelEntry : Page
         ViewState["VehicleID"] = ddlVehicleNumber.SelectedValue;
         ddlPetroCardNumber.Enabled = false;
         var dsOdo = ObjFuelEntry.ICheckFuelEntryOdo(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
+        if (dsOdo == null) throw new ArgumentNullException(nameof(dsOdo));
         switch (dsOdo.Tables[0].Rows.Count)
         {
             case 0:
@@ -144,12 +159,20 @@ public partial class FuelEntry : Page
     {
         var ds = ObjFuelEntry.IFillPayMode();
         if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "PayMode", "PayModeID", ddlPaymode);
-        ddlPaymode.Enabled = true;
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "PayMode", "PayModeID", ddlPaymode);
+            ddlPaymode.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlPaymode_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (ddlPaymode == null) return;
         switch (ddlPaymode.SelectedValue)
         {
             case "1":
@@ -168,6 +191,7 @@ public partial class FuelEntry : Page
     private void FillCardNumber(int vehicleId)
     {
         var ds = ObjFuelEntry.IFillCardNumber(vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         switch (ds.Tables[0].Rows.Count)
         {
             case 0:
@@ -194,128 +218,153 @@ public partial class FuelEntry : Page
     private void FillFuelAgency(int petroCardIssueId)
     {
         var ds = ObjFuelEntry.IFillFuelAgency(petroCardIssueId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
-        ddlAgency.Enabled = true;
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
+            ddlAgency.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void Save_Click(object sender, EventArgs e)
     {
         var dsOdo = ObjFuelEntry.ICheckFuelEntryOdo(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
-        switch (dsOdo.Tables[0].Rows.Count)
+        if (dsOdo == null) throw new ArgumentNullException(nameof(dsOdo));
+        try
         {
-            case 0:
-                maxOdo.Value = "0";
-                break;
-            default:
-                if (dsOdo.Tables[0].Rows[0]["ODO"].ToString() == string.Empty)
+            switch (dsOdo.Tables[0].Rows.Count)
+            {
+                case 0:
                     maxOdo.Value = "0";
-                else
-                {
-                    maxOdo.Value = dsOdo.Tables[0].Rows[0]["ODO"].ToString();
-                    ViewState["maxodometer"] = dsOdo.Tables[0].Rows[0]["ODO"].ToString();
-                }
-
-                break;
-        }
-
-        // Show(txtFuelEntryDate.Text);
-        var entrydate = DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-        if (entrydate > DateTime.Now)
-        {
-            Show("Fuel entry date should not be greater than current date ");
-            return;
-        }
-
-        Save.Enabled = false;
-        var fmsGeneral = new FMSGeneral();
-        var ds = fmsGeneral.GetRegistrationDate(int.Parse(ddlVehicleNumber.SelectedItem.Value));
-        Save.Enabled = true;
-        switch (ds.Tables[0].Rows.Count)
-        {
-            case 0:
-                Show("Fuel Entry cannot be done as vehicle is not yet Registered");
-                break;
-            default:
-                if (txtOdometer.Text.Trim() == string.Empty)
-                {
-                    Show("Enter Odo value");
-                    return;
-                }
-                else
-                {
-                    if (Convert.ToInt32(ViewState["maxodometer"].ToString()) != 0)
+                    break;
+                default:
+                    if (dsOdo.Tables[0].Rows[0]["ODO"].ToString() == string.Empty)
+                        maxOdo.Value = "0";
+                    else
                     {
-                        var maxno = Convert.ToInt32(ViewState["maxodometer"].ToString()) + 1000;
-                        if (maxno <= Convert.ToInt32(txtOdometer.Text) || Convert.ToInt32(txtOdometer.Text) <= Convert.ToInt32(ViewState["maxodometer"].ToString()))
+                        maxOdo.Value = dsOdo.Tables[0].Rows[0]["ODO"].ToString();
+                        ViewState["maxodometer"] = dsOdo.Tables[0].Rows[0]["ODO"].ToString();
+                    }
+
+                    break;
+            }
+
+            var entrydate = DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            if (entrydate > DateTime.Now)
+            {
+                Show("Fuel entry date should not be greater than current date ");
+                return;
+            }
+
+            Save.Enabled = false;
+            var fmsGeneral = new FMSGeneral();
+            var ds = fmsGeneral.GetRegistrationDate(int.Parse(ddlVehicleNumber.SelectedItem.Value));
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            Save.Enabled = true;
+            switch (ds.Tables[0].Rows.Count)
+            {
+                case 0:
+                    Show("Fuel Entry cannot be done as vehicle is not yet Registered");
+                    break;
+                default:
+                    if (txtOdometer.Text.Trim() == string.Empty)
+                    {
+                        Show("Enter Odo value");
+                        return;
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(ViewState["maxodometer"].ToString()) != 0)
                         {
-                            Show("Odo value between  " + ViewState["maxodometer"] + " And " + maxno);
-                            txtOdometer.Text = "";
-                            txtOdometer.Focus();
+                            var maxno = Convert.ToInt32(ViewState["maxodometer"].ToString()) + 1000;
+                            if (maxno <= Convert.ToInt32(txtOdometer.Text) || Convert.ToInt32(txtOdometer.Text) <= Convert.ToInt32(ViewState["maxodometer"].ToString()))
+                            {
+                                Show("Odo value between  " + ViewState["maxodometer"] + " And " + maxno);
+                                txtOdometer.Text = "";
+                                txtOdometer.Focus();
+                                return;
+                            }
+                        }
+                    }
+
+                    var dtofRegistration = DateTime.ParseExact(ds.Tables[0].Rows[0]["RegDate"].ToString(), "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    var fuelEntry = DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    if (dtofRegistration > fuelEntry)
+                    {
+                        Show("Fuel entry date should be greater than date of registration ");
+                        return;
+                    }
+
+                    var dtpreviousentryDate = GetpreviousOdo(int.Parse(ddlVehicleNumber.SelectedItem.Value));
+                    if (dtpreviousentryDate.Rows.Count > 0 && dtpreviousentryDate.Rows[0]["maxentry"].ToString() != "")
+                    {
+                        var dtprvrefill = Convert.ToDateTime(dtpreviousentryDate.Rows[0]["maxentry"].ToString());
+                        if (dtprvrefill > DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture))
+                        {
+                            Show("Fuel entry date must be greater than previous fuel entry date");
                             return;
                         }
                     }
-                }
 
-                var dtofRegistration = DateTime.ParseExact(ds.Tables[0].Rows[0]["RegDate"].ToString(), "MM/dd/yyyy", CultureInfo.InvariantCulture);
-                var fuelEntry = DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-                if (dtofRegistration > fuelEntry)
-                {
-                    Show("Fuel entry date should be greater than date of registration ");
-                    return;
-                }
-
-                var dtpreviousentryDate = GetpreviousOdo(int.Parse(ddlVehicleNumber.SelectedItem.Value));
-                if (dtpreviousentryDate.Rows.Count > 0 && dtpreviousentryDate.Rows[0]["maxentry"].ToString() != "")
-                {
-                    var dtprvrefill = Convert.ToDateTime(dtpreviousentryDate.Rows[0]["maxentry"].ToString());
-                    if (dtprvrefill > DateTime.ParseExact(txtFuelEntryDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture))
+                    Save.Enabled = false;
+                    if (Save.Text == "Save" && ddlPetroCardNumber.Enabled)
                     {
-                        Show("Fuel entry date must be greater than previous fuel entry date");
-                        return;
+                        _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
+                        InsFuelEntry(Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToInt64(ddlPetroCardNumber.SelectedValue), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToString(txtLocation.Text), Convert.ToInt32(Session["User_Id"].ToString()), DateTime.Now, 1, Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
+                        FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
                     }
-                }
+                    else if (Save.Text == "Save" && ddlPetroCardNumber.Enabled == false)
+                    {
+                        _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
+                        InsFuelEntry1(Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToString(txtLocation.Text), Convert.ToInt32(Session["User_Id"].ToString()), DateTime.Now, 1, Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
+                        FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
+                    }
+                    else if (Save.Text == "Update" && ddlPetroCardNumber.Enabled)
+                    {
+                        _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
+                        UpdFuelEntry(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToInt64(ddlPetroCardNumber.SelectedValue), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToString(txtLocation.Text), Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
+                        FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
+                    }
+                    else
+                    {
+                        _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
+                        UpdFuelEntry1(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToString(txtLocation.Text), Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
+                        FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
+                    }
 
-                //Shiva end
-                Save.Enabled = false;
-                if (Save.Text == "Save" && ddlPetroCardNumber.Enabled)
-                {
-                    _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
-                    InsFuelEntry(Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToInt64(ddlPetroCardNumber.SelectedValue), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToString(txtLocation.Text), Convert.ToInt32(Session["User_Id"].ToString()), DateTime.Now, 1, Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
-                    FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
-                }
-                else if (Save.Text == "Save" && ddlPetroCardNumber.Enabled == false)
-                {
-                    _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
-                    InsFuelEntry1(Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToString(txtLocation.Text), Convert.ToInt32(Session["User_Id"].ToString()), DateTime.Now, 1, Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
-                    FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
-                }
-                else if (Save.Text == "Update" && ddlPetroCardNumber.Enabled)
-                {
-                    _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
-                    UpdFuelEntry(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), Convert.ToInt32(ddlDistrict.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToInt64(ddlPetroCardNumber.SelectedValue), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToString(txtLocation.Text), Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
-                    FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
-                }
-                else
-                {
-                    _bunkname = ddlBunkName.Visible ? ddlBunkName.SelectedItem.Text : txtBunkName.Text;
-                    UpdFuelEntry1(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt32(ddlVehicleNumber.SelectedValue), fuelEntry, Convert.ToInt64(txtBillNumber.Text), Convert.ToInt64(txtOdometer.Text), _bunkname, Convert.ToInt32(ddlPaymode.SelectedValue), Convert.ToDecimal(txtQuantity.Text), Convert.ToDecimal(txtUnitPrice.Text), Convert.ToString(txtLocation.Text), Convert.ToDecimal(txtAmount.Text), Convert.ToInt32(txtPilotID.Text), Convert.ToString(txtPilotName.Text), Convert.ToInt32(ddlCardSwiped.SelectedValue), Convert.ToString(txtRemarks.Text));
-                    FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
-                }
-
-                break;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     private DataTable GetpreviousOdo(int vehicleId)
     {
         string query = "select max(entrydate) maxentry from T_FMS_FuelEntryDetails where vehicleid = '" + vehicleId + "' and status = 1";
-        DataTable dtVehData = _helper.ExecuteSelectStmt(query);
+        DataTable dtVehData = null;
+        try
+        {
+            dtVehData = _helper.ExecuteSelectStmt(query);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
+
         return dtVehData;
     }
 
     private void ShowKmpl()
     {
         var ds = ObjFuelEntry.GetKMPL(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         if (ds.Tables[0].Rows.Count > 0)
         {
             switch (ds.Tables[0].Rows[0]["KMPL"].ToString())
@@ -341,6 +390,7 @@ public partial class FuelEntry : Page
     private void ShowMasterKmpl()
     {
         var ds = ObjFuelEntry.GetMasterKMPL(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         if (ds.Tables[0].Rows.Count > 0)
         {
             switch (ds.Tables[0].Rows[0]["KMPL"].ToString())
@@ -401,10 +451,12 @@ public partial class FuelEntry : Page
     private void InsFuelEntry(int districtId, int vehicleId, int borrowedVehicle, DateTime entryDate, long billNumber, long odometer, string bunkName, int paymode, decimal quantity, long petroCardNumber, decimal unitPrice, int agencyId, string location, int createdBy, DateTime createdDate, int status, decimal amount, int pilotId, string pilotName, int cardSwipedStatus, string remarks)
     {
         var dsOdo = ObjFuelEntry.ICheckFuelEntryOdo(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
+        if (dsOdo == null) throw new ArgumentNullException(nameof(dsOdo));
         var maxodo = Convert.ToInt32(dsOdo.Tables[0].Rows[0]["ODO"].ToString());
         if (maxodo < odometer)
         {
             var dsres = ObjFuelEntry.IInsFuelEntry(districtId, vehicleId, borrowedVehicle, entryDate, billNumber, odometer, bunkName, paymode, quantity, petroCardNumber, unitPrice, agencyId, location, createdBy, createdDate, status, amount, pilotId, pilotName, cardSwipedStatus, remarks);
+            if (dsres == null) throw new ArgumentNullException(nameof(dsres));
             ShowKmpl();
             ShowMasterKmpl();
             if (dsres.Tables[0].Rows.Count > 0)
@@ -444,6 +496,7 @@ public partial class FuelEntry : Page
     private void InsFuelEntry1(int districtId, int vehicleId, DateTime entryDate, long billNumber, long odometer, string bunkName, int paymode, decimal quantity, decimal unitPrice, string location, int createdBy, DateTime createdDate, int status, decimal amount, int pilotId, string pilotName, int cardSwipedStatus, string remarks)
     {
         var ds = ObjFuelEntry.IInsFuelEntry1(districtId, vehicleId, entryDate, billNumber, odometer, bunkName, paymode, quantity, unitPrice, location, createdBy, createdDate, status, amount, pilotId, pilotName, cardSwipedStatus, remarks);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         ShowKmpl();
         ShowMasterKmpl();
         if (ds.Tables[0].Rows.Count > 0)
@@ -511,22 +564,30 @@ public partial class FuelEntry : Page
 
     private void FillGridFuelEntry(int vehicleId)
     {
-        gvFuelEntry.Visible = true;
-        var ds = ObjFuelEntry.IFillGridFuelEntry(vehicleId);
-        if (ds != null && ds.Tables.Count > 0)
+        try
         {
-            gvFuelEntry.DataSource = ds;
-            gvFuelEntry.DataBind();
-            ViewState["maxodometer"] = ds.Tables[0].Rows[0]["odo"].ToString();
+            gvFuelEntry.Visible = true;
+            var ds = ObjFuelEntry.IFillGridFuelEntry(vehicleId);
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                gvFuelEntry.DataSource = ds;
+                gvFuelEntry.DataBind();
+                ViewState["maxodometer"] = ds.Tables[0].Rows[0]["odo"].ToString();
+            }
+            else
+                ViewState["maxodometer"] = 0;
         }
-        else
-            ViewState["maxodometer"] = 0;
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void gvFuelEntry_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvFuelEntry.PageIndex = e.NewPageIndex;
         var ds = ObjFuelEntry.IFillGridFuelEntry(Convert.ToInt32(ddlVehicleNumber.SelectedValue));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvFuelEntry.DataSource = ds;
         gvFuelEntry.DataBind();
     }
@@ -590,110 +651,119 @@ public partial class FuelEntry : Page
 
     protected void gvFuelEntry_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if (e.CommandName == null) return;
+        try
         {
-            case "EditFuel":
+            switch (e.CommandName)
             {
-                Save.Text = "Update";
-                var id = Convert.ToInt32(e.CommandArgument.ToString());
-                var ds = ObjFuelEntry.IEditFuelEntryDetails(id);
-                FillCardNumber(Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString()));
-                ddlPetroCardNumber.Enabled = false;
-                txtEdit.Text = Convert.ToString(id);
-                ddlPaymode.ClearSelection();
-                ddlPaymode.Items.FindByValue(ds.Tables[0].Rows[0]["Paymode"].ToString()).Selected = true;
-                ddlVehicleNumber.ClearSelection();
-                ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
-                ddlCardSwiped.ClearSelection();
-                ddlCardSwiped.Items.FindByValue(ds.Tables[0].Rows[0]["CardSwipedStatus"].ToString()).Selected = true;
-                ddlCardSwiped.Enabled = false;
-                FillDistricts();
-                maxOdo.Value = "0";
-                txtFuelEntryDate.Text = ds.Tables[0].Rows[0]["EntryDate"].ToString();
-                txtBillNumber.Text = ds.Tables[0].Rows[0]["BillNumber"].ToString();
-                txtOdometer.Text = ds.Tables[0].Rows[0]["Odometer"].ToString();
-                txtBunkName.Text = ds.Tables[0].Rows[0]["BunkName"].ToString();
-                var coBGrade = Convert.ToString(ds.Tables[0].Rows[0]["Quantity"].ToString()).Split('.');
-                txtQuantity.Text = coBGrade[0] + '.' + coBGrade[1].Substring(0, 2);
-                txtLocation.Text = ds.Tables[0].Rows[0]["Location"].ToString();
-                var cGrade = Convert.ToString(ds.Tables[0].Rows[0]["UnitPrice"].ToString()).Split('.');
-                txtUnitPrice.Text = cGrade[0] + '.' + cGrade[1].Substring(0, 2);
-                var coAGrade = Convert.ToString(ds.Tables[0].Rows[0]["Amount"].ToString()).Split('.');
-                txtAmount.Text = coAGrade[0] + '.' + coAGrade[1].Substring(0, 2);
-                txtPilotID.Text = ds.Tables[0].Rows[0]["Pilot"].ToString();
-                txtPilotName.Text = ds.Tables[0].Rows[0]["PilotName"].ToString();
-                txtRemarks.Text = ds.Tables[0].Rows[0]["RemarksFuel"].ToString();
-                if (ds.Tables[0].Rows[0]["PetroCardNumber"].ToString() != string.Empty)
+                case "EditFuel":
                 {
-                    switch (Convert.ToInt32(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()))
+                    Save.Text = "Update";
+                    var id = Convert.ToInt32(e.CommandArgument.ToString());
+                    var ds = ObjFuelEntry.IEditFuelEntryDetails(id);
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    FillCardNumber(Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString()));
+                    ddlPetroCardNumber.Enabled = false;
+                    txtEdit.Text = Convert.ToString(id);
+                    ddlPaymode.ClearSelection();
+                    ddlPaymode.Items.FindByValue(ds.Tables[0].Rows[0]["Paymode"].ToString()).Selected = true;
+                    ddlVehicleNumber.ClearSelection();
+                    ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
+                    ddlCardSwiped.ClearSelection();
+                    ddlCardSwiped.Items.FindByValue(ds.Tables[0].Rows[0]["CardSwipedStatus"].ToString()).Selected = true;
+                    ddlCardSwiped.Enabled = false;
+                    FillDistricts();
+                    maxOdo.Value = "0";
+                    txtFuelEntryDate.Text = ds.Tables[0].Rows[0]["EntryDate"].ToString();
+                    txtBillNumber.Text = ds.Tables[0].Rows[0]["BillNumber"].ToString();
+                    txtOdometer.Text = ds.Tables[0].Rows[0]["Odometer"].ToString();
+                    txtBunkName.Text = ds.Tables[0].Rows[0]["BunkName"].ToString();
+                    var coBGrade = Convert.ToString(ds.Tables[0].Rows[0]["Quantity"].ToString()).Split('.');
+                    txtQuantity.Text = coBGrade[0] + '.' + coBGrade[1].Substring(0, 2);
+                    txtLocation.Text = ds.Tables[0].Rows[0]["Location"].ToString();
+                    var cGrade = Convert.ToString(ds.Tables[0].Rows[0]["UnitPrice"].ToString()).Split('.');
+                    txtUnitPrice.Text = cGrade[0] + '.' + cGrade[1].Substring(0, 2);
+                    var coAGrade = Convert.ToString(ds.Tables[0].Rows[0]["Amount"].ToString()).Split('.');
+                    txtAmount.Text = coAGrade[0] + '.' + coAGrade[1].Substring(0, 2);
+                    txtPilotID.Text = ds.Tables[0].Rows[0]["Pilot"].ToString();
+                    txtPilotName.Text = ds.Tables[0].Rows[0]["PilotName"].ToString();
+                    txtRemarks.Text = ds.Tables[0].Rows[0]["RemarksFuel"].ToString();
+                    if (ds.Tables[0].Rows[0]["PetroCardNumber"].ToString() != string.Empty)
                     {
-                        case 0:
+                        switch (Convert.ToInt32(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()))
                         {
-                            var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString());
-                            ddlPetroCardNumber.ClearSelection();
-                            FillCardNumber(vid);
-                            ddlPetroCardNumber.Items.FindByValue(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString()).Selected = true;
-                            var pid = Convert.ToInt32(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString());
-                            ddlAgency.ClearSelection();
-                            FillFuelAgency(pid);
-                            ddlAgency.Items.FindByValue(ds.Tables[0].Rows[0]["AgencyID"].ToString()).Selected = true;
+                            case 0:
+                            {
+                                var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString());
+                                ddlPetroCardNumber.ClearSelection();
+                                FillCardNumber(vid);
+                                ddlPetroCardNumber.Items.FindByValue(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString()).Selected = true;
+                                var pid = Convert.ToInt32(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString());
+                                ddlAgency.ClearSelection();
+                                FillFuelAgency(pid);
+                                ddlAgency.Items.FindByValue(ds.Tables[0].Rows[0]["AgencyID"].ToString()).Selected = true;
+                                break;
+                            }
+                            default:
+                            {
+                                var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString());
+                                ddlDistrict.ClearSelection();
+                                ddlDistrict.Items.FindByValue(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()).Selected = true;
+                                ddlPetroCardNumber.ClearSelection();
+                                FillCardNumber(vid);
+                                ddlPetroCardNumber.Items.FindByValue(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString()).Selected = true;
+                                var pid = Convert.ToInt32(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString());
+                                ddlAgency.ClearSelection();
+                                FillFuelAgency(pid);
+                                ddlAgency.Items.FindByValue(ds.Tables[0].Rows[0]["AgencyID"].ToString()).Selected = true;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        FillFuelAgency(0);
+                        var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString());
+                        ObjFuelEntry.IFillCardNumber(vid);
+                        ObjFuelEntry.IFillAgencyWoDistrictID();
+                    }
+
+                    ddlAgency.Enabled = false;
+                    ddlPaymode.Enabled = false;
+                    ddlPetroCardNumber.Enabled = false;
+                    ddlVehicleNumber.Enabled = false;
+                    ddlDistrict.Enabled = false;
+                    break;
+                }
+                case "DeleteFuel":
+                {
+                    var id = Convert.ToInt32(e.CommandArgument.ToString());
+                    var result = ObjFuelEntry.IDeleteFuelEntry(id);
+                    switch (result)
+                    {
+                        case 1:
+                        {
+                            var strFmsScript = "Fuel Entry Deactivated";
+                            Show(strFmsScript);
                             break;
                         }
                         default:
                         {
-                            var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString());
-                            ddlDistrict.ClearSelection();
-                            ddlDistrict.Items.FindByValue(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()).Selected = true;
-                            ddlPetroCardNumber.ClearSelection();
-                            FillCardNumber(vid);
-                            ddlPetroCardNumber.Items.FindByValue(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString()).Selected = true;
-                            var pid = Convert.ToInt32(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString());
-                            ddlAgency.ClearSelection();
-                            FillFuelAgency(pid);
-                            ddlAgency.Items.FindByValue(ds.Tables[0].Rows[0]["AgencyID"].ToString()).Selected = true;
+                            var strFmsScript = "failure";
+                            Show(strFmsScript);
                             break;
                         }
                     }
-                }
-                else
-                {
-                    FillFuelAgency(0);
-                    var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString());
-                    ObjFuelEntry.IFillCardNumber(vid);
-                    ObjFuelEntry.IFillAgencyWoDistrictID();
-                }
 
-                ddlAgency.Enabled = false;
-                ddlPaymode.Enabled = false;
-                ddlPetroCardNumber.Enabled = false;
-                ddlVehicleNumber.Enabled = false;
-                ddlDistrict.Enabled = false;
-                break;
-            }
-            case "DeleteFuel":
-            {
-                var id = Convert.ToInt32(e.CommandArgument.ToString());
-                var result = ObjFuelEntry.IDeleteFuelEntry(id);
-                switch (result)
-                {
-                    case 1:
-                    {
-                        var strFmsScript = "Fuel Entry Deactivated";
-                        Show(strFmsScript);
-                        break;
-                    }
-                    default:
-                    {
-                        var strFmsScript = "failure";
-                        Show(strFmsScript);
-                        break;
-                    }
+                    ClearFields();
+                    FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
+                    break;
                 }
-
-                ClearFields();
-                FillGridFuelEntry(Convert.ToInt32(ViewState["VehicleID"]));
-                break;
             }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

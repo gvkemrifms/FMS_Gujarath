@@ -30,10 +30,17 @@ public partial class VehicleHistoryReport : Page
 
     public void GetDistricts()
     {
-        var ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
-        ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+        try
+        {
+            var ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
+            if (ds == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+            ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnExportToExcel_Click(object sender, EventArgs e)
@@ -60,12 +67,19 @@ public partial class VehicleHistoryReport : Page
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ddlVehNumber.Enabled = true;
-        var districtIdssn = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        var ds = _vehreg.VehicleNumber(districtIdssn);
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehNumber);
-        ddlVehNumber.Items.Insert(1, new ListItem("All", "-1"));
+        try
+        {
+            ddlVehNumber.Enabled = true;
+            var districtIdssn = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            var ds = _vehreg.VehicleNumber(districtIdssn);
+            if (ds == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehNumber);
+            ddlVehNumber.Items.Insert(1, new ListItem("All", "-1"));
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlMonth_SelectedIndexChanged(object sender, EventArgs e)

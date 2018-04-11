@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class CostingAnalysisReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -12,11 +13,13 @@ public partial class CostingAnalysisReport : Page
             BindDistrictdropdown();
         }
     }
+
     private void BindDistrictdropdown()
     {
         string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
         _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
+
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
@@ -28,40 +31,42 @@ public partial class CostingAnalysisReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+                _helper.ErrorsEntry(ex);
             }
         }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         Loaddata();
     }
+
     public void Loaddata()
     {
         try
         {
             _helper.FillDropDownHelperMethodWithSp("P_Reports_MaintCostingAnalysis", null, null, ddldistrict, ddlvehicle, null, null, "@DistrictID", "@VehicleID", null, null, null, Grdcosdetails);
-
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
     }

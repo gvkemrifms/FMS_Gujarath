@@ -20,9 +20,9 @@ public partial class InvoiceTrackingReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -37,9 +37,9 @@ public partial class InvoiceTrackingReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "Billno", ddlvehicle, ddlbillno, null, null, "@vehNo");
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -50,9 +50,9 @@ public partial class InvoiceTrackingReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -67,9 +67,9 @@ public partial class InvoiceTrackingReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Reports_VenwiseInvoiceTracking", "", "", ddlvehicle, ddlbillno, null, null, "@VehicleNo", "@BillNo", null, null, null, Grddetails);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 

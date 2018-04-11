@@ -21,9 +21,9 @@ public partial class EquipmentDetailsRepornew : Page
             var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -33,9 +33,9 @@ public partial class EquipmentDetailsRepornew : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleEquipmentDetails", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -45,9 +45,9 @@ public partial class EquipmentDetailsRepornew : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleEquipmentDetails", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -70,9 +70,9 @@ public partial class EquipmentDetailsRepornew : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 

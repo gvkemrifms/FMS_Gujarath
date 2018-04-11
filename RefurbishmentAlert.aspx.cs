@@ -9,6 +9,7 @@ using GvkFMSAPP.BLL.Alert;
 public partial class RefurbishmentAlert : Page
 {
     private readonly Alert _fmsAlert = new Alert();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -17,11 +18,18 @@ public partial class RefurbishmentAlert : Page
 
     protected void FillGrid()
     {
-        _fmsAlert.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsAlert.GetRefurbishmentAlert();
-        ViewState["ds"] = ds;
-        grdRefAlert.DataSource = ds;
-        grdRefAlert.DataBind();
+        try
+        {
+            _fmsAlert.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsAlert.GetRefurbishmentAlert();
+            ViewState["ds"] = ds;
+            grdRefAlert.DataSource = ds;
+            grdRefAlert.DataBind();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public string CreateHtml(DataSet ds)
@@ -58,10 +66,17 @@ public partial class RefurbishmentAlert : Page
 
     protected void btnSendMail_Click(object sender, EventArgs e)
     {
-        var subject = "";
-        var mailBody = "";
-        subject = "Vehicle Refurbishment Alert";
-        mailBody = CreateHtml((DataSet) ViewState["ds"]);
-        MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        try
+        {
+            var subject = "";
+            var mailBody = "";
+            subject = "Vehicle Refurbishment Alert";
+            mailBody = CreateHtml((DataSet) ViewState["ds"]);
+            MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 }

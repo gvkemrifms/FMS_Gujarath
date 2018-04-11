@@ -11,6 +11,7 @@ public partial class GetWheelAlignmentAlert : Page
 {
     private readonly Alert _fmsAlert = new Alert();
     private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -63,6 +64,7 @@ public partial class GetWheelAlignmentAlert : Page
     {
         _fmsAlert.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _fmsAlert.GetWheelAlignment();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         ViewState["ds"] = ds;
         grdWheelAlignment.DataSource = ds;
         grdWheelAlignment.DataBind();
@@ -72,6 +74,7 @@ public partial class GetWheelAlignmentAlert : Page
     {
         var vehicleId = e.CommandArgument.ToString();
         var ds = _vehMain.GetVehiclesPendingForEntry(Convert.ToInt32(Session["UserdistrictId"].ToString()));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         if (Convert.ToInt32(ds.Tables[0].Select("Vehicle_ID=" + vehicleId).Length) <= 0)
             Response.Redirect("~/VehicleScheduleServiceRequest.aspx?VehID=" + vehicleId, true);
         else

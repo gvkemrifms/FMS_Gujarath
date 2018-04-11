@@ -20,8 +20,15 @@ public partial class HrDisciplinaryActions : Page
 
     private void GetVehicleNumbers()
     {
-        var ds = _obj.GetHRDiscVeh();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleno);
+        try
+        {
+            var ds = _obj.GetHRDiscVeh();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleno);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void BindData()
@@ -29,29 +36,45 @@ public partial class HrDisciplinaryActions : Page
         var ds = _obj.GetHRDiscDropDown();
         if (ds != null && ds.Tables.Count > 0)
         {
-            _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[0], "FA_Details", "FA_ID");
-            _helper.FillDifferentDataTables(ddlMajor, ds.Tables[1], "MajA_Details", "MajA_ID");
-            _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[2], "MajlossA_Details", "MajlossA_ID");
-            _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[3], "MA_Details", "MA_ID");
-            _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[4], "SevInj_Details", "SevInj_ID");
-            _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[5], "SituationOfAccident", "AccidentId");
+            try
+            {
+                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[0], "FA_Details", "FA_ID");
+                _helper.FillDifferentDataTables(ddlMajor, ds.Tables[1], "MajA_Details", "MajA_ID");
+                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[2], "MajlossA_Details", "MajlossA_ID");
+                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[3], "MA_Details", "MA_ID");
+                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[4], "SevInj_Details", "SevInj_ID");
+                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[5], "SituationOfAccident", "AccidentId");
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
     protected void ddlSitIfAction_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (ddlSitIfAction.SelectedIndex)
+        if (ddlSitIfAction == null) return;
+        try
         {
-            case 0:
-                ddlCause.Items.Clear();
-                ddlCause.Enabled = false;
-                break;
-            default:
-                ddlCause.Enabled = true;
-                var x = ddlSitIfAction.SelectedIndex;
-                var ds = _obj.GetCausesforAcc(x);
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "CauseOfAccident", "CauseId", ddlCause);
-                break;
+            switch (ddlSitIfAction.SelectedIndex)
+            {
+                case 0:
+                    ddlCause.Items.Clear();
+                    ddlCause.Enabled = false;
+                    break;
+                default:
+                    ddlCause.Enabled = true;
+                    var x = ddlSitIfAction.SelectedIndex;
+                    var ds = _obj.GetCausesforAcc(x);
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "CauseOfAccident", "CauseId", ddlCause);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -77,6 +100,7 @@ public partial class HrDisciplinaryActions : Page
         if (ddlMajorOrtotLoss != null) _obj.majLoss = ddlMajorOrtotLoss.SelectedIndex.ToString();
         if (ddlSevereInj != null) _obj.sevInj = ddlSevereInj.SelectedItem.ToString();
         if (ddlFatalAcc != null) _obj.fatalAcc = ddlFatalAcc.SelectedItem.ToString();
+        if (_obj == null) return;
         var i = _obj.InsertHRDisciplinaryActions();
         switch (i)
         {

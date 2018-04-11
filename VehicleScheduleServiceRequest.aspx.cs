@@ -36,19 +36,34 @@ public partial class VehicleScheduleServiceRequest : Page
 
     private void FillVehicles()
     {
-        if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var o = Session["UserdistrictId"];
-        if (o != null)
+        try
         {
-            var ds = _vehMain.GetVehicleNumber(Convert.ToInt32(o.ToString()));
-            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNo);
+            if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var o = Session["UserdistrictId"];
+            if (o != null)
+            {
+                var ds = _vehMain.GetVehicleNumber(Convert.ToInt32(o.ToString()));
+                if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNo);
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     private void FillDropDownList()
     {
-        var ds = _fmsg.GetMaintenanceType();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "Maint_Desc", "Maint_Type_ID", ddlScheduleCat);
+        try
+        {
+            var ds = _fmsg.GetMaintenanceType();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "Maint_Desc", "Maint_Type_ID", ddlScheduleCat);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
@@ -128,9 +143,7 @@ public partial class VehicleScheduleServiceRequest : Page
     {
         var ds = _vehMain.IBind_ServiceRequestDetails(vehicleId);
         if (ds == null)
-        {
             pnlDisplayDetails.Visible = false;
-        }
         else
         {
             if (ds.Tables[0].Rows.Count <= 0)

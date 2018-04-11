@@ -3,29 +3,16 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
-        function CheckLength(text, long) {
-            var maxlength = new Number(long); // Change number to your max length.
-            if (text.value.length > maxlength) {
-                text.value = text.value.substring(0, maxlength);
-                alert(" Only " + long + " chars");
-            }
-        }
 
-        function remark(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode !== 34) && (keycode !== 39);
-        }
 
         function validation() {
             var tyreRecDate = document.getElementById('<%= txtTyreRecDate.ClientID %>');
             var remarks = document.getElementById('<%= txtRemarks.ClientID %>');
             var dcDate = document.getElementById('<%= txtTyreDCDate.ClientID %>');
 
-            if (!requiredValidation(tyreRecDate, "Receipt Date cannot be Blank"))
+            if (!window.requiredValidation(tyreRecDate, "Receipt Date cannot be Blank"))
                 return false;
 
             if (trim(tyreRecDate.value) !== "") {
@@ -48,30 +35,8 @@
                 return false;
             }
 
-            if (!requiredValidation(remarks, "Remarks cannot be Blank"))
+            if (!window.requiredValidation(remarks, "Remarks cannot be Blank"))
                 return false;
-
-            function requiredValidation(ctrl, msg) {
-                switch (trim(ctrl.value)) {
-                case '':
-                    alert(msg);
-                    ctrl.focus();
-                    return false;
-                default:
-                    return true;
-                }
-            }
-
-            function trim(value) {
-                value = value.replace(/^\s+/, '');
-                value = value.replace(/\s+$/, '');
-                return value;
-
-            }
-
-            function isValidDate(subject) {
-                return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-            }
 
             return true;
         }

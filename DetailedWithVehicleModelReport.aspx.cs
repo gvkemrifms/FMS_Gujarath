@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class DetailedWithVehicleModelReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -15,8 +16,15 @@ public partial class DetailedWithVehicleModelReport : Page
 
     private void BindDistrictdropdown()
     {
-        var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-        _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        try
+        {
+            var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void Withoutdist()
@@ -25,9 +33,9 @@ public partial class DetailedWithVehicleModelReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVehicleModel", null, null, null, null, null, null, null, null, null, null, null, Grdvehmodel);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -35,11 +43,11 @@ public partial class DetailedWithVehicleModelReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this,Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -49,9 +57,9 @@ public partial class DetailedWithVehicleModelReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVehicleModel", null, null, null, null, null, null, "@DistrictID", null, null, null, null, Grdvehmodel);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -61,14 +69,15 @@ public partial class DetailedWithVehicleModelReport : Page
 
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        switch (ddldistrict.SelectedValue)
-        {
-            case "0":
-                Withoutdist();
-                break;
-            default:
-                Loaddata();
-                break;
-        }
+        if (ddldistrict != null)
+            switch (ddldistrict.SelectedValue)
+            {
+                case "0":
+                    Withoutdist();
+                    break;
+                default:
+                    Loaddata();
+                    break;
+            }
     }
 }

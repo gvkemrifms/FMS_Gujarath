@@ -31,9 +31,9 @@ public partial class AccidentReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Commented
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -49,9 +49,9 @@ public partial class AccidentReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -61,9 +61,9 @@ public partial class AccidentReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReports_FuelReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@districtID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 

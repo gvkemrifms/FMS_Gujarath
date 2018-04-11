@@ -34,6 +34,7 @@ public partial class FleetManufacturers : Page
 
         //Permissions
         var dsPerms = (DataSet) Session["PermissionsDS"];
+        if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
         dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
         pnlFleetManufacturers.Visible = false;
@@ -88,9 +89,15 @@ public partial class FleetManufacturers : Page
         var ds = ObjFmsMan.IFillStates();
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlManufacturerState);
-            ddlManufacturerState.Items[0].Value = "0";
-            ddlFleetManufacturerDistrict.Enabled = true;
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlManufacturerState);
+                ddlFleetManufacturerDistrict.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -103,10 +110,15 @@ public partial class FleetManufacturers : Page
         var ds = ObjFmsMan.IFillDistricts(stateId);
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFleetManufacturerDistrict);
-            ddlFleetManufacturerDistrict.Items[0].Value = "0";
-            ddlFleetManufacturerDistrict.SelectedIndex = 0;
-            ddlFleetManufacturerDistrict.Enabled = true;
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFleetManufacturerDistrict);
+                ddlFleetManufacturerDistrict.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -116,6 +128,7 @@ public partial class FleetManufacturers : Page
 
     protected void ddlManufacturerState_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (ddlManufacturerState == null) return;
         switch (ddlManufacturerState.SelectedIndex)
         {
             case 0:
@@ -146,88 +159,100 @@ public partial class FleetManufacturers : Page
 
     protected void btnManufacturerSave_Click(object sender, EventArgs e)
     {
-        switch (btnManufacturerSave.Text)
-        {
-            case "Save":
+        if (btnManufacturerSave != null)
+            try
             {
-                var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
-                if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "'").Length <= 0)
+                switch (btnManufacturerSave.Text)
                 {
-                    var mfname = txtManufacturerName.Text;
-                    var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
-                    var mfmodel = txtManufacturerModel.Text;
-                    var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
-                    var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
-                    var mfmandal = 0;
-                    var mfcity = 0;
-                    var mfaddress = txtManufacturerAddress.Text;
-                    var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
-                    var mfcontper = txtManufacturerContactPerson.Text;
-                    var mfmail = txtManufacturerEmailId.Text;
-                    var mftin = Convert.ToInt64(txtManufacturerTin.Text);
-                    var mfern = Convert.ToInt64(txtManufacturerErn.Text);
-                    var mfstatus = 1;
-                    var mfinactby = Convert.ToString(Session["User_Id"]);
-                    var mfinactdate = DateTime.Today;
-                    var mfcreatedate = DateTime.Today;
-                    var mfcreateby = Convert.ToString(Session["User_Id"]);
-                    var mfupdtdate = DateTime.Today;
-                    var mfupdateby = Convert.ToString(Session["User_Id"]);
-                    ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
-                    switch (ds.Tables.Count)
+                    case "Save":
                     {
-                        case 0:
-                            Show("Manufacturer Details added successfully");
-                            FleetManufacturerDetailsReset();
-                            break;
-                        default:
-                            Show("This Manufacturer details already exists");
-                            break;
+                        if (ObjFmsMan != null)
+                        {
+                            var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
+                            if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "'").Length <= 0)
+                            {
+                                var mfname = txtManufacturerName.Text;
+                                var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
+                                var mfmodel = txtManufacturerModel.Text;
+                                var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
+                                var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
+                                var mfmandal = 0;
+                                var mfcity = 0;
+                                var mfaddress = txtManufacturerAddress.Text;
+                                var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
+                                var mfcontper = txtManufacturerContactPerson.Text;
+                                var mfmail = txtManufacturerEmailId.Text;
+                                var mftin = Convert.ToInt64(txtManufacturerTin.Text);
+                                var mfern = Convert.ToInt64(txtManufacturerErn.Text);
+                                var mfstatus = 1;
+                                var mfinactby = Convert.ToString(Session["User_Id"]);
+                                var mfinactdate = DateTime.Today;
+                                var mfcreatedate = DateTime.Today;
+                                var mfcreateby = Convert.ToString(Session["User_Id"]);
+                                var mfupdtdate = DateTime.Today;
+                                var mfupdateby = Convert.ToString(Session["User_Id"]);
+                                ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
+                                switch (ds.Tables.Count)
+                                {
+                                    case 0:
+                                        Show("Manufacturer Details added successfully");
+                                        FleetManufacturerDetailsReset();
+                                        break;
+                                    default:
+                                        Show("This Manufacturer details already exists");
+                                        break;
+                                }
+                            }
+                            else
+                                Show("Manufacturer Name Already Exists");
+                        }
+
+                        break;
+                    }
+                    default:
+                    {
+                        var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
+                        if (ds == null) throw new ArgumentNullException(nameof(ds));
+                        if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "' And FleetManufacturer_Id<>'" + hidManId.Value + "'").Length <= 0)
+                        {
+                            int mfId = Convert.ToInt16(hidManId.Value);
+                            var mfname = txtManufacturerName.Text;
+                            var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
+                            var mfmodel = txtManufacturerModel.Text;
+                            var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
+                            var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
+                            var mfmandal = 0;
+                            var mfcity = 0;
+                            var mfaddress = txtManufacturerAddress.Text;
+                            var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
+                            var mfcontper = txtManufacturerContactPerson.Text;
+                            var mfmail = txtManufacturerEmailId.Text;
+                            var mftin = Convert.ToInt64(txtManufacturerTin.Text);
+                            var mfern = Convert.ToInt64(txtManufacturerErn.Text);
+                            //UpdateManufacturerDetails interface object
+                            ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
+                            switch (ds.Tables.Count)
+                            {
+                                case 0:
+                                    Show("Manufacturer Details Updated successfully");
+                                    FleetManufacturerDetailsReset();
+                                    break;
+                                default:
+                                    Show("This Manufacturer details already exists ");
+                                    break;
+                            }
+                        }
+                        else
+                            Show("Manufacturer Name Already Exists");
+
+                        break;
                     }
                 }
-                else
-                    Show("Manufacturer Name Already Exists");
-
-                break;
             }
-            default:
+            catch (Exception ex)
             {
-                var ds = ObjFmsMan.IFillGrid_FleetManufacturerDetails();
-                if (ds.Tables[0].Select("FleetManufacturer_Name='" + txtManufacturerName.Text + "' And FleetManufacturer_Id<>'" + hidManId.Value + "'").Length <= 0)
-                {
-                    int mfId = Convert.ToInt16(hidManId.Value);
-                    var mfname = txtManufacturerName.Text;
-                    var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
-                    var mfmodel = txtManufacturerModel.Text;
-                    var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
-                    var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
-                    var mfmandal = 0;
-                    var mfcity = 0;
-                    var mfaddress = txtManufacturerAddress.Text;
-                    var mfcontno = Convert.ToInt64(txtManufacturerContactNumber.Text);
-                    var mfcontper = txtManufacturerContactPerson.Text;
-                    var mfmail = txtManufacturerEmailId.Text;
-                    var mftin = Convert.ToInt64(txtManufacturerTin.Text);
-                    var mfern = Convert.ToInt64(txtManufacturerErn.Text);
-                    //UpdateManufacturerDetails interface object
-                    ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
-                    switch (ds.Tables.Count)
-                    {
-                        case 0:
-                            Show("Manufacturer Details Updated successfully");
-                            FleetManufacturerDetailsReset();
-                            break;
-                        default:
-                            Show("This Manufacturer details already exists ");
-                            break;
-                    }
-                }
-                else
-                    Show("Manufacturer Name Already Exists");
-
-                break;
+                _helper.ErrorsEntry(ex);
             }
-        }
 
         FillGrid_FleetManufacturerDetails();
     }

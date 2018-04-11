@@ -4,6 +4,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
         <ContentTemplate>
             <table width="100%">
@@ -45,7 +46,7 @@
                             </tr>
                         </table>
                         <div>
-                            <div style="width: 300px; float: left">
+                            <div style="float: left; width: 300px;">
                             </div>
                             <div>
                                 <asp:Button runat="server" ID="btnUpdate" Text="Update"
@@ -53,7 +54,7 @@
                             </div>
                         </div>
                         <div>
-                            <div style="width: 200px; float: left">
+                            <div style="float: left; width: 200px;">
                             </div>
                             <div style="float: left">
                                 <asp:GridView ID="gvVehKmplDetails" runat="server" EmptyDataText="No records found" PageSize="20"
@@ -115,26 +116,6 @@
                         districts.focus();
                         return false;
                     }
-
-                    function onlyAlphabets(myfield, e, dec) {
-                        var key;
-                        if (window.event || e)
-                            key = window.event.keyCode;
-                        else return true;
-                        var keychar = String.fromCharCode(key);
-                        return ("!@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) <= -1;
-                    }
-
-                    function numeric(event) {
-                        var charCode = (event.which) ? event.which : event.keyCode;
-                        //debugger;
-                        if (charCode === 190 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                            var txtBox = document.getElementById(event.srcElement.id);
-                            return txtBox.value.indexOf('.') === -1;
-                        } else
-                            return true;
-                    }
-
                     return true;
                 }
             </script>
@@ -142,4 +123,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

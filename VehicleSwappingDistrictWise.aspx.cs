@@ -29,15 +29,24 @@ public partial class VehicleSwappingDistrictWise : Page
 
     public void GetDistrict()
     {
-        var dsDistrict = _fmsobj.GetDistrict();
-        _helper.FillDropDownHelperMethodWithDataSet(dsDistrict, "ds_lname", "ds_dsid", ddlSourceDistrict);
-        ViewState["Districts"] = dsDistrict;
+        try
+        {
+            var dsDistrict = _fmsobj.GetDistrict();
+            if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
+            _helper.FillDropDownHelperMethodWithDataSet(dsDistrict, "ds_lname", "ds_dsid", ddlSourceDistrict);
+            ViewState["Districts"] = dsDistrict;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlSrcVehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlSrcVehicle.SelectedIndex == 0) return;
         var ds = (DataSet) Session["dsvehicle"];
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         var dvsrcvehbase = new DataView(ds.Tables[0], "VehicleID ='" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
         if (dvsrcvehbase.ToTable().Rows.Count <= 0) return;
         txtSrcBaseLocation.Text = dvsrcvehbase[0][1].ToString();
@@ -49,6 +58,7 @@ public partial class VehicleSwappingDistrictWise : Page
     {
         if (ddlDestVehicle.SelectedIndex == 0) return;
         var dsDestVeh = (DataSet) Session["dsvehicle"];
+        if (dsDestVeh == null) throw new ArgumentNullException(nameof(dsDestVeh));
         var dvdestvehbase = new DataView(dsDestVeh.Tables[0], "VehicleID ='" + ddlDestVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
         if (dvdestvehbase.ToTable().Rows.Count <= 0) return;
         txtDestBaseLocation.Text = dvdestvehbase[0][1].ToString();
@@ -58,55 +68,69 @@ public partial class VehicleSwappingDistrictWise : Page
 
     protected void ddlSourceDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (ddlSourceDistrict.SelectedIndex)
+        try
         {
-            case 0:
-                ddlDestDistrict.DataSource = null;
-                ddlDestDistrict.DataBind();
-                ddlDestDistrict.Enabled = false;
-                ddlDestVehicle.DataSource = null;
-                ddlDestVehicle.DataBind();
-                ddlDestVehicle.Enabled = false;
-                ddlSrcVehicle.DataSource = null;
-                ddlSrcVehicle.DataBind();
-                ddlSrcVehicle.Enabled = false;
-                break;
-            default:
-                ddlDestDistrict.Enabled = true;
-                //Binding Source Vehicles
-                ddlSrcVehicle.Enabled = true;
-                _vasbll.DistrictId = Convert.ToInt32(ddlSourceDistrict.SelectedItem.Value);
-                var ds = _vasbll.GetActiveVehicles();
-                ddlSrcVehicle.DataSource = ds;
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
-                Session["dsvehicle"] = ds;
-                //Destination District based on Source district
-                var dsDestDist = (DataSet) ViewState["Districts"];
-                var dvDestDist = dsDestDist.Tables[0].DefaultView;
-                dvDestDist.RowFilter = "ds_lname <>'" + ddlSourceDistrict.SelectedItem.Text + "'";
-                _helper.FillDropDownHelperMethodWithDataSet(dsDestDist, "ds_lname", "ds_dsid", ddlDestDistrict);
-                break;
+            switch (ddlSourceDistrict.SelectedIndex)
+            {
+                case 0:
+                    ddlDestDistrict.DataSource = null;
+                    ddlDestDistrict.DataBind();
+                    ddlDestDistrict.Enabled = false;
+                    ddlDestVehicle.DataSource = null;
+                    ddlDestVehicle.DataBind();
+                    ddlDestVehicle.Enabled = false;
+                    ddlSrcVehicle.DataSource = null;
+                    ddlSrcVehicle.DataBind();
+                    ddlSrcVehicle.Enabled = false;
+                    break;
+                default:
+                    ddlDestDistrict.Enabled = true;
+                    //Binding Source Vehicles
+                    ddlSrcVehicle.Enabled = true;
+                    _vasbll.DistrictId = Convert.ToInt32(ddlSourceDistrict.SelectedItem.Value);
+                    var ds = _vasbll.GetActiveVehicles();
+                    ddlSrcVehicle.DataSource = ds;
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
+                    Session["dsvehicle"] = ds;
+                    //Destination District based on Source district
+                    var dsDestDist = (DataSet) ViewState["Districts"];
+                    var dvDestDist = dsDestDist.Tables[0].DefaultView;
+                    dvDestDist.RowFilter = "ds_lname <>'" + ddlSourceDistrict.SelectedItem.Text + "'";
+                    _helper.FillDropDownHelperMethodWithDataSet(dsDestDist, "ds_lname", "ds_dsid", ddlDestDistrict);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     protected void ddlDestDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (ddlDestDistrict.SelectedIndex)
+        try
         {
-            case 0:
-                ddlDestDistrict.DataSource = null;
-                ddlDestDistrict.DataBind();
-                ddlDestDistrict.Enabled = false;
-                break;
-            default:
-                //Binding Destination Vehicles
-                ddlDestVehicle.Enabled = true;
-                _vasbll.DistrictId = Convert.ToInt32(ddlDestDistrict.SelectedItem.Value);
-                var ds = _vasbll.GetActiveVehicles();
-                ddlDestVehicle.DataSource = ds;
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
-                Session["dsvehicle"] = ds;
-                break;
+            switch (ddlDestDistrict.SelectedIndex)
+            {
+                case 0:
+                    ddlDestDistrict.DataSource = null;
+                    ddlDestDistrict.DataBind();
+                    ddlDestDistrict.Enabled = false;
+                    break;
+                default:
+                    //Binding Destination Vehicles
+                    ddlDestVehicle.Enabled = true;
+                    _vasbll.DistrictId = Convert.ToInt32(ddlDestDistrict.SelectedItem.Value);
+                    var ds = _vasbll.GetActiveVehicles();
+                    ddlDestVehicle.DataSource = ds;
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
+                    Session["dsvehicle"] = ds;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

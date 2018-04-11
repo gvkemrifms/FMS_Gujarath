@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceWorksServiceGroup.aspx.cs" Inherits="MaintenanceWorksServiceGroup" %>
+
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script language="javascript" type="text/javascript">
@@ -38,7 +39,7 @@
                         <fieldset style="padding: 10px;">
                             <legend>Maintenance Works-Service Group</legend>
                             <asp:Panel ID="pnlmaintenanceworksServiceGrp" runat="server">
-                                <table style="width: 99%; height: 119px;" align="center">
+                                <table style="height: 119px; width: 99%;" align="center">
                                     <tr>
                                         <td class="rowseparator"></td>
                                     </tr>
@@ -67,7 +68,7 @@
                                         <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 140px; height: 58px;"></td>
+                                        <td style="height: 58px; width: 140px;"></td>
                                         <td style="height: 58px; width: 400px;">
                                             <asp:Button ID="btnSaveMaintenanceWorksServiceGroup" runat="server" Text="Save"
                                                         OnClick="btnSaveMaintenanceWorksServiceGroup_Click"/>
@@ -144,4 +145,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

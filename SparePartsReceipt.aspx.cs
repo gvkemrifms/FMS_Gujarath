@@ -40,9 +40,16 @@ public partial class SparePartsReceipt : Page
 
     private void FillVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        DataSet ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            DataSet ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,6 +68,7 @@ public partial class SparePartsReceipt : Page
     private void FillGridIssueDetails(int vehicleId, int fleetInventoryItemId)
     {
         var ds = ObjInventory.GetInventoryIssueDetailsForVehicle1(vehicleId, fleetInventoryItemId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvIssueDetails.DataSource = ds;
         gvIssueDetails.DataBind();
         gvIssueDetails.Visible = true;

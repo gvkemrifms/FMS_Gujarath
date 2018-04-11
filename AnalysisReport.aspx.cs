@@ -31,9 +31,9 @@ public partial class AnalysisReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle, null, null, null, "@districtID");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -44,9 +44,9 @@ public partial class AnalysisReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -61,9 +61,9 @@ public partial class AnalysisReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_AccidentAnalysisReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 

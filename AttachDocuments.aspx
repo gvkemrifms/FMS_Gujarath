@@ -6,6 +6,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function enableButton() {
@@ -13,21 +14,17 @@
         }
 
         function validation(obj, id) {
-
             id = obj.id.replace(id, "ddlistVehicleNumber");
             var ddlistAttachmentPurpose = obj.id.replace(id, "ddlistAttachmentPurpose");
             var txtRemarks = obj.id.replace(id, "txtRemarks");
             var attachmentPurpose = document.getElementById(ddlistAttachmentPurpose);
             var remarks = document.getElementById(txtRemarks);
             var fileAttachment = document.getElementById('<%= fileAttachmentPurpose.ClientID %>');
-
-
             if (id.selectedIndex === 0) {
                 alert("Please select the attachment Purpose");
                 id.focus();
                 return false;
             }
-
 
             if (attachmentPurpose.selectedIndex === 0) {
                 alert("Please select the attachment Purpose");
@@ -49,27 +46,6 @@
 
             return true;
         }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true;
-            if ((keycode !== 34) && (keycode !== 39)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -132,7 +108,6 @@
                     <td>
                         <asp:AsyncFileUpload ID="fileAttachmentPurpose" runat="server" CompleteBackColor="White"
                                              UploaderStyle="Modern" OnClientUploadComplete="enableButton"/>
-                        <%-- <input type="file" id="fileAttachmentPurpose" runat="server" />--%>
                         <asp:Button ID="btnUpload" runat="server" Text="Upload" Visible="False"
                                     OnClick="btnUpload_Click"/>
                         <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="False"/>

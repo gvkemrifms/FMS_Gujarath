@@ -1,83 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/temp.master" CodeFile="VehicleInsuranceViewHistory.aspx.cs" Inherits="VehicleInsuranceViewHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <style>
-        .mydatagrid {
-            border: solid 2px black;
-            min-width: 80%;
-            width: 80%;
-        }
-
-        .header {
-            background-color: #646464;
-            border: none 0px transparent;
-            color: White;
-            font-family: Arial;
-            font-size: 16px;
-            height: 25px;
-            text-align: center;
-        }
-
-        .rows {
-            background-color: #fff;
-            border: none 0px transparent;
-            color: #000;
-            font-family: Arial;
-            font-size: 14px;
-            min-height: 25px;
-            text-align: left;
-        }
-
-            .rows:hover {
-                background-color: #ff8000;
-                color: #fff;
-                font-family: Arial;
-                text-align: left;
-            }
-
-        .selectedrow {
-            background-color: #ff8000;
-            color: #fff;
-            font-family: Arial;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .mydatagrid a /** FOR THE PAGING ICONS  **/ {
-            background-color: Transparent;
-            color: #fff;
-            font-weight: bold;
-            padding: 5px 5px 5px 5px;
-            text-decoration: none;
-        }
-
-            .mydatagrid a:hover /** FOR THE PAGING ICONS  HOVER STYLES**/ {
-                background-color: #000;
-                color: #fff;
-            }
-
-        .mydatagrid span /** FOR THE PAGING ICONS CURRENT PAGE INDICATOR **/ {
-            /*background-color: #c9c9c9;*/
-            color: #000;
-            padding: 5px 5px 5px 5px;
-        }
-
-        .pager {
-            background-color: #646464;
-            color: White;
-            font-family: Arial;
-            height: 30px;
-            text-align: left;
-        }
-
-        .mydatagrid td {
-            padding: 5px;
-        }
-
-        .mydatagrid th {
-            padding: 5px;
-        }
-    </style>
+    <link href="css/VehicleInsuranceViewHistory.css" rel="stylesheet"/>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <table style="width: 100%">
@@ -97,11 +21,11 @@
                                 <tr>
                                     <td>
                                         <asp:GridView ID="gvViewHistory" runat="server" Width="630px" AutoGenerateColumns="False"
-                                            AllowPaging="True" CellPadding="4" ForeColor="#333333" EmptyDataText="No Records Found"
-                                            GridLines="None" OnPageIndexChanging="gvViewHistory_PageIndexChanging" CssClass="mydatagrid" PagerStyle-CssClass="pager"
-                                            HeaderStyle-CssClass="header" RowStyle-CssClass="rows"
-                                            CellSpacing="2">
-                                            <RowStyle CssClass="rowStyleGrid" />
+                                                      AllowPaging="True" CellPadding="4" ForeColor="#333333" EmptyDataText="No Records Found"
+                                                      GridLines="None" OnPageIndexChanging="gvViewHistory_PageIndexChanging" CssClass="mydatagrid" PagerStyle-CssClass="pager"
+                                                      HeaderStyle-CssClass="header" RowStyle-CssClass="rows"
+                                                      CellSpacing="2">
+                                            <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Vehicle Number">
                                                     <ItemTemplate>
@@ -158,10 +82,10 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                            <FooterStyle CssClass="footerStylegrid" />
-                                            <PagerStyle CssClass="pagerStylegrid" />
-                                            <SelectedRowStyle CssClass="selectedRowStyle" />
-                                            <HeaderStyle CssClass="headerStyle" />
+                                            <FooterStyle CssClass="footerStylegrid"/>
+                                            <PagerStyle CssClass="pagerStylegrid"/>
+                                            <SelectedRowStyle CssClass="selectedRowStyle"/>
+                                            <HeaderStyle CssClass="headerStyle"/>
                                         </asp:GridView>
                                     </td>
                                 </tr>

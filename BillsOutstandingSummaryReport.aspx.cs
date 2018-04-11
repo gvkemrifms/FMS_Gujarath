@@ -22,9 +22,9 @@ public partial class BillsOutstandingSummaryReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -43,9 +43,9 @@ public partial class BillsOutstandingSummaryReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, null, null, "@DistrictID");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -61,9 +61,9 @@ public partial class BillsOutstandingSummaryReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_VendorWiseBillsOutstandingSummaryReport", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grddetails);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 }

@@ -27,16 +27,32 @@ public partial class TripDetails : Page
 
     private void FillTrips()
     {
-        var ds = ObjFuelEntry.IGetTripTypes();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "TripTypeDescription", "TripTypeID", ddlTripType);
-        ddlTripType.Enabled = true;
+        try
+        {
+            var ds = ObjFuelEntry.IGetTripTypes();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "TripTypeDescription", "TripTypeID", ddlTripType);
+            ddlTripType.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillVehicles()
     {
-        var ds = _fmsg.GetVehicleNumber();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlAmbulanceID);
-        ddlAmbulanceID.Enabled = true;
+        try
+        {
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlAmbulanceID);
+            ddlAmbulanceID.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillHoursandMins()

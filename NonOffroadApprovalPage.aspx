@@ -1,7 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="NonOffroadApprovalPage.aspx.cs" Inherits="NonOffroadApprovalPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="NonOffroadApprovalPage.aspx.cs" Inherits="NonOffroadApprovalPage" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:content id="Content1" contentplaceholderid="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script type="text/javascript">
         function PressButton() {
             document.getElementById('<%= btnPopUp.ClientID %>').click();
@@ -39,21 +41,12 @@
 
         }
 
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-
-        function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) === '') {
-                alert(msg);
-                ctrl.focus();
+        function Reason() {
+            var reason = document.getElementById('<%= txtrejectReason.ClientID %>');
+            if (!RequiredValidation(reason, "Please provide reason for Rejection"))
                 return false;
-            } else
-                return true;
+
+            return true;
         }
     </script>
     <asp:UpdatePanel ID="updtpnlApprPage" runat="server">
@@ -185,28 +178,28 @@
                 </tr>
 
             </table>
-            <div style="width: 300px; padding: 5px; display: block" id="dvReason">
-                <div style="border-bottom: none; background-color: Maroon">
+            <div style="display: block; padding: 5px; width: 300px;" id="dvReason">
+                <div style="background-color: Maroon; border-bottom: none;">
                     <asp:Label ID="Label1" runat="server" Text="Reason for Rejection" Font-Bold="True"
                                Font-Size="Small" ForeColor="#FFFFCC"/>
                 </div>
                 <div style="background-color: White">
                     <div style="width: 100%">
-                        <div style="width: 20%; float: left">
+                        <div style="float: left; width: 20%;">
                         </div>
                         <div style="float: right; width: 80%">
                             <asp:TextBox runat="server" ID="txtrejectReason" TextMode="MultiLine"/>
                         </div>
                     </div>
                     <div style="width: 100%">
-                        <div style="width: 40%; float: left">
+                        <div style="float: left; width: 40%;">
                         </div>
-                        <div style="width: 60%; float: right">
-                            <div style="width: 50%; float: left">
+                        <div style="float: right; width: 60%;">
+                            <div style="float: left; width: 50%;">
                                 <asp:Button runat="server" ID="btnReason" Text="Submit"
                                             OnClientClick="return Reason();" onclick="btnReason_Click"/>
                             </div>
-                            <div style="width: 50%; float: right">
+                            <div style="float: right; width: 50%;">
                                 <asp:Button runat="server" ID="btnCancel" Text="Close"
                                             onclick="btnCancel_Click"/>
                             </div>
@@ -224,15 +217,4 @@
             </cc1:ModalPopupExtender>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <script language="javascript" type="text/javascript">
-        function Reason() {
-            var reason = document.getElementById('<%= txtrejectReason.ClientID %>');
-            if (!RequiredValidation(reason, "Please provide reason for Rejection"))
-                return false;
-
-            return true;
-        }
-//             
-    </script>
-</asp:Content>
-
+</asp:content>

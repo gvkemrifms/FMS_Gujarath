@@ -18,6 +18,7 @@ public partial class VehicleTypes : Page
         txtVehicleDescription.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
         //Permissions
         var dsPerms = (DataSet) Session["PermissionsDS"];
+        if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
         dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
         pnlvehicletypes.Visible = false;
@@ -57,6 +58,7 @@ public partial class VehicleTypes : Page
             case "Save":
             {
                 var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "'").Length > 0)
                     Show("Vehicle Type already exists");
                 else
@@ -81,6 +83,7 @@ public partial class VehicleTypes : Page
             default:
             {
                 var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "' And VehicleType_Id<>'" + hidVehicleType.Value + "'").Length > 0)
                     Show("Vehicle Type already exists");
                 else

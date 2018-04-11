@@ -2,52 +2,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script language="javascript" type="text/javascript">
-
-        function ConfirmApprove(btnId, remarkId) {
-            var btnApprove = document.getElementById(btnId);
-            if (remarkId) {
-                alert('Please enter remarks!');
-                (document.getElementById(remarkId)).focus();
-            } else {
-                if (confirm('Are you sure you want to Approve'))
-                    btnApprove.click();
-            }
-        }
-
-        function ConfirmReject(btnId, remarkId) {
-            var btnReject = document.getElementById(btnId);
-            if (remarkId) {
-                alert('Please enter remarks!');
-                (document.getElementById(remarkId)).focus();
-            } else {
-                if (confirm('Are you sure you want to Reject'))
-                    btnReject.click();
-            }
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode !== 34) && (keycode !== 39);
-        }
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var key;
-            if (window.event || e)
-                key = window.event.keyCode;
-            else
-                return true;
-            var keychar = String.fromCharCode(key);
-            return (" !@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) <= -1;
-        }
-
-        function EnableRemarks() {
-            document.getElementById("<%= gvVerification.ClientID %>");
-            return true;
-        }
-    </script>
+    <script src="js/Validation.js"></script>
     <table>
         <tr>
             <td class="rowseparator">

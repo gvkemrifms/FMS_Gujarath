@@ -43,8 +43,15 @@ public partial class VehicleAllocation : Page
 
     public void GetDistrict()
     {
-        var ds = _fmsobj.GetDistricts_new();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        try
+        {
+            var ds = _fmsobj.GetDistricts_new();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void GetTime()
@@ -95,9 +102,16 @@ public partial class VehicleAllocation : Page
 
     public void InsertAgent(string offroadid, string vehicleNo, string agentId)
     {
-        var ip = GetLocalIpAddress();
-        var insertQuery = "insert into t_onroadAgent(onroadId ,vehicleNo, AgentID,AgentName,ip) values ('" + offroadid + "', '" + vehicleNo + "', '" + agentId + "', '" + Session["User_Name"] + "','" + ip + "')";
-        _helper.ExecuteInsertStatement(insertQuery);
+        try
+        {
+            var ip = GetLocalIpAddress();
+            var insertQuery = "insert into t_onroadAgent(onroadId ,vehicleNo, AgentID,AgentName,ip) values ('" + offroadid + "', '" + vehicleNo + "', '" + agentId + "', '" + Session["User_Name"] + "','" + ip + "')";
+            _helper.ExecuteInsertStatement(insertQuery);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
@@ -171,17 +185,24 @@ public partial class VehicleAllocation : Page
                 Insertdata(smsContent, dtPenData.Rows[0]["Rmname"].ToString(), dtPenData.Rows[0]["RmContactNumber"].ToString());
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
     public void Insertdata(string smsContent, string name, string mobileno)
     {
-        smsContent = smsContent.Replace("{name}", name);
-        var query = "insert into t_SMS(smsContent ,mobileno) values ('" + smsContent + "', '" + mobileno + "')";
-        _helper.ExecuteInsertStatement(query);
+        try
+        {
+            smsContent = smsContent.Replace("{name}", name);
+            var query = "insert into t_SMS(smsContent ,mobileno) values ('" + smsContent + "', '" + mobileno + "')";
+            _helper.ExecuteInsertStatement(query);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void Show(string message)
@@ -197,9 +218,17 @@ public partial class VehicleAllocation : Page
 
     public void GetVehicles()
     {
-        _vehallobj.District = ddlDistrict.SelectedItem.Text;
-        var ds = _vehallobj.GetVehicleNo();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "OffRoadVehicle_No", "OffRoadVehicle_No", ddlVehicleNumber);
+        try
+        {
+            _vehallobj.District = ddlDistrict.SelectedItem.Text;
+            var ds = _vehallobj.GetVehicleNo();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "OffRoadVehicle_No", "OffRoadVehicle_No", ddlVehicleNumber);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillHoursandMins()
@@ -278,9 +307,9 @@ public partial class VehicleAllocation : Page
             adp.Fill(ds);
             conn.Close();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //Do Log
+            _helper.ErrorsEntry(ex);
         }
     }
 

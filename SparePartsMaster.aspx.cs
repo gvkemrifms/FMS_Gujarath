@@ -34,13 +34,22 @@ public partial class SparePartsMaster : Page
 
     private void BindManufacturerName()
     {
-        var ds = _obj.GetManufacturerName();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerID);
+        try
+        {
+            var ds = _obj.GetManufacturerName();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerID);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillGridSpareParts()
     {
         var ds = _objFleetMaster.IFillGridSpareParts();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvSpareParts.DataSource = ds;
         gvSpareParts.DataBind();
     }
@@ -79,6 +88,7 @@ public partial class SparePartsMaster : Page
     {
         gvSpareParts.PageIndex = e.NewPageIndex;
         var ds = _objFleetMaster.IFillGridSpareParts();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvSpareParts.DataSource = ds;
         gvSpareParts.DataBind();
     }
@@ -90,6 +100,7 @@ public partial class SparePartsMaster : Page
             case "Save":
             {
                 var ds = _objFleetMaster.IFillGridSpareParts();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("ManufacturerSpare_Id='" + txtManufacturerSpareID.Text + "'").Length > 0)
                     Show("Manufacturer Spare Id already exists");
                 else
@@ -99,6 +110,7 @@ public partial class SparePartsMaster : Page
             default:
             {
                 var ds = _objFleetMaster.IFillGridSpareParts();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("SparePart_Name='" + txtSparePartName.Text + "' And SparePart_Id<>'" + txtSparePartID.Text + "'").Length > 0)
                     Show("Spare Part Name already exists");
                 else

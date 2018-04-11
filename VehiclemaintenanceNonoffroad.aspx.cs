@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
 using GvkFMSAPP.BLL.VehicleMaintenance;
+using Exception = System.Exception;
 
 public partial class VehiclemaintenanceNonoffroad : Page
 {
@@ -24,18 +25,31 @@ public partial class VehiclemaintenanceNonoffroad : Page
 
     private void BindVendorDetails()
     {
-        var ds = _vehMain.IFillVendorsMaintenance();
-        if (ds != null)
+        try
         {
+            var ds = _vehMain.IFillVendorsMaintenance();
+            if (ds == null) return;
             _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlVendorName);
             _helper.FillDifferentDataTables(ddlMaintenanceType, ds.Tables[1], "MaintenanceType", "MaintId");
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     public void GetVehicles()
     {
-        var ds = _vehicleobj.getVehforNonOffroad();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "vi_VehicleNumber", "", null, ddlVehicles);
+        try
+        {
+            var ds = _vehicleobj.getVehforNonOffroad();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "vi_VehicleNumber", "", null, ddlVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void SetInitialMaintenanceDetails()
@@ -126,23 +140,30 @@ public partial class VehiclemaintenanceNonoffroad : Page
 
     protected void grdvwMaintenanceDetails_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        switch (e.Row.RowType)
+        try
         {
-            case DataControlRowType.DataRow:
-                var ddlVName = e.Row.FindControl("ddlVendorName") as DropDownList;
-                var ddlMType = e.Row.FindControl("ddlMaintenanceType") as DropDownList;
-                var ds = _vehMain.IFillVendorsMaintenance();
-                if (ddlVName != null)
-                {
-                    ddlVName.Items.Clear();
-                    if (ds != null)
+            switch (e.Row.RowType)
+            {
+                case DataControlRowType.DataRow:
+                    var ddlVName = e.Row.FindControl("ddlVendorName") as DropDownList;
+                    var ddlMType = e.Row.FindControl("ddlMaintenanceType") as DropDownList;
+                    var ds = _vehMain.IFillVendorsMaintenance();
+                    if (ddlVName != null)
                     {
-                        _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlVName);
-                        if (ddlMType != null) _helper.FillDifferentDataTables(ddlMType, ds.Tables[1], "MaintId", "MaintenanceType");
+                        ddlVName.Items.Clear();
+                        if (ds != null)
+                        {
+                            _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyId", ddlVName);
+                            if (ddlMType != null) _helper.FillDifferentDataTables(ddlMType, ds.Tables[1], "MaintId", "MaintenanceType");
+                        }
                     }
-                }
 
-                break;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

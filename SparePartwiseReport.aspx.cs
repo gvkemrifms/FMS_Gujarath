@@ -24,9 +24,9 @@ public partial class SparePartwiseReport : Page
             var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -40,9 +40,9 @@ public partial class SparePartwiseReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // 
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -55,9 +55,9 @@ public partial class SparePartwiseReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                _helper.ErrorsEntry(ex);
             }
         }
         else
@@ -74,11 +74,10 @@ public partial class SparePartwiseReport : Page
             try
             {
                 _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, txtfrmDate, txttodate, "@DistrictID");
-                var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                _helper.ErrorsEntry(ex);
             }
         }
         else
@@ -98,9 +97,9 @@ public partial class SparePartwiseReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Reports_SparePartsWise", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", "@SpareVenName", Grddetails, null, null, ddlvendor);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 }

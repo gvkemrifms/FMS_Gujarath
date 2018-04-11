@@ -21,9 +21,9 @@ public partial class HistoryReport : Page
             var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
             _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -38,9 +38,9 @@ public partial class HistoryReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -56,9 +56,9 @@ public partial class HistoryReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID", "@Month", "@Year", null, Grddetails, ddlmonth, ddlyear);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -68,9 +68,9 @@ public partial class HistoryReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 

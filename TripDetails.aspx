@@ -2,7 +2,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
+    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="up1" runat="server">
         <ContentTemplate>
             <div class="center">
@@ -191,65 +191,6 @@
                 </fieldset>
             </div>
             <script type="text/javascript" language="javascript">
-
-                function OnlyAlphabets(myfield, e, dec) {
-                    var key;
-                    if (window.event || e)
-                        key = window.event.keyCode;
-                    else return true;
-                    var keychar = String.fromCharCode(key);
-                    return ("!@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) <= -1;
-                }
-
-
-                function isNumberKey(evt) {
-                    var charCode = (evt.which) ? evt.which : event.keyCode;
-                    return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-                }
-
-
-                function remark(e) {
-                    var keycode;
-                    if (window.event || event || e) keycode = window.event.keyCode;
-                    else return true;
-                    return (keycode !== 34) && (keycode !== 39);
-                }
-
-                function CheckLength(text, long) {
-                    var maxlength = new Number(long); // Change number to your max length.
-                    if (text.value.length > maxlength) {
-                        text.value = text.value.substring(0, maxlength);
-                        alert(" Only " + long + " chars");
-
-                    }
-                }
-
-
-                function RequiredValidation(ctrl, msg) {
-                    switch (trim(ctrl.value)) {
-                    case '':
-                        alert(msg);
-                        ctrl.focus();
-                        return false;
-                    default:
-                        return true;
-                    }
-                }
-
-
-                function trim(value) {
-                    value = value.replace(/^\s+/, '');
-                    value = value.replace(/\s+$/, '');
-                    return value;
-
-                }
-
-                function isValidDate(subject) {
-                    return !!subject.match(
-                        /^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-                }
-
-
                 function validationFuelEntry() {
 
 

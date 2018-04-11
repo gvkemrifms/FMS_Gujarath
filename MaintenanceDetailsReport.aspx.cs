@@ -16,8 +16,15 @@ public partial class MaintenanceDetailsReport : Page
 
     private void BindDistrictdropdown()
     {
-        var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        try
+        {
+            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -31,9 +38,9 @@ public partial class MaintenanceDetailsReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
-            catch
+            catch (Exception ex)
             {
-                // ignored
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -44,9 +51,9 @@ public partial class MaintenanceDetailsReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -61,9 +68,9 @@ public partial class MaintenanceDetailsReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_FMSReport_MaintenanceDetails", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
-        catch
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 

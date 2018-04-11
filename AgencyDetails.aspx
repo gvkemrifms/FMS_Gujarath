@@ -1,63 +1,12 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="AgencyDetails.aspx.cs" Inherits="AgencyDetails" Language="C#" MasterPageFile="~/temp.master"  %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="AgencyDetails.aspx.cs" Inherits="AgencyDetails" Language="C#" MasterPageFile="~/temp.master" %>
 
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+<script src="js/Validation.js"></script>
 <script type="text/javascript">
-
-    function CheckLength(text, long) {
-        var maxlength = new Number(long); // Change number to your max length.
-        if (text.value.length > maxlength) {
-            text.value = text.value.substring(0, maxlength);
-            alert(" Only " + long + " chars");
-        }
-    }
-    function remark(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        return (keycode !== 34) && (keycode !== 39);
-    }
-
-    function OnlyAlphabets(myfield, e, dec) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-    }
-
-    function OnlyAlphaNumeric(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-    }
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-        return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-    }
-
-    function isValidPAN(pan) {
-        if (pan.match(/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/)) {
-            return true;
-        } else {
-            alert("Enter a valid PAN eg - 'BBAPM6454J'");
-            return false;
-        }
-    }
-
     function validationAgencyDetails() {
         if (document.getElementById("<%= txtAgencyName.ClientID %>").value === 0) {
             alert("Please Enter Agency Name");
@@ -116,6 +65,7 @@
             document.getElementById("<%= txtTin.ClientID %>").focus();
             return false;
         }
+        return true;
     }
 </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">

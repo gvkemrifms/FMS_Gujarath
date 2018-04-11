@@ -19,7 +19,7 @@
                 <legend>District User Mapping</legend>
                 <table style="width: 100%">
                     <tr>
-                        <td valign="top" align="center">
+                        <td align="top" align="center">
                             <table>
                                 <tr>
                                     <td align="center">

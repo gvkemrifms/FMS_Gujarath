@@ -11,9 +11,9 @@ public partial class VehicleSummaryAll : Page
         {
             _helper.FillDropDownHelperMethodWithSp("vas_allvehicleregin", null, null, null, null, null, null, null, null, null, null, null, GrdtotalData);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -27,9 +27,9 @@ public partial class VehicleSummaryAll : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryAll.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // 
+            _helper.ErrorsEntry(ex);
         }
     }
 }

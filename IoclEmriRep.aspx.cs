@@ -20,32 +20,54 @@ public partial class IoclEmriRep : Page
 
     private void BindVehicles()
     {
-        var sqlQuery = "select * from m_fms_vehicles  order by vehicleNumber";
-        _helper.FillDropDownHelperMethod(sqlQuery, "vehicleNumber", "vehicleid", ddlvehicleNo);
+        try
+        {
+            var sqlQuery = "select * from m_fms_vehicles  order by vehicleNumber";
+            _helper.FillDropDownHelperMethod(sqlQuery, "vehicleNumber", "vehicleid", ddlvehicleNo);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        _helper.LoadExcelSpreadSheet(this, Panel4, "gvtoexcel.xls");
+        try
+        {
+            _helper.LoadExcelSpreadSheet(this, Panel4, "gvtoexcel.xls");
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnShow_Click(object sender, EventArgs e)
     {
         //  getdates
-        var dtData = _helper.ExecuteSelectStmt("exec getdates '" + txtfromdate.Text + "','" + txttodate.Text + "','" + ddlvehicleNo.SelectedValue + "'");
-        if (dtData.Rows.Count <= 0)
+        try
         {
-            grdRepData.DataSource = null;
-            grdRepData.DataBind();
-            Show("No Records Found");
-            tblHeader.Visible = false;
+            var dtData = _helper.ExecuteSelectStmt("exec getdates '" + txtfromdate.Text + "','" + txttodate.Text + "','" + ddlvehicleNo.SelectedValue + "'");
+            if (dtData == null) throw new ArgumentNullException(nameof(dtData));
+            if (dtData.Rows.Count <= 0)
+            {
+                grdRepData.DataSource = null;
+                grdRepData.DataBind();
+                Show("No Records Found");
+                tblHeader.Visible = false;
+            }
+            else
+            {
+                grdRepData.DataSource = dtData;
+                grdRepData.DataBind();
+                tblHeader.Visible = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "CallMyFunction", "rearrange()", true);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            grdRepData.DataSource = dtData;
-            grdRepData.DataBind();
-            tblHeader.Visible = true;
-            Page.ClientScript.RegisterStartupScript(GetType(), "CallMyFunction", "rearrange()", true);
+            _helper.ErrorsEntry(ex);
         }
     }
 

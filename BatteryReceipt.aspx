@@ -4,35 +4,8 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
-    function CheckLength(text, long) {
-        var maxlength = new Number(long); // Change number to your max length.
-        if (text.value.length > maxlength) {
-            text.value = text.value.substring(0, maxlength);
-
-            alert(" Only " + long + " chars");
-
-        }
-    }
-
-    function remark(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        if ((keycode !== 34) && (keycode !== 39)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-        return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-    }
-
     function validation() {
         var recInvoiceNo = document.getElementById('<%= txtBatRecInvoiceNo.ClientID %>');
         var recInvoiceDate = document.getElementById('<%= txtBatRecInvoiceDate.ClientID %>');
@@ -90,42 +63,6 @@
         return true;
     }
 
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-
-        default:
-            return true;
-
-        }
-    }
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|[12][0-9]|3[01])[\- \/.](0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-
-        if (charCode === 190 || charCode === 46) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        else
-            return true;
-    }
-
 
 </script>
 
@@ -159,8 +96,6 @@
                               PageSize="5" OnPageIndexChanging="grvBatteryDetailsForReceipt_PageIndexChanging"
                               OnRowCommand="grvBatteryDetailsForReceipt_RowCommand">
                     <Columns>
-                        <%-- <asp:BoundField HeaderText="Item Issue ID" DataField="InventoryItemIssueID" />--%>
-                        <%-- <asp:BoundField HeaderText="Requisition ID" DataField="FleetInventoryReqID" />--%>
                         <asp:BoundField HeaderText="Vehicle Number" DataField="VehicleNum"/>
                         <asp:BoundField HeaderText="District" DataField="ds_lname"/>
                         <asp:BoundField HeaderText="No. of Batteries" DataField="RequestedQty"/>
@@ -328,9 +263,6 @@
                                   GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" BackColor="#DEBA84"
                                   Width="95%" OnRowDataBound="grvBatteryReceiptDetailsPopup_RowDataBound">
                         <Columns>
-                            <%--<asp:BoundField HeaderText="Item Issue Id" DataField="InventoryItemIssueID" />
-                                            <asp:BoundField HeaderText="Requisition ID" DataField="FleetInventoryReqID" />
-                                            <asp:BoundField HeaderText="Battery Issue DetID" DataField="BatteryIssueDetailsID" />--%>
                             <asp:BoundField HeaderText="Battery Number" DataField="BatteryNumber"/>
                             <asp:BoundField HeaderText="Make" DataField="Make"/>
                             <asp:BoundField HeaderText="Model" DataField="Model"/>

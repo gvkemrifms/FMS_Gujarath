@@ -1,10 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="GpsKm.aspx.cs" Inherits="GpsKm" %>
-
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-   
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -13,7 +11,7 @@
             <div class="col-xs-12">
                 <div class="panel">
                     <header class="panel-heading">
-                        Vehicle List 
+                        Vehicle List
                     </header>
                     <div class="row" runat="server" id="dvSearch" visible="false">
                         <div class="col-md-12">
@@ -23,7 +21,8 @@
                                         <label class="col-sm-2 col-sm-2 control-label">Vehicle Number</label>
                                         <div class="col-sm-10">
                                             <asp:TextBox ID="txtVehicleNumber" runat="server" class="form-control" onkeypress="return numeric_only(event)"
-                                                MaxLength="12"></asp:TextBox>
+                                                         MaxLength="12">
+                                            </asp:TextBox>
                                         </div>
 
                                     </div>
@@ -42,7 +41,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Can Push automatically</label>
                                         <div class="col-sm-10">
-                                            <asp:CheckBox runat="server" ID="chkpush" />
+                                            <asp:CheckBox runat="server" ID="chkpush"/>
                                         </div>
                                     </div>
                                     <div>
@@ -70,8 +69,9 @@
             <Columns>
                 <asp:TemplateField HeaderText="Change">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%#DataBinder.Eval(Container.DataItem,"vehiclenumber") %>'
-                            CommandName="change" Text="Change"></asp:LinkButton>
+                        <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "vehiclenumber") %>'
+                                        CommandName="change" Text="Change">
+                        </asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

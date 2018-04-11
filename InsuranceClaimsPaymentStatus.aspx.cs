@@ -72,6 +72,7 @@ public partial class InsuranceClaimsPaymentStatus : Page
     public void GetAccidentDetails()
     {
         var ds = _vehinsclaimpend.GetAccidentDetails();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();
         txtAccidentTitle.Text = ds.Tables[0].Rows[0]["AccidentTitle"].ToString();
         txtAccidentDateTime.Text = ds.Tables[0].Rows[0]["AccidentDateTime"].ToString();
@@ -80,6 +81,7 @@ public partial class InsuranceClaimsPaymentStatus : Page
     public void GetInsuranceDetails()
     {
         var ds = _vehinsclaimpend.GetInsuranceDetails();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtPolicyNumber.Text = ds.Tables[0].Rows[0]["InsurancePolicyNo"].ToString();
         txtAgency.Text = ds.Tables[0].Rows[0]["InsuranceAgency"].ToString();
         txtInsuranceStartDate.Text = ds.Tables[0].Rows[0]["PolicyStartDate"].ToString();
@@ -90,6 +92,7 @@ public partial class InsuranceClaimsPaymentStatus : Page
     public void GetInsuranceClaimsDetailsReceived()
     {
         var ds = _vehinsclaimpend.GetInsuranceClaimsDetailsReceived();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();
         txtAccidentTitle.Text = ds.Tables[0].Rows[0]["AccidentTitle"].ToString();
         txtAccidentDateTime.Text = ds.Tables[0].Rows[0]["AccidentDateTime"].ToString();
@@ -110,6 +113,7 @@ public partial class InsuranceClaimsPaymentStatus : Page
     public void GetInsuranceClaimsDetailsRejected()
     {
         var ds = _vehinsclaimpend.GetInsuranceClaimsDetailsReceived();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();
         txtAccidentTitle.Text = ds.Tables[0].Rows[0]["AccidentTitle"].ToString();
         txtAccidentDateTime.Text = ds.Tables[0].Rows[0]["AccidentDateTime"].ToString();
@@ -210,7 +214,7 @@ public partial class InsuranceClaimsPaymentStatus : Page
         switch (ddlPaymentStatus.SelectedItem.Value)
         {
             case "0":
-                txtCostToCompany.Text = (float.Parse(txtTotalCostOfRepairs.Text) - float.Parse(txtAmountReceivedFromInsurance.Text)).ToString();
+                txtCostToCompany.Text = (float.Parse(txtTotalCostOfRepairs.Text) - float.Parse(txtAmountReceivedFromInsurance.Text)).ToString(CultureInfo.InvariantCulture);
                 break;
         }
     }

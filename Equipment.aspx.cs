@@ -18,7 +18,15 @@ public partial class Equipment : Page
         if (!IsPostBack)
         {
             BtnSave.Attributes.Add("onclick", "return validation()");
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+            try
+            {
+                if (_distvehmapp != null) _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+
             var numbers = new List<int> {1, 2, 3, 4, 5, 6};
             foreach (var number in numbers) BindGrid(number);
         }
@@ -26,33 +34,43 @@ public partial class Equipment : Page
 
     private void BindGrid(int number)
     {
-        var ds = ObjFleetMaster.GetSelectAllMedicalEquipmentByEquipmentTypeID(number);
-        switch (number)
+        if (ObjFleetMaster != null)
         {
-            case 1:
-                grdviewMedicalEqupment.DataSource = ds;
-                grdviewMedicalEqupment.DataBind();
-                break;
-            case 2:
-                grdviewMedicalDisposables.DataSource = ds;
-                grdviewMedicalDisposables.DataBind();
-                break;
-            case 3:
-                grdviewExtricationTools.DataSource = ds;
-                grdviewExtricationTools.DataBind();
-                break;
-            case 4:
-                grdviewCOmmunicationTechnology.DataSource = ds;
-                grdviewCOmmunicationTechnology.DataBind();
-                break;
-            case 5:
-                grdviewMedicines.DataSource = ds;
-                grdviewMedicines.DataBind();
-                break;
-            case 6:
-                grdviewNoMedicalSupplies.DataSource = ds;
-                grdviewNoMedicalSupplies.DataBind();
-                break;
+            try
+            {
+                var ds = ObjFleetMaster.GetSelectAllMedicalEquipmentByEquipmentTypeID(number);
+                switch (number)
+                {
+                    case 1:
+                        grdviewMedicalEqupment.DataSource = ds;
+                        grdviewMedicalEqupment.DataBind();
+                        break;
+                    case 2:
+                        grdviewMedicalDisposables.DataSource = ds;
+                        grdviewMedicalDisposables.DataBind();
+                        break;
+                    case 3:
+                        grdviewExtricationTools.DataSource = ds;
+                        grdviewExtricationTools.DataBind();
+                        break;
+                    case 4:
+                        grdviewCOmmunicationTechnology.DataSource = ds;
+                        grdviewCOmmunicationTechnology.DataBind();
+                        break;
+                    case 5:
+                        grdviewMedicines.DataSource = ds;
+                        grdviewMedicines.DataBind();
+                        break;
+                    case 6:
+                        grdviewNoMedicalSupplies.DataSource = ds;
+                        grdviewNoMedicalSupplies.DataBind();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -127,6 +145,7 @@ public partial class Equipment : Page
 
         var mapping = new ArrayList();
         var ds = ObjFleetMaster.GetSelectAllVehicleEquipmentByVehicleId(Convert.ToInt32(ddlistVehicleNumber.SelectedItem.Value));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         foreach (DataRow dr in ds.Tables[0].Rows) mapping.Add(dr[1].ToString());
         foreach (GridViewRow row in grdviewMedicalEqupment.Rows)
         {

@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
+using Exception = System.Exception;
 
 public partial class VehicleAgeingReport : Page
 {
@@ -28,10 +29,17 @@ public partial class VehicleAgeingReport : Page
 
     public void GetDistricts()
     {
-        var ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
-        ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+        try
+        {
+            var ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
+            if (ds == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+            ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnExportToExcel_Click(object sender, EventArgs e)

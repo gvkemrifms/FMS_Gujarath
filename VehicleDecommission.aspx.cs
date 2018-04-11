@@ -22,15 +22,29 @@ public partial class VehicleDecommission : Page
 
     public void GetDistrict()
     {
-        var ds = _fmsobj.GetDistrict();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        try
+        {
+            var ds = _fmsobj.GetDistrict();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _fmsgenobj.UserDistrictId = int.Parse(ddlDistrict.SelectedItem.Value);
-        var ds = _fmsgenobj.GetVehicleForDecomm();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+        try
+        {
+            _fmsgenobj.UserDistrictId = int.Parse(ddlDistrict.SelectedItem.Value);
+            var ds = _fmsgenobj.GetVehicleForDecomm();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnReset_Click(object sender, EventArgs e)

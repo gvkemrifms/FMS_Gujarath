@@ -3,6 +3,9 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
+using Microsoft.Office.Interop.Excel;
+using Label = System.Web.UI.WebControls.Label;
+using Page = System.Web.UI.Page;
 
 public partial class NonOffroadApprovalPage : Page
 {
@@ -22,39 +25,44 @@ public partial class NonOffroadApprovalPage : Page
     public void BindGridview()
     {
         var ds = _objBll.BindForNonOffroadApproval();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvNonOffroadApprovalPage.DataSource = ds.Tables[0];
         gvNonOffroadApprovalPage.DataBind();
     }
 
     protected void gvNonOffroadApprovalPage_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName.ToUpper())
         {
             case "VEHAPPROVE":
             {
                 var row = (GridViewRow) ((WebControl) e.CommandSource).Parent.Parent;
-                _objBll.District = ((Label) row.FindControl("lblDistrict")).Text;
-                _objBll.SrcVehNo = ((Label) row.FindControl("lblVehicle_No")).Text;
-                _objBll.NonOffBillNo = ((Label) row.FindControl("lblBillNo")).Text;
-                _objBll.NonOffBillDate = Convert.ToDateTime(((Label) row.FindControl("lblBillDate")).Text);
-                if (((Label) row.FindControl("lblDownTime")).Text != "NA") _objBll.OffRoadDate = Convert.ToDateTime(((Label) row.FindControl("lblDownTime")).Text);
-                if (((Label) row.FindControl("lblUpTime")).Text != "NA") _objBll.UpTime = Convert.ToDateTime(((Label) row.FindControl("lblUpTime")).Text);
-                _objBll.NonOffAmount = ((Label) row.FindControl("lblAmount")).Text;
-                _objBll.BaseLocId = Convert.ToInt64(((Label) row.FindControl("lblBrkDwn")).Text);
-                _objBll.VenName = ((Label) row.FindControl("lblVendorName")).Text;
-                _objBll.UpdatedDate = Convert.ToDateTime(txtApprovalDate.Text);
-                var x = _objBll.NonOffApproved();
-                switch (x)
+                if (_objBll != null)
                 {
-                    case 0:
-                        Show("Vehicle approved unsuccessfull");
-                        break;
-                    default:
-                        Show("Vehicle approved successfully");
-                        txtApprovalDate.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-                        txtApprovalDate.Enabled = false;
-                        BindGridview();
-                        break;
+                    _objBll.District = ((Label) row.FindControl("lblDistrict")).Text;
+                    _objBll.SrcVehNo = ((Label) row.FindControl("lblVehicle_No")).Text;
+                    _objBll.NonOffBillNo = ((Label) row.FindControl("lblBillNo")).Text;
+                    _objBll.NonOffBillDate = Convert.ToDateTime(((Label) row.FindControl("lblBillDate")).Text);
+                    if (((Label) row.FindControl("lblDownTime")).Text != "NA") _objBll.OffRoadDate = Convert.ToDateTime(((Label) row.FindControl("lblDownTime")).Text);
+                    if (((Label) row.FindControl("lblUpTime")).Text != "NA") _objBll.UpTime = Convert.ToDateTime(((Label) row.FindControl("lblUpTime")).Text);
+                    _objBll.NonOffAmount = ((Label) row.FindControl("lblAmount")).Text;
+                    _objBll.BaseLocId = Convert.ToInt64(((Label) row.FindControl("lblBrkDwn")).Text);
+                    _objBll.VenName = ((Label) row.FindControl("lblVendorName")).Text;
+                    _objBll.UpdatedDate = Convert.ToDateTime(txtApprovalDate.Text);
+                    var x = _objBll.NonOffApproved();
+                    switch (x)
+                    {
+                        case 0:
+                            Show("Vehicle approved unsuccessfull");
+                            break;
+                        default:
+                            Show("Vehicle approved successfully");
+                            txtApprovalDate.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                            txtApprovalDate.Enabled = false;
+                            BindGridview();
+                            break;
+                    }
                 }
 
                 break;

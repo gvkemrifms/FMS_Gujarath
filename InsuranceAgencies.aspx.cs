@@ -22,6 +22,7 @@ public partial class InsuranceAgencies : Page
             txtAddress.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
             //Permissions
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             if (p.Modify) return;
@@ -34,12 +35,14 @@ public partial class InsuranceAgencies : Page
 
     public void FillGridInsuranceAgencyDetails()
     {
-        var ds = ObjInsAgency.IFIllInsuranceAgencies();
-        if (ds != null)
+        if (ObjInsAgency != null)
         {
+            var ds = ObjInsAgency.IFIllInsuranceAgencies();
+            if (ds == null) return;
             grvInsuranceAgencyDetails.DataSource = ds;
-            grvInsuranceAgencyDetails.DataBind();
         }
+
+        grvInsuranceAgencyDetails.DataBind();
     }
 
     #endregion
@@ -106,12 +109,14 @@ public partial class InsuranceAgencies : Page
 
     protected void grvInsuranceAgencyDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName)
         {
             case "EditAgency":
                 btnInsuranceUpdate.Text = "Update";
                 ViewState["InsuranceId"] = e.CommandArgument.ToString();
                 var ds = ObjInsAgency.IGetInsuranceAgenciesByInsuranceID(Convert.ToInt32(ViewState["InsuranceId"]));
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 txtInsuranceAgency.Text = ds.Tables[0].Rows[0]["InsuranceAgency"].ToString();
                 txtContactPerson.Text = ds.Tables[0].Rows[0]["ContactPerson"].ToString();
                 txtAddress.Text = ds.Tables[0].Rows[0]["Address"].ToString();

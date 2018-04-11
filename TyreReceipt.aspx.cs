@@ -39,14 +39,22 @@ public partial class TyreReceipt : Page
 
     private void FillInventoryVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryTyreReceiptVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryTyreReceiptVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillGrid_TyreDetailsForReceipt(int fleetInventoryItemId, int vehicleId)
     {
         var ds = ObjTyreRecp.GetTyreDetailsForReceipt(1, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvTyreDetailsForReceipt.DataSource = ds.Tables[0];
         grvTyreDetailsForReceipt.DataBind();
     }
@@ -137,6 +145,7 @@ public partial class TyreReceipt : Page
         var id = Convert.ToInt32(e.CommandArgument.ToString());
         txtIssueID.Text = e.CommandArgument.ToString();
         var ds = ObjTyreRecp.GetGridTyreReceiptPopup(id);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtTyreDCNumber.Text = ds.Tables[0].Rows[0][1].ToString();
         txtTyreDCDate.Text = ds.Tables[0].Rows[0][2].ToString();
         txtTyreRecCourierName.Text = ds.Tables[0].Rows[0][3].ToString();

@@ -3,26 +3,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
-
-    function CheckLength(text, long) {
-        var maxlength = new Number(long); // Change number to your max length.
-        if (text.value.length > maxlength) {
-            text.value = text.value.substring(0, maxlength);
-
-            alert(" Only " + long + " chars");
-
-        }
-    }
-
-    function remark(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode !== 34) && (keycode !== 39);
-    }
-
     function validationInventoryBatteryVehicleType() {
         var id = document.getElementById('<%= ddlInventoryVehicles.ClientID %>');
         var inputs = id.getElementsByTagName('input');
@@ -38,16 +21,9 @@
 
             }
         }
+        return true;
     }
 
-    function OnlyAlphaNumeric(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 47 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-    }
 
 </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -56,16 +32,14 @@
 <legend>Battery Requisition</legend>
 <table style="width: 600px">
 <tr>
-    <td class="rowseparator">
-    </td>
+    <td class="rowseparator"></td>
 </tr>
 <tr align="center">
     <td>
         <asp:Panel ID="pnlNewBatteryRequisition" runat="server">
             <table>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td align="center">
@@ -78,8 +52,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td>
@@ -117,8 +90,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td align="center">
@@ -137,8 +109,7 @@
     <td>
         <table>
             <tr>
-                <td class="rowseparator">
-                </td>
+                <td class="rowseparator"></td>
             </tr>
             <tr>
                 <td>
@@ -171,8 +142,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="rowseparator">
-                </td>
+                <td class="rowseparator"></td>
             </tr>
             <tr>
                 <td>
@@ -201,15 +171,14 @@
                 </td>
             </tr>
             <tr>
-                <td class="rowseparator">
-                </td>
+                <td class="rowseparator"></td>
             </tr>
             <tr>
                 <td>
                     <asp:Button ID="btnShowPopup" runat="server" Style="display: none"/>
                     <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtender1" BehaviorID="mdlPopup"
                                                     runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
-                    <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Width="500px" Style="padding: 10px; display: none;">
+                    <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Width="500px" Style="display: none; padding: 10px;">
                         <fieldset style="padding: 10px; width: auto">
                             <legend>Battery Request Details</legend>
                             <table>
@@ -217,16 +186,14 @@
                                     <td>
                                         <asp:Label ID="lblVehicleNo" runat="server" Text="Vehicle Number"></asp:Label>
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
                                         <asp:TextBox ID="txtVehicleNumberPopUp" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
                                     <td>
                                         <asp:Label ID="Label1" runat="server" Text="Request ID"></asp:Label>
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
                                         <asp:TextBox ID="txtRequestIdPopup" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
@@ -242,7 +209,7 @@
                                     <HeaderStyle CssClass="headerStyle"/>
                                 </asp:GridView>
                             </div>
-                            <div id="Div7" align="center" style="width: 95%; background-color: white">
+                            <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                 <br/>
                                 <asp:Button ID="btnOk" runat="server" Text="Approve" OnClick="btnOk_Click" Width="50px"/>
                                 <ajaxToolkit:ConfirmButtonExtender
@@ -260,8 +227,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="rowseparator">
-                </td>
+                <td class="rowseparator"></td>
             </tr>
         </table>
     </td>

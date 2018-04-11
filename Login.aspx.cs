@@ -20,6 +20,7 @@ public partial class Login : Page
     {
         var client = new ACLServiceClient();
         var results = client.LoginAuthenticate(txtFmsUsername.Text, txtFmsPassword.Text, "FMSGlobalization", "1.2.3.4", 80);
+        if (results == null) throw new ArgumentNullException(nameof(results));
         var dsResults = new DataSet();
         dsResults.ReadXml(new XmlTextReader(new StringReader(results)));
         var resultFlag = Convert.ToInt32(dsResults.Tables[0].Rows[0].ItemArray[0].ToString());
@@ -37,11 +38,13 @@ public partial class Login : Page
                 Session["Role_Name"] = dsResults.Tables[0].Rows[0].ItemArray[4].ToString();
                 Session["Module_Name"] = dsResults.Tables[0].Rows[0].ItemArray[5].ToString();
                 var ds = client.GetMenuItems(Convert.ToInt16(Session["User_Id"].ToString()), Convert.ToInt16(dsResults.Tables[0].Rows[0]["m_moid"].ToString()), Convert.ToInt16(Session["Role_Id"].ToString()));
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 Session["PermissionsDS"] = ds;
                 // Redirect to Home Page...
                 if (Convert.ToInt16(Session["UserdistrictId"].ToString()) > 0)
                 {
                     var dist = _fmsgen.GetUserDistrict(Convert.ToInt16(Session["User_Id"].ToString()));
+                    if (dist == null) throw new ArgumentNullException(nameof(dist));
                     Session["District_Name"] = dist.Tables[0].Rows[0]["district_name"].ToString();
                 }
                 else

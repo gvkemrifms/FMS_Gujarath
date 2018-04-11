@@ -67,8 +67,15 @@ public partial class MaintenanceWorksServiceGroup : Page
     private void FillManufacturerNames()
     {
         var ds = ObjFmsMaintenanceWorksServiceGroup.IFillManufacturerNames();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
-        ddlManufacturerName.Items[0].Value = "0";
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     #endregion
@@ -77,16 +84,18 @@ public partial class MaintenanceWorksServiceGroup : Page
 
     public void FillGrid_MaintenanceWorksServiceGroup()
     {
-        var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup();
-        if (ds != null && ds.Tables[0].Rows.Count > 0)
+        using (var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup())
         {
-            grvMaintenanceWorksServiceGroupDetails.DataSource = ds.Tables[0];
-            grvMaintenanceWorksServiceGroupDetails.DataBind();
-        }
-        else
-        {
-            var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
-            ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                grvMaintenanceWorksServiceGroupDetails.DataSource = ds.Tables[0];
+                grvMaintenanceWorksServiceGroupDetails.DataBind();
+            }
+            else
+            {
+                var strScript1 = "<script language=JavaScript>alert('" + "No record found" + "')</script>";
+                ClientScript.RegisterStartupScript(GetType(), "Success", strScript1);
+            }
         }
     }
 
@@ -96,59 +105,68 @@ public partial class MaintenanceWorksServiceGroup : Page
 
     protected void btnSaveMaintenanceWorksServiceGroup_Click(object sender, EventArgs e)
     {
-        switch (btnSaveMaintenanceWorksServiceGroup.Text)
+        try
         {
-            case "Save":
+            switch (btnSaveMaintenanceWorksServiceGroup.Text)
             {
-                var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup();
-                if (ds.Tables[0].Select("ServiceGroup_Name='" + txtServiceGroupName.Text + "' And FleetManufacturer_Name='" + ddlManufacturerName.SelectedItem + "'").Length <= 0)
+                case "Save":
                 {
-                    var serviceGroupName = txtServiceGroupName.Text;
-                    var manufacturerId = Convert.ToInt32(ddlManufacturerName.SelectedValue);
-                    var createdDate = DateTime.Today;
-                    var createdBy = Convert.ToInt32(Session["User_Id"]);
-                    ds = ObjFmsMaintenanceWorksServiceGroup.InsertMaintenanceWorksServiceGroupDetails(serviceGroupName, manufacturerId, createdDate, createdBy);
-                    switch (ds.Tables.Count)
+                    var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup();
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    if (ds.Tables[0].Select("ServiceGroup_Name='" + txtServiceGroupName.Text + "' And FleetManufacturer_Name='" + ddlManufacturerName.SelectedItem + "'").Length <= 0)
                     {
-                        case 0:
-                            Show("Details saved successfully");
-                            MaintenanceWorksServiceGroupReset();
-                            break;
-                        default:
-                            Show("Details already exists");
-                            break;
+                        var serviceGroupName = txtServiceGroupName.Text;
+                        var manufacturerId = Convert.ToInt32(ddlManufacturerName.SelectedValue);
+                        var createdDate = DateTime.Today;
+                        var createdBy = Convert.ToInt32(Session["User_Id"]);
+                        ds = ObjFmsMaintenanceWorksServiceGroup.InsertMaintenanceWorksServiceGroupDetails(serviceGroupName, manufacturerId, createdDate, createdBy);
+                        switch (ds.Tables.Count)
+                        {
+                            case 0:
+                                Show("Details saved successfully");
+                                MaintenanceWorksServiceGroupReset();
+                                break;
+                            default:
+                                Show("Details already exists");
+                                break;
+                        }
                     }
-                }
-                else
-                    Show("Service Group Name for selected Manufacturer already exists");
+                    else
+                        Show("Service Group Name for selected Manufacturer already exists");
 
-                break;
-            }
-            default:
-            {
-                var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup();
-                if (ds.Tables[0].Select("ServiceGroup_Name='" + txtServiceGroupName.Text + "' And ServiceGroup_Id<>'" + hidSerGrpId.Value + "'").Length <= 0)
+                    break;
+                }
+                default:
                 {
-                    int serviceGroupId = Convert.ToInt16(hidSerGrpId.Value);
-                    var serviceGroupName = txtServiceGroupName.Text;
-                    var manufacturerId = Convert.ToInt32(ddlManufacturerName.SelectedValue);
-                    ds = ObjFmsMaintenanceWorksServiceGroup.UpdateMaintenanceWorksServiceGroupDetails(serviceGroupId, serviceGroupName, manufacturerId);
-                    switch (ds.Tables.Count)
+                    var ds = ObjFmsMaintenanceWorksServiceGroup.IFillGrid_MaintenanceWorksServiceGroup();
+                    if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    if (ds.Tables[0].Select("ServiceGroup_Name='" + txtServiceGroupName.Text + "' And ServiceGroup_Id<>'" + hidSerGrpId.Value + "'").Length <= 0)
                     {
-                        case 0:
-                            Show("Details updated successfully");
-                            MaintenanceWorksServiceGroupReset();
-                            break;
-                        default:
-                            Show("Details already exists");
-                            break;
+                        int serviceGroupId = Convert.ToInt16(hidSerGrpId.Value);
+                        var serviceGroupName = txtServiceGroupName.Text;
+                        var manufacturerId = Convert.ToInt32(ddlManufacturerName.SelectedValue);
+                        ds = ObjFmsMaintenanceWorksServiceGroup.UpdateMaintenanceWorksServiceGroupDetails(serviceGroupId, serviceGroupName, manufacturerId);
+                        switch (ds.Tables.Count)
+                        {
+                            case 0:
+                                Show("Details updated successfully");
+                                MaintenanceWorksServiceGroupReset();
+                                break;
+                            default:
+                                Show("Details already exists");
+                                break;
+                        }
                     }
-                }
-                else
-                    Show("Service Group Name already exists");
+                    else
+                        Show("Service Group Name already exists");
 
-                break;
+                    break;
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
 
         FillGrid_MaintenanceWorksServiceGroup();
@@ -185,6 +203,7 @@ public partial class MaintenanceWorksServiceGroup : Page
         hidSerGrpId.Value = lblServiceId.Text;
         int sgId = Convert.ToInt16(hidSerGrpId.Value);
         var ds = ObjFmsMaintenanceWorksServiceGroup.IRowEditMaintenanceWorksServiceGroupDetails(sgId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         Session["Manufacturer_Id"] = ds.Tables[0].Rows[0].ItemArray[1].ToString();
         txtServiceGroupName.Text = Convert.ToString(ds.Tables[0].Rows[0]["ServiceGroup_Name"].ToString());
         FillManufacturerNames();

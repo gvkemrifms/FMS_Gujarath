@@ -6,18 +6,18 @@
 
             var district = document.getElementById('<%= ddlDistrict.ClientID %>');
             switch (district.selectedIndex) {
-                case 0:
-                    alert("Please select the District");
-                    window.Districts.focus();
-                    return false;
+            case 0:
+                alert("Please select the District");
+                window.Districts.focus();
+                return false;
             }
 
             var ssn = document.getElementById('<%= ddlSSN.ClientID %>');
             switch (ssn.selectedIndex) {
-                case 0:
-                    alert("Please select the Service Station Name");
-                    ssn.focus();
-                    return false;
+            case 0:
+                alert("Please select the Service Station Name");
+                ssn.focus();
+                return false;
             }
             return true;
         }
@@ -29,20 +29,22 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Select District :
+                    <td>
+                        Select District :
                         <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
                     <td></td>
-                    <td>Service Station Name:
+                    <td>
+                        Service Station Name:
                         <asp:DropDownList ID="ddlSSN" runat="server" AutoPostBack="True"
-                            OnSelectedIndexChanged="ddlSSN_SelectedIndexChanged">
+                                          OnSelectedIndexChanged="ddlSSN_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
                     <td></td>
                     <td>
                         <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
-                            OnClick="btnExportToExcel_Click" />
+                                    OnClick="btnExportToExcel_Click"/>
                     </td>
                 </tr>
                 <tr>

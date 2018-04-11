@@ -4,6 +4,7 @@ using System.Web.UI;
 public partial class CumulativeReport : Page
 {
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) btnShow_Click();
@@ -11,13 +12,26 @@ public partial class CumulativeReport : Page
 
     protected void btnShow_Click()
     {
-        _helper.FillDropDownHelperMethodWithSp("CumulativeReportOnRO", null, null, null, null, null, null, null, null, null, null, null, GridView1);
-        
+        try
+        {
+            _helper.FillDropDownHelperMethodWithSp("CumulativeReportOnRO", null, null, null, null, null, null, null, null, null, null, null, GridView1);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        _helper.LoadExcelSpreadSheet(this,null,"CumulativeReport.xls", GridView1);
+        try
+        {
+            _helper.LoadExcelSpreadSheet(this, null, "CumulativeReport.xls", GridView1);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public override void VerifyRenderingInServerForm(Control control)

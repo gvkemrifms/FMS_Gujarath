@@ -7,12 +7,14 @@ public partial class HandOvertoOperations : Page
 {
     private readonly GvkFMSAPP.BLL.HandOvertoOperations _handovertooperation = new GvkFMSAPP.BLL.HandOvertoOperations();
     readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btHandover.Attributes.Add("onclick", "return validation()");
@@ -24,7 +26,15 @@ public partial class HandOvertoOperations : Page
     public void GetVehicleNumber()
     {
         var ds = _handovertooperation.GetVehicleNumber(); //FMS.BLL.HandOvertoOperations.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNo);
+        if (ds != null)
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNo);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
     }
 
     protected void btHandover_Click(object sender, EventArgs e)

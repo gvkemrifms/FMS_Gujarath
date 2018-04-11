@@ -18,9 +18,19 @@ public partial class DistrictVehicleMapping : Page
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", "abc()", true);
             btnSave.Attributes.Add("onclick", "return validation()");
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType); //Fill VehicleTypes
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlVehicleNumber); //GetVehicleNumber
-            _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetDistrict(), "district_name", "district_id", ddlDistrict); //GetDistricts
+            if (_distvehmapp != null)
+            {
+                try
+                {
+                    _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType); //Fill VehicleTypes
+                    _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicles(), "VehicleNumber", "VehicleID", ddlVehicleNumber); //GetVehicleNumber
+                    _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetDistrict(), "district_name", "district_id", ddlDistrict); //GetDistricts
+                }
+                catch (Exception ex)
+                {
+                    _helper.ErrorsEntry(ex);
+                }
+            }
         }
     }
 
@@ -62,22 +72,52 @@ public partial class DistrictVehicleMapping : Page
         ddlCity.Items.Clear();
         ddlCity.Items.Insert(0, new ListItem("--Select--", "0"));
         txtContactNumber.Text = "";
-        _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
+        if (ddlDistrict != null)
+            if (_vehallobj != null)
+                _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+        if (_vehallobj != null)
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
     }
 
     public void GetBaseLocation()
     {
-        _vehallobj.CityId = Convert.ToInt32(ddlCity.SelectedItem.Value);
-        var ds = _vehallobj.GetBaseLocation();
-        ViewState["ContactNumber"] = ds;
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Base_Location", "Location_ID", ddlBaseLocation);
+        if (ddlCity != null && _vehallobj != null) _vehallobj.CityId = Convert.ToInt32(ddlCity.SelectedItem.Value);
+        if (_vehallobj != null)
+            using (var ds = _vehallobj.GetBaseLocation())
+            {
+                ViewState["ContactNumber"] = ds;
+                if (ds != null)
+                    try
+                    {
+                        _helper.FillDropDownHelperMethodWithDataSet(ds, "Base_Location", "Location_ID", ddlBaseLocation);
+                    }
+                    catch (Exception ex)
+                    {
+                        _helper.ErrorsEntry(ex);
+                    }
+            }
     }
 
     protected void ddlSegments_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
+        if (ddlDistrict != null && _vehallobj != null) _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+        if (_vehallobj != null)
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetMandals_new(), "mandal_name", "mandal_id", ddlMandal); //GetMandals
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+
         GetDistrictMandals();
     }
 
@@ -89,8 +129,18 @@ public partial class DistrictVehicleMapping : Page
 
     protected void ddlMandal_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
-        _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetCities_new(), "ct_lname", "city_id", ddlCity);
+        if (_vehallobj != null)
+        {
+            if (ddlMandal != null) _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(_vehallobj.GetCities_new(), "ct_lname", "city_id", ddlCity);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+        }
     }
 
     protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
@@ -105,63 +155,70 @@ public partial class DistrictVehicleMapping : Page
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        if (ddlVehType.SelectedIndex <= 0)
-            Show("Please Select vehicle type");
-        else
+        try
         {
-            _vehallobj.OffRoadVehcileId = Convert.ToInt32(ddlVehicleNumber.SelectedItem.Value);
-            _vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
-            _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-            _vehallobj.District = ddlDistrict.SelectedItem.Text;
-            var manids = "";
-            _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
-            _vehallobj.Mandal = ddlMandal.SelectedItem.Text;
-            _vehallobj.CityId = Convert.ToInt32(ddlCity.SelectedItem.Value);
-            _vehallobj.City = ddlCity.SelectedItem.Text;
-            if (ddlBaseLocation.Visible)
-            {
-                _vehallobj.BaseLocationId = Convert.ToInt32(ddlBaseLocation.SelectedItem.Value);
-                _vehallobj.BaseLocation = ddlBaseLocation.SelectedItem.Text;
-                _vehallobj.Flag = "Old";
-                _vehallobj.Latitude = "0.00";
-                _vehallobj.Longitude = "0.00";
-                // Bind Lat Longs
-            }
+            if (ddlVehType.SelectedIndex <= 0)
+                Show("Please Select vehicle type");
             else
             {
-                _vehallobj.BaseLocationId = 0;
-                _vehallobj.BaseLocation = txtBaseLocation.Text;
-                _vehallobj.Flag = "New";
+                _vehallobj.OffRoadVehcileId = Convert.ToInt32(ddlVehicleNumber.SelectedItem.Value);
+                _vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
+                _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+                _vehallobj.District = ddlDistrict.SelectedItem.Text;
+                var manids = "";
+                _vehallobj.MandalId = Convert.ToInt32(ddlMandal.SelectedItem.Value);
+                _vehallobj.Mandal = ddlMandal.SelectedItem.Text;
+                _vehallobj.CityId = Convert.ToInt32(ddlCity.SelectedItem.Value);
+                _vehallobj.City = ddlCity.SelectedItem.Text;
+                if (ddlBaseLocation.Visible)
+                {
+                    _vehallobj.BaseLocationId = Convert.ToInt32(ddlBaseLocation.SelectedItem.Value);
+                    _vehallobj.BaseLocation = ddlBaseLocation.SelectedItem.Text;
+                    _vehallobj.Flag = "Old";
+                    _vehallobj.Latitude = "0.00";
+                    _vehallobj.Longitude = "0.00";
+                    // Bind Lat Longs
+                }
+                else
+                {
+                    _vehallobj.BaseLocationId = 0;
+                    _vehallobj.BaseLocation = txtBaseLocation.Text;
+                    _vehallobj.Flag = "New";
+                    _vehallobj.Latitude = txtLatitude.Text;
+                    _vehallobj.Longitude = txtLongitude.Text;
+                }
+
+                _vehallobj.SegmentId = 0;
+                _vehallobj.Segment = "";
+                _vehallobj.NewSegFlag = "New";
+                for (var i = 1; i < ddlMandal.Items.Count; i++) manids = manids + ddlMandal.Items[i].Value + ",";
+                _vehallobj.NewSegMandalIds = manids;
+                _vehallobj.SegmentId = 0;
                 _vehallobj.Latitude = txtLatitude.Text;
                 _vehallobj.Longitude = txtLongitude.Text;
-            }
+                _vehallobj.ContactNumber = txtContactNumber.Text;
+                _vehallobj.VehType = ddlVehType.SelectedItem.Value;
+                var clsGen = new ClsGeneral();
+                var dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
+                var insres = _vehallobj.InsNewVehAllocation_new();
+                switch (insres)
+                {
+                    case 0:
+                        Show("Error!!");
+                        break;
+                    default:
+                        clsGen.InsertVehicle(ddlVehicleNumber.SelectedItem.Value, ddlVehicleNumber.SelectedItem.Text, "1", txtContactNumber.Text, txtLatitude.Text, txtLongitude.Text, ddlVehType.SelectedItem.Text, ddlDistrict.SelectedItem.Value, ddlMandal.SelectedItem.Value, ddlBaseLocation.Visible ? ddlBaseLocation.SelectedItem.Text : txtBaseLocation.Text);
+                        if (dtGetVehData.Rows.Count > 0) UpdateData(ddlVehicleNumber, txtContactNumber.Text, txtLatitude.Text, txtLongitude.Text, ddlDistrict.SelectedItem.Value, ddlMandal.SelectedItem.Value, ddlBaseLocation.SelectedItem.Text);
+                        Show("Record Inserted Successfully!!");
+                        break;
+                }
 
-            _vehallobj.SegmentId = 0;
-            _vehallobj.Segment = "";
-            _vehallobj.NewSegFlag = "New";
-            for (var i = 1; i < ddlMandal.Items.Count; i++) manids = manids + ddlMandal.Items[i].Value + ",";
-            _vehallobj.NewSegMandalIds = manids;
-            _vehallobj.SegmentId = 0;
-            _vehallobj.Latitude = txtLatitude.Text;
-            _vehallobj.Longitude = txtLongitude.Text;
-            _vehallobj.ContactNumber = txtContactNumber.Text;
-            _vehallobj.VehType = ddlVehType.SelectedItem.Value;
-            var clsGen = new ClsGeneral();
-            var dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
-            var insres = _vehallobj.InsNewVehAllocation_new();
-            switch (insres)
-            {
-                case 0:
-                    Show("Error!!");
-                    break;
-                default:
-                    clsGen.InsertVehicle(ddlVehicleNumber.SelectedItem.Value, ddlVehicleNumber.SelectedItem.Text, "1", txtContactNumber.Text, txtLatitude.Text, txtLongitude.Text, ddlVehType.SelectedItem.Text, ddlDistrict.SelectedItem.Value, ddlMandal.SelectedItem.Value, ddlBaseLocation.Visible ? ddlBaseLocation.SelectedItem.Text : txtBaseLocation.Text);
-                    if (dtGetVehData.Rows.Count > 0) UpdateData(ddlVehicleNumber, txtContactNumber.Text, txtLatitude.Text, txtLongitude.Text, ddlDistrict.SelectedItem.Value, ddlMandal.SelectedItem.Value, ddlBaseLocation.SelectedItem.Text);
-                    Show("Record Inserted Successfully!!");
-                    break;
+                ClearAll();
             }
-
-            ClearAll();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -170,7 +227,14 @@ public partial class DistrictVehicleMapping : Page
         var statement = "";
         statement = statement + "update m_vehicle set  `contact_number` = '" + contactNumber + "',`latitude`= '" + latitude + "',`longitude` = '" + longitude + "',`mandal_id`  = '" + mandal + "',`location_name`  = '" + baseLocation + "', district_id= '" + district + "'";
         statement = statement + "  where `vehicle_no` = '" + vehicleNumber.SelectedItem.Text + "' ;";
-        _helper.ExecuteInsertStatement(statement);
+        try
+        {
+            _helper.ExecuteInsertStatement(statement);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void Show(string message)
@@ -203,18 +267,30 @@ public partial class DistrictVehicleMapping : Page
 
     protected void ddlVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
-        var dsvehalldet = _vehallobj.GetVehAllocationDet();
-        if (dsvehalldet.Tables[0].Rows.Count <= 0) return;
-        var sb = new StringBuilder();
-        sb.Append("Vehicle is already allocated to :\\n");
-        sb.Append("\\nDistrict      - " + dsvehalldet.Tables[0].Rows[0]["District"]);
-        sb.Append("\\nSegment       - " + dsvehalldet.Tables[0].Rows[0]["Segment"]);
-        sb.Append("\\nMandal        - " + dsvehalldet.Tables[0].Rows[0]["Mandal"]);
-        sb.Append("\\nCity/Village  - " + dsvehalldet.Tables[0].Rows[0]["City"]);
-        sb.Append("\\nBase Location - " + dsvehalldet.Tables[0].Rows[0]["BaseLocation"]);
-        var str = sb.ToString();
-        Show(str);
+        if (_vehallobj == null) return;
+        try
+        {
+            _vehallobj.OffRoadVehicleNo = ddlVehicleNumber.SelectedItem.Text;
+            var dsvehalldet = _vehallobj.GetVehAllocationDet();
+            if (dsvehalldet != null && dsvehalldet.Tables[0].Rows.Count <= 0) return;
+            var sb = new StringBuilder();
+            sb.Append("Vehicle is already allocated to :\\n");
+            if (dsvehalldet != null)
+            {
+                sb.Append("\\nDistrict      - " + dsvehalldet.Tables[0].Rows[0]["District"]);
+                sb.Append("\\nSegment       - " + dsvehalldet.Tables[0].Rows[0]["Segment"]);
+                sb.Append("\\nMandal        - " + dsvehalldet.Tables[0].Rows[0]["Mandal"]);
+                sb.Append("\\nCity/Village  - " + dsvehalldet.Tables[0].Rows[0]["City"]);
+                sb.Append("\\nBase Location - " + dsvehalldet.Tables[0].Rows[0]["BaseLocation"]);
+            }
+
+            var str = sb.ToString();
+            Show(str);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void lnkbtnNewSegment_Click(object sender, EventArgs e)
@@ -243,29 +319,37 @@ public partial class DistrictVehicleMapping : Page
 
     protected void ddlBaseLocation_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (ddlBaseLocation.SelectedIndex)
+        if (ddlBaseLocation == null) return;
+        try
         {
-            case 0:
-                txtContactNumber.Text = "";
-                txtLatitude.Text = "";
-                txtLongitude.Text = "";
-                break;
-            default:
-                var dsblcn = (DataSet) ViewState["ContactNumber"];
-                var dv = new DataView(dsblcn.Tables[0], "Location_ID =" + Convert.ToInt32(ddlBaseLocation.SelectedItem.Value), "Contact_Number", DataViewRowState.CurrentRows);
-                txtContactNumber.Text = dv[0]["Contact_Number"].ToString();
-                txtLatitude.Text = dv[0]["latitude"].ToString();
-                txtLongitude.Text = dv[0]["longitude"].ToString();
-                var csg = new ClsGeneral();
-                var dtVehData = csg.getVehiclesinRadius(txtLatitude.Text, txtLongitude.Text, ConfigurationManager.AppSettings["Locateveh"]);
-                if (dtVehData.Rows.Count > 0)
-                {
-                    lblVeh.Text = "Vehicles that are under " + ConfigurationManager.AppSettings["Locateveh"] + "KMs to base location ";
-                    grdVehicleData.DataSource = dtVehData;
-                    grdVehicleData.DataBind();
-                }
+            switch (ddlBaseLocation.SelectedIndex)
+            {
+                case 0:
+                    txtContactNumber.Text = "";
+                    txtLatitude.Text = "";
+                    txtLongitude.Text = "";
+                    break;
+                default:
+                    var dsblcn = (DataSet) ViewState["ContactNumber"];
+                    var dv = new DataView(dsblcn.Tables[0], "Location_ID =" + Convert.ToInt32(ddlBaseLocation.SelectedItem.Value), "Contact_Number", DataViewRowState.CurrentRows);
+                    txtContactNumber.Text = dv[0]["Contact_Number"].ToString();
+                    txtLatitude.Text = dv[0]["latitude"].ToString();
+                    txtLongitude.Text = dv[0]["longitude"].ToString();
+                    var csg = new ClsGeneral();
+                    var dtVehData = csg.getVehiclesinRadius(txtLatitude.Text, txtLongitude.Text, ConfigurationManager.AppSettings["Locateveh"]);
+                    if (dtVehData.Rows.Count > 0)
+                    {
+                        lblVeh.Text = "Vehicles that are under " + ConfigurationManager.AppSettings["Locateveh"] + "KMs to base location ";
+                        grdVehicleData.DataSource = dtVehData;
+                        grdVehicleData.DataBind();
+                    }
 
-                break;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 }

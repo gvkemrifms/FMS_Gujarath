@@ -30,9 +30,16 @@ public partial class OffroadPhysicalBills : Page
 
     public void BindDropDown()
     {
-        _dsDistricts = _fmsobj.GetDistrict();
-        _helper.FillDropDownHelperMethodWithDataSet(_dsDistricts, "ds_lname", "ds_dsid", ddlDistricts);
-        ViewState["dsDistricts"] = _dsDistricts;
+        try
+        {
+            _dsDistricts = _fmsobj.GetDistrict();
+            _helper.FillDropDownHelperMethodWithDataSet(_dsDistricts, "ds_lname", "ds_dsid", ddlDistricts);
+            ViewState["dsDistricts"] = _dsDistricts;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDistricts_SelectedIndexChanged(object sender, EventArgs e)
@@ -160,12 +167,14 @@ public partial class OffroadPhysicalBills : Page
     public void BindGrid()
     {
         var ds = _obj.GetOffroadPhysicalBills();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvVehiclePhysicalBillDetails.DataSource = ds.Tables[0];
         gvVehiclePhysicalBillDetails.DataBind();
     }
 
     protected void gvVehiclePhysicalBillDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName.ToUpper())
         {
             case "VEHMAINEDIT":

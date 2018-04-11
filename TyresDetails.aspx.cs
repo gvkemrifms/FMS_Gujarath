@@ -80,6 +80,7 @@ public partial class TyresDetails : Page
             case "Save":
             {
                 var ds = ObjTyresDetails.IFillGrid_TyresDetails();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("TyreNumber='" + txtTyreNumber.Text + "' or Tyre_Item_Code='" + txtTyreItemCode.Text + "'").Length > 0)
                     Show("Tyre Number and Tyre Item Code already exists");
                 else
@@ -161,12 +162,14 @@ public partial class TyresDetails : Page
         var lblid = (Label) grvTyresDetails.Rows[index].FindControl("lblId");
         hidTyresId.Value = lblid.Text;
         int tyreId = Convert.ToInt16(hidTyresId.Value);
-        var ds = ObjTyresDetails.IRowEditTyresDetails(tyreId);
-        txtTyreItemCode.Text = Convert.ToString(ds.Tables[0].Rows[0]["Tyre_Item_Code"].ToString()).Trim();
-        txtTyreNumber.Text = Convert.ToString(ds.Tables[0].Rows[0]["TyreNumber"].ToString());
-        txtTyreMake.Text = Convert.ToString(ds.Tables[0].Rows[0]["Make"].ToString());
-        txtTyreModel.Text = Convert.ToString(ds.Tables[0].Rows[0]["Model"].ToString());
-        txtTyreSize.Text = Convert.ToString(ds.Tables[0].Rows[0]["Size"].ToString());
+        using (var ds = ObjTyresDetails.IRowEditTyresDetails(tyreId))
+        {
+            txtTyreItemCode.Text = Convert.ToString(ds.Tables[0].Rows[0]["Tyre_Item_Code"].ToString()).Trim();
+            txtTyreNumber.Text = Convert.ToString(ds.Tables[0].Rows[0]["TyreNumber"].ToString());
+            txtTyreMake.Text = Convert.ToString(ds.Tables[0].Rows[0]["Make"].ToString());
+            txtTyreModel.Text = Convert.ToString(ds.Tables[0].Rows[0]["Model"].ToString());
+            txtTyreSize.Text = Convert.ToString(ds.Tables[0].Rows[0]["Size"].ToString());
+        }
     }
 
     public void Show(string message)

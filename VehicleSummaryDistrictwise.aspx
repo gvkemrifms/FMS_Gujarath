@@ -9,7 +9,7 @@
     <table>
         <tr>
             <td>
-                <asp:Label ID="lblDistrictreport" Style="font-size: 20px; color: brown" runat="server" Text="vehicle&nbsp;summarys&nbsp;DistrictwiseReport"></asp:Label>
+                <asp:Label ID="lblDistrictreport" Style="color: brown; font-size: 20px;" runat="server" Text="vehicle&nbsp;summarys&nbsp;DistrictwiseReport"></asp:Label>
             </td>
         </tr>
 
@@ -49,4 +49,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-

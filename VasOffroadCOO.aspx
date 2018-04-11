@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VasOffroadCoo.aspx.cs" Inherits="VasOffroadCoo" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
         <ContentTemplate>
             <div>
@@ -12,7 +13,7 @@
                               CellPadding="4" ForeColor="#333333" GridLines="None"
                               Width="630px" AllowPaging="True"
                               EnableSortingAndPagingCallbacks="True"
-                              onpageindexchanging="gvVasOffroad_PageIndexChanging" onrowcommand="gvVasOffroad_RowCommand">
+                              OnPageIndexChanging="gvVasOffroad_PageIndexChanging" OnRowCommand="gvVasOffroad_RowCommand">
 
                     <RowStyle CssClass="rowStyleGrid"/>
                     <Columns>
@@ -37,8 +38,6 @@
                                 <asp:Label ID="lblDoOffRoad" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "downtime") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-
-
                         <asp:TemplateField HeaderText="Reason">
                             <ItemTemplate>
                                 <asp:Label ID="lblReason" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Reason") %>'></asp:Label>
@@ -54,23 +53,18 @@
                                 <asp:TextBox runat="server" ID="txtApprovedCost"/>
                             </ItemTemplate>
                         </asp:TemplateField>
-
-
                         <asp:TemplateField HeaderText="Approve">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve" CommandArgument=" <%# Container.DataItemIndex %>"
                                                 Text="Approve">
                                 </asp:LinkButton>
-
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Reject">
                             <ItemTemplate>
-
                                 <asp:LinkButton OnClientClick="PressButton()" ID="lnkReject" runat="server" CommandName="Reject" CommandArgument=" <%# Container.DataItemIndex %>"
                                                 Text="Reject">
                                 </asp:LinkButton>
-
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -99,16 +93,16 @@
                         <div style="width: 60%; float: right">
                             <div style="width: 50%; float: left">
                                 <asp:Button runat="server" ID="btnReason" Text="Submit"
-                                            onclick="btnReason_Click" OnClientClick="return Validation();"/>
+                                            OnClick="btnReason_Click" OnClientClick="return Validation();"/>
                             </div>
                             <div style="width: 50%; float: right">
                                 <asp:Button runat="server" ID="btnCancel" OnClientClick="PressButton2()" Text="Close"/>
                             </div>
-                        </div >
+                        </div>
                         <div>
-                        </div >
+                        </div>
                         <div style="display: none">
-                            <asp:Button runat="server" ID="btnDoWork" Text="TEMP" onclick="btnDoWork_Click"/>
+                            <asp:Button runat="server" ID="btnDoWork" Text="TEMP" OnClick="btnDoWork_Click"/>
                             <asp:Button runat="server" ID="btnPopUp"/>
                         </div>
 
@@ -128,7 +122,6 @@
         }
 
         function Reason() {
-            //debugger;
             var reason = document.getElementById('<%= txtrejectReason.ClientID %>');
             if (!RequiredValidation(reason, "Please provide reason for Rejection"))
                 return false;
@@ -149,22 +142,6 @@
             return true;
         }
 
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-            }
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-        }
     </script>
 </asp:Content>
 

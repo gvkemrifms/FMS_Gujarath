@@ -1,7 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="SparePartsMaster.aspx.cs" Inherits="SparePartsMaster" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
         function validation() {
             var fldSparePartName = document.getElementById('<%= txtSparePartName.ClientID %>');
@@ -36,14 +38,6 @@
             return true;
         }
 
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32);
-        }
-
         function onKeyPressBlockNumbers(value) {
             var reg = /^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
             if (!reg.test(value)) {
@@ -53,33 +47,6 @@
             }
 
             return reg.test(value);
-        }
-
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-            }
-        }
-
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function numeric(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
         }
 
     </script>
@@ -107,7 +74,7 @@
                                         <td class="columnseparator"></td>
                                         <td align="left">
                                             <asp:Label ID="lbManufacturerSpareID" runat="server" Text="Manufacturer Spare ID"
-                                                       onkeypress="return numeric(event)">
+                                                onkeypress="return numeric(event)">
                                             </asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
@@ -126,7 +93,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td align="left">
-                                            <asp:DropDownList ID="ddlManufacturerID" runat="server" Width="120px"/>
+                                            <asp:DropDownList ID="ddlManufacturerID" runat="server" Width="120px" />
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td align="left">
@@ -173,9 +140,9 @@
                                     </tr>
                                     <tr>
                                         <td colspan="7" align="center">
-                                            <asp:Button ID="btSave" runat="server" OnClick="btSave_Click" Text="Save" OnClientClick="return validation();"/>
+                                            <asp:Button ID="btSave" runat="server" OnClick="btSave_Click" Text="Save" OnClientClick="return validation();" />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btReset" runat="server" OnClick="btReset_Click" Text="Reset"/>
+                                            <asp:Button ID="btReset" runat="server" OnClick="btReset_Click" Text="Reset" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -193,43 +160,43 @@
                     <td>
                         <fieldset style="padding: 10px">
                             <asp:GridView ID="gvSpareParts" runat="server" AutoGenerateColumns="False" CellPadding="3"
-                                          CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnPageIndexChanging="gvSpareParts_PageIndexChanging"
-                                          OnRowDeleting="gvSpareParts_RowDeleting" OnRowEditing="gvSpareParts_RowEditing">
-                                <RowStyle CssClass="rowStyleGrid"/>
+                                CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnPageIndexChanging="gvSpareParts_PageIndexChanging"
+                                OnRowDeleting="gvSpareParts_RowDeleting" OnRowEditing="gvSpareParts_RowEditing">
+                                <RowStyle CssClass="rowStyleGrid" />
                                 <Columns>
                                     <asp:TemplateField HeaderText="SparePart Id">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%#Eval("SparePart_Id") %>'/>
+                                            <asp:Label ID="lblId" runat="server" Text='<%#Eval("SparePart_Id") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="SparePart Name">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblSparePartName" runat="server" Text='<%#Eval("SparePart_Name") %>'/>
+                                            <asp:Label ID="lblSparePartName" runat="server" Text='<%#Eval("SparePart_Name") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Manufacturer SpareId">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblManSprId" runat="server" Text='<%#Eval("ManufacturerSpare_Id") %>'/>
+                                            <asp:Label ID="lblManSprId" runat="server" Text='<%#Eval("ManufacturerSpare_Id") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Manufacturer Id">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblManId" runat="server" Text='<%#Eval("Manufacturer_Id") %>'/>
+                                            <asp:Label ID="lblManId" runat="server" Text='<%#Eval("Manufacturer_Id") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Group Id">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblGroupId" runat="server" Text='<%#Eval("SparePart_Group_Id") %>'/>
+                                            <asp:Label ID="lblGroupId" runat="server" Text='<%#Eval("SparePart_Group_Id") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Group Name">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblGroupName" runat="server" Text='<%#Eval("Group_Name") %>'/>
+                                            <asp:Label ID="lblGroupName" runat="server" Text='<%#Eval("Group_Name") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Cost">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblCost" runat="server" Text='<%#Eval("Cost") %>'/>
+                                            <asp:Label ID="lblCost" runat="server" Text='<%#Eval("Cost") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Edit">
@@ -241,15 +208,15 @@
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" Text="Deactivate"></asp:LinkButton>
                                             <asp:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" ConfirmText="Are You sure you want to DEACTIVATE"
-                                                                       TargetControlID="lnkDelete">
+                                                TargetControlID="lnkDelete">
                                             </asp:ConfirmButtonExtender>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
-                                <FooterStyle CssClass="footerStylegrid"/>
-                                <PagerStyle CssClass="pagerStylegrid"/>
-                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                <HeaderStyle CssClass="headerStyle"/>
+                                <FooterStyle CssClass="footerStylegrid" />
+                                <PagerStyle CssClass="pagerStylegrid" />
+                                <SelectedRowStyle CssClass="selectedRowStyle" />
+                                <HeaderStyle CssClass="headerStyle" />
                             </asp:GridView>
                         </fieldset>
                     </td>
@@ -261,7 +228,7 @@
                     <td class="rowseparator"></td>
                 </tr>
             </table>
-            <asp:HiddenField ID="hidSpareId" runat="server"/>
+            <asp:HiddenField ID="hidSpareId" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -23,17 +23,25 @@ public partial class VehicleAccidentInvestigationDetails : Page
 
     public void GetVehicleNumber()
     {
-        var ds = _fmsg.GetVehicleNumberInsurance();
-        if (ds.Tables[0] != null && ds.Tables[0].Rows.Count != 0)
+        try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlistVehicleNumber);
-            ViewState["dsVehicles"] = ds;
-        }
+            var ds = _fmsg.GetVehicleNumberInsurance();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            if (ds.Tables[0] != null && ds.Tables[0].Rows.Count != 0)
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlistVehicleNumber);
+                ViewState["dsVehicles"] = ds;
+            }
 
-        if (ds.Tables[1] != null && ds.Tables[1].Rows.Count != 0)
+            if (ds.Tables[1] != null && ds.Tables[1].Rows.Count != 0)
+            {
+                gvVehicleDetails.DataSource = ds.Tables[1];
+                gvVehicleDetails.DataBind();
+            }
+        }
+        catch (Exception ex)
         {
-            gvVehicleDetails.DataSource = ds.Tables[1];
-            gvVehicleDetails.DataBind();
+            _helper.ErrorsEntry(ex);
         }
     }
 

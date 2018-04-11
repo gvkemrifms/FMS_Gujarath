@@ -3,9 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-   <%-- <div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7; border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
     <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
         <ContentTemplate>
             <table width="100%">
@@ -50,7 +47,7 @@
                                 </tr>
                             </table>
                             <div>
-                                <div style="width: 300px; float: left">
+                                <div style="float: left; width: 300px;">
                                 </div>
                                 <div>
                                     <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" OnClientClick="return validationFuelEntry();" />
@@ -59,7 +56,7 @@
                                 </div>
                             </div>
                             <div>
-                                <div style="width: 200px; float: left">
+                                <div style="float: left; width: 200px;">
                                 </div>
                                 <div style="float: left">
                                     <asp:GridView ID="gvServiceStationDetails" Visible="false" runat="server" EmptyDataText="No records found"
@@ -72,32 +69,34 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="Station">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblServiceStation" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ServiceStation_Name") %>'>
+                                                    <asp:Label ID="lblServiceStation" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ServiceStation_Name") %>'>
                                                     </asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="District">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblDistricts" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ds_lname") %>'>
+                                                    <asp:Label ID="lblDistricts" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ds_lname") %>'>
                                                     </asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="VehicleNumber">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblVehNum" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"VehicleNumber") %>'>
+                                                    <asp:Label ID="lblVehNum" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>'>
                                                     </asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="MainEdit" CommandArgument=' <%# Container.DataItemIndex %>'
-                                                        Text="Edit"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="MainEdit" CommandArgument=" <%# Container.DataItemIndex %>"
+                                                        Text="Edit">
+                                                    </asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Delete">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandName="MainDelete" CommandArgument=' <%# Container.DataItemIndex %>'
-                                                        Text="Delete"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandName="MainDelete" CommandArgument=" <%# Container.DataItemIndex %>"
+                                                        Text="Delete">
+                                                    </asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -116,38 +115,38 @@
 
                 function validationFuelEntry() {
 
-                    if (document.getElementById("<%=txtServiceSrationName.ClientID %>").value == 0) {
+                    if (document.getElementById("<%= txtServiceSrationName.ClientID %>").value == 0) {
                         alert("Service Station Cannot be Blank");
-                        document.getElementById("<%=txtServiceSrationName.ClientID %>").focus();
+                        document.getElementById("<%= txtServiceSrationName.ClientID %>").focus();
                         return false;
                     }
 
-                    var VehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>')
-                    if (VehicleNumber.selectedIndex == 0) {
+                    var vehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
+                    if (vehicleNumber.selectedIndex === 0) {
                         alert("Please select the Vehicle");
-                        Districts.focus();
+                        districts.focus();
                         return false;
                     }
 
-                    var Districts = document.getElementById('<%= ddlDistricts.ClientID %>')
+                    var districts = document.getElementById('<%= ddlDistricts.ClientID %>');
 
-                    if (Districts.selectedIndex == 0) {
+                    if (districts.selectedIndex === 0) {
                         alert("Please select the District");
-                        Districts.focus();
+                        districts.focus();
                         return false;
                     }
+                    return true;
                 }
 
                 function OnlyAlphabets(myfield, e, dec) {
                     var key;
-                    var keychar;
                     if (window.event)
                         key = window.event.keyCode;
                     else if (e)
                         key = e.which;
                     else
                         return true;
-                    keychar = String.fromCharCode(key);
+                    var keychar = String.fromCharCode(key);
                     if ((("!@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) > -1))
                         return false;
                     else
@@ -159,4 +158,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

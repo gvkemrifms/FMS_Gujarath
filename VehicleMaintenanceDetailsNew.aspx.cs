@@ -67,15 +67,31 @@ public partial class VehicleMaintenanceDetailsNew : Page
 
     public void GetVehicleNumber()
     {
-        _fmsVas.District = ddlDistrict.SelectedItem.Text;
-        var ds = _fmsVas.GetOffRoadVehicles(); // .GetVehicleNumber();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "ORV_VehicleNumber", "ORV_VehOffRoadId", ddlVehicleNumber);
+        try
+        {
+            _fmsVas.District = ddlDistrict.SelectedItem.Text;
+            var ds = _fmsVas.GetOffRoadVehicles(); // .GetVehicleNumber();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "ORV_VehicleNumber", "ORV_VehOffRoadId", ddlVehicleNumber);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetDistrict()
     {
-        var ds = _fmsobj.GetDistricts_new();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        try
+        {
+            var ds = _fmsobj.GetDistricts_new();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillHoursandMins()
@@ -87,16 +103,24 @@ public partial class VehicleMaintenanceDetailsNew : Page
 
     protected void ddlVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlVehicleNumber.SelectedIndex == 0) return;
-        _fmsVas.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
-        _fmsVas.VehOffRoadId = Convert.ToInt64(ddlVehicleNumber.SelectedValue);
-        var ds = _fmsVas.GetOffRoadVehicleDetails();
-        txtMaintenanceType.Text = ds.Tables[0].Rows[0][0].ToString();
-        txtDownTime.Text = ds.Tables[1].Rows[0][0].ToString();
-        txtDownOdo.Text = ds.Tables[2].Rows.Count != 0 ? ds.Tables[2].Rows[0][0].ToString() : "";
-        lblBreakdownID.Text = ds.Tables[3].Rows[0][0].ToString();
-        lblApprovedCost.Text = ds.Tables[4].Rows.Count != 0 ? ds.Tables[4].Rows[0][0].ToString() : "";
-        GetVehicleMainDet();
+        try
+        {
+            if (ddlVehicleNumber.SelectedIndex == 0) return;
+            _fmsVas.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
+            _fmsVas.VehOffRoadId = Convert.ToInt64(ddlVehicleNumber.SelectedValue);
+            var ds = _fmsVas.GetOffRoadVehicleDetails();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            txtMaintenanceType.Text = ds.Tables[0].Rows[0][0].ToString();
+            txtDownTime.Text = ds.Tables[1].Rows[0][0].ToString();
+            txtDownOdo.Text = ds.Tables[2].Rows.Count != 0 ? ds.Tables[2].Rows[0][0].ToString() : "";
+            lblBreakdownID.Text = ds.Tables[3].Rows[0][0].ToString();
+            lblApprovedCost.Text = ds.Tables[4].Rows.Count != 0 ? ds.Tables[4].Rows[0][0].ToString() : "";
+            GetVehicleMainDet();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlSpareItemDesc_SelectedIndexChanged(object sender, EventArgs e)
@@ -768,128 +792,133 @@ public partial class VehicleMaintenanceDetailsNew : Page
 
     private void SetInitialRowLabour()
     {
-        var dt = new DataTable();
-        DataRow dr;
-        dt.Columns.Add(new DataColumn("RowNumberLabour", typeof(string)));
-        dt.Columns.Add(new DataColumn("ColLabVendorName", typeof(string)));
-        dt.Columns.Add(new DataColumn("ColLabBillNo", typeof(string)));
-        dt.Columns.Add(new DataColumn("ColLabBillDate", typeof(string)));
-        dt.Columns.Add(new DataColumn("Aggregates", typeof(string)));
-        dt.Columns.Add(new DataColumn("Categories", typeof(string)));
-        dt.Columns.Add(new DataColumn("Sub_Categories", typeof(string)));
-        dt.Columns.Add(new DataColumn("ColLabItemDescription", typeof(string)));
-        dt.Columns.Add(new DataColumn("ColLabQuantity", typeof(string)));
-        dt.Columns.Add(new DataColumn("Column3", typeof(string)));
-        var dslabourFromDb = (DataSet) ViewState["Categories"];
-        if (dslabourFromDb != null)
+        try
         {
-            var count = 0;
-            if (dslabourFromDb.Tables.Count > 0)
-                if (dslabourFromDb.Tables[0].Rows.Count > 0)
-                {
-                    foreach (DataRow drLabour in dslabourFromDb.Tables[0].Rows)
+            var dt = new DataTable();
+            DataRow dr;
+            dt.Columns.Add(new DataColumn("RowNumberLabour", typeof(string)));
+            dt.Columns.Add(new DataColumn("ColLabVendorName", typeof(string)));
+            dt.Columns.Add(new DataColumn("ColLabBillNo", typeof(string)));
+            dt.Columns.Add(new DataColumn("ColLabBillDate", typeof(string)));
+            dt.Columns.Add(new DataColumn("Aggregates", typeof(string)));
+            dt.Columns.Add(new DataColumn("Categories", typeof(string)));
+            dt.Columns.Add(new DataColumn("Sub_Categories", typeof(string)));
+            dt.Columns.Add(new DataColumn("ColLabItemDescription", typeof(string)));
+            dt.Columns.Add(new DataColumn("ColLabQuantity", typeof(string)));
+            dt.Columns.Add(new DataColumn("Column3", typeof(string)));
+            var dslabourFromDb = (DataSet) ViewState["Categories"];
+            if (dslabourFromDb != null)
+            {
+                var count = 0;
+                if (dslabourFromDb.Tables.Count > 0)
+                    if (dslabourFromDb.Tables[0].Rows.Count > 0)
                     {
-                        dr = dt.NewRow();
-                        dr["Aggregates"] = Convert.ToString(drLabour["Aggregates"]);
-                        dr["Categories"] = Convert.ToString(drLabour["Categories"]);
-                        dr["Sub_Categories"] = Convert.ToString(drLabour["Sub_Categories"]);
-                        dr["Column3"] = Convert.ToString(drLabour["Column3"]);
-                        dr["RowNumberLabour"] = ++count;
-                        dt.Rows.Add(dr);
-                    }
-
-                    ViewState["LabourCurrentTable"] = dt;
-                    ViewState["IsGridSet"] = 1;
-                    for (var i = 0; i < grdvwLabourBillDetails.Rows.Count; i++)
-                        if (i < dt.Rows.Count)
+                        foreach (DataRow drLabour in dslabourFromDb.Tables[0].Rows)
                         {
-                            var dslabourAggregatesnew = (DataSet) ViewState["LabourAggregates"];
-                            var dsLabourCategoriesnew = (DataSet) ViewState["LabourCategories"];
-                            var dsLabourSubCategories = (DataSet) ViewState["LabourSubCategories"];
-                            var ddl4 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourAggregates") as ComboBox;
-                            if (ddl4 != null)
-                            {
-                                _helper.FillDropDownHelperMethodWithDataSet(dslabourAggregatesnew, "Aggregates", "Aggregate_Id", null, ddl4);
-                                var dvagg = new DataView(dslabourAggregatesnew.Tables[0]) {RowFilter = "Aggregates = '" + dt.Rows[i][4] + "'"};
-                                var aggid = dvagg.ToTable().Rows[0]["Aggregate_Id"].ToString();
-                                ddl4.SelectedValue = aggid;
-                            }
-
-                            var ddl5 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourCategories") as ComboBox;
-                            if (ddl5 != null)
-                            {
-                                _helper.FillDropDownHelperMethodWithDataSet(dsLabourCategoriesnew, "Categories", "Category_Id", null, ddl5);
-                                var dvcat = new DataView(dsLabourCategoriesnew.Tables[0]) {RowFilter = "Categories = '" + dt.Rows[i][5] + "'"};
-                                var catid = dvcat.ToTable().Rows[0]["Category_Id"].ToString();
-                                ddl5.SelectedValue = catid;
-                            }
-
-                            var ddl6 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourSubCategories") as ComboBox;
-                            if (ddl6 != null)
-                            {
-                                _helper.FillDropDownHelperMethodWithDataSet(dsLabourSubCategories, "SubCategories", "SubCategory_Id", null, ddl6);
-                                var dvSub = new DataView(dsLabourSubCategories.Tables[0]) {RowFilter = "SubCategories = '" + dt.Rows[i][6] + "'"};
-                                var subid = dvSub.ToTable().Rows[0]["SubCategory_Id"].ToString();
-                                ddl6.SelectedValue = subid;
-                            }
+                            dr = dt.NewRow();
+                            dr["Aggregates"] = Convert.ToString(drLabour["Aggregates"]);
+                            dr["Categories"] = Convert.ToString(drLabour["Categories"]);
+                            dr["Sub_Categories"] = Convert.ToString(drLabour["Sub_Categories"]);
+                            dr["Column3"] = Convert.ToString(drLabour["Column3"]);
+                            dr["RowNumberLabour"] = ++count;
+                            dt.Rows.Add(dr);
                         }
 
-                    grdvwLabourBillDetails.DataSource = dt;
-                    grdvwLabourBillDetails.DataBind();
-                    var count1 = 0;
-                    foreach (GridViewRow item in grdvwLabourBillDetails.Rows)
-                    {
-                        if (dt.Rows[count1]["Aggregates"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourAggregates")).Items.FindByText(dt.Rows[count1]["Aggregates"].ToString()).Selected = true;
-                        if (dt.Rows[count1]["Categories"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourCategories")).Items.FindByText(dt.Rows[count1]["Categories"].ToString()).Selected = true;
-                        if (dt.Rows[count1]["Sub_Categories"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourSubCategories")).Items.FindByText(dt.Rows[count1]["Sub_Categories"].ToString()).Selected = true;
-                        count1 += 1;
-                    }
-                }
-                else
-                {
-                    //Add a Dummy Data on Initial Load
-                    dr = dt.NewRow();
-                    dr["RowNumberLabour"] = 1;
-                    dt.Rows.Add(dr);
+                        ViewState["LabourCurrentTable"] = dt;
+                        ViewState["IsGridSet"] = 1;
+                        for (var i = 0; i < grdvwLabourBillDetails.Rows.Count; i++)
+                            if (i < dt.Rows.Count)
+                            {
+                                var dslabourAggregatesnew = (DataSet) ViewState["LabourAggregates"];
+                                var dsLabourCategoriesnew = (DataSet) ViewState["LabourCategories"];
+                                var dsLabourSubCategories = (DataSet) ViewState["LabourSubCategories"];
+                                var ddl4 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourAggregates") as ComboBox;
+                                if (ddl4 != null)
+                                {
+                                    _helper.FillDropDownHelperMethodWithDataSet(dslabourAggregatesnew, "Aggregates", "Aggregate_Id", null, ddl4);
+                                    var dvagg = new DataView(dslabourAggregatesnew.Tables[0]) {RowFilter = "Aggregates = '" + dt.Rows[i][4] + "'"};
+                                    var aggid = dvagg.ToTable().Rows[0]["Aggregate_Id"].ToString();
+                                    ddl4.SelectedValue = aggid;
+                                }
 
-                    //Store the DataTable in ViewState
-                    ViewState["LabourCurrentTable"] = dt;
-                    if (IsPostBack && dt.Rows.Count == 1)
-                    {
+                                var ddl5 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourCategories") as ComboBox;
+                                if (ddl5 != null)
+                                {
+                                    _helper.FillDropDownHelperMethodWithDataSet(dsLabourCategoriesnew, "Categories", "Category_Id", null, ddl5);
+                                    var dvcat = new DataView(dsLabourCategoriesnew.Tables[0]) {RowFilter = "Categories = '" + dt.Rows[i][5] + "'"};
+                                    var catid = dvcat.ToTable().Rows[0]["Category_Id"].ToString();
+                                    ddl5.SelectedValue = catid;
+                                }
+
+                                var ddl6 = grdvwLabourBillDetails.Rows[i].FindControl("ddlLabourSubCategories") as ComboBox;
+                                if (ddl6 != null)
+                                {
+                                    _helper.FillDropDownHelperMethodWithDataSet(dsLabourSubCategories, "SubCategories", "SubCategory_Id", null, ddl6);
+                                    var dvSub = new DataView(dsLabourSubCategories.Tables[0]) {RowFilter = "SubCategories = '" + dt.Rows[i][6] + "'"};
+                                    var subid = dvSub.ToTable().Rows[0]["SubCategory_Id"].ToString();
+                                    ddl6.SelectedValue = subid;
+                                }
+                            }
+
                         grdvwLabourBillDetails.DataSource = dt;
                         grdvwLabourBillDetails.DataBind();
-                        pnlBillSummaryDetails.Visible = false;
-                        btnSave.Enabled = false;
-                        txtTotalBillAmt.Text = "";
+                        var count1 = 0;
+                        foreach (GridViewRow item in grdvwLabourBillDetails.Rows)
+                        {
+                            if (dt.Rows[count1]["Aggregates"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourAggregates")).Items.FindByText(dt.Rows[count1]["Aggregates"].ToString()).Selected = true;
+                            if (dt.Rows[count1]["Categories"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourCategories")).Items.FindByText(dt.Rows[count1]["Categories"].ToString()).Selected = true;
+                            if (dt.Rows[count1]["Sub_Categories"].ToString() != string.Empty) ((ComboBox) item.FindControl("ddlLabourSubCategories")).Items.FindByText(dt.Rows[count1]["Sub_Categories"].ToString()).Selected = true;
+                            count1 += 1;
+                        }
                     }
-                }
-        }
-        else
-        {
-            //Add a Dummy Data on Initial Load
-            dr = dt.NewRow();
-            dr["RowNumberLabour"] = 1;
-            dt.Rows.Add(dr);
-            grdvwLabourBillDetails.DataSource = dt;
-            grdvwLabourBillDetails.DataBind();
-            pnlBillSummaryDetails.Visible = false;
-            btnSave.Enabled = false;
-            txtTotalBillAmt.Text = "";
-            //Store the DataTable in ViewState
-            ViewState["LabourCurrentTable"] = dt;
-        }
+                    else
+                    {
+                        //Add a Dummy Data on Initial Load
+                        dr = dt.NewRow();
+                        dr["RowNumberLabour"] = 1;
+                        dt.Rows.Add(dr);
 
-        if (IsPostBack == false)
-        {
-            //Bind the DataTable to the Grid
-            grdvwLabourBillDetails.DataSource = dt;
-            grdvwLabourBillDetails.DataBind();
-            pnlBillSummaryDetails.Visible = false;
-            btnSave.Enabled = false;
-            txtTotalBillAmt.Text = "";
-        }
+                        //Store the DataTable in ViewState
+                        ViewState["LabourCurrentTable"] = dt;
+                        if (IsPostBack && dt.Rows.Count == 1)
+                        {
+                            grdvwLabourBillDetails.DataSource = dt;
+                            grdvwLabourBillDetails.DataBind();
+                            pnlBillSummaryDetails.Visible = false;
+                            btnSave.Enabled = false;
+                            txtTotalBillAmt.Text = "";
+                        }
+                    }
+            }
+            else
+            {
+                //Add a Dummy Data on Initial Load
+                dr = dt.NewRow();
+                dr["RowNumberLabour"] = 1;
+                dt.Rows.Add(dr);
+                grdvwLabourBillDetails.DataSource = dt;
+                grdvwLabourBillDetails.DataBind();
+                pnlBillSummaryDetails.Visible = false;
+                btnSave.Enabled = false;
+                txtTotalBillAmt.Text = "";
+                //Store the DataTable in ViewState
+                ViewState["LabourCurrentTable"] = dt;
+            }
 
-        ////AddRowToGridSummary();
+            if (IsPostBack == false)
+            {
+                //Bind the DataTable to the Grid
+                grdvwLabourBillDetails.DataSource = dt;
+                grdvwLabourBillDetails.DataBind();
+                pnlBillSummaryDetails.Visible = false;
+                btnSave.Enabled = false;
+                txtTotalBillAmt.Text = "";
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void AddNewRowToGridLabour()
@@ -1557,9 +1586,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                     break;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-//
+            _helper.ErrorsEntry(ex);
         }
     }
 

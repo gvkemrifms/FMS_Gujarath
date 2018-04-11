@@ -24,15 +24,23 @@ public partial class ScheduleServiceMaster : Page
     private void BindGrid()
     {
         var ds = _obj.GetSSMaster();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvScheduleServiceMaster.DataSource = ds.Tables[0];
         gvScheduleServiceMaster.DataBind();
     }
 
     private void BindData()
     {
-        var ds = _obj.GetManufaturerName();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufactName);
-        ViewState["ManufaturerName"] = ds;
+        try
+        {
+            var ds = _obj.GetManufaturerName();
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufactName);
+            ViewState["ManufaturerName"] = ds;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btnSave_Click(object sender, EventArgs e)

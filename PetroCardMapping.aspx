@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
         function isMandatory(evt) {
             var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
@@ -39,21 +40,6 @@
                 return false;
             }
             return true;
-        }
-
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-        }
-
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var key;
-            if (window.event || e)
-                key = window.event.keyCode;
-            else return true;
-            var keychar = String.fromCharCode(key);
-            return (" !@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) <= -1;
         }
 
     </script>
@@ -112,15 +98,15 @@
                         <fieldset style="padding: 10px">
                             <table style="width: 463px" align="center">
                                 <tr>
-                                    <td align="left" style="width: 155px; height: 19px">
+                                    <td align="left" style="height: 19px; width: 155px;">
                                         Vehicle Number<span style="color: Red">*</span>
                                     </td>
-                                    <td style="width: 109px; height: 19px">
+                                    <td style="height: 19px; width: 109px;">
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True" DropDownStyle="DropDownList" Width="154px"
                                                       OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
                                         </cc1:ComboBox>
                                     </td>
-                                    <td style="width: 100px; height: 19px">
+                                    <td style="height: 19px; width: 100px;">
                                     </td>
                                 </tr>
                                 <tr>
@@ -195,15 +181,15 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="left" style="width: 155px; height: 19px">
+                                    <td align="left" style="height: 19px; width: 155px;">
                                         <asp:Label ID="lbReason" runat="server" Text="Reason" Visible="False"></asp:Label>
                                     </td>
-                                    <td style="width: 109px; height: 19px">
+                                    <td style="height: 19px; width: 109px;">
                                         <asp:DropDownList ID="ddlReason" runat="server" AutoPostBack="True" Width="154px"
                                                           Visible="false" OnSelectedIndexChanged="ddlReason_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
-                                    <td style="width: 100px; height: 19px">
+                                    <td style="height: 19px; width: 100px;">
                                         <asp:TextBox ID="txtRemarks" runat="server" Visible="False" onkeypress="return OnlyAlphabets(event);"
                                                      MaxLength="15">
                                         </asp:TextBox>
@@ -238,11 +224,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right" style="width: 100px; height: 19px">
+                                    <td align="right" style="height: 19px; width: 100px;">
                                         <asp:Button ID="Save" runat="server" Text="Save" OnClientClick="return isMandatory();"
                                                     OnClick="Save_Click"/>&nbsp;
                                     </td>
-                                    <td align="left" style="width: 99px; height: 19px">
+                                    <td align="left" style="height: 19px; width: 99px;">
                                         &nbsp;<asp:Button ID="Reset" runat="server" Text="Reset" OnClick="Reset_Click"/>
                                     </td>
                                 </tr>
@@ -254,4 +240,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

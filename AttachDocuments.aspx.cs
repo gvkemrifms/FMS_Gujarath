@@ -54,7 +54,7 @@ public partial class AttachDocuments : Page
                     }
                     catch (Exception ex)
                     {
-                        Response.Write("Error: " + ex.Message);
+                        _helper.ErrorsEntry(ex);
                     }
                 }
             }
@@ -70,10 +70,13 @@ public partial class AttachDocuments : Page
 
     public void GetVehicleNumber()
     {
-        _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsGeneral.GetVehicleNumber();
-        if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+        if (_fmsGeneral != null)
+        {
+            _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsGeneral.GetVehicleNumber();
+            if (ds == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlistVehicleNumber);
+        }
     }
 
     protected void ClearControls()
@@ -88,12 +91,13 @@ public partial class AttachDocuments : Page
         try
         {
             var dv = _attachmentForVehicle.FillAttachmentToVehicle().Tables[0].DefaultView; // objFMSOther.IFillAttachmentToVehicle().Tables[0].DefaultView;
+            if (dv == null) throw new ArgumentNullException(nameof(dv));
             grdVehicleAttachment.DataSource = dv;
             grdVehicleAttachment.DataBind();
         }
         catch (Exception ex)
         {
-            ErrorHandler.ErrorsEntry(ex.GetBaseException().ToString(), "class: AttachDocuments;Method: Page_Load()-FillVehicleAttachment", 0);
+            _helper.ErrorsEntry(ex);
         }
     }
 

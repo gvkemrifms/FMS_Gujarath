@@ -9,6 +9,7 @@ public partial class VehicleCardTypeReport : Page
 {
     readonly VehicleRegistration _vehreg = new VehicleRegistration();
     private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -20,7 +21,6 @@ public partial class VehicleCardTypeReport : Page
 
     protected void GetVehicleCardTypeReport()
     {
-
         string reportpath = ConfigurationManager.AppSettings["reportServerPath"] + "?%2f" + ConfigurationManager.AppSettings["reportFolderPath"] + "%2f";
         string vehicleCardTypeReport = reportpath + "FMSReport_GetCardType&rs%3aCommand=Render&rc:Parameters=false&rc:Toolbar=false&DistrictID=" + _vehreg.DistrictId + "&BunkID=" + Convert.ToInt16(ddlSSN.SelectedItem.Value);
         iframe_VehicleCardTypeReport.Attributes.Add("src", vehicleCardTypeReport);
@@ -28,11 +28,18 @@ public partial class VehicleCardTypeReport : Page
 
     public void GetDistricts()
     {
-        DataSet ds = _vehreg.GetDistrcts();//FMS.BLL.VehicleRegistration.GetDistrcts();
-        if (ds != null)
+        try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
-            ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+            DataSet ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
+            if (ds != null)
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+                ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -60,14 +67,20 @@ public partial class VehicleCardTypeReport : Page
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int districtIdssn = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        DataSet ds = _vehreg.GetServiceStn(districtIdssn);
-        if (ds != null)
+        try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ServiceStation_Name", "Id", ddlSSN);
-            ddlSSN.Items.Insert(1, new ListItem("All", "-1"));
+            int districtIdssn = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            DataSet ds = _vehreg.GetServiceStn(districtIdssn);
+            if (ds != null)
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ServiceStation_Name", "Id", ddlSSN);
+                ddlSSN.Items.Insert(1, new ListItem("All", "-1"));
+            }
         }
-
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlSSN_SelectedIndexChanged(object sender, EventArgs e)

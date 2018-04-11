@@ -11,6 +11,7 @@ public partial class VehicleDecommissionApproval : Page
 {
     private readonly VehicleDecommissionProposalBLL _vehicleProposalBol = new VehicleDecommissionProposalBLL();
     private readonly VehicleDecommissionApprovalBLL _vehicleApprovalBol = new VehicleDecommissionApprovalBLL();
+    readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,6 +19,7 @@ public partial class VehicleDecommissionApproval : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btnAccept.Attributes.Add("onclick", "return validation(this,'" + btnAccept.ID + "')");
@@ -55,27 +57,35 @@ public partial class VehicleDecommissionApproval : Page
 
     protected void grdVehicleDecompositionApproval_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if (e.CommandName == null) return;
+        try
         {
-            case "vehicleApproval":
-                _vehicleProposalBol.VehicleDecommisionProposalID = Convert.ToInt32(e.CommandArgument);
-                var ds = _vehicleProposalBol.GetVehicleDecommissionProposalByVehicleProposalId();
-                ViewState["VehicleId"] = ds.Tables[0].Rows[0]["VehicleId"].ToString();
-                ViewState["vi_LocationId"] = ds.Tables[0].Rows[0]["vi_LocationId"].ToString();
-                ViewState["VehicleProposalId"] = ds.Tables[0].Rows[0]["VehicleProposalId"].ToString();
-                ViewState["TotalDistanceTravelled"] = ds.Tables[0].Rows[0]["TotalDistanceTravelled"].ToString();
-                txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();
-                txtOffRoadDate.Text = ds.Tables[0].Rows[0]["OffRoadDate"].ToString();
-                txtDateOfRegistration.Text = ds.Tables[0].Rows[0]["DateOfRegistration"].ToString();
-                txtDateofPurchase.Text = ds.Tables[0].Rows[0]["DateOfPurchase"].ToString();
-                ViewState["DateOfPurchase"] = txtDateofPurchase.Text;
-                txtDateOfLaunching.Text = ds.Tables[0].Rows[0]["DateOfLaunching"].ToString();
-                txtSurveyDate.Text = ds.Tables[0].Rows[0]["SurveyDate"].ToString();
-                txtSurveyBy.Text = ds.Tables[0].Rows[0]["SurveyBy"].ToString();
-                ViewState["SurveyRemark"] = ds.Tables[0].Rows[0]["SurveyRemark"].ToString();
-                ViewState["TotalMaintenanceExpenses"] = ds.Tables[0].Rows[0]["TotalMaintenanceExpenses"].ToString();
-                txtProposedRemarks.Text = ds.Tables[0].Rows[0]["ProposedRemark"].ToString();
-                break;
+            switch (e.CommandName)
+            {
+                case "vehicleApproval":
+                    _vehicleProposalBol.VehicleDecommisionProposalID = Convert.ToInt32(e.CommandArgument);
+                    var ds = _vehicleProposalBol.GetVehicleDecommissionProposalByVehicleProposalId();
+                    ViewState["VehicleId"] = ds.Tables[0].Rows[0]["VehicleId"].ToString();
+                    ViewState["vi_LocationId"] = ds.Tables[0].Rows[0]["vi_LocationId"].ToString();
+                    ViewState["VehicleProposalId"] = ds.Tables[0].Rows[0]["VehicleProposalId"].ToString();
+                    ViewState["TotalDistanceTravelled"] = ds.Tables[0].Rows[0]["TotalDistanceTravelled"].ToString();
+                    txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();
+                    txtOffRoadDate.Text = ds.Tables[0].Rows[0]["OffRoadDate"].ToString();
+                    txtDateOfRegistration.Text = ds.Tables[0].Rows[0]["DateOfRegistration"].ToString();
+                    txtDateofPurchase.Text = ds.Tables[0].Rows[0]["DateOfPurchase"].ToString();
+                    ViewState["DateOfPurchase"] = txtDateofPurchase.Text;
+                    txtDateOfLaunching.Text = ds.Tables[0].Rows[0]["DateOfLaunching"].ToString();
+                    txtSurveyDate.Text = ds.Tables[0].Rows[0]["SurveyDate"].ToString();
+                    txtSurveyBy.Text = ds.Tables[0].Rows[0]["SurveyBy"].ToString();
+                    ViewState["SurveyRemark"] = ds.Tables[0].Rows[0]["SurveyRemark"].ToString();
+                    ViewState["TotalMaintenanceExpenses"] = ds.Tables[0].Rows[0]["TotalMaintenanceExpenses"].ToString();
+                    txtProposedRemarks.Text = ds.Tables[0].Rows[0]["ProposedRemark"].ToString();
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

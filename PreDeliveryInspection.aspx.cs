@@ -61,14 +61,28 @@ public partial class PreDeliveryInspection : Page
 
     public void GetTrNo()
     {
-        var ds = _predelinsp.GetTRNo(); //FMS.BLL.PreDeliveryInspection.GetTRNo();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+        try
+        {
+            var ds = _predelinsp.GetTRNo(); //FMS.BLL.PreDeliveryInspection.GetTRNo();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetVehicleRecievedFrom()
     {
-        var ds = _predelinsp.GetVehicleRecievedFrom();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetFabricator_Name", "FleetFabricator_Id", ddlVehicleReceived);
+        try
+        {
+            var ds = _predelinsp.GetVehicleRecievedFrom();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetFabricator_Name", "FleetFabricator_Id", ddlVehicleReceived);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btSave_Click(object sender, EventArgs e)
@@ -139,6 +153,7 @@ public partial class PreDeliveryInspection : Page
 
     protected void gvPreDeliveryInspection_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName)
         {
             case "pdiEdit":
@@ -197,8 +212,15 @@ public partial class PreDeliveryInspection : Page
 
     protected void ddlTRNo_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var dates = _fmsGeneral.GetFabInspDate(int.Parse(ddlTRNo.SelectedItem.Value));
-        var dt = Convert.ToDateTime(dates.Tables[0].Rows[0]["FVDInspectedDate"].ToString());
-        vehicleFabInspDate.Value = dt.ToString(CultureInfo.InvariantCulture);
+        try
+        {
+            var dates = _fmsGeneral.GetFabInspDate(int.Parse(ddlTRNo.SelectedItem.Value));
+            var dt = Convert.ToDateTime(dates.Tables[0].Rows[0]["FVDInspectedDate"].ToString());
+            vehicleFabInspDate.Value = dt.ToString(CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 }

@@ -55,11 +55,18 @@ public partial class VehicleOffroad : Page
 
     public void FillMaintenanceTypes()
     {
-        var dset = _fmsgeneral.GetMaintenanceType();
-        if (dset == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(dset, "Maint_Type_ID", "Maint_Desc", ddlreasons);
-        ddlreasons.Items.Insert(12, new ListItem("RESOURCE SHORTAGE", "13"));
-        ddlreasons.Items.Insert(13, new ListItem("NO FUEL", "14"));
+        try
+        {
+            var dset = _fmsgeneral.GetMaintenanceType();
+            if (dset == null) return;
+            _helper.FillDropDownHelperMethodWithDataSet(dset, "Maint_Type_ID", "Maint_Desc", ddlreasons);
+            ddlreasons.Items.Insert(12, new ListItem("RESOURCE SHORTAGE", "13"));
+            ddlreasons.Items.Insert(13, new ListItem("NO FUEL", "14"));
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void GetTime()
@@ -110,12 +117,16 @@ public partial class VehicleOffroad : Page
 
     public void InsertAgent(string offroadid, string vehicleNo, string agentId)
     {
-        var ip = GetLocalIpAddress();
-        var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
-        conn.Open();
-        var cmd = new SqlCommand {CommandType = CommandType.Text, CommandText = "insert into t_offroadAgent(offroadid ,vehicleNo, AgentID,AgentName,ip) values ('" + offroadid + "', '" + vehicleNo + "', '" + agentId + "', '" + Session["User_Name"] + "','" + ip + "')", Connection = conn};
-        cmd.ExecuteNonQuery();
-        conn.Close();
+        try
+        {
+            var ip = GetLocalIpAddress();
+            var query = "insert into t_offroadAgent(offroadid ,vehicleNo, AgentID,AgentName,ip) values ('" + offroadid + "', '" + vehicleNo + "', '" + agentId + "', '" + Session["User_Name"] + "','" + ip + "')";
+            _helper.ExecuteInsertStatement(query);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void SendSms(string vehicleno, string breakdownid, string reason)
@@ -125,9 +136,9 @@ public partial class VehicleOffroad : Page
             var query = "select * from m_vehicle_supervisors where VehicleNo = '" + vehicleno + "'";
             _helper.ExecuteSelectStmt(query);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -275,7 +286,7 @@ public partial class VehicleOffroad : Page
         }
         catch (Exception ex)
         {
-            throw ex.GetBaseException();
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -311,16 +322,24 @@ public partial class VehicleOffroad : Page
             adp.Fill(ds);
             conn.Close();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //Do Log
+            _helper.ErrorsEntry(ex);
         }
     }
 
     public void GetDistrict()
     {
-        var ds = _fmsobj.GetDistricts_new();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        try
+        {
+            var ds = _fmsobj.GetDistricts_new();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void Show(string message)
@@ -483,50 +502,70 @@ public partial class VehicleOffroad : Page
 
     protected void grdvothersegment_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-        var dssegmentgot = _vehallobj.GetMappedSegments();
-        switch (e.Row.RowType)
+        try
         {
-            case DataControlRowType.DataRow:
-                var ddl = (DropDownList) e.Row.FindControl("DropDownList1");
-                _helper.FillDropDownHelperMethodWithDataSet(dssegmentgot, "Sg_SName", "Sg_Segid", ddl);
-                break;
+            _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+            var dssegmentgot = _vehallobj.GetMappedSegments();
+            if (dssegmentgot == null) throw new ArgumentNullException(nameof(dssegmentgot));
+            switch (e.Row.RowType)
+            {
+                case DataControlRowType.DataRow:
+                    var ddl = (DropDownList) e.Row.FindControl("DropDownList1");
+                    _helper.FillDropDownHelperMethodWithDataSet(dssegmentgot, "Sg_SName", "Sg_Segid", ddl);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     protected void grdvothervehicle_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         var dsvehiclevgvo = (DataSet) Session["dsvehilce"];
+        if (dsvehiclevgvo == null) throw new ArgumentNullException(nameof(dsvehiclevgvo));
         var dssegmentgvo = (DataSet) Session["dssegment"];
-        var dv1 = new DataView(dsvehiclevgvo.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows);
-        Session["othersegmentid"] = Convert.ToInt32(dv1[0][3]);
-        var dv = new DataView(dssegmentgvo.Tables[0], "Sg_Segid <>" + Convert.ToInt32(Session["othersegmentid"]), "Sg_SName", DataViewRowState.CurrentRows);
-        switch (e.Row.RowType)
+        if (dssegmentgvo == null) throw new ArgumentNullException(nameof(dssegmentgvo));
+        using (var dv1 = new DataView(dsvehiclevgvo.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows))
         {
-            case DataControlRowType.DataRow:
-                var ddl = (DropDownList) e.Row.FindControl("DropDownList2");
-                ddl.DataSource = dv;
-                ddl.DataTextField = "Sg_SName";
-                ddl.DataValueField = "Sg_Segid";
-                ddl.DataBind();
-                break;
+            Session["othersegmentid"] = Convert.ToInt32(dv1[0][3]);
+        }
+
+        using (var dv = new DataView(dssegmentgvo.Tables[0], "Sg_Segid <>" + Convert.ToInt32(Session["othersegmentid"]), "Sg_SName", DataViewRowState.CurrentRows))
+        {
+            switch (e.Row.RowType)
+            {
+                case DataControlRowType.DataRow:
+                    var ddl = (DropDownList) e.Row.FindControl("DropDownList2");
+                    ddl.DataSource = dv;
+                    ddl.DataTextField = "Sg_SName";
+                    ddl.DataValueField = "Sg_Segid";
+                    ddl.DataBind();
+                    break;
+            }
         }
     }
 
     protected void ddlothervehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
         var dsvehiclevov = (DataSet) Session["dsvehilce"];
-        var dv = new DataView(dsvehiclevov.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows);
-        Session["othersegmentid"] = Convert.ToInt32(dv[0][3]);
-        lblOtherVehSegmentName.Text = dv[0][2].ToString();
-        lblOtherVehSegmentName.Visible = true;
-        lblOtherVehSegment.Visible = true;
-        txtotherbaselocation.Text = Convert.ToString(dv[0][5]);
-        txtothercontactno.Text = Convert.ToString(dv[0][6]);
-        Session["locationid"] = Convert.ToInt32(dv[0][4]);
+        if (dsvehiclevov == null) throw new ArgumentNullException(nameof(dsvehiclevov));
+        using (var dv = new DataView(dsvehiclevov.Tables[0], "Vehicle ='" + ddlothervehicle.SelectedValue + "'", "Sg_SName", DataViewRowState.CurrentRows))
+        {
+            Session["othersegmentid"] = Convert.ToInt32(dv[0][3]);
+            lblOtherVehSegmentName.Text = dv[0][2].ToString();
+            lblOtherVehSegmentName.Visible = true;
+            lblOtherVehSegment.Visible = true;
+            txtotherbaselocation.Text = Convert.ToString(dv[0][5]);
+            txtothercontactno.Text = Convert.ToString(dv[0][6]);
+            Session["locationid"] = Convert.ToInt32(dv[0][4]);
+        }
+
         _vehallobj.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
         _vehallobj.SegmentId = Convert.ToInt32(Session["othersegmentid"]);
         var ds = _vehallobj.GetMandals();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         if (ds.Tables[0].Rows.Count <= 0)
             grdvothervehicle.Visible = false;
         else
@@ -547,7 +586,15 @@ public partial class VehicleOffroad : Page
         _vehallobj.Aggregates = ddlAggregates.SelectedValue;
         _vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
         var ds = _vehallobj.GetAggregatesOffRoad();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "Aggregate_Id", "Aggregates", ddlAggregates);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "Aggregate_Id", "Aggregates", ddlAggregates);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlreasons_SelectedIndexChanged(object sender, EventArgs e)
@@ -577,7 +624,15 @@ public partial class VehicleOffroad : Page
         _vehallobj.Aggregates2 = Convert.ToInt16(ddlAggregates.SelectedValue);
         _vehallobj.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
         var ds = _vehallobj.GetCategories();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "Category_Id", "Categories", ddlCategories);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "Category_Id", "Categories", ddlCategories);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlAggregates_SelectedIndexChanged(object sender, EventArgs e)
@@ -600,9 +655,17 @@ public partial class VehicleOffroad : Page
 
     public void GetSubCategories()
     {
-        _vehallobj.Categories2 = Convert.ToInt16(ddlCategories.SelectedValue);
-        var ds = _vehallobj.GetSubcategories();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "SubCategory_Id", "SubCategories", ddlSubCategories);
+        try
+        {
+            _vehallobj.Categories2 = Convert.ToInt16(ddlCategories.SelectedValue);
+            var ds = _vehallobj.GetSubcategories();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "SubCategory_Id", "SubCategories", ddlSubCategories);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)

@@ -19,15 +19,24 @@ public partial class PetroCardMapping : Page
             FillGridformapping();
             FillddlReasons();
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
 
     private void FillddlReasons()
     {
-        var ds = Objpetmap.IFillddlReasons();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "Reason", "ReasonsID", ddlReason);
-        ddlReason.Enabled = true;
+        try
+        {
+            var ds = Objpetmap.IFillddlReasons();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "Reason", "ReasonsID", ddlReason);
+            ddlReason.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillGridformapping()
@@ -35,42 +44,75 @@ public partial class PetroCardMapping : Page
         var districtId = -1;
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = Objpetmap.IFillGridformapping(districtId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvPetroCardMapping.DataSource = ds;
         gvPetroCardMapping.DataBind();
     }
 
     private void FillPetroCardformapping()
     {
-        var userId = -1;
-        if (Session["User_Id"] != null) userId = Convert.ToInt32(Session["User_Id"].ToString());
-        var ds = Objpetmap.IFillPetroCardformapping(userId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
-        ddlPetroCardNumber.Enabled = true;
+        try
+        {
+            var userId = -1;
+            if (Session["User_Id"] != null) userId = Convert.ToInt32(Session["User_Id"].ToString());
+            var ds = Objpetmap.IFillPetroCardformapping(userId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
+            ddlPetroCardNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillPetroCardformapping1()
     {
-        var ds = Objpetmap.IFillPetroCardformapping1();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
-        ddlPetroCardNumber.Enabled = true;
+        try
+        {
+            var ds = Objpetmap.IFillPetroCardformapping1();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
+            ddlPetroCardNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillVehiclesformapping()
     {
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = Objpetmap.IFillVehiclesformapping(districtId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
-        ddlVehicleNumber.Enabled = true;
+        try
+        {
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = Objpetmap.IFillVehiclesformapping(districtId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            ddlVehicleNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillVehiclesformappingEdit()
     {
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = Objpetmap.IFillVehiclesformappingEdit(districtId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
-        ddlVehicleNumber.Enabled = true;
+        try
+        {
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = Objpetmap.IFillVehiclesformappingEdit(districtId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            ddlVehicleNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
@@ -81,12 +123,20 @@ public partial class PetroCardMapping : Page
 
     private void FillNewVehicleNumber()
     {
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = Objpetmap.IFillVehiclesformapping(districtId);
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlNewVehicleNumber);
-        ddlNewVehicleNumber.Items.Remove(ddlVehicleNumber.SelectedItem);
-        ddlNewVehicleNumber.Enabled = true;
+        try
+        {
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = Objpetmap.IFillVehiclesformapping(districtId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlNewVehicleNumber);
+            ddlNewVehicleNumber.Items.Remove(ddlVehicleNumber.SelectedItem);
+            ddlNewVehicleNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlPetroCardNumber_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,10 +146,18 @@ public partial class PetroCardMapping : Page
 
     private void FillCardTypeAgencyValidity(int vehicleId)
     {
-        var ds = Objpetmap.IFillCardTypeAgencyValidity(vehicleId);
-        txtCardValidity.Text = ds.Tables[0].Rows[0][0].ToString();
-        txtAgency.Text = ds.Tables[0].Rows[0][1].ToString();
-        txtCardType.Text = ds.Tables[0].Rows[0][2].ToString();
+        try
+        {
+            var ds = Objpetmap.IFillCardTypeAgencyValidity(vehicleId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            txtCardValidity.Text = ds.Tables[0].Rows[0][0].ToString();
+            txtAgency.Text = ds.Tables[0].Rows[0][1].ToString();
+            txtCardType.Text = ds.Tables[0].Rows[0][2].ToString();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void Deactivate_CheckedChanged(object sender, EventArgs e)
@@ -152,9 +210,7 @@ public partial class PetroCardMapping : Page
             else if (Save.Text == "Update" && ddlVehicleNumber.Enabled == false && ddlNewVehicleNumber.Enabled && TransfertoNewVehicle.Checked && Deactivate.Checked == false)
             {
                 if (ddlNewVehicleNumber.SelectedIndex != 0)
-                {
                     UpdMapping1(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(ddlNewVehicleNumber.SelectedValue), Convert.ToInt32(ddlPetroCardNumber.SelectedValue), Convert.ToDateTime(txtIssDate.Text));
-                }
                 else
                 {
                     var strFmsScript = "Please Select a new Vehicle to transfer";
@@ -282,12 +338,20 @@ public partial class PetroCardMapping : Page
 
     protected void gvPetroCardMapping_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
-        gvPetroCardMapping.PageIndex = e.NewPageIndex;
-        var districtId = -1;
-        if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = Objpetmap.IFillGridformapping(districtId);
-        gvPetroCardMapping.DataSource = ds;
-        gvPetroCardMapping.DataBind();
+        try
+        {
+            gvPetroCardMapping.PageIndex = e.NewPageIndex;
+            var districtId = -1;
+            if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = Objpetmap.IFillGridformapping(districtId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            gvPetroCardMapping.DataSource = ds;
+            gvPetroCardMapping.DataBind();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlReason_SelectedIndexChanged(object sender, EventArgs e)

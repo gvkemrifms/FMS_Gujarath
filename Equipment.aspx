@@ -6,7 +6,6 @@
 <script language="javascript" type="text/javascript">
     function validation() {
         var vehnum = document.getElementById('<%= ddlistVehicleNumber.ClientID %>');
-
         if (vehnum.selectedIndex === 0) {
             alert("Please select a Vehicle");
             vehnum.focus();

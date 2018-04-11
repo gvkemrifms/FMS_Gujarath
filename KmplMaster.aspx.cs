@@ -25,15 +25,23 @@ public partial class KmplMaster : Page
 
     private void BindData()
     {
-        _dataset = null;
-        _dataset = _fmsobj.GetVehicleNumber();
-        _helper.FillDropDownHelperMethodWithDataSet(_dataset, "VehicleNumber", "VehicleID", null, ddlVehNumber);
-        ViewState["dsVehicles"] = _dataset;
+        try
+        {
+            _dataset = null;
+            if (_fmsobj != null) _dataset = _fmsobj.GetVehicleNumber();
+            _helper.FillDropDownHelperMethodWithDataSet(_dataset, "VehicleNumber", "VehicleID", null, ddlVehNumber);
+            ViewState["dsVehicles"] = _dataset;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void Bindgrid()
     {
         var ds = _fmsobj.GetGridVehKMPL();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvVehKmplDetails.DataSource = ds.Tables[0];
         gvVehKmplDetails.DataBind();
         ViewState["dsGrid"] = ds;
@@ -49,24 +57,32 @@ public partial class KmplMaster : Page
 
     protected void gvVehKmplDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if (e.CommandName == null) return;
+        try
         {
-            case "MainEdit":
-                var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
-                var index = gvr.RowIndex;
-                ClearAll();
-                btnUpdate.Visible = true;
-                txtKMPL.Text = ((Label) gvVehKmplDetails.Rows[index].FindControl("lblKMPL")).Text;
-                var dsVeh = (DataSet) ViewState["dsVehicles"];
-                var dvVeh = dsVeh.Tables[0].DefaultView;
-                dvVeh.RowFilter = "VehicleNumber='" + ((Label) gvVehKmplDetails.Rows[index].FindControl("lblVehNumber")).Text + "'";
-                ddlVehNumber.SelectedValue = Convert.ToString(dvVeh.ToTable().Rows[0]["VehicleID"]);
-                var ds = (DataSet) ViewState["dsGrid"];
-                var dv = new DataView(ds.Tables[0]);
-                dv.RowFilter = "KMPL='" + txtKMPL.Text + "' and VehicleNumber='" + ddlVehNumber.SelectedItem.Text + "'";
-                var dt = dv.ToTable();
-                Session["Id"] = Convert.ToString(dt.Rows[0]["VehicleID"]);
-                break;
+            switch (e.CommandName)
+            {
+                case "MainEdit":
+                    var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
+                    var index = gvr.RowIndex;
+                    ClearAll();
+                    btnUpdate.Visible = true;
+                    txtKMPL.Text = ((Label) gvVehKmplDetails.Rows[index].FindControl("lblKMPL")).Text;
+                    var dsVeh = (DataSet) ViewState["dsVehicles"];
+                    var dvVeh = dsVeh.Tables[0].DefaultView;
+                    dvVeh.RowFilter = "VehicleNumber='" + ((Label) gvVehKmplDetails.Rows[index].FindControl("lblVehNumber")).Text + "'";
+                    ddlVehNumber.SelectedValue = Convert.ToString(dvVeh.ToTable().Rows[0]["VehicleID"]);
+                    var ds = (DataSet) ViewState["dsGrid"];
+                    var dv = new DataView(ds.Tables[0]);
+                    dv.RowFilter = "KMPL='" + txtKMPL.Text + "' and VehicleNumber='" + ddlVehNumber.SelectedItem.Text + "'";
+                    var dt = dv.ToTable();
+                    Session["Id"] = Convert.ToString(dt.Rows[0]["VehicleID"]);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

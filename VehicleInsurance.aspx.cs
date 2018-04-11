@@ -26,6 +26,7 @@ public partial class VehicleInsurance : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btSave.Attributes.Add("onclick", "return validation()");
@@ -63,9 +64,16 @@ public partial class VehicleInsurance : Page
 
     public void GetVehicleNumber()
     {
-        _vehicleInsurance.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _vehicleInsurance.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNo);
+        try
+        {
+            _vehicleInsurance.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _vehicleInsurance.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNo);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btSave_Click(object sender, EventArgs e)
@@ -126,39 +134,60 @@ public partial class VehicleInsurance : Page
 
     public void GetInsuranceType()
     {
-        var ds = _vehicleInsurance.GetInsuranceType();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsuranceType);
+        try
+        {
+            var ds = _vehicleInsurance.GetInsuranceType();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsuranceType);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetAgency()
     {
-        var ds = _vehicleInsurance.GetAgency();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlInsuranceAgency);
+        try
+        {
+            var ds = _vehicleInsurance.GetAgency();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlInsuranceAgency);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetVehicleInsuranceData()
     {
-        switch (ddlVehicleNo.SelectedIndex)
+        try
         {
-            case 0:
-                txtDistrict.Text = "";
-                txtInsuranceType.Text = "";
-                txtInsuranceAgency.Text = "";
-                txtInsurancePolicyNo.Text = "";
-                txtCurrentPolicyEndDate.Text = "";
-                break;
-            default:
-                _vehicleInsurance.VehicleID = int.Parse(ddlVehicleNo.SelectedItem.Value);
-                var ds = _vehicleInsurance.GetVehicleInsuranceData();
-                txtDistrict.Text = ds.Tables[0].Rows[0]["ds_lname"].ToString();
-                txtInsuranceType.Text = ds.Tables[0].Rows[0]["InsuranceTypeName"].ToString();
-                txtInsuranceAgency.Text = ds.Tables[0].Rows[0]["AgencyName"].ToString();
-                txtInsurancePolicyNo.Text = ds.Tables[0].Rows[0]["InsurancePolicyNo"].ToString();
-                txtCurrentPolicyEndDate.Text = ds.Tables[0].Rows[0]["CurrentPolicyEndDate"].ToString();
-                ViewState["District"] = ds.Tables[0].Rows[0]["District"].ToString();
-                ViewState["InsuranceType"] = ds.Tables[0].Rows[0]["InsuranceType"].ToString();
-                ViewState["InsuranceAgency"] = ds.Tables[0].Rows[0]["InsuranceAgency"].ToString();
-                break;
+            switch (ddlVehicleNo.SelectedIndex)
+            {
+                case 0:
+                    txtDistrict.Text = "";
+                    txtInsuranceType.Text = "";
+                    txtInsuranceAgency.Text = "";
+                    txtInsurancePolicyNo.Text = "";
+                    txtCurrentPolicyEndDate.Text = "";
+                    break;
+                default:
+                    _vehicleInsurance.VehicleID = int.Parse(ddlVehicleNo.SelectedItem.Value);
+                    var ds = _vehicleInsurance.GetVehicleInsuranceData();
+                    txtDistrict.Text = ds.Tables[0].Rows[0]["ds_lname"].ToString();
+                    txtInsuranceType.Text = ds.Tables[0].Rows[0]["InsuranceTypeName"].ToString();
+                    txtInsuranceAgency.Text = ds.Tables[0].Rows[0]["AgencyName"].ToString();
+                    txtInsurancePolicyNo.Text = ds.Tables[0].Rows[0]["InsurancePolicyNo"].ToString();
+                    txtCurrentPolicyEndDate.Text = ds.Tables[0].Rows[0]["CurrentPolicyEndDate"].ToString();
+                    ViewState["District"] = ds.Tables[0].Rows[0]["District"].ToString();
+                    ViewState["InsuranceType"] = ds.Tables[0].Rows[0]["InsuranceType"].ToString();
+                    ViewState["InsuranceAgency"] = ds.Tables[0].Rows[0]["InsuranceAgency"].ToString();
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

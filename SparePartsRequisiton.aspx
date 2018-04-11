@@ -2,7 +2,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
 <script type="text/javascript">
 
@@ -42,24 +42,21 @@
         <asp:Panel ID="pnlSparePartsRequisition" runat="server">
             <table>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td align="right">
                         <asp:Label ID="lbVehicles" runat="server" Text="Vehicles"></asp:Label>
                         <span style="color: Red">*</span>
                     </td>
-                    <td class="columnseparator">
-                    </td>
+                    <td class="columnseparator"></td>
                     <td>
-                        <ajaxToolkit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
-                        </ajaxToolkit:ComboBox>
+                        <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
+                        </ajaxToolKit:ComboBox>
                     </td>
                 </tr>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
@@ -97,15 +94,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rowseparator">
-                    </td>
+                    <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
                         <asp:Button ID="btnAddRow" runat="server" Text="Add Row" OnClick="btnAddRow_Click"/>
                         <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click"/>
                         <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click"/>
-                        <asp:Button ID="btnSparePartsReqHistory" runat="server" Text="View History" OnClick="btnSparePartsReqHistory_Click" onclientclick="return validation();"/>
+                        <asp:Button ID="btnSparePartsReqHistory" runat="server" Text="View History" OnClick="btnSparePartsReqHistory_Click" OnClientClick="return validation();"/>
                     </td>
                 </tr>
             </table>
@@ -116,8 +112,7 @@
     <td>
         <table>
         <tr>
-            <td class="rowseparator">
-            </td>
+            <td class="rowseparator"></td>
         </tr>
         <tr>
             <td align="left">
@@ -125,8 +120,7 @@
             </td>
         </tr>
         <tr>
-            <td class="rowseparator">
-            </td>
+            <td class="rowseparator"></td>
         </tr>
         <tr>
             <td align="center">
@@ -156,8 +150,7 @@
             </td>
         </tr>
         <tr>
-            <td class="rowseparator">
-            </td>
+            <td class="rowseparator"></td>
         </tr>
         <tr>
             <td>
@@ -185,8 +178,7 @@
             </td>
         </tr>
         <tr>
-            <td class="rowseparator">
-            </td>
+            <td class="rowseparator"></td>
         </tr>
         <tr>
         <td>
@@ -203,15 +195,13 @@
                             </legend>
                             <table width="70%">
                                 <tr>
-                                    <td class="rowseparator">
-                                    </td>
+                                    <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td align="left">
                                         <asp:Label ID="lblVehicleNum" runat="server" Text="VehicleNum"/>
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td align="left">
                                         <asp:TextBox ID="txtVehicleNumber" runat="server" ReadOnly="true"></asp:TextBox>
                                     </td>
@@ -219,22 +209,19 @@
                                 <caption>
                                     .
                                     <tr>
-                                        <td class="rowseparator">
-                                        </td>
+                                        <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
                                         <td align="left">
                                             <asp:Label ID="lblReqID" runat="server" Text="InvReqID"/>
                                         </td>
-                                        <td class="columnseparator">
-                                        </td>
+                                        <td class="columnseparator"></td>
                                         <td align="left">
                                             <asp:TextBox ID="txtReqID" runat="server" ReadOnly="true"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator">
-                                        </td>
+                                        <td class="rowseparator"></td>
                                     </tr>
                                     <tr align="left">
                                         <td colspan="3">
@@ -249,8 +236,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator">
-                                        </td>
+                                        <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
                                         <td align="center" colspan="3">
@@ -266,8 +252,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator">
-                                        </td>
+                                        <td class="rowseparator"></td>
                                     </tr>
                                 </caption>
                             </table>
@@ -277,8 +262,7 @@
             </asp:UpdatePanel>
         </asp:Panel>
         <tr>
-            <td class="rowseparator">
-            </td>
+            <td class="rowseparator"></td>
         </tr>
     </td>
 </tr>
@@ -286,4 +270,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

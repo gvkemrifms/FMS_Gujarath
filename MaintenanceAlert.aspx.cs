@@ -21,6 +21,7 @@ public partial class MaintenanceAlert : Page
         _fmsAlert.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         _fmsAlert.VehNum = Convert.ToString(ddlVehicle.SelectedItem.Text);
         var ds = _fmsAlert.GetMaintenanceAlert();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         ViewState["ds"] = ds;
         grdMaintAlert.DataSource = ds;
         grdMaintAlert.DataBind();
@@ -28,8 +29,15 @@ public partial class MaintenanceAlert : Page
 
     public void GetVehicles()
     {
-        var ds = _vehreg.GetvehiclesReport(); //FMS.BLL.VehicleRegistration.GetDistrcts();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicle);
+        try
+        {
+            var ds = _vehreg.GetvehiclesReport(); //FMS.BLL.VehicleRegistration.GetDistrcts();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicle);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public string CreateHtml(DataSet ds)

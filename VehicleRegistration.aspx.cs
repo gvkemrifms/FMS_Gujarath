@@ -21,6 +21,7 @@ public partial class VehicleRegistration : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btSave.Attributes.Add("onclick", "return validation()");
@@ -60,14 +61,28 @@ public partial class VehicleRegistration : Page
 
     public void GetTrNo()
     {
-        var ds = _vehreg.GetTRNo(); //FMS.BLL.VehicleRegistration.GetTrNo();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+        try
+        {
+            var ds = _vehreg.GetTRNo(); //FMS.BLL.VehicleRegistration.GetTrNo();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetDistricts()
     {
-        var ds = _getDistrict.GetDistricts_new(); //FMS.BLL.VehicleRegistration.GetDistrcts();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        try
+        {
+            var ds = _getDistrict.GetDistricts_new(); //FMS.BLL.VehicleRegistration.GetDistrcts();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void btSave_Click(object sender, EventArgs e)

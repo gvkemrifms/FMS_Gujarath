@@ -3,7 +3,6 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.PL;
 
 public partial class FuelDetailsVerification : Page
 {
@@ -19,6 +18,7 @@ public partial class FuelDetailsVerification : Page
             if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
             FillVehicles();
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
@@ -27,9 +27,15 @@ public partial class FuelDetailsVerification : Page
     {
         var ds = _fmsg.GetVehicleNumber();
         if (ds == null) return;
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);
-        ddlVehicleNumber.SelectedIndex = 0;
-        ddlVehicleNumber.Enabled = true;
+        try
+        {
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);
+            ddlVehicleNumber.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     private void FillGridVerification()
@@ -39,6 +45,7 @@ public partial class FuelDetailsVerification : Page
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         if (ddlVehicleNumber.SelectedValue != null) vehicleId = Convert.ToInt32(ddlVehicleNumber.SelectedValue);
         var ds = Objfuelver.IFillGridVerification(districtId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         switch (ds.Tables[0].Rows.Count)
         {
             case 0:
@@ -302,6 +309,7 @@ public partial class FuelDetailsVerification : Page
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         if (ddlVehicleNumber.SelectedValue != null) vehicleId = Convert.ToInt32(ddlVehicleNumber.SelectedValue);
         var ds = Objfuelver.IFillGridVerification(districtId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvVerification.DataSource = ds;
         gvVerification.DataBind();
     }
@@ -319,6 +327,7 @@ public partial class FuelDetailsVerification : Page
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         if (ddlVehicleNumber.SelectedValue != null) vehicleId = Convert.ToInt32(ddlVehicleNumber.SelectedValue);
         var ds = Objfuelver.IFillGridReconcilation(districtId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         switch (ds.Tables[0].Rows.Count)
         {
             case 0:
@@ -344,6 +353,7 @@ public partial class FuelDetailsVerification : Page
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         if (ddlVehicleNumber.SelectedValue != null) vehicleId = Convert.ToInt32(ddlVehicleNumber.SelectedValue);
         var ds = Objfuelver.IFillGridReconcilation(districtId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvReconcilation.DataSource = ds;
         gvReconcilation.DataBind();
     }

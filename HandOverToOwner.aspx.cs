@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Web.UI.WebControls;
 using AjaxControlToolkit;
 using GvkFMSAPP.BLL;
@@ -16,6 +17,7 @@ public partial class HandOverToOwner : System.Web.UI.Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btnSave.Attributes.Add("onclick", "return validation(this,'" + btnSave.ID + "')");
@@ -132,24 +134,27 @@ public partial class HandOverToOwner : System.Web.UI.Page
 
     protected void grdTemporaryVehicle_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName.Equals("vehicleAccidentedit"))
+        Debug.Assert(e.CommandName != null, "e.CommandName != null");
+        switch (e.CommandName)
         {
-            txtHandOverBy.Text = "";
-            txtHandOverDate.Text = "";
-            txtHandOverTo.Text = "";
-            txtOdoreading.Text = "";
-            txtVehicleNumber.Text = "";
-            _handOvertoOwner.VehicleId = Convert.ToInt32(e.CommandArgument);
-            var ds = _handOvertoOwner.GetVehicleByVehicleID();
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                ViewState["vehicleID"] = dr["VehicleID"].ToString();
-                txtVehicleNumber.Text = dr["VehicleNumber"].ToString();
-            }
+            case "vehicleAccidentedit":
+                txtHandOverBy.Text = "";
+                txtHandOverDate.Text = "";
+                txtHandOverTo.Text = "";
+                txtOdoreading.Text = "";
+                txtVehicleNumber.Text = "";
+                _handOvertoOwner.VehicleId = Convert.ToInt32(e.CommandArgument);
+                var ds = _handOvertoOwner.GetVehicleByVehicleID();
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    ViewState["vehicleID"] = dr["VehicleID"].ToString();
+                    txtVehicleNumber.Text = dr["VehicleNumber"].ToString();
+                }
 
-            var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
-            var modal = (ModalPopupExtender) gvr.FindControl("ModalPopupExtender1");
-            modal.Show();
+                var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
+                var modal = (ModalPopupExtender) gvr.FindControl("ModalPopupExtender1");
+                modal.Show();
+                break;
         }
     }
 }

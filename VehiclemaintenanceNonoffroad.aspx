@@ -4,10 +4,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style>
-        .WrapStyle TD {
-            word-break: break-all;
-        }
+        .WrapStyle TD { word-break: break-all; }
     </style>
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function Validation() {
@@ -18,52 +17,6 @@
                 return false;
             }
             return true;
-        }
-
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 48 && keycode <= 57) ||
-                (keycode >= 65 && keycode <= 90) ||
-                (keycode >= 97 && keycode <= 122);
-        }
-
-        function numeric_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return keycode >= 48 && keycode <= 57;
-        }
-
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-
-        function alpha_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-        }
-
-        function numeric(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
         }
 
     </script>
@@ -78,13 +31,14 @@
                         <td colspan="7"></td>
                     </tr>
                     <tr>
-                        <td style="width: 162px">Vehicle Number<span class="labelErr" style="color: Red">*</span>
+                        <td style="width: 162px">
+                            Vehicle Number<span class="labelErr" style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
                             <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="true"
-                                DropDownStyle="DropDownList"
-                                OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
+                                          DropDownStyle="DropDownList"
+                                          OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </cc1:ComboBox>
                         </td>
@@ -94,18 +48,20 @@
                     </tr>
                     <div id="divLocationDetails" runat="server">
                         <tr>
-                            <td style="width: 162px">District<span class="labelErr" style="color: Red">*</span>
+                            <td style="width: 162px">
+                                District<span class="labelErr" style="color: Red">*</span>
                             </td>
                             <td class="columnseparator"></td>
                             <td style="width: 148px">
-                                <asp:TextBox runat="server" ID="txtDistrict" Enabled="False" />
-                            </td>
-                            <td class="columnseparator"></td>
-                            <td>Location<span class="labelErr" style="color: Red">*</span>
+                                <asp:TextBox runat="server" ID="txtDistrict" Enabled="False"/>
                             </td>
                             <td class="columnseparator"></td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtLocation" Enabled="False" />
+                                Location<span class="labelErr" style="color: Red">*</span>
+                            </td>
+                            <td class="columnseparator"></td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtLocation" Enabled="False"/>
                             </td>
                         </tr>
                     </div>
@@ -131,10 +87,10 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtMaintenanceDate" runat="server"
-                                        onkeypress="return false">
+                                                 onkeypress="return false">
                                     </asp:TextBox>
                                     <cc1:CalendarExtender ID="calextndrBillDate22" runat="server" Format="dd/MM/yyyy"
-                                        PopupButtonID="imgBtnQuotationDate" TargetControlID="txtMaintenanceDate">
+                                                          PopupButtonID="imgBtnQuotationDate" TargetControlID="txtMaintenanceDate">
                                     </cc1:CalendarExtender>
                                 </td>
                             </tr>
@@ -144,7 +100,7 @@
                                 </td>
 
                                 <td>
-                                    <asp:DropDownList ID="ddlVendorName" runat="server" />
+                                    <asp:DropDownList ID="ddlVendorName" runat="server"/>
                                 </td>
                             </tr>
                             <tr>
@@ -153,7 +109,7 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillNo" runat="server" MaxLength="10"
-                                        onkeypress="return numeric(event)">
+                                                 onkeypress="return numeric(event)">
                                     </asp:TextBox>
                                 </td>
                             </tr>
@@ -163,10 +119,10 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillDate" runat="server"
-                                        onkeypress="return false">
+                                                 onkeypress="return false">
                                     </asp:TextBox>
                                     <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="dd/MM/yyyy"
-                                        PopupButtonID="imgBtnQuotationDate" TargetControlID="txtBillDate">
+                                                          PopupButtonID="imgBtnQuotationDate" TargetControlID="txtBillDate">
                                     </cc1:CalendarExtender>
                                 </td>
                             </tr>
@@ -176,7 +132,7 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtPartCode" runat="server" MaxLength="10"
-                                        onkeypress="return numeric_only(event);">
+                                                 onkeypress="return numeric_only(event);">
                                     </asp:TextBox>
                                 </td>
                             </tr>
@@ -186,7 +142,7 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtItemDesc" runat="server"
-                                        onkeypress="return alpha_only_withspace(event)">
+                                                 onkeypress="return alpha_only_withspace(event)">
                                     </asp:TextBox>
                                 </td>
                             </tr>
@@ -196,7 +152,7 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtQuant" runat="server" MaxLength="5"
-                                        onkeypress="return numeric(event)">
+                                                 onkeypress="return numeric(event)">
                                     </asp:TextBox>
                                 </td>
                             </tr>
@@ -213,19 +169,18 @@
                             <tr>
                                 <td>
                                     <asp:Button runat="server" ID="Button1" Text="Save" Width="52px"
-                                        OnClick="btnSave_Click" OnClientClick="return Validation()" />
+                                                OnClick="btnSave_Click" OnClientClick="return Validation()"/>
                                 </td>
                                 <td>
                                     <asp:Button ID="btnSPReset" runat="server" Text="Reset"
-                                        OnClick="btnSPReset_Click" />
+                                                OnClick="btnSPReset_Click"/>
                                 </td>
                             </tr>
                         </table>
                     </fieldset>
-                    <br />
+                    <br/>
                 </asp:Panel>
             </fieldset>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

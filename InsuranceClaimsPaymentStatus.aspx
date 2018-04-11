@@ -2,79 +2,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<style>
-    .button {
-        border: none;
-        border-radius: 4px;
-        color: #FFFFFF;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 28px;
-        margin: 5px;
-        padding: 0px;
-        text-align: center;
-        transition: all 0.5s;
-        width: 122px;
-    }
-
-    .button span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-    .button span:after {
-        content: '\00bb';
-        opacity: 0;
-        position: absolute;
-        right: -20px;
-        top: 0;
-        transition: 0.5s;
-    }
-
-    .button:hover span { padding-right: 25px; }
-
-    .button:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-</style>
-<style>
-    .text1 {
-        border: 2px solid rgb(173, 204, 204);
-        box-shadow: 0px 0px 27px rgb(204, 204, 204) inset;
-        height: 31px;
-        padding: 3px 3px 3px 3px;
-        transition: 500ms all ease;
-        width: 223px;
-    }
-
-    .text1:hover, #text1:focus {
-        background: url(msg.png) no-repeat right;
-        background-position: 96% 62%;
-        background-size: 25px 25px;
-        padding: 3px 32px 3px 3px;
-        transition: 500ms all ease;
-        width: 260px;
-    }
-
-    tr:nth-child(even) { background-color: #f2f2f2; }
-
-    th {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    tr:hover { background-color: #f5f5f5; }
-
-    input[type=text] {
-        box-sizing: border-box;
-        margin: 2px 0;
-        padding: 4px 20px;
-        width: 100%;
-    }
-</style>
+<link href="css/InsuranceClaimsPaymentStatus.css" rel="stylesheet"/>
+<script src="js/Validation.js"></script>
 
 <script language="javascript" type="text/javascript">
     function validation() {
@@ -156,65 +85,6 @@
             return false;
         }
         return true;
-    }
-
-
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-        default:
-            return true;
-        }
-    }
-
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode !== 190 && charCode !== 46) {
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-        } else {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        }
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function alphanumeric_withspace_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122) ||
-            (keycode == 32);
-    }
-
-    function alpha_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-    }
-
-    function remark(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode !== 34) && (keycode !== 39);
     }
 
 
@@ -529,4 +399,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

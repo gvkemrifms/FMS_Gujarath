@@ -1,36 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyreIssue.aspx.cs" Inherits="TyreIssue" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
-
-        function CheckLength(text, long) {
-            var maxlength = new Number(long); // Change number to your max length.
-            if (text.value.length > maxlength) {
-                text.value = text.value.substring(0, maxlength);
-                alert(" Only " + long + " chars");
-            }
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode !== 34) && (keycode !== 39);
-        }
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-        }
-
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-        }
-
 
         function validation() {
             var tyreCost = document.getElementById('<%= txtTyreCost.ClientID %>');
@@ -64,38 +38,6 @@
             return true;
         }
 
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-            }
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function isValidDate(subject) {
-            return !!subject.match(/^(?:(0[1-9]|[12][0-9]|3[01])[\- \/.](0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/);
-        }
-
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-
-            if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-    </script>
-    <script type="text/javascript">
         function ValidateIssueQty(issQtyId, reqQty) {
             var objIssQty = document.getElementById(issQtyId);
             if (parseInt(objIssQty.value) > parseInt(reqQty)) {

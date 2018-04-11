@@ -3,6 +3,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
  <script language="javascript" type="text/javascript">
         var publicData;
         var vehcostdata;
@@ -35,11 +36,8 @@ var now = new Date();
             }
 
         }
-
-
         function validation() {
             var engineNo = document.getElementById('<%= ddlEngineNo.ClientID %>');
-            //  var ChassisNo = document.getElementById('<%= txtChassisNo.ClientID %>');
             var invoiceNo = document.getElementById('<%= txtInvoiceNo.ClientID %>');
             var invoiceDate = document.getElementById('<%=txtInvoiceDate.ClientID %>');
             var basicPrice = document.getElementById('<%=txtBasicPrice.ClientID %>');
@@ -141,7 +139,6 @@ var now = new Date();
             }
 
             vehCost.value = (parseFloat(basicPrice.value) + parseFloat(handlingCharges.value) + parseFloat(exciseDuty.value) + parseFloat(ec.value) + parseFloat(vat.value) + parseFloat(uav.value) + parseFloat(shec.value)).toFixed(2);
-
             var vehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
             var kmpl = document.getElementById('<%=txtKmpl.ClientID %>');
             var vehicleType = document.getElementById('<%=ddlVehicleType.ClientID %>');
@@ -150,7 +147,6 @@ var now = new Date();
             var ownerName = document.getElementById('<%=txtOwnerName.ClientID %>');
             var manufacturerName = document.getElementById('<%=ddlManufacturerName.ClientID %>');
             var vehicleCost = document.getElementById('<%=txtVehicleCost.ClientID%>');
-
             var manufacturingDate = document.getElementById('<%=txtManufacturingDate.ClientID %>');
             var engineCapacity = document.getElementById('<%=txtEngineCapacity.ClientID %>');
             var fuelType = document.getElementById('<%=ddlFuelType.ClientID%>');
@@ -506,32 +502,19 @@ var now = new Date();
                 modelCapacity.focus();
                 return false;
             }
-        }
-
-        function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) === '') {
-                alert(msg);
-                ctrl.focus();
-                return false;
-            }
-            else
-                return true;
+            return true;
         }
         var stepNo = 0;
 
         function previousValidation() {
 
-            if (stepNo > 0) {
-
-                stepNo--;
-            }
-
+            if (stepNo <= 0)
+                return;
+            stepNo--;
         }
 
         function stepvalidation() {
             ////-----------------Start of Validation of General Information----------------////
-
-
             var purchaseDate;
             if (stepNo === 0) {
                 var vehicleModel = document.getElementById('<%=ddlVehicleModel.ClientID %>');
@@ -890,6 +873,7 @@ var now = new Date();
 
                 stepNo++;
             }
+            return true;
         }
 
         function finalStepValidation() {
@@ -920,119 +904,11 @@ var now = new Date();
                 modelCapacity.focus();
                 return false;
             }
+            return true;
         }
 
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
 
-        }
-
-        function isValidDate(subject) {
-            if (subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            //debugger;
-            if (charCode === 190 || charCode === 46) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                if (txtBox.value.indexOf('.') === -1)
-                    return true;
-                else
-                    return false;
-            }
-            else if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            else
-                return true;
-        }
-
-        function numeric(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                if (txtBox.value.indexOf('.') === -1)
-                    return true;
-                else
-                    return false;
-            }
-            else if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            else
-                return true;
-        }
-
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true;
-            if ((keycode >= 48 && keycode <= 57) ||
-                (keycode >= 65 && keycode <= 90) ||
-                (keycode >= 97 && keycode <= 122)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function alpha_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-
-        function alphanumeric_withspace_only(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-
-        function isValidVehicleNumber(vehicleNo) {
-            if (vehicleNo.match(/^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{1,4}$/)) {
-                return true;
-            }
-            else {
-                alert("Enter a valid Vehicle T/R Number eg - 'AP27HY9834' or 'AP27H8'");
-                return false;
-            }
-        } 
-        
-    
-    </script>
+ </script>
 
    
     <asp:UpdatePanel ID="up1" runat="server">

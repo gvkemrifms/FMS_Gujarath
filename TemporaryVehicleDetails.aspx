@@ -1,7 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TemporaryVehicleDetails.aspx.cs" Inherits="TemporaryVehicleDetails" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script src="js/Validation.js"></script>
 <link href="css/newStyles.css" rel="stylesheet"/>
 <script language="javascript" type="text/javascript">
     var now = new Date();
@@ -61,16 +63,6 @@
         return true;
     }
 
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-        default:
-            return true;
-        }
-    }
 
     var stepNo = 0;
 
@@ -82,8 +74,6 @@
 
     function stepvalidation() {
         ////-----------------Start of Validation of General Information----------------////
-
-
         var purchaseDate;
         switch (stepNo) {
         case 0:
@@ -444,52 +434,8 @@
         return true;
     }
 
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else return true;
-    }
-
-    function alphanumeric_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-    }
-
-    function alpha_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-    }
-
-    function alpha_only_withspace(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32);
-    }
-
     function isValidVehicleNumber(vehicleNo) {
         if (!vehicleNo.match(/^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{1,4}$/)) {
-            alert("Enter a valid Vehicle Number eg - 'AP27HY9834' or 'AP27H8'");
-            vehicleNo.value = "";
             return false;
         } else {
             return true;

@@ -48,23 +48,39 @@ public partial class SparePartsRequisiton : Page
 
     private void FillVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void BindGrid(int iRows)
     {
-        var ds = CreateEmptyRows(iRows);
-        grvNewSparePartsRequisition.DataSource = ds;
-        grvNewSparePartsRequisition.DataBind();
-        Session["dsSpareParts"] = ds;
-        foreach (GridViewRow gvrow in grvNewSparePartsRequisition.Rows)
+        try
         {
-            var dsSpareParts = ObjInventory.GetSpareParts();
-            var ddlSpareParts = (DropDownList) gvrow.FindControl("ddlSparePartName");
-            _helper.FillDropDownHelperMethodWithDataSet(dsSpareParts, "SparePart_Name", "SparePart_Id", ddlSpareParts);
-            ddlSpareParts.SelectedValue = ds.Tables[0].Rows[gvrow.RowIndex]["SparePart_Id"].ToString();
+            var ds = CreateEmptyRows(iRows);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            grvNewSparePartsRequisition.DataSource = ds;
+            grvNewSparePartsRequisition.DataBind();
+            Session["dsSpareParts"] = ds;
+            foreach (GridViewRow gvrow in grvNewSparePartsRequisition.Rows)
+            {
+                var dsSpareParts = ObjInventory.GetSpareParts();
+                if (dsSpareParts == null) throw new ArgumentNullException(nameof(dsSpareParts));
+                var ddlSpareParts = (DropDownList) gvrow.FindControl("ddlSparePartName");
+                _helper.FillDropDownHelperMethodWithDataSet(dsSpareParts, "SparePart_Name", "SparePart_Id", ddlSpareParts);
+                ddlSpareParts.SelectedValue = ds.Tables[0].Rows[gvrow.RowIndex]["SparePart_Id"].ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -98,6 +114,7 @@ public partial class SparePartsRequisiton : Page
         foreach (GridViewRow gvrow in grvNewSparePartsRequisition.Rows)
         {
             var ds = (dsEmptySpareParts) Session["dsSpareParts"];
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
             var txtqty = (TextBox) gvrow.FindControl("txtQuantity");
             var ddlSpPart = (DropDownList) gvrow.FindControl("ddlSparePartName");
             ds.Tables[0].Rows[gvrow.RowIndex]["Quantity"] = txtqty.Text;
@@ -109,6 +126,7 @@ public partial class SparePartsRequisiton : Page
     protected void AdjustSiNo()
     {
         var ds = (dsEmptySpareParts) Session["dsSpareParts"];
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         for (var i = 0; i < ds.Tables[0].Rows.Count; i++) ds.Tables[0].Rows[i]["SNo"] = i + 1;
         ds.AcceptChanges();
     }
@@ -185,6 +203,7 @@ public partial class SparePartsRequisiton : Page
         var quantitySatus = false;
         UpdateSessionTable();
         var ds = (dsEmptySpareParts) Session["dsSpareParts"];
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         var dt = ds.Tables[0];
         var duplicateCount = CheckDuplicateRows(dt, "SparePart_Id");
         if (duplicateCount > 0)
@@ -384,6 +403,7 @@ public partial class SparePartsRequisiton : Page
     public void FillGrid_RequisitionHistory(int vehicleId, int districtId, int fleetInventoryItemId)
     {
         var ds = ObjInventory.IFillFleetInventoryRequisitionHistory(vehicleId, districtId, 2);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvRequisitionHistory.DataSource = ds.Tables[0];
         grvRequisitionHistory.DataBind();
     }
@@ -403,15 +423,18 @@ public partial class SparePartsRequisiton : Page
 
     protected void grvPendingforApproval_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName.Equals("Show"))
+        switch (e.CommandName)
         {
-            var id = Convert.ToInt32(e.CommandArgument.ToString());
-            var ds = ObjInventory.GetInventoryReqForEDIT(id);
-            txtReqID.Text = e.CommandArgument.ToString();
-            txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNum"].ToString();
-            grvBatteryRequestDetails.DataSource = ds.Tables[1];
-            grvBatteryRequestDetails.DataBind();
-            gv_ModalPopupExtender1.Show();
+            case "Show":
+                var id = Convert.ToInt32(e.CommandArgument.ToString());
+                var ds = ObjInventory.GetInventoryReqForEDIT(id);
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
+                txtReqID.Text = e.CommandArgument.ToString();
+                txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNum"].ToString();
+                grvBatteryRequestDetails.DataSource = ds.Tables[1];
+                grvBatteryRequestDetails.DataBind();
+                gv_ModalPopupExtender1.Show();
+                break;
         }
     }
 

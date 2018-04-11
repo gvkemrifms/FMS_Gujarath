@@ -1,44 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="PollutionUnderControl.aspx.cs" Inherits="PollutionUnderControl" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<style>
-    .button {
-        border: none;
-        border-radius: 4px;
-        color: #FFFFFF;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 28px;
-        http: //localhost:58742/VehicleInsurance.aspx padding:0px;
-        margin: 5px;
-        text-align: center;
-        transition: all 0.5s;
-        width: 122px;
-    }
-
-    .button span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-    .button span:after {
-        content: '\00bb';
-        opacity: 0;
-        position: absolute;
-        right: -20px;
-        top: 0;
-        transition: 0.5s;
-    }
-
-    .button:hover span { padding-right: 25px; }
-
-    .button:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-</style>
+<script src="js/Validation.js"></script>
+<link href="css/PollutionUnderControl.css" rel="stylesheet"/>
 
 <script language="javascript" type="text/javascript">
     function validation() {
@@ -97,56 +61,6 @@
             return false;
         return true;
     }
-
-
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-        default:
-            return true;
-        }
-    }
-
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-    }
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode === 190 || charCode === 46) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function alphanumeric_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 48 && keycode <= 57) ||
-            (keycode >= 65 && keycode <= 90) ||
-            (keycode >= 97 && keycode <= 122);
-
-    }
-
-    function alpha_only(e) {
-        var keycode;
-        if (window.event || event || e) keycode = window.event.keyCode;
-        else return true;
-        return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-    }
-
 </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
@@ -384,4 +298,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function validation() {
@@ -96,33 +97,6 @@
         }
 
         return true;
-    }
-
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-            case '':
-                alert(msg);
-                ctrl.focus();
-                return false;
-            default:
-                return true;
-        }
-    }
-
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-    function numeric(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode === 190 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else return true;
     }
 
     function OnlyNumPeriod(evt) {

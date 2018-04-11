@@ -43,11 +43,7 @@
                 <asp:TextBox ID="txtfrmDate" runat="server"></asp:TextBox>
             </td>
             <td>
-
-                <%--<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>--%>
                 <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
-
-
             </td>
             <td>
                 <asp:Label ID="lbltodate" runat="server" Text="To date"></asp:Label>
@@ -57,8 +53,6 @@
                 <asp:TextBox ID="txttodate" runat="server"></asp:TextBox>
             </td>
             <td>
-
-                <%--<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>--%>
                 <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
 
 

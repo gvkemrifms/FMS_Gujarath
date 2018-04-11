@@ -1,130 +1,106 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="ScheduleServiceMaster.aspx.cs" Inherits="ScheduleServiceMaster" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
         <ContentTemplate>
             <table width="100%">
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                            <legend>
-                                Schedule Service Master<br/>
+                            <legend>Schedule Service Master<br />
                             </legend>
                             <div style="height: 246px; width: 150px; float: left"></div>
                             <table>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Manufacturer Name :
+                                    <td style="width: 176px">Manufacturer Name :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
                                         <asp:DropDownList ID="ddlManufactName" runat="server"
-                                                          onselectedindexchanged="ddlManufactName_SelectedIndexChanged"
-                                                          AutoPostBack="True"/>
+                                            OnSelectedIndexChanged="ddlManufactName_SelectedIndexChanged"
+                                            AutoPostBack="True" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        General Service :
+                                    <td style="width: 176px">General Service :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtGeneralService" runat="server"/>
+                                        <asp:TextBox ID="txtGeneralService" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Schedule Service Alert1 :
+                                    <td style="width: 176px">Schedule Service Alert1 :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert1" runat="server"/>
+                                        <asp:TextBox ID="txtSSAlert1" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Schedule Service Alert2 :
+                                    <td style="width: 176px">Schedule Service Alert2 :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert2" runat="server"/>
+                                        <asp:TextBox ID="txtSSAlert2" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Schedule Service Alert3 :
+                                    <td style="width: 176px">Schedule Service Alert3 :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert3" runat="server"/>
+                                        <asp:TextBox ID="txtSSAlert3" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Schedule Service Alert4 :
+                                    <td style="width: 176px">Schedule Service Alert4 :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert4" runat="server"/>
+                                        <asp:TextBox ID="txtSSAlert4" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                        Schedule Service Alert5 :
+                                    <td style="width: 176px">Schedule Service Alert5 :
                                     </td>
-                                    <td class="columnseparator">
-                                    </td>
+                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert5" runat="server"/>
+                                        <asp:TextBox ID="txtSSAlert5" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px">
-                                    </td>
+                                    <td class="rowseparator" style="width: 176px"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px">
-                                    </td>
+                                    <td style="width: 176px"></td>
                                     <td>
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" onclick="btnSave_Click"/>
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
                                     </td>
 
                                     <td>
-                                        <asp:Button ID="btnUpdate" runat="server" text="Update" onclick="btnUpdate_Click"/>
+                                        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" />
                                     </td>
                                 </tr>
                             </table>
@@ -133,10 +109,10 @@
                                 </div>
                                 <div style="float: left">
                                     <asp:GridView ID="gvScheduleServiceMaster" runat="server" EmptyDataText="No Records Found"
-                                                  AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
-                                                  CellPadding="4" ForeColor="#333333" GridLines="None" Width="650px" AllowPaging="True"
-                                                  EnableSortingAndPagingCallbacks="True" onrowcommand="gvScheduleServiceMaster_RowCommand">
-                                        <RowStyle CssClass="rowStyleGrid"/>
+                                        AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="650px" AllowPaging="True"
+                                        EnableSortingAndPagingCallbacks="True" OnRowCommand="gvScheduleServiceMaster_RowCommand">
+                                        <RowStyle CssClass="rowStyleGrid" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Manufacturer Name">
                                                 <ItemTemplate>
@@ -176,16 +152,16 @@
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditService" CommandArgument=" <%# Container.DataItemIndex %>"
-                                                                    Text="Edit">
+                                                        Text="Edit">
                                                     </asp:LinkButton>
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
-                                        <FooterStyle CssClass="footerStylegrid"/>
-                                        <PagerStyle CssClass="pagerStylegrid"/>
-                                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                        <HeaderStyle CssClass="headerStyle"/>
+                                        <FooterStyle CssClass="footerStylegrid" />
+                                        <PagerStyle CssClass="pagerStylegrid" />
+                                        <SelectedRowStyle CssClass="selectedRowStyle" />
+                                        <HeaderStyle CssClass="headerStyle" />
                                     </asp:GridView>
                                 </div>
                             </div>

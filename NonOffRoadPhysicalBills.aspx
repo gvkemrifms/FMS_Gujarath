@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script type="text/javascript">
         function validation() {
 
@@ -58,63 +59,8 @@
                 fldReceiptDate.focus();
                 return false;
             }
-
-            function requiredValidation(ctrl, msg) {
-                if (trim(ctrl.value) === '') {
-                    alert(msg);
-                    ctrl.focus();
-                    return false;
-                } else
-                    return true;
-            }
+            return true;
         }
-
-        function alphanumeric_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 48 && keycode <= 57) ||
-                (keycode >= 65 && keycode <= 90) ||
-                (keycode >= 97 && keycode <= 122);
-        }
-
-        function numeric_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return keycode >= 48 && keycode <= 57;
-        }
-
-        function alpha_only(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
-        }
-
-        function alpha_only_withspace(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32);
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-
 
     </script>
 
@@ -230,7 +176,7 @@
                                 </tr>
                             </table>
                             <div>
-                                <div style="width: 200px; float: left">
+                                <div style="float: left; width: 200px;">
                                 </div>
                                 <div style="float: left">
                                     <asp:GridView ID="gvVehiclePhysicalBillDetails" runat="server" EmptyDataText="No Records Found"

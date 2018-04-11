@@ -40,14 +40,18 @@ public partial class BatteryReceipt : Page
 
     private void FillInventoryVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
+        if (_fmsg != null)
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryBatteryReceiptVehicles);
+        }
     }
 
     private void FillGrid_BatteryDetailsForReceipt(int fleetInventoryItemId, int vehicleId)
     {
         var ds = ObjFmsInvBatRecp.GetBatteryDetailsForReceipt(fleetInventoryItemId, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvBatteryDetailsForReceipt.DataSource = ds.Tables[0];
         grvBatteryDetailsForReceipt.DataBind();
     }
@@ -150,6 +154,7 @@ public partial class BatteryReceipt : Page
     {
         var id = Convert.ToInt32(e.CommandArgument.ToString());
         var ds = ObjFmsInvBatRecp.GetGridBatteryReceiptPopup(id);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtBatRecPONumber.Text = ds.Tables[0].Rows[0][1].ToString();
         txtBatRecPODate.Text = ds.Tables[0].Rows[0][2].ToString();
         txtBatRecCourierName.Text = ds.Tables[0].Rows[0][3].ToString();

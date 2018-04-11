@@ -8,18 +8,21 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Select District :
+                <td>
+                    Select District :
                     <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                     </asp:DropDownList>
-                    </td>
-                    <td>Select Vehicle :
+                </td>
+                <td>
+                    Select Vehicle :
                     <asp:DropDownList ID="ddlVehNumber" runat="server" AutoPostBack="True"
-                        OnSelectedIndexChanged="ddlVehNumber_SelectedIndexChanged">
+                                      OnSelectedIndexChanged="ddlVehNumber_SelectedIndexChanged">
                     </asp:DropDownList>
-                    </td>
-                    <td>Select Month :
+                </td>
+                <td>
+                    Select Month :
                     <asp:DropDownList ID="ddlMonth" runat="server" AutoPostBack="True"
-                        OnSelectedIndexChanged="ddlMonth_SelectedIndexChanged">
+                                      OnSelectedIndexChanged="ddlMonth_SelectedIndexChanged">
                         <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                         <asp:ListItem Text="All" Value="-1"></asp:ListItem>
                         <asp:ListItem Text="January" Value="1"></asp:ListItem>
@@ -35,9 +38,10 @@
                         <asp:ListItem Text="November" Value="11"></asp:ListItem>
                         <asp:ListItem Text="December" Value="12"></asp:ListItem>
                     </asp:DropDownList>
-                    </td>
-                    <td></td>
-                    <td>Year :
+                </td>
+                <td></td>
+                <td>
+                    Year :
                     <asp:DropDownList ID="ddlYear" runat="server" AutoPostBack="True">
                         <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                         <asp:ListItem Text="2004" Value="2004"></asp:ListItem>
@@ -54,23 +58,23 @@
                         <asp:ListItem Text="2015" Value="2015"></asp:ListItem>
                         <asp:ListItem Text="2016" Value="2016"></asp:ListItem>
                     </asp:DropDownList>
-                    </td>
-                    <td></td>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <asp:Button ID="btnShowRpt" runat="server" Text="Show Report"
-                                OnClick="btnShowRpt_Click" />
-                        </td>
-                        <td>
-                            <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
-                                OnClick="btnExportToExcel_Click" />
-                        </td>
-                    </tr>
-                </tr>
+                </td>
+                <td></td>
                 <tr>
                     <td></td>
+                    <td>
+                        <asp:Button ID="btnShowRpt" runat="server" Text="Show Report"
+                                    OnClick="btnShowRpt_Click"/>
+                    </td>
+                    <td>
+                        <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
+                                    OnClick="btnExportToExcel_Click"/>
+                    </td>
                 </tr>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
             </table>
             <table cellpadding="2" cellspacing="2">
                 <tr>

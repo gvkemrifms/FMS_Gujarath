@@ -24,6 +24,7 @@ public partial class VehicleInsuranceClaims : Page
 
     protected void gvInsuranceClaim_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        if (e.CommandName == null) return;
         switch (e.CommandName)
         {
             case "EditInsurance":

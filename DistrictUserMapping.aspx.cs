@@ -26,8 +26,17 @@ public partial class DistrictUserMapping : Page
     public void FillUserList()
     {
         ACLServiceClient client = new ACLServiceClient();
-        DataSet ds = client.GetUsersList(0, 0, "FMSGlobalization", "");
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Login_Name", "PK_USER_ID", ddlUserList);
+        using (DataSet ds = client.GetUsersList(0, 0, "FMSGlobalization", ""))
+            if (ds != null)
+                try
+                {
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "Login_Name", "PK_USER_ID", ddlUserList);
+                }
+                catch (Exception ex)
+                {
+                    _helper.ErrorsEntry(ex);
+                }
+
         ddlUserList.Items.Remove("FMSAdminUser");
     }
 
@@ -36,10 +45,17 @@ public partial class DistrictUserMapping : Page
         DataSet ds = _distvehmapp.GetDistrict();
         if (ds != null)
         {
-            chkDistrictList.DataSource = ds;
-            chkDistrictList.DataTextField = "district_name";
-            chkDistrictList.DataValueField = "district_id";
-            chkDistrictList.DataBind();
+            try
+            {
+                chkDistrictList.DataSource = ds;
+                chkDistrictList.DataTextField = "district_name";
+                chkDistrictList.DataValueField = "district_id";
+                chkDistrictList.DataBind();
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -47,14 +63,15 @@ public partial class DistrictUserMapping : Page
     {
         ArrayList districtIds = new ArrayList();
         foreach (ListItem lstSelectedDistrict in chkDistrictList.Items)
-        {
-            if (lstSelectedDistrict.Selected) districtIds.Add(lstSelectedDistrict.Value);
-        }
-
+            if (lstSelectedDistrict.Selected)
+                districtIds.Add(lstSelectedDistrict.Value);
         if (districtIds.Count > 0)
         {
-            int ret = _distUserMapping.InsertDistrictUserMapping(Convert.ToInt32(ddlUserList.SelectedItem.Value), districtIds);
-            Show(ret != 0 ? "User Mapped to district Successfully" : "Error");
+            if (_distUserMapping != null)
+            {
+                int ret = _distUserMapping.InsertDistrictUserMapping(Convert.ToInt32(ddlUserList.SelectedItem.Value), districtIds);
+                Show(ret != 0 ? "User Mapped to district Successfully" : "Error");
+            }
         }
         else
             Show("Select District");
@@ -71,8 +88,13 @@ public partial class DistrictUserMapping : Page
     {
         ArrayList districtId = new ArrayList();
         if (ddlUserList.SelectedIndex == 0) return;
-        DataSet ds = _distUserMapping.GetSelectedDistrictByUserList(Convert.ToInt32(ddlUserList.SelectedItem.Value));
-        foreach (DataRow dr in ds.Tables[0].Rows) districtId.Add(dr["DistrictId"].ToString());
+        if (_distUserMapping != null)
+        {
+            DataSet ds = _distUserMapping.GetSelectedDistrictByUserList(Convert.ToInt32(ddlUserList.SelectedItem.Value));
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            foreach (DataRow dr in ds.Tables[0].Rows) districtId.Add(dr["DistrictId"].ToString());
+        }
+
         foreach (ListItem lstSelectedDistrict in chkDistrictList.Items) lstSelectedDistrict.Selected = districtId.Contains(lstSelectedDistrict.Value);
     }
 

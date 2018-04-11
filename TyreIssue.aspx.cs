@@ -23,6 +23,7 @@ public partial class TyreIssue : Page
             txtCourierName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
             txtRemarks.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             grvTyrePendingForIssue.Columns[2].Visible = false;
@@ -43,9 +44,16 @@ public partial class TyreIssue : Page
 
     private void FillInventoryVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryTyreIssueVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryTyreIssueVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlInventoryTyreIssueVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,9 +73,17 @@ public partial class TyreIssue : Page
 
     private void FillGrid_TyreForIssue(int fleetInventoryItemId, int vehicleId)
     {
-        var ds = ObjTyreIssue.GetTyrePendingForIssue(1, vehicleId);
-        grvTyrePendingForIssue.DataSource = ds.Tables[0];
-        grvTyrePendingForIssue.DataBind();
+        try
+        {
+            var ds = ObjTyreIssue.GetTyrePendingForIssue(1, vehicleId);
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            grvTyrePendingForIssue.DataSource = ds.Tables[0];
+            grvTyrePendingForIssue.DataBind();
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void BtnViewDetails_Click(object sender, EventArgs e)
@@ -82,13 +98,21 @@ public partial class TyreIssue : Page
 
     protected void grvTyreIssueDetailsPopup_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        var ds = ObjTyreIssue.IFillTyreNumbers();
-        switch (e.Row.RowType)
+        try
         {
-            case DataControlRowType.DataRow:
-                var ddl = (DropDownList) e.Row.FindControl("ddlTyreNumber");
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "TyreNumber", "Tyre_Id", ddl);
-                break;
+            var ds = ObjTyreIssue.IFillTyreNumbers();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            switch (e.Row.RowType)
+            {
+                case DataControlRowType.DataRow:
+                    var ddl = (DropDownList) e.Row.FindControl("ddlTyreNumber");
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "TyreNumber", "Tyre_Id", ddl);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -180,6 +204,7 @@ public partial class TyreIssue : Page
     {
         var id = Convert.ToInt32(e.CommandArgument.ToString());
         var ds = ObjTyreIssue.GetGridTyreIssuePopup(id);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtTyreIssVehicleNumber.Text = ds.Tables[0].Rows[0][0].ToString();
         txtTyreIssDistrict.Text = ds.Tables[0].Rows[0][1].ToString();
         Session["TyreIssue"] = ds;

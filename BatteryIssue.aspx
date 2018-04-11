@@ -4,64 +4,18 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
-        function CheckLength(text, long) {
-            var maxlength = new Number(long); // Change number to your max length.
-            if (text.value.length > maxlength) {
-                text.value = text.value.substring(0, maxlength);
-                alert(" Only " + long + " chars");
-
-            }
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true;
-            if ((keycode != 34) && (keycode != 39)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true;
-            if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            else
-                return true;
-        }
-
         function validation() {
             var dcNumberPopup = document.getElementById('<%= txtDcNumberPopup.ClientID %>');
             var dcDate = document.getElementById('<%= txtDcDate.ClientID %>');
             var courierName = document.getElementById('<%= txtCourierName.ClientID %>');
             var remarks = document.getElementById('<%= txtRemarks.ClientID %>');
-
-
             if (!RequiredValidation(dcNumberPopup, "DC Number cannot be Blank"))
                 return false;
 
             if (!RequiredValidation(dcDate, "DC Date cannot be Blank"))
                 return false;
-
-
             if (trim(dcDate.value) !== "") {
                 if (!isValidDate(dcDate.value)) {
                     alert("Enter the DC Date");
@@ -86,46 +40,9 @@
             var txtIssuedQuantity = document.getElementById(window.IssuedQuantity);
             if (!RequiredValidation(txtIssuedQuantity, "Issue Qty cannot be Blank"))
                 return false;
-        }
-
-        function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) === '') {
-                alert(msg);
-                ctrl.focus();
-                return false;
-            } else
-                return true;
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function isValidDate(subject) {
-            return !!subject.match(/^(?:(0[1-9]|[12][0-9]|3[01])[\- \/.](0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/);
-        }
-
-        function isDecimalNumberKey(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-
-            if (charCode === 190 || charCode === 46 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-
-        function ValidateIssueQty(issQtyId, reqQty) {
-            var objIssQty = document.getElementById(issQtyId);
-            if (parseInt(objIssQty.value) > parseInt(reqQty)) {
-                alert("Issued Quantity Cannot be more than Request Quantity");
-                objIssQty.focus();
-                return false;
-            }
             return true;
         }
+
 
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -150,7 +67,6 @@
                                       PageSize="5" OnPageIndexChanging="grvBatteryPendingForIssue_PageIndexChanging"
                                       OnRowCommand="grvBatteryPendingForIssue_RowCommand">
                             <Columns>
-                                <%--<asp:BoundField HeaderText="S.No" DataField="FleetInventoryReqID" />--%>
                                 <asp:BoundField HeaderText="Vehicle Number" DataField="VehicleNum"/>
                                 <asp:BoundField HeaderText="No. of Batteries" DataField="RequestedQty"/>
                                 <asp:BoundField HeaderText="Request Date" DataField="RequestedDate" DataFormatString="{0:dd/MM/yyyy}"/>

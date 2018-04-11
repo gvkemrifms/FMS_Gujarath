@@ -49,12 +49,19 @@ public partial class NewBatteryRequisition : Page
 
     private void FillInventoryVehicles()
     {
-        _fmsg.UserDistrictId = global::System.Convert.ToInt32(Session["UserdistrictId"].ToString());
-        DataSet ds = _fmsg.GetVehicleNumber();
-        if (ds != null)
+        try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryVehicles);
-            ddlInventoryVehicles.Items[0].Value = "0";
+            _fmsg.UserDistrictId = global::System.Convert.ToInt32(Session["UserdistrictId"].ToString());
+            DataSet ds = _fmsg.GetVehicleNumber();
+            if (ds != null)
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlInventoryVehicles);
+                ddlInventoryVehicles.Items[0].Value = "0";
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -78,6 +85,7 @@ public partial class NewBatteryRequisition : Page
     public void FillGrid_NewBatteryRequisition(int vehicleId)
     {
         var ds = ObjFmsInventory.GetInventoryIssueDetailsForVehicle(vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvInventoryNewBatteryRequisition.DataSource = ds;
         grvInventoryNewBatteryRequisition.DataBind();
     }
@@ -162,6 +170,7 @@ public partial class NewBatteryRequisition : Page
     public void FillGrid_BatteryPendingForApproval(int fleetInventoryItemId, int vehicleId)
     {
         var ds = ObjFmsInventory.GetBatteryPendingForApproval(3, vehicleId);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvBatteryPendingForApproval.DataSource = ds.Tables[0];
         grvBatteryPendingForApproval.DataBind();
     }
@@ -216,6 +225,7 @@ public partial class NewBatteryRequisition : Page
     public void FillGrid_RequisitionHistory(int @vehicleId, int @districtId, int fleetInventoryItemId)
     {
         var ds = ObjFmsInventory.IFillFleetInventoryRequisitionHistory(vehicleId, districtId, 3);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grvRequisitionHistory.DataSource = ds.Tables[0];
         grvRequisitionHistory.DataBind();
     }
@@ -230,6 +240,7 @@ public partial class NewBatteryRequisition : Page
     {
         int id = Convert.ToInt32(e.CommandArgument.ToString());
         var ds = ObjFmsInventory.GetInventoryReqForEdit(id);
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         txtRequestIdPopup.Text = Convert.ToString(id);
         txtVehicleNumberPopUp.Text = ds.Tables[0].Rows[0]["VehicleNum"].ToString();
         grvBatteryRequestDetails.DataSource = ds.Tables[1];

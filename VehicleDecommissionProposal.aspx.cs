@@ -18,6 +18,7 @@ public partial class VehicleDecommissionProposal : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btnSave.Attributes.Add("onclick", "return validation(this,'" + btnSave.ID + "')");
@@ -113,6 +114,7 @@ public partial class VehicleDecommissionProposal : Page
             case "vehicleProposal":
                 _vehicleProposalBol.vi_LocationId = Convert.ToInt32(e.CommandArgument);
                 var ds = _vehicleProposalBol.GetVehicleDecommissionProposalByVehicleProposalIdByCTIAPPS();
+                if (ds == null) throw new ArgumentNullException(nameof(ds));
                 ViewState["VehicleId"] = ds.Tables[0].Rows[0]["VehicleId"].ToString();
                 ViewState["vi_LocationId"] = ds.Tables[0].Rows[0]["vi_LocationId"].ToString();
                 txtVehicleNumber.Text = ds.Tables[0].Rows[0]["VehicleNumber"].ToString();

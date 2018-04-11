@@ -42,9 +42,16 @@ public partial class SparePartIssue : Page
 
     private void FillVehicles()
     {
-        _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        try
+        {
+            _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumber();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlVehicles_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,6 +89,7 @@ public partial class SparePartIssue : Page
         {
             var issuedQuantity = Convert.ToInt32(((TextBox) item.FindControl("txtIssuedQty")).Text);
             var ds = _fmsg.GetRegistrationDate(Convert.ToInt32(ddlVehicles.SelectedValue));
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
             if (DateTime.Parse(ds.Tables[0].Rows[0]["RegDate"].ToString()) < DateTime.Parse(txtDCDate.Text))
             {
                 InsertIssueDetails(Convert.ToInt32(txtInvReqID.Text), Convert.ToInt32(txtDCNumber.Text), Convert.ToDateTime(txtDCDate.Text), Convert.ToString(txtCourierName.Text), Convert.ToString(txtRemarks.Text), issuedQuantity, Convert.ToInt32(txtVehicleID.Text));

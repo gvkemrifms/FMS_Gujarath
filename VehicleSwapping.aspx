@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script type="text/javascript" language="javascript">
 
         function validation() {
@@ -41,33 +42,6 @@
             return true;
         }
 
-        function RequiredValidation(ctrl, msg) {
-            switch (trim(ctrl.value)) {
-                case '':
-                    alert(msg);
-                    ctrl.focus();
-                    return false;
-                default:
-                    return true;
-            }
-        }
-
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function numeric(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            if (charCode === 190 || charCode > 31 && (charCode < 48 || charCode > 57)) {
-                var txtBox = document.getElementById(event.srcElement.id);
-                return txtBox.value.indexOf('.') === -1;
-            } else return true;
-        }
-
     </script>
     <asp:UpdatePanel ID="updtpnlVehSwapping" runat="server">
         <ContentTemplate>
@@ -79,17 +53,19 @@
                     </tr>
 
                     <tr>
-                        <td>District
+                        <td>
+                            District
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="true" Width="155px"
-                                OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                                              OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </asp:DropDownList>
                         </td>
                         <td class="columnseparator"></td>
-                        <td>Requested By
+                        <td>
+                            Requested By
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -100,22 +76,24 @@
                         <td class="rowseparator"></td>
                     </tr>
                     <tr>
-                        <td>Source Vehicle
+                        <td>
+                            Source Vehicle
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <cc1:ComboBox AutoCompleteMode="Append" ID="ddlSrcVehicle" runat="server" AutoPostBack="true"
-                                Width="155px" OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                                          Width="155px" OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </cc1:ComboBox>
                         </td>
                         <td class="columnseparator"></td>
-                        <td>Destination Vehicle
+                        <td>
+                            Destination Vehicle
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <cc1:ComboBox AutoCompleteMode="Append" ID="ddlDestVehicle" runat="server" AutoPostBack="true"
-                                Width="155px" OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                                          Width="155px" OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </cc1:ComboBox>
                         </td>
@@ -124,21 +102,23 @@
                         <td class="rowseparator"></td>
                     </tr>
                     <tr>
-                        <td>Base Location
+                        <td>
+                            Base Location
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <asp:TextBox ID="txtSrcBaseLocation" runat="server" Width="150px" BackColor="#CCCCCC"
-                                ReadOnly="True">
+                                         ReadOnly="True">
                             </asp:TextBox>
                         </td>
                         <td class="columnseparator"></td>
-                        <td>Base Location
+                        <td>
+                            Base Location
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <asp:TextBox ID="txtDestBaseLocation" runat="server" Width="150px" BackColor="#CCCCCC"
-                                ReadOnly="True">
+                                         ReadOnly="True">
                             </asp:TextBox>
                         </td>
                     </tr>
@@ -146,14 +126,16 @@
                         <td class="rowseparator"></td>
                     </tr>
                     <tr>
-                        <td>Contact Number
+                        <td>
+                            Contact Number
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <asp:TextBox ID="txtSrcContactNo" runat="server" Width="150px" MaxLength="10" onkeypress="return numeric(event)"></asp:TextBox>
                         </td>
                         <td class="columnseparator"></td>
-                        <td>Contact Number
+                        <td>
+                            Contact Number
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -168,15 +150,15 @@
                     </tr>
                     <caption>
                         <img id="loaderButton" alt="" src="../images/savingimage.gif"
-                            style="display: none" />
+                             style="display: none"/>
                         <tr>
                             <td align="center" colspan="7" style="">
                                 <asp:Panel ID="pnlButton" runat="server">
                                     <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click"
-                                        Text="Submit" />
+                                                Text="Submit"/>
                                     &nbsp;&nbsp;&nbsp;
                                     <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click"
-                                        Text="Reset" />
+                                                Text="Reset"/>
                                 </asp:Panel>
                             </td>
                         </tr>
@@ -186,4 +168,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

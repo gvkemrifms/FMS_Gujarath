@@ -25,89 +25,114 @@ public partial class NonOffRoadPhysicalBills : Page
 
     public void BindData()
     {
-        _dsDistricts = new DataSet();
-        _dsDistricts = _fmsobj.GetDistrict();
-        _helper.FillDropDownHelperMethodWithDataSet(_dsDistricts, "ds_lname", "ds_dsid", ddlDistricts);
-        ViewState["dsDistricts"] = _dsDistricts;
+        try
+        {
+            _dsDistricts = new DataSet();
+            _dsDistricts = _fmsobj.GetDistrict();
+            _helper.FillDropDownHelperMethodWithDataSet(_dsDistricts, "ds_lname", "ds_dsid", ddlDistricts);
+            ViewState["dsDistricts"] = _dsDistricts;
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlDistricts_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (ddlDistricts.SelectedIndex)
+        try
         {
-            case 0:
-                ddlVehicleno.Items.Clear();
-                ddlVehicleno.Enabled = false;
-                ddlBillNo.Items.Clear();
-                ddlBillNo.Enabled = false;
-                txtBillAmount.Text = "";
-                break;
-            default:
-                _dsVehicle = new DataSet();
-                ddlVehicleno.Enabled = true;
-                _obj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
-                _dsVehicle = _obj.GetNonOffVehFoBilling();
-                _helper.FillDropDownHelperMethodWithDataSet(_dsVehicle, "Vehicleno", "", ddlVehicleno);
-                ViewState["dsVehicle"] = _dsVehicle;
-                break;
+            switch (ddlDistricts.SelectedIndex)
+            {
+                case 0:
+                    ddlVehicleno.Items.Clear();
+                    ddlVehicleno.Enabled = false;
+                    ddlBillNo.Items.Clear();
+                    ddlBillNo.Enabled = false;
+                    txtBillAmount.Text = "";
+                    break;
+                default:
+                    _dsVehicle = new DataSet();
+                    ddlVehicleno.Enabled = true;
+                    _obj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
+                    _dsVehicle = _obj.GetNonOffVehFoBilling();
+                    _helper.FillDropDownHelperMethodWithDataSet(_dsVehicle, "Vehicleno", "", ddlVehicleno);
+                    ViewState["dsVehicle"] = _dsVehicle;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     protected void ddlVehicleno_SelectedIndexChanged1(object sender, EventArgs e)
     {
-        switch (ddlVehicleno.SelectedIndex)
+        try
         {
-            case 0:
-                ddlBillNo.Items.Clear();
-                ddlBillNo.Enabled = false;
-                txtBillAmount.Text = "";
-                break;
-            default:
-                _dsBillNo = new DataSet();
-                ddlBillNo.Enabled = true;
-                _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
-                _dsBillNo = _obj.GetBillNo();
-                _helper.FillDropDownHelperMethodWithDataSet(_dsBillNo, "Billno", "", ddlBillNo);
-                ViewState["dsBillNo"] = _dsBillNo;
-                break;
+            switch (ddlVehicleno.SelectedIndex)
+            {
+                case 0:
+                    ddlBillNo.Items.Clear();
+                    ddlBillNo.Enabled = false;
+                    txtBillAmount.Text = "";
+                    break;
+                default:
+                    _dsBillNo = new DataSet();
+                    ddlBillNo.Enabled = true;
+                    _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
+                    _dsBillNo = _obj.GetBillNo();
+                    _helper.FillDropDownHelperMethodWithDataSet(_dsBillNo, "Billno", "", ddlBillNo);
+                    ViewState["dsBillNo"] = _dsBillNo;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        _obj.District = ddlDistricts.SelectedItem.ToString();
-        _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
-        _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
-        _obj.ReceiptDate = Convert.ToDateTime(txtReceiptDate.Text);
-        _obj.CourierName = txtCourierName.Text;
-        _obj.DocketNo = txtDocketNo.Text;
-        _obj.NonOffAmount = txtBillAmount.Text;
-        _obj.MandalId = int.Parse(lblBrkdwn.Text);
-        _obj.VenName = HiddenField1.Value;
-        int i = _obj.InsertNonoffroadPhysicalBills();
-        switch (i)
+        if (_obj != null)
         {
-            case 0:
-                Show("Records not inserted successfully");
-                break;
-            default:
-                Show("Records inserted successfully");
-                BindGridView();
-                ddlDistricts.SelectedIndex = 0;
-                ddlVehicleno.Items.Clear();
-                ddlBillNo.Items.Clear();
-                txtReceiptDate.Text = "";
-                txtCourierName.Text = "";
-                txtDocketNo.Text = "";
-                txtBillAmount.Text = "";
-                lblBrkdwn.Text = "";
-                break;
+            _obj.District = ddlDistricts.SelectedItem.ToString();
+            _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
+            _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
+            _obj.ReceiptDate = Convert.ToDateTime(txtReceiptDate.Text);
+            _obj.CourierName = txtCourierName.Text;
+            _obj.DocketNo = txtDocketNo.Text;
+            _obj.NonOffAmount = txtBillAmount.Text;
+            _obj.MandalId = int.Parse(lblBrkdwn.Text);
+            _obj.VenName = HiddenField1.Value;
+            int i = _obj.InsertNonoffroadPhysicalBills();
+            switch (i)
+            {
+                case 0:
+                    Show("Records not inserted successfully");
+                    break;
+                default:
+                    Show("Records inserted successfully");
+                    BindGridView();
+                    ddlDistricts.SelectedIndex = 0;
+                    ddlVehicleno.Items.Clear();
+                    ddlBillNo.Items.Clear();
+                    txtReceiptDate.Text = "";
+                    txtCourierName.Text = "";
+                    txtDocketNo.Text = "";
+                    txtBillAmount.Text = "";
+                    lblBrkdwn.Text = "";
+                    break;
+            }
         }
     }
 
     public void BindGridView()
     {
         var ds = _obj.GetNonOffPhysicalBills();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         ViewState["VehiclePhyBill"] = ds.Tables[0];
         gvVehiclePhysicalBillDetails.DataSource = ds.Tables[0];
         gvVehiclePhysicalBillDetails.DataBind();
@@ -193,6 +218,7 @@ public partial class NonOffRoadPhysicalBills : Page
             _obj.VehNumforNonOff = ddlVehicleno.SelectedItem.ToString();
             _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
             DataSet ds = _obj.GetNonOffroadBillAmt();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
             txtBillAmount.Text = ds.Tables[0].Rows[0][0].ToString();
             lblBrkdwn.Text = ds.Tables[1].Rows[0][0].ToString();
             HiddenField1.Value = ds.Tables[1].Rows[0][1].ToString();

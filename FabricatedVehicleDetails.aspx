@@ -4,6 +4,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
     function validation() {
         var fabricatorName = document.getElementById('<%= ddlFabricatorName.ClientID %>');
@@ -133,76 +134,6 @@
         return true;
     }
 
-    function RequiredValidation(ctrl, msg) {
-        switch (trim(ctrl.value)) {
-        case '':
-            alert(msg);
-            ctrl.focus();
-            return false;
-        default:
-            return true;
-        }
-    }
-
-
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode === 190 || charCode === 46) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            return txtBox.value.indexOf('.') === -1;
-        } else if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        else
-            return true;
-    }
-
-    function isValidDate(subject) {
-        return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
-    }
-
-    function alphanumeric_only(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-            return true;
-        } else
-            return false;
-    }
-
-    function alpha_only(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-            return true;
-        } else
-            return false;
-    }
-
-    function alpha_only_withspace(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32)) {
-            return true;
-        } else
-            return false;
-    }
 
 </script>
 

@@ -1,30 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyresDetails.aspx.cs" Inherits="TyresDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
-        function OnlyAlphaNumeric(e) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode === 32) ||
-                (keycode >= 47 && keycode <= 57) ||
-                (keycode >= 65 && keycode <= 90) ||
-                (keycode >= 97 && keycode <= 122);
-        }
-
-        function OnlyAlphabets(myfield, e, dec) {
-            var keycode;
-            if (window.event || event || e) keycode = window.event.keyCode;
-            else return true;
-            return (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode === 32);
-        }
-
-        function OnlyNumbers(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            return charCode <= 31 || (charCode >= 48 && charCode <= 57);
-        }
-
-
         function validation() {
             switch (document.getElementById("<%= txtTyreItemCode.ClientID %>").value) {
             case 0:

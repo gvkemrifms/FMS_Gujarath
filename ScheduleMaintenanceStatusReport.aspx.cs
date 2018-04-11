@@ -16,8 +16,16 @@ public partial class ScheduleMaintenanceStatusReport : Page
 
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-        _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        try
+        {
+            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+        }
+        catch (Exception ex)
+        {
+_helper.ErrorsEntry(ex);
+        }
+
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
@@ -31,9 +39,9 @@ public partial class ScheduleMaintenanceStatusReport : Page
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", null, null, ddldistrict, ddlvehicle, null, null, "@districtID");
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                _helper.ErrorsEntry(ex);
             }
         }
     }
@@ -44,9 +52,9 @@ public partial class ScheduleMaintenanceStatusReport : Page
         {
             _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // 
+            _helper.ErrorsEntry(ex);
         }
     }
 
@@ -61,9 +69,9 @@ public partial class ScheduleMaintenanceStatusReport : Page
         {
             _helper.FillDropDownHelperMethodWithSp("P_Reports_Sch_Maint_Status", null, null, ddldistrict, ddlvehicle, null, null, "@DistrictID", "@VehicleID", null, null, null, Grddetails);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 

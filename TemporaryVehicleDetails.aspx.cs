@@ -18,7 +18,6 @@ public partial class TemporaryVehicleDetails : Page
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             var btnTempVehDetail = tempVehDetWizard.FindControl("StartNavigationTemplateContainerID").FindControl("StartNextButton") as Button;
             if (btnTempVehDetail != null) btnTempVehDetail.Attributes.Add("onclick", "return validation(this,'" + btnTempVehDetail.ID + "')");
             var btnTempVehDetailStepNextButton = tempVehDetWizard.FindControl("StepNavigationTemplateContainerID").FindControl("StepNextButton") as Button;
@@ -44,8 +43,15 @@ public partial class TemporaryVehicleDetails : Page
 
     public void GetVehicleType()
     {
-        var ds = _tempvehdet.GetVehicleType();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle_Type", "VehicleType_Id", ddlVehicleType);
+        try
+        {
+            var ds = _tempvehdet.GetVehicleType();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle_Type", "VehicleType_Id", ddlVehicleType);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetTyreMake()
@@ -53,11 +59,18 @@ public partial class TemporaryVehicleDetails : Page
         var ds = _tempvehdet.GetTyreMake();
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeFL);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeFR);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeRL);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeRR);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeSpareWheel);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeFL);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeFR);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeRL);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeRR);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeSpareWheel);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -66,11 +79,18 @@ public partial class TemporaryVehicleDetails : Page
         var ds = _tempvehdet.GetTyreModelSize();
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeFL);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeFR);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeRL);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeRR);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeSpareWheel);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeFL);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeFR);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeRL);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeRR);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeSpareWheel);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
@@ -79,45 +99,94 @@ public partial class TemporaryVehicleDetails : Page
         var ds = _tempvehdet.GetBatteryMake();
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMakeBattery1);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMakeBattery2);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMakeBattery1);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMakeBattery2);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 
     public void GetAgency()
     {
-        var ds = _basevehdet.GetAgency();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlAgency);
+        try
+        {
+            var ds = _basevehdet.GetAgency();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceAgency", "InsuranceId", ddlAgency);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetInsuranceType()
     {
-        var ds = _basevehdet.GetInsuranceType();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsType);
+        try
+        {
+            var ds = _basevehdet.GetInsuranceType();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "InsuranceTypeName", "InsuranceTypeId", ddlInsType);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetFuelType()
     {
-        var ds = _basevehdet.GetFuelType();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FuelTypeName", "FuelTypeId", ddlFuelType);
+        try
+        {
+            var ds = _basevehdet.GetFuelType();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FuelTypeName", "FuelTypeId", ddlFuelType);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetDistrict()
     {
-        var ds = _tempvehdet.GetDistrict();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        try
+        {
+            var ds = _tempvehdet.GetDistrict();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetVehicleModel()
     {
-        var ds = _basevehdet.GetVehicleModel();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleModelName", "VehicleModelId", ddlVehicleModel);
+        try
+        {
+            var ds = _basevehdet.GetVehicleModel();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleModelName", "VehicleModelId", ddlVehicleModel);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetManufacturerName()
     {
-        var ds = _basevehdet.GetManufacturerName();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
+        try
+        {
+            var ds = _basevehdet.GetManufacturerName();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "FleetManufacturer_Name", "FleetManufacturer_Id", ddlManufacturerName);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     public void GetBatteryModelCapacity()
@@ -125,8 +194,15 @@ public partial class TemporaryVehicleDetails : Page
         var ds = _tempvehdet.GetBatteryModelCapacity();
         if (ds != null)
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacityBattery1);
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacityBattery2);
+            try
+            {
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacityBattery1);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacityBattery2);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
         }
     }
 

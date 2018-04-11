@@ -20,6 +20,7 @@ public partial class VehicleAccidentDetails : Page
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];
+            if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             btnSave.Attributes.Add("onclick", "return validation(this,'" + btnSave.ID + "')");
@@ -34,9 +35,16 @@ public partial class VehicleAccidentDetails : Page
 
     public void GetVehicleNumber()
     {
-        if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsg.GetVehicleNumberAccident();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlistVehicleNumber);
+        try
+        {
+            if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsg.GetVehicleNumberAccident();
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlistVehicleNumber);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void FillHour()
@@ -115,7 +123,7 @@ public partial class VehicleAccidentDetails : Page
         }
         catch (Exception ex)
         {
-            ErrorHandler.ErrorsEntry(ex.GetBaseException().ToString(), "class: AttachDocuments;Method: btnAttachFiles_Click()-InsertFillAttachmentToVehicle", 0);
+            _helper.ErrorsEntry(ex);
         }
     }
 

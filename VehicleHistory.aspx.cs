@@ -24,9 +24,17 @@ public partial class VehicleHistory : Page
 
     protected void FillVehicleNumber()
     {
-        if (Session["UserdistrictId"] != null) _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        var ds = _fmsGeneral.GetVehicleNumber();
-        _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleList);
+        try
+        {
+            if (Session["UserdistrictId"] != null) _fmsGeneral.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            var ds = _fmsGeneral.GetVehicleNumber();
+            if (ds == null) throw new ArgumentNullException(nameof(ds));
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleList);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
 
     protected void ddlVehicleList_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,6 +64,7 @@ public partial class VehicleHistory : Page
         _roadtax.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         _roadtax.VehicleID = int.Parse(ddlVehicleList.SelectedItem.Value);
         var ds = _roadtax.GetRoadTaxByVehicleID();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvRoadTax.DataSource = ds;
         gvRoadTax.DataBind();
     }
@@ -65,6 +74,7 @@ public partial class VehicleHistory : Page
         _vehicleInsurance.VehicleID = int.Parse(ddlVehicleList.SelectedItem.Value);
         _vehicleInsurance.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _vehicleInsurance.GetVehicleInsurancebyVehicleID();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvVehicleInsurance.DataSource = ds;
         gvVehicleInsurance.DataBind();
     }
@@ -74,6 +84,7 @@ public partial class VehicleHistory : Page
         _vehiclePuc.VehicleID = int.Parse(ddlVehicleList.SelectedItem.Value);
         _vehiclePuc.UserDistId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _vehiclePuc.GetPollutionUnderControlbyVehicle();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvPollutionUnderControl.DataSource = ds;
         gvPollutionUnderControl.DataBind();
     }
@@ -83,6 +94,7 @@ public partial class VehicleHistory : Page
         _vehicleFitnessRenewal.VehicleID = int.Parse(ddlVehicleList.SelectedItem.Value);
         _vehicleFitnessRenewal.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _vehicleFitnessRenewal.GetFitnessRenewalbyVehicleID();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvFitnessRenewal.DataSource = ds;
         gvFitnessRenewal.DataBind();
     }
@@ -91,6 +103,7 @@ public partial class VehicleHistory : Page
     {
         _distvehmapp.VehicleId = int.Parse(ddlVehicleList.SelectedItem.Value);
         var ds = _distvehmapp.GetSelectedDistrictByVehicleList();
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         foreach (DataRow dr in ds.Tables[0].Rows) lblDistrict.Text = dr["ds_lname"].ToString();
     }
 
@@ -104,6 +117,7 @@ public partial class VehicleHistory : Page
     protected void FillPetrolCard()
     {
         var ds = ObjFuelEntry.IFillCardNumber(int.Parse(ddlVehicleList.SelectedItem.Value));
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         grdPetroCard.DataSource = ds;
         grdPetroCard.DataBind();
     }

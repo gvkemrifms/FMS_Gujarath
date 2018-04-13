@@ -8,7 +8,7 @@
 <script src="js/Validation.js"></script>
 <script type="text/javascript">
     function validationAgencyDetails() {
-        if (document.getElementById("<%= txtAgencyName.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtAgencyName.ClientID %>").value === "") {
             alert("Please Enter Agency Name");
             document.getElementById("<%= txtAgencyName.ClientID %>").focus();
             return false;
@@ -23,12 +23,12 @@
             document.getElementById("<%= ddlDistrict.ClientID %>").focus();
             return false;
         }
-        if (document.getElementById("<%= txtAddress.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
             alert("Please Enter Address");
             document.getElementById("<%= txtAddress.ClientID %>").focus();
             return false;
         }
-        if (document.getElementById("<%= txtContactNo.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
             alert("Please Enter Contact Number");
             document.getElementById("<%= txtContactNo.ClientID %>").focus();
             return false;
@@ -47,7 +47,7 @@
         }
 
 
-        if (document.getElementById("<%= txtPanNo.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
             alert("Please Enter PAN");
             document.getElementById("<%= txtPanNo.ClientID %>").focus();
             return false;
@@ -60,7 +60,7 @@
         }
 
 
-        if (document.getElementById("<%= txtTin.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
             alert("Please Enter TIN");
             document.getElementById("<%= txtTin.ClientID %>").focus();
             return false;

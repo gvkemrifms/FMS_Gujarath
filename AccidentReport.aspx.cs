@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class AccidentReport : Page
@@ -9,6 +10,7 @@ public partial class AccidentReport : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
@@ -18,7 +20,7 @@ public partial class AccidentReport : Page
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -66,7 +68,7 @@ public partial class AccidentReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_FuelReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@districtID", "@VehicleID", "@From", "@To", null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_FuelReport", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@End", null, Grddetails);
         }
         catch (Exception ex)
         {

@@ -12,7 +12,7 @@ public partial class AgencyDetails : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             grvAgencyDetails.Columns[0].Visible = false;
@@ -127,6 +127,7 @@ public partial class AgencyDetails : Page
 
     protected void btnSaveAgencyDetails_Click(object sender, EventArgs e)
     {
+        try
         {
             switch (btnSaveAgencyDetails.Text)
             {
@@ -151,10 +152,14 @@ public partial class AgencyDetails : Page
                     break;
                 }
             }
-
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
             FillGridAgencyDetails();
         }
-    }
+    
 
     private void UpdateAgencyDetails(int agencyId, string agencyName, int stateId, int districtId, int mandalId, int cityId, long contactNum, string panNum, long tin, string address)
     {

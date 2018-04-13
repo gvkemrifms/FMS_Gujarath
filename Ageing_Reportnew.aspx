@@ -2,12 +2,33 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="Scripts/jquery-1.4.4.js"></script>
+    <script src="Scripts/jquery.validate.js"></script>
+    <script type ="text/javascript">
+        $(function() {
+            $('#<%=btnSubmit.ClientID%>').click(function(){
+                var ddlDistrict = $('#<%=ddldistrict.ClientID%> option:selected').text().toLowerCase();
+                if (ddlDistrict === '--select--') {
+                    $('#lblDisplayError').text("Please select District").css("color","red");
+                }
+            });
+
+        });
+      
+    </script>  
     <table>
         <tr>
             <td>
                 <asp:Label ID="lblcardtypereport" style="font-size: 20px; color: brown" runat="server" Text="Ageing&nbsp;DetailsReport"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label id="lblDisplayError">*</label>
+
             </td>
         </tr>
     </table>
@@ -21,18 +42,17 @@
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 100px"></asp:DropDownList>
             </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button runat="server" ID="btnSubmit" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                </td>
+                <td>
+                    <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
 
-            <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
-            </td>
+                </td>
 
-
-            <td>
-                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
-
-            </td>
-
-        </tr>
+            </tr>
     </table>
 
     <div>

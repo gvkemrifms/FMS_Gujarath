@@ -5,6 +5,42 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="Scripts/jquery-1.4.4.min.js"></script>
+    <script src="Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#<%= btnShowReport.ClientID %>').click(function () {
+                var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+                if (ddlDistrict === '--select--') {
+                    alert("Please select District");
+                    e.preventDefault("Please select District");
+                }
+                var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+                if (ddlVehicle === '--select--') {
+                    alert("Please select Vehicle");
+                    e.preventDefault();
+                }
+                var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
+                var txtToDate = $('#<%= txttodate.ClientID %>').val();
+                if (txtFirstDate === "") {
+                    alert('From Date is Mandatory');
+                    txtFirstDate.focus();
+                    e.preventDefault();
+                }
+                if (txtToDate === "") {
+                    alert("End Date is Mandatory");
+                    txtToDate.focus();
+                    e.preventDefault();
+                }
+                var fromDate = (txtFirstDate).replace(/\D/g, '/');
+                var toDate = (txtToDate).replace(/\D/g, '/');
+                var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+                if (ordToDate < ordFromDate) {
+                    alert("Please select valid date range");
+                }
+            });
+        })
+    </script>
     <table>
         <tr>
             <td>
@@ -60,7 +96,7 @@
 
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" id="btnShowReport" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
             </td>
 
             <td>
@@ -75,6 +111,6 @@
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
         </asp:Panel>
-    </div>
+    </div>   
 </asp:Content>
 

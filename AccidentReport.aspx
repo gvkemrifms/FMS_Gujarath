@@ -4,7 +4,40 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="Scripts/jquery-1.4.4.js"></script>
     <script src="Scripts/jquery.validate.js"></script>
-
+ <script type="text/javascript">
+     $(function () {
+         $('#<%= btnShowReport.ClientID %>').click(function () {
+             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+             if (ddlDistrict === '--select--') {
+                 alert("Please select District");
+                 e.preventDefault("Please select District");
+             }
+             var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+             if (ddlVehicle === '--select--') {
+                 alert("Please select Vehicle");
+                 e.preventDefault();
+             }
+             var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
+             var txtToDate = $('#<%= txttodate.ClientID %>').val();
+             if (txtFirstDate === "") {
+                 alert('From Date is Mandatory');
+                 txtFirstDate.focus();
+                 e.preventDefault();
+             }
+             if (txtToDate === "") {
+                 alert("End Date is Mandatory");
+                 txtToDate.focus();
+                 e.preventDefault();
+             }
+             var fromDate = (txtFirstDate).replace(/\D/g, '/');
+             var toDate = (txtToDate).replace(/\D/g, '/');
+             var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+             if (ordToDate < ordFromDate) {
+                 alert("Please select valid date range");
+             }
+         });
+     })
+ </script>
     <br/>
     <label id="displayValidationError" runat="server" style="color: red; display: block" clientidmode="Static">*</label>
     <table>
@@ -72,35 +105,7 @@
         <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
     </asp:Panel>
     </>
-    <script type="text/javascript">
-        $(function() {
-            $('#<%= btnShowReport.ClientID %>').click(function() {
-                var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-                if (ddlDistrict === '--select--') {
-                    alert("Please select District");
-                    e.preventDefault("Please select District");
-                }
-                var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
-                if (ddlVehicle === '--select--') {
-                    alert("Please select Vehicle");
-                    e.preventDefault();
-                }
-                var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
-                var txtToDate = $('#<%= txttodate.ClientID %>').val();
-                if (txtFirstDate === "") {
-                    alert('From Date is Mandatory');
-                    txtFirstDate.focus();
-                    e.preventDefault();
-                }
-                if (txtToDate === "") {
-                    alert("End Date is Mandatory");
-                    txtToDate.focus();
-                    e.preventDefault();
-                }
 
-            });
-        })
-    </script>
 </asp:Content>
 
 

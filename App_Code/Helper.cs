@@ -93,14 +93,14 @@ public class Helper
         var cmd = new SqlCommand {Connection = conn, CommandType = CommandType.StoredProcedure, CommandText = commandText};
         if (dropDownValue != null && gridView == null && dropDownValue2 == null)
         {
-            cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
+            cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedValue);
             CommonMethod(textFieldValue, valueField, dropDownValue, ds, cmd);
             dropDownValue.Items.Insert(0, new ListItem("--Select--", "0"));
         }
         else if (dropDownValue != null && dropDownValue2 != null && dropDownValue3 != null)
         {
-            cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
-            cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
+            cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedValue);
+            cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedValue);
             CommonMethod(textFieldValue, valueField, dropDownValue3, ds, cmd);
         }
         else if (dropDownValue != null && dropDownValue2 != null && gridView == null)
@@ -209,15 +209,26 @@ public class Helper
         }
         else
         {
-            if (dropdownId1 == null || dropdownId != null || combo != null) return;
-            dropdownId1.Items.Clear();
-            dropdownId1.DataSource = dataSet.Tables[0];
-            dropdownId1.DataTextField = textFieldValue;
-            dropdownId1.DataValueField = valueField;
-            dropdownId1.DataBind();
-            dropdownId1.Items.Insert(0, new ListItem("--Select--", "0"));
-            dropdownId1.Items[0].Value = "0";
-            dropdownId1.SelectedIndex = 0;
+            if (dropdownId1 != null && dropdownId != null && combo == null)
+            {
+                dropdownId1.Items.Clear();
+                dropdownId1.DataSource = dataSet.Tables[0];
+                dropdownId1.DataTextField = textFieldValue;
+                dropdownId1.DataValueField = valueField;
+                dropdownId1.DataBind();
+                dropdownId1.Items.Insert(0, new ListItem("--Select--", "0"));
+                dropdownId1.Items[0].Value = "0";
+                dropdownId1.SelectedIndex = 0;
+
+                dropdownId.Items.Clear();
+                dropdownId.DataSource = dataSet.Tables[0];
+                dropdownId.DataTextField = textFieldValue;
+                dropdownId.DataValueField = valueField;
+                dropdownId.DataBind();
+                dropdownId.Items.Insert(0, new ListItem("--Select--", "0"));
+                dropdownId.Items[0].Value = "0";
+                dropdownId.SelectedIndex = 0;
+            }
         }
     }
 

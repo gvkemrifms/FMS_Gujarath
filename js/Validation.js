@@ -35,9 +35,22 @@ function OnlyAlphaNumeric(e) {
     return (keycode >= 47 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122);
 }
 
-function isNumberKey(evt) {
-    var charCode = (evt.which) ? evt.which : event.keyCode;
-    return charCode <= 31 || (charCode >= 48 && charCode <= 57);
+
+function numericOnly(elementRef) {
+
+    var keyCodeEntered = (event.which) ? event.which : (window.event.keyCode) ? window.event.keyCode : -1;
+    if ((keyCodeEntered >= 48) && (keyCodeEntered <= 57)) {
+        return true;
+    }
+    // '.' decimal point...  
+    else if (keyCodeEntered === 46) {
+        // Allow only 1 decimal point ('.')...  
+        if ((elementRef.value) && (elementRef.value.indexOf('.') >= 0))
+            return false;
+        else
+            return true;
+    }
+    return false;
 }
 
 function isValidPAN(pan) {
@@ -49,6 +62,14 @@ function isValidPAN(pan) {
     }
 }
 
+function validateDecimal(value) {
+    var re = "^\d*\.?\d{0,2}$";
+    if(re.test(value)){
+        return true;
+    }else{
+        return false;
+    }
+}
 function OnlyNumPeriod(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     if (evt.shiftKey === 1 ||
@@ -173,7 +194,7 @@ function alphanumeric_only_withspace(e) {
 function DecimalValidate(control) {
     var rgexp = new RegExp("^\d*([.]\d{2})?$");
     var input = document.getElementById(control).value;
-    return !!input.match(rgexp);
+    return input.match(rgexp);
 }
 
 function alpha_only(e) {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AjaxControlToolkit;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.DLL;
 
@@ -14,7 +15,7 @@ public partial class AttachDocuments : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (IsPostBack) return;
         if (Session["UserdistrictId"] != null) _vehicleInsurance.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         GetVehicleNumber();

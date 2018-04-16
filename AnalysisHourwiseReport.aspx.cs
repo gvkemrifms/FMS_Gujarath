@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class AnalysisHourwiseReport : Page
@@ -9,6 +10,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
@@ -18,7 +20,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"]; ;
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -34,7 +36,7 @@ public partial class AnalysisHourwiseReport : Page
             ddlvehicle.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle, null, null, null, "@districtID");
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
             catch (Exception ex)
             {

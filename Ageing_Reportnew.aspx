@@ -12,7 +12,9 @@
             $('#<%=btnSubmit.ClientID%>').click(function(){
                 var ddlDistrict = $('#<%=ddldistrict.ClientID%> option:selected').text().toLowerCase();
                 if (ddlDistrict === '--select--') {
-                    $('#lblDisplayError').text("Please select District").css("color","red");
+                    //$('#lblDisplayError').text("Please select District").css("color","red");
+                    alert("Please select District");
+                    e.preventDefault();
                 }
             });
 

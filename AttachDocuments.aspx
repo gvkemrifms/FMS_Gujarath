@@ -1,51 +1,42 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AttachDocuments.aspx.cs" Inherits="AttachDocuments" Language="C#" MasterPageFile="~/temp.master" %>
 
 <%@ Import Namespace="System.ComponentModel" %>
-
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="Scripts/jquery-1.4.4.min.js"></script>
+    <script src="Scripts/jquery.validate.min.js"></script>
     <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
+        $(function() {
+            $('#<%= btnAttachFiles.ClientID %>').click(function() {
+                var remarks = $('#<%= txtRemarks.ClientID %>').val();
+                var fileAttachments = $('#<%= fileAttachmentPurpose.ClientID %>').val();
+                var ddlVehicle = $('#<%= ddlistVehicleNumber.ClientID %> option:selected').text().toLowerCase();
+                var attachmentPurpose =
+                    $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text().toLowerCase();
+                if (ddlVehicle === '--select--') {
+                    alert("Please select Vehicle");
+                    e.preventDefault();
+                }
 
-        function enableButton() {
-            document.getElementById('<%= btnAttachFiles.ClientID %>').disabled = false;
-        }
+                if (attachmentPurpose === 'select') {
+                    alert("Please select Attachment Purpose");
+                    e.preventDefault();
+                }
+                if (fileAttachments === "") {
+                    alert("File Attachment is Mandatory");
+                    e.preventDefault();
+                }
 
-        function validation(obj, id) {
-            id = obj.id.replace(id, "ddlistVehicleNumber");
-            var ddlistAttachmentPurpose = obj.id.replace(id, "ddlistAttachmentPurpose");
-            var txtRemarks = obj.id.replace(id, "txtRemarks");
-            var attachmentPurpose = document.getElementById(ddlistAttachmentPurpose);
-            var remarks = document.getElementById(txtRemarks);
-            var fileAttachment = document.getElementById('<%= fileAttachmentPurpose.ClientID %>');
-            if (id.selectedIndex === 0) {
-                alert("Please select the attachment Purpose");
-                id.focus();
-                return false;
-            }
+                if (remarks === "") {
+                    alert('Remarks is Mandatory');
+                    remarks.focus();
+                    e.preventDefault();
+                }
 
-            if (attachmentPurpose.selectedIndex === 0) {
-                alert("Please select the attachment Purpose");
-                attachmentPurpose.focus();
-                return false;
-            }
-
-            if (trim(remarks.value) === '') {
-                alert("Remarks Cannot be Blank");
-                remarks.focus();
-                return false;
-            }
-
-            if (fileAttachment.value === '') {
-                alert("Upload a File");
-                fileAttachment.focus();
-                return false;
-            }
-
-            return true;
-        }
+            });
+        });
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -106,11 +97,11 @@
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:AsyncFileUpload ID="fileAttachmentPurpose" runat="server" CompleteBackColor="White"
-                                             UploaderStyle="Modern" OnClientUploadComplete="enableButton"/>
-                        <asp:Button ID="btnUpload" runat="server" Text="Upload" Visible="False"
-                                    OnClick="btnUpload_Click"/>
-                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="False"/>
+                        <asp:FileUpload ID="fileAttachmentPurpose" runat="server" ForeColor="red"/>
+                        <asp:Button ID="btnAttachFiles" runat="server" Text="Attach Files" Enabled="true"
+                                    OnClick="btnAttachFiles_Click"/>
+                        <asp:Button ID="btnUpload" runat="server" Text="Upload" Visible="False" OnClick="btnUpload_Click"/>
+                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="True"/>
                     </td>
                 </tr>
                 <tr>
@@ -118,10 +109,9 @@
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
-                        <asp:Button ID="btnAttachFiles" runat="server" Text="Attach Files" Enabled="false"
-                                    OnClick="btnAttachFiles_Click"/>
+
                         <asp:Button ID="btnHideViewAttachFiles" runat="server" Text="Hide/View Attached Files"
-                                    Visible="false"/>
+                                    Visible="False"/>
                     </td>
                 </tr>
                 <tr>

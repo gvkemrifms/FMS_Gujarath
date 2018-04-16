@@ -58,7 +58,7 @@ public partial class BaseVehicleDetails : Page
                         break;
                     case "getBatteryModelCapacity":
                         ds = _basevehdet.GetBatteryModelCapacity();
-                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlBatteryMake);
+                        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacity);
                         break;
                     case "getDistrict":
                         ds = _basevehdet.GetDistricts_new();

@@ -3,7 +3,9 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/Validation.js"></script>
+
 <asp:UpdatePanel ID="updPanel1" runat="server">
 <ContentTemplate>
 <fieldset style="padding: 10px">
@@ -93,7 +95,7 @@
         Odometer(km)<span style="color: Red">*</span>
     </td>
     <td align="left" style="width: 100px; height: 19px">
-        <asp:TextBox ID="txtOdometer" runat="server" MaxLength="6"></asp:TextBox>
+        <asp:TextBox ID="txtOdometer" runat="server" MaxLength="6" ></asp:TextBox>
     </td>
     <td align="left" style="width: 112px; height: 19px">
         Bunk Name<span style="color: Red">*</span>
@@ -396,9 +398,7 @@
     </table>
 </fieldset>
 <asp:HiddenField ID="maxOdo" runat="server"/>
-
-<script type="text/javascript" language="javascript">
-    document.getElementById('<%= ddlVehicleNumber.ClientID %>').focus();
+<script type="text/javascript">
 
     function sum() {
         var text1 = parseFloat(document.getElementById("<%= txtQuantity.ClientID %>").value);
@@ -406,21 +406,14 @@
         var text3 = text1 * text2;
         document.getElementById("<%= txtAmount.ClientID %>").value = text3.toFixed(2);
     }
-
-
     function validationFuelEntry() {
-        var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-            case 'text':
-                if (inputs[i].value === "" || inputs[i].value == null || inputs[i].value === "--Select--") {
-                }
-                break;
-            }
-        }
+        var vehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
 
+        if (vehicleNumber.selectedIndex === -1) {
+            alert("Please select the Vehicle");
+            vehicleNumber.focus();
+            return false;
+        }      
         var fuelEntryDate = document.getElementById('<%= txtFuelEntryDate.ClientID %>');
 
         if (!RequiredValidation(fuelEntryDate, "FuelEntryDate Cannot be Blank"))
@@ -441,14 +434,14 @@
             return false;
         }
 
-        if (document.getElementById("<%= txtBillNumber.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtBillNumber.ClientID %>").value === '') {
             alert("Please Enter BillNumber value");
             document.getElementById("<%= txtBillNumber.ClientID %>").focus();
             return false;
         }
 
 
-        if (document.getElementById("<%= txtOdometer.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtOdometer.ClientID %>").value === '') {
             alert("Please Enter Odometer value");
             document.getElementById("<%= txtOdometer.ClientID %>").focus();
             return false;
@@ -461,7 +454,7 @@
             paymode.focus();
             return false;
         }
-
+       
         if (paymode.options[paymode.selectedIndex].text === "Card") {
             var agency = document.getElementById('<%= ddlAgency.ClientID %>');
 
@@ -471,7 +464,7 @@
                 return false;
             }
 
-            var petroCardNumber = document.getElementById('<%= ddlPetroCardNumber.ClientID %>')
+            var petroCardNumber = document.getElementById('<%= ddlPetroCardNumber.ClientID %>');
 
             if (petroCardNumber.selectedIndex === 0) {
                 alert("Please select the PetroCardNumber");
@@ -479,34 +472,34 @@
                 return false;
             }
         }
-        if (document.getElementById("<%= txtQuantity.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtQuantity.ClientID %>").value === '') {
             alert("Please Enter quantity value");
             document.getElementById("<%= txtQuantity.ClientID %>").focus();
             return false;
         }
 
-        if (document.getElementById("<%= txtUnitPrice.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtUnitPrice.ClientID %>").value === '') {
             alert("Please Enter UnitPrice value");
             document.getElementById("<%= txtUnitPrice.ClientID %>").focus();
             return false;
         }
 
 
-        if (document.getElementById("<%= txtLocation.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtLocation.ClientID %>").value === '') {
             alert("Please Enter Location value");
             document.getElementById("<%= txtLocation.ClientID %>").focus();
             return false;
         }
 
 
-        if (document.getElementById("<%= txtPilotID.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtPilotID.ClientID %>").value === '') {
             alert("Please Enter Pilot ID");
             document.getElementById("<%= txtPilotID.ClientID %>").focus();
             return false;
         }
 
 
-        if (document.getElementById("<%= txtPilotName.ClientID %>").value === 0) {
+        if (document.getElementById("<%= txtPilotName.ClientID %>").value === '') {
             alert("Please Enter Pilot Name");
             document.getElementById("<%= txtPilotName.ClientID %>").focus();
             return false;

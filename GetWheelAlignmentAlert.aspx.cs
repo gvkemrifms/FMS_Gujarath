@@ -16,6 +16,7 @@ public partial class GetWheelAlignmentAlert : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             lblheader.Text = "Wheel Alignment Alert";
             FillGrid();
         }

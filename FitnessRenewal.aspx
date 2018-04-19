@@ -186,7 +186,7 @@
                         Fitness Fee<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtFitnessFee" runat="server" class="text1" onkeypress="return isDecimalNumberKey(event);"
+                        <asp:TextBox ID="txtFitnessFee" runat="server" class="text1" onkeypress="return numericOnly(this);"
                                      Width="145px" MaxLength="9">
                         </asp:TextBox>
                     </td>

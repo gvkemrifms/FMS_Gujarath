@@ -142,7 +142,6 @@
                                                   GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" Width="95%"
                                                   OnRowDataBound="grvBatteryIssueDetailsPopup_RowDataBound">
                                         <Columns>
-                                            <%--<asp:BoundField HeaderText="ReqID" DataField="FleetInventoryReqID" />--%>
                                             <asp:BoundField HeaderText="Battery Position ID" DataField="BatteryPositionID"/>
                                             <asp:BoundField HeaderText="Old Battery Number" DataField="BatteryNumber"/>
                                             <asp:TemplateField HeaderText="New Battery Number">

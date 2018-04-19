@@ -71,6 +71,7 @@ public partial class BatteryIssue : Page
     }
 
     private void FillGrid_BatteryForIssue(int fleetInventoryItemId, int vehicleId)
+
     {
         var ds = ObjFmsInvBatIss.GetBatteryPendingForIssue(fleetInventoryItemId, vehicleId);
         if (ds == null) throw new ArgumentNullException(nameof(ds));

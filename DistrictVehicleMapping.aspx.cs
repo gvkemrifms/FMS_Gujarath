@@ -199,7 +199,7 @@ public partial class DistrictVehicleMapping : Page
                 _vehallobj.ContactNumber = txtContactNumber.Text;
                 _vehallobj.VehType = ddlVehType.SelectedItem.Value;
                 var clsGen = new ClsGeneral();
-                var dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
+                DataTable dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
                 var insres = _vehallobj.InsNewVehAllocation_new();
                 switch (insres)
                 {

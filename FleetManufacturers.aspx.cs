@@ -27,9 +27,6 @@ public partial class FleetManufacturers : Page
             txtManufacturerModel.Attributes.Add("onkeypress", "javascript:return OnlyAlphaNumeric(this,event)");
             txtManufacturerAddress.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
             txtManufacturerContactPerson.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            txtManufacturerContactNumber.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-            txtManufacturerTin.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-            txtManufacturerErn.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
         }
 
         //Permissions

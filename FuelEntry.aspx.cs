@@ -42,15 +42,13 @@ public partial class FuelEntry : Page
             FillVehicles();
             FillPayMode();
             //FillGridFuelEntry();
-            txtAmount.Attributes.Add("onkeypress", "javascript:return isNumberKey(event)");
-            txtBillNumber.Attributes.Add("onkeypress", "javascript:return isNumberKey(event)");
+            txtAmount.Attributes.Add("onkeypress", "javascript:return numericOnly(event)");
+            txtBillNumber.Attributes.Add("onkeypress", "javascript:return numeric_only(event)");
             txtLocation.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            txtOdometer.Attributes.Add("onkeypress", "javascript:return isNumberKey(event)");
+            txtOdometer.Attributes.Add("onkeypress", "javascript:return numeric_only(event)");
             txtLocation.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            txtPilotID.Attributes.Add("onkeypress", "javascript:return isNumberKey(event)");
+            txtPilotID.Attributes.Add("onkeypress", "javascript:return numeric_only(event)");
             txtPilotName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            var dsPerms = (DataSet) Session["PermissionsDS"];
-            dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
         }
     }
 

@@ -97,7 +97,7 @@ public class Helper
             CommonMethod(textFieldValue, valueField, dropDownValue, ds, cmd);
             dropDownValue.Items.Insert(0, new ListItem("--Select--", "0"));
         }
-        else if (dropDownValue != null && dropDownValue2 != null && dropDownValue3 != null)
+        else if (dropDownValue != null && dropDownValue2 != null && dropDownValue3 != null && gridView==null )
         {
             cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedValue);
             cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedValue);
@@ -111,11 +111,11 @@ public class Helper
         }
         else if (gridView != null)
         {
-            if (dropDownValue != null) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
-            if (dropDownValue2 != null) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
-            if (dropDownValue3 != null) cmd.Parameters.AddWithValue(parameterValue3, dropDownValue3.SelectedItem.Value);
-            if (dropDownValue4 != null) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
-            if (dropDownValue5 != null) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
+            if (dropDownValue != null && dropDownValue.SelectedIndex>=0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
+            if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
+            if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue3.SelectedItem.Value);
+            if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
+            if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
             if (txtBox != null) cmd.Parameters.AddWithValue(parameterValue3, txtBox.Text + " 00:00:00");
             if (txtBox1 != null) cmd.Parameters.AddWithValue(parameterValue4, txtBox1.Text + " 23:59:59");
             var da = new SqlDataAdapter(cmd);
@@ -171,6 +171,7 @@ public class Helper
             var da = new SqlDataAdapter(cmd);
             var ds = new DataSet();
             da.Fill(ds);
+            dropdownId.Items.Clear();
             dropdownId.DataSource = ds.Tables[0];
             dropdownId.DataTextField = textFieldValue;
             dropdownId.DataValueField = valueField;

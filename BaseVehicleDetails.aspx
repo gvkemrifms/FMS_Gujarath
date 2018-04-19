@@ -6,16 +6,6 @@
     <script src="js/Validation.js"></script>
     <script src="js/jquery-1.10.2.min.js"></script>
  <script language="javascript" type="text/javascript">
-
-     $(function () {
-         $('#<%=txtBasicPrice.ClientID %>').on('input', function () {
-             this.value = this.value
-                 .replace(/[^\d.]/g, '')             // numbers and decimals only
-                 .replace(/(^[\d]{2})[\d]/g, '$1')   // not more than 2 digits at the beginning
-                 .replace(/(\..*)\./g, '$1')         // decimal can't exist more than once
-                 .replace(/(\.[\d]{4})./g, '$1');    // not more than 4 digits after decimal
-         });
-     });
      var publicData;
      var vehcostdata;
      var inVoiceDate;
@@ -975,12 +965,6 @@
                             <td>
                                 &nbsp;
                             </td>
-                            <%--</tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>--%>
                             <td style="width: 164px">
                                 &nbsp;
                             </td>
@@ -1014,7 +998,7 @@
                                 Basic Price<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtBasicPrice" runat="server" Width="100px" ondrop = "return false;"  
+                                <asp:TextBox ID="txtBasicPrice" runat="server" name="floats" Width="100px" ondrop = "return false;"  
                                              onpaste = "return false;" onkeypress="return numericOnly(this);"
                                     MaxLength="11" onchange="return vehicleCostAddition(this)" TabIndex="5"></asp:TextBox>
                             </td>s
@@ -1029,7 +1013,7 @@
                                 Handling Charges<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtHandlingCharges" runat="server" Width="100px" onkeypress="return OnlyNumbers(event);"
+                                <asp:TextBox ID="txtHandlingCharges" runat="server" name="floats" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="6"></asp:TextBox>
                             </td>
                             <td>
@@ -1048,8 +1032,8 @@
                                 Excise Duty<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtExciseDuty" runat="server" Width="100px" onkeypress="return OnlyNumbers(event);"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="7"></asp:TextBox>
+                                <asp:TextBox ID="txtExciseDuty" runat="server" name="floats" Width="100px"
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" onkeypress="return numericOnly(this);" TabIndex="7"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1062,8 +1046,8 @@
                                 EC<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtEC" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="8"></asp:TextBox>
+                                <asp:TextBox ID="txtEC" runat="server" Width="100px" 
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" onkeypress="return numericOnly(this);" TabIndex="8"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1081,7 +1065,7 @@
                                 VAT<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtVAT" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtVAT" runat="server" Width="100px"  onkeypress="return numericOnly(this);"
                                     MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="9"></asp:TextBox>
                             </td>
                             <td>
@@ -1095,7 +1079,7 @@
                                 Cess on UAV<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtUAV" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtUAV" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="10"></asp:TextBox>
                             </td>
                             <td>
@@ -1114,7 +1098,7 @@
                                 SHEC<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtSHEC" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtSHEC" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     AutoPostBack="True" MaxLength="8" 
                                     onchange="return vehicleCostAddition(this)" TabIndex="11"></asp:TextBox>
                             </td>
@@ -1174,7 +1158,7 @@
                                 KMPL<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtKmpl" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtKmpl" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="5" TabIndex="14"></asp:TextBox>
                             </td>
                             <td>
@@ -1280,7 +1264,7 @@
                                 Vehicle Cost<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtVehicleCost" runat="server" Width="100px" onkeypress="return false;"
+                                <asp:TextBox ID="txtVehicleCost" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="11" ReadOnly="True" TabIndex="21"></asp:TextBox>
                             </td>
                             <td>
@@ -1418,7 +1402,7 @@
                                 Insurance Fee<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtInsFee" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtInsFee" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="11" TabIndex="29"></asp:TextBox>
                             </td>
                             <td>
@@ -1452,8 +1436,8 @@
                                 Insurance Fees Paid Date
                             </td>
                             <td>
-                                <asp:TextBox ID="txtInsuranceFeesPaidDate" runat="server" Width="100px" onkeypress="return false"
-                                    oncut="return false;" onpaste="return false;" TabIndex="31"></asp:TextBox>
+                                <asp:TextBox ID="txtInsuranceFeesPaidDate" runat="server" Width="100px" 
+                                     TabIndex="31" onkeypress="return false"></asp:TextBox>
                                 <cc1:CalendarExtender ID="txtInsuranceFeesPaidDate_CalendarExtender" runat="server"
                                     Enabled="True" PopupButtonID="imgbtInsuranceFeesPaidDate" Format="MM/dd/yyyy"
                                     TargetControlID="txtInsuranceFeesPaidDate">
@@ -1696,7 +1680,7 @@
                                 Road Tax Fee<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtRoadTaxFee" runat="server" Width="100px" onkeypress="return isDecimalNumberKey(event);"
+                                <asp:TextBox ID="txtRoadTaxFee" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     MaxLength="9" TabIndex="46"></asp:TextBox>
                             </td>
                             <td>
@@ -1857,7 +1841,7 @@
                                 Odometer Reading<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtOdometerReading" runat="server" Width="100px" onkeypress="return numeric(event);"
+                                <asp:TextBox ID="txtOdometerReading" runat="server" Width="100px" onkeypress="return OnlyNumbers(event);"
                                     MaxLength="12" TabIndex="55"></asp:TextBox>
                             </td>
                             <td>

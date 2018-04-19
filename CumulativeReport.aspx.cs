@@ -7,10 +7,15 @@ public partial class CumulativeReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) btnShow_Click();
+        if (!IsPostBack)
+        {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+            ShowReport();
+        }
+            
     }
 
-    protected void btnShow_Click()
+    protected void ShowReport()
     {
         try
         {

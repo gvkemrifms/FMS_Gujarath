@@ -9,6 +9,7 @@ public partial class DetailedWithVendorReport : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             BindDistrictdropdown();
             Withoutdist();
         }

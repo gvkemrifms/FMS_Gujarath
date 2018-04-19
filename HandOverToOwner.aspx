@@ -212,7 +212,7 @@
                                     <td class="columnseparator">
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtOdoreading" runat="server" onkeypress="return isDecimalNumberKey(event);" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtOdoreading" runat="server" onkeypress="return numericOnly(event);" MaxLength="10"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>

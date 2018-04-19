@@ -9,6 +9,7 @@ public partial class DetailedWithVehicleModelReport : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             BindDistrictdropdown();
             Withoutdist();
         }
@@ -55,7 +56,7 @@ public partial class DetailedWithVehicleModelReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVehicleModel", null, null, null, null, null, null, "@DistrictID", null, null, null, null, Grdvehmodel);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailedWithVehicleModel", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdvehmodel);
         }
         catch (Exception ex)
         {

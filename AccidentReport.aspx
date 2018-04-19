@@ -5,12 +5,12 @@
     <script src="Scripts/jquery-1.4.4.js"></script>
     <script src="Scripts/jquery.validate.js"></script>
  <script type="text/javascript">
-     $(function () {
+   var func=  $(function () {
          $('#<%= btnShowReport.ClientID %>').click(function () {
              var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
              if (ddlDistrict === '--select--') {
                  alert("Please select District");
-                 e.preventDefault("Please select District");
+                 e.preventDefault();
              }
              var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
              if (ddlVehicle === '--select--') {
@@ -32,6 +32,11 @@
              var fromDate = (txtFirstDate).replace(/\D/g, '/');
              var toDate = (txtToDate).replace(/\D/g, '/');
              var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+             var currentDate = new Date();
+             if (ordFromDate > currentDate) {
+                 alert("From date should not be greater than today's date");
+                 e.preventDefault();
+             }
              if (ordToDate < ordFromDate) {
                  alert("Please select valid date range");
              }
@@ -89,7 +94,7 @@
 
         <tr>
             <td>
-                <asp:Button runat="server" id="btnShowReport" Text="ShowReport" OnClick="btnsubmit_Click" EnableViewState="True"></asp:Button>
+                <asp:Button runat="server" id="btnShowReport" Text="ShowReport" OnClick="btnsubmit_Click" ClientIDMode="static" EnableViewState="True"  OnClientClick="return func"></asp:Button>
             </td>
 
             <td>
@@ -104,8 +109,6 @@
     <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
         <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
     </asp:Panel>
-    </>
-
 </asp:Content>
 
 

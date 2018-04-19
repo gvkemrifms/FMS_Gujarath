@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class DetailedReport : Page
@@ -7,14 +8,19 @@ public partial class DetailedReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) BindDistrictdropdown();
+        if (!IsPostBack)
+        {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+            BindDistrictdropdown();
+        }
+           
     }
 
     private void BindDistrictdropdown()
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"]; ;
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -48,7 +54,7 @@ public partial class DetailedReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, null, null, "@DistrictID", "@From", "@To", null, null, Grddtreport);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, txtfrmDate, txttodate, "@DistrictID",null, "@From", "@To", null, Grddtreport);
         }
         catch (Exception ex)
         {

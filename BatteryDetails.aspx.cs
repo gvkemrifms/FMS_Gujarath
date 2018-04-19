@@ -70,22 +70,25 @@ public partial class BatteryDetails : Page
                     var mbmake = txtBatteryMake.Text;
                     var mbmodel = txtBatteryModel.Text;
                     var mbcapacity = txtBatteryCapacity.Text;
-                    var mbexpiry = Convert.ToDateTime(txtBatteryExpiryDate.Text);
-                    var mbstatus = 1;
-                    var mbinactdate = DateTime.Today;
-                    var mbcreationdate = DateTime.Today;
-                    var mbcreateby = Convert.ToString(Session["User_Id"]);
-                    var mbupdatedate = DateTime.Today;
-                    var mbupdateby = Convert.ToString(Session["User_Id"]);
-                    var mboutput = string.Empty;
-                    ds = ObjFmsBatDet.InsertBatteryDetails(mbatteryitemcode, mbmake, mbmodel, mbcapacity, mbexpiry, mbstatus, mbinactdate, mbcreationdate, mbcreateby, mbupdatedate, mbupdateby, ref mboutput);
-                    if (ds.Tables.Count == 0 && mboutput == "Success")
+                    if (txtBatteryExpiryDate != null)
                     {
-                        Show("Battery Details added successfully");
-                        FleetBatteryDetailsReset();
+                        var mbexpiry = Convert.ToDateTime(txtBatteryExpiryDate.Text);
+                        var mbstatus = 1;
+                        var mbinactdate = DateTime.Today;
+                        var mbcreationdate = DateTime.Today;
+                        var mbcreateby = Convert.ToString(Session["User_Id"]);
+                        var mbupdatedate = DateTime.Today;
+                        var mbupdateby = Convert.ToString(Session["User_Id"]);
+                        var mboutput = string.Empty;
+                        ds = ObjFmsBatDet.InsertBatteryDetails(mbatteryitemcode, mbmake, mbmodel, mbcapacity, mbexpiry, mbstatus, mbinactdate, mbcreationdate, mbcreateby, mbupdatedate, mbupdateby, ref mboutput);
+                        if (ds.Tables.Count == 0 && mboutput == "Success")
+                        {
+                            Show("Battery Details added successfully");
+                            FleetBatteryDetailsReset();
+                        }
+                        else
+                            Show("This Battery details already exists");
                     }
-                    else
-                        Show("This Battery details already exists");
                 }
 
                 break;

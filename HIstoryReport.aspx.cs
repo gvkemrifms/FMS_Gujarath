@@ -9,8 +9,11 @@ public partial class HistoryReport : Page
     {
         if (!IsPostBack)
         {
-            ddlvehicle.Enabled = false;
-            BindDistrictdropdown();
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+            {
+                ddlvehicle.Enabled = false;
+                BindDistrictdropdown();
+            }
         }
     }
 
@@ -54,7 +57,7 @@ public partial class HistoryReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID", "@Month", "@Year", null, Grddetails, ddlmonth, ddlyear);
+            _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID",null, "@Year", "@Month", Grddetails, ddlmonth, ddlyear);
         }
         catch (Exception ex)
         {

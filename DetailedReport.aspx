@@ -3,8 +3,43 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script type="text/javascript">
+        $(function () {
+            $('#<%= btnShowReport.ClientID %>').click(function () {
+                var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+                if (ddlDistrict === '--select--') {
+                    alert("Please select District");
+                    e.preventDefault();
+                }               
+                var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
+                var txtToDate = $('#<%= txttodate.ClientID %>').val();
+                if (txtFirstDate === "") {
+                    alert('From Date is Mandatory');
+                    txtFirstDate.focus();
+                    e.preventDefault();
+                }
+                if (txtToDate === "") {
+                    alert("End Date is Mandatory");
+                    txtToDate.focus();
+                    e.preventDefault();
+                }
+                var fromDate = (txtFirstDate).replace(/\D/g, '/');
+                var toDate = (txtToDate).replace(/\D/g, '/');
+                var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+                var currentDate = new Date();
+                if (ordFromDate > currentDate) {
+                    alert("From date should not be greater than today's date");
+                    e.preventDefault();
+                }
+                if (ordToDate < ordFromDate) {
+                    alert("Please select valid date range");
+                }
+            });
+        })
+    </script>
     <table>
         <tr>
             <td>
@@ -52,7 +87,7 @@
 
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnSubmit" OnClick="btnSubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnSubmit_Click"></asp:Button>
             </td>
 
             <td>

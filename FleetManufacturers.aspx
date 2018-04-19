@@ -7,7 +7,7 @@
 
     function validationFleetManufacturers() {
         switch (document.getElementById("<%= txtManufacturerName.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Name");
             document.getElementById("<%= txtManufacturerName.ClientID %>").focus();
             return false;
@@ -20,7 +20,7 @@
             return false;
         }
         switch (document.getElementById("<%= txtManufacturerModel.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Select Manufacturer Model");
             document.getElementById("<%= txtManufacturerModel.ClientID %>").focus();
             return false;
@@ -33,13 +33,13 @@
 
         }
         switch (document.getElementById("<%= txtManufacturerAddress.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Address");
             document.getElementById("<%= txtManufacturerAddress.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtManufacturerContactNumber.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Contact Number");
             document.getElementById("<%= txtManufacturerContactNumber.ClientID %>").focus();
             return false;
@@ -59,13 +59,13 @@
         }
 
         switch (document.getElementById("<%= txtManufacturerContactPerson.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Contact Person");
             document.getElementById("<%= txtManufacturerContactPerson.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtManufacturerEmailId.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer EmailId");
             document.getElementById("<%= txtManufacturerEmailId.ClientID %>").focus();
             return false;
@@ -81,13 +81,13 @@
         }
 
         switch (document.getElementById("<%= txtManufacturerTin.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Tin");
             document.getElementById("<%= txtManufacturerTin.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtManufacturerErn.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Manufacturer Ern");
             document.getElementById("<%= txtManufacturerErn.ClientID %>").focus();
             return false;
@@ -202,7 +202,7 @@
                                     <td class="columnseparator"></td>
                                     <td>
                                         <asp:TextBox ID="txtManufacturerContactNumber" runat="server" CssClass="textbox180"
-                                                     MaxLength="15">
+                                                     MaxLength="15" onkeypress="return numeric_only(this)">
                                         </asp:TextBox>
                                     </td>
                                 </tr>
@@ -242,7 +242,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerTin" runat="server" CssClass="textbox180" MaxLength="11"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerTin" runat="server" CssClass="textbox180" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -254,7 +254,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerErn" runat="server" CssClass="textbox180" MaxLength="11"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerErn" runat="server" CssClass="textbox180" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>

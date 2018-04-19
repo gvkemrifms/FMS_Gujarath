@@ -1,13 +1,12 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Fabricator.aspx.cs" Inherits="Fabricator" Language="C#" MasterPageFile="~/temp.master" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
-
-
+    <script src="js/Validation.js"></script>
+<script type="text/javascript">
+    
     function validationFabricator() {
         switch (document.getElementById("<%= txtFabricatorName.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Fabricator Name");
             document.getElementById("<%= txtFabricatorName.ClientID %>").focus();
             return false;
@@ -28,13 +27,13 @@
         }
 
         switch (document.getElementById("<%= txtFabricatorAddress.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Fabricator Address");
             document.getElementById("<%= txtFabricatorAddress.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtFabricatorContactNumber.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Fabricator Contact Number");
             document.getElementById("<%= txtFabricatorContactNumber.ClientID %>").focus();
             return false;
@@ -53,26 +52,31 @@
         }
 
         switch (document.getElementById('<%= txtFabricatorContactPerson.ClientID %>').value) {
-        case 0:
+        case '':
             alert("Please Enter Fabricator Contact Person");
             document.getElementById("<%= txtFabricatorContactPerson.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtFabricatorPanNo.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter PAN No.");
             document.getElementById("<%= txtFabricatorPanNo.ClientID %>").focus();
             return false;
         }
+        var pan=document.getElementById("<%= txtFabricatorPanNo.ClientID %>").value;
+        if (isValidPAN(pan) === false) {
+            return false;
+        }
+    
         switch (document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Enter Fabricator EmailId");
             document.getElementById("<%= txtFabricatorEmailId.ClientID %>").focus();
             return false;
         }
-
-        var emailPat = /^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/;
-        var emailid = document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value;
+       
+        var emailPat = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        var emailid = document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value;      
         var matchArray = emailid.match(emailPat);
         if (matchArray == null) {
             alert("Your email address seems incorrect. Please try again.");
@@ -80,14 +84,14 @@
             return false;
         } else {
             switch (document.getElementById("<%= txtFabricatorTin.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Fabricator Tin");
                 document.getElementById("<%= txtFabricatorTin.ClientID %>").focus();
                 return false;
 
             }
             switch (document.getElementById("<%= txtFabricatorErn.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Fabricator Ern");
                 document.getElementById("<%= txtFabricatorErn.ClientID %>").focus();
                 return false;
@@ -96,7 +100,7 @@
         return true;
     }
 </script>
-
+<script src="js/Validation.js"></script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <table id="table1" cellspacing="0" cellpadding="0" width="100%" align="center" border="0"
@@ -119,7 +123,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorName" runat="server" CssClass="textbox180" MaxLength="35"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorName" runat="server"  MaxLength="35"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -131,7 +135,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlFabricatorType" runat="server" CssClass="textbox180">
+                                        <asp:DropDownList ID="ddlFabricatorType" runat="server" >
                                             <asp:ListItem Value="0">--Select--</asp:ListItem>
                                             <asp:ListItem Value="1">Body</asp:ListItem>
                                             <asp:ListItem Value="2">FRP</asp:ListItem>
@@ -148,7 +152,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlFabricatorState" runat="server" CssClass="textbox180" AutoPostBack="True"
+                                        <asp:DropDownList ID="ddlFabricatorState" runat="server"  AutoPostBack="True"
                                                           OnSelectedIndexChanged="ddlFabricatorState_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -162,7 +166,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" CssClass="textbox180"
+                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" 
                                                           AutoPostBack="True" OnSelectedIndexChanged="ddlFabricatorDistrict_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -177,7 +181,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine" CssClass="textbox180"
+                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine" 
                                                      onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                         </asp:TextBox>
                                     </td>
@@ -191,7 +195,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" CssClass="textbox180"
+                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" 
                                                      MaxLength="15">
                                         </asp:TextBox>
                                     </td>
@@ -206,7 +210,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactPerson" runat="server" CssClass="textbox180"
+                                        <asp:TextBox ID="txtFabricatorContactPerson" runat="server" 
                                                      MaxLength="35">
                                         </asp:TextBox>
                                     </td>
@@ -220,7 +224,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server" CssClass="textbox180" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server"  MaxLength="10"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -232,7 +236,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorEmailId" runat="server" CssClass="textbox180" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorEmailId" runat="server"  MaxLength="50"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -244,7 +248,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorTin" runat="server" CssClass="textbox180" MaxLength="11"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorTin" runat="server"  MaxLength="11" onkeypress="return numeric_only(event);" ></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -256,7 +260,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorErn" runat="server" CssClass="textbox180" MaxLength="11"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorErn" MaxLength="11" runat="server" name="floats" Width="100px" ondrop = "return false;" onpaste = "return false;" onkeypress="return numeric_only(event);"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>

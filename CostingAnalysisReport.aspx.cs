@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class CostingAnalysisReport : Page
@@ -9,6 +10,7 @@ public partial class CostingAnalysisReport : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
@@ -16,7 +18,7 @@ public partial class CostingAnalysisReport : Page
 
     private void BindDistrictdropdown()
     {
-        string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+        string sqlQuery = ConfigurationManager.AppSettings["Query"];
         _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
 

@@ -3,36 +3,38 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
+        
         function validationBatteryDetails() {
             switch (document.getElementById("<%= txtBatteryItemCode.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Battery Item Code");
                 document.getElementById("<%= txtBatteryItemCode.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtBatteryMake.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Battery Make");
                 document.getElementById("<%= txtBatteryMake.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtBatteryModel.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Battery Model");
                 document.getElementById("<%= txtBatteryModel.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtBatteryCapacity.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Battery Capacity");
                 document.getElementById("<%= txtBatteryCapacity.ClientID %>").focus();
                 return false;
             }
 
             switch (document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Battery Expiry Date");
                 document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").focus();
                 return false;

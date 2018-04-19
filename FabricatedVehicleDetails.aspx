@@ -215,7 +215,7 @@
                         Fabrication Cost<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtFabricationCost" runat="server" Width="145px" onkeypress="return isDecimalNumberKey(event);"
+                        <asp:TextBox ID="txtFabricationCost" runat="server" Width="145px" onkeypress="return numericOnly(this);"
                                      MaxLength="9">
                         </asp:TextBox>
                     </td>

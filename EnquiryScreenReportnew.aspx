@@ -2,8 +2,21 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script type="text/javascript">
+        $(function() {
+            $('#<%= btnShowReport.ClientID %>').click(function () {
+                var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+                if (ddlVehicle === '--select--') {
+                    alert("Please select Vehicle");
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+   
     <table>
         <tr>
             <td>
@@ -22,14 +35,16 @@
                 <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 100px"></asp:DropDownList>
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btClick_ShowReport"></asp:Button>
             </td>
 
             <td>
                 <asp:Button runat="server" Text="ExportExcel"></asp:Button>
 
             </td>
-
+            <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
+                <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
+            </asp:Panel>
 
         </tr>
     </table>

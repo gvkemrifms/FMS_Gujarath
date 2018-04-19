@@ -2,8 +2,27 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
+   <script type="text/javascript">
+       $(function() {
+           $('#<%=btnShowReport.ClientID%>').click(function() {
+               var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+               var ddlStation = $('#<%= ddlstation.ClientID %> option:selected').text().toLowerCase();
+               if (ddlDistrict === '--select--') {
+                   alert("Please select District");
+                   e.preventDefault();
+               }
+              
+               if (ddlStation === '--select--') {
+                   alert("Please select Vehicle");
+                   e.preventDefault();
+               }
+           });
+       });
+   </script>
     <table>
         <tr>
             <td>
@@ -31,7 +50,7 @@
             </td>
 
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btnsubmit_Click"></asp:Button>
             </td>
 
             <td>

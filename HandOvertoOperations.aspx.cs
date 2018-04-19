@@ -6,6 +6,7 @@ using GvkFMSAPP.PL;
 public partial class HandOvertoOperations : Page
 {
     private readonly GvkFMSAPP.BLL.HandOvertoOperations _handovertooperation = new GvkFMSAPP.BLL.HandOvertoOperations();
+
     readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)

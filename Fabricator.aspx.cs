@@ -18,6 +18,7 @@ public partial class Fabricator : Page
         if (!IsPostBack)
         {
             grvFabricatorDetails.Columns[0].Visible = false;
+
             FillStates();
             FillDistricts(0);
             ddlFabricatorDistrict.Enabled = false;
@@ -28,9 +29,6 @@ public partial class Fabricator : Page
         txtFabricatorContactPerson.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
         txtFabricatorAddress.Attributes.Add("onkeypress", "javascript:return  remark(this,event)");
         txtFabricatorContactNumber.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-        txtFabricatorTin.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-        txtFabricatorErn.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-        txtFabricatorPanNo.Attributes.Add("onkeypress", "javascript:return  OnlyAlphaNumeric(this,event)");
         //Permissions
         var dsPerms = (DataSet) Session["PermissionsDS"];
         if (dsPerms == null) throw new ArgumentNullException(nameof(dsPerms));

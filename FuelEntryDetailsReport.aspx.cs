@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class FuelEntryDetailsReport : Page
@@ -7,14 +8,18 @@ public partial class FuelEntryDetailsReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) BindDistrictdropdown();
+        if (!IsPostBack)
+        {
+            if(Session["User_Name"]==null)Response.Redirect("Login.aspx");
+            BindDistrictdropdown();
+        }
     }
 
     private void BindDistrictdropdown()
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)

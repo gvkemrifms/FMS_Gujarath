@@ -2,9 +2,35 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
+<script type="text/javascript">
+  $(function() {
+        $('#<%= btnShowReport.ClientID %>').click(function() {
+            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') {
+                alert("Please select District");
+                e.preventDefault();
+            }
+            var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+                alert("Please select Vehicle");
+                e.preventDefault();
+            }
+            var ddlMonth = $('#<%= ddlmonth.ClientID %> option:selected').text().toLowerCase();
+            if (ddlMonth === '--select--') {
+                alert("Please select Month of Registration");
+                e.preventDefault();
+            }
+            var ddlYear = $('#<%= ddlyear.ClientID %> option:selected').text().toLowerCase();
+            if (ddlYear === '--select--') {
+                alert("Please select Year of Registration");
+                e.preventDefault();
+            }
+        });
+    });
+</script>
     <table>
         <tr>
             <td>
@@ -17,7 +43,7 @@
         <tr>
 
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+                <asp:Label ID="lbldistrict" runat="server" Text="SelectDistrict"></asp:Label>
             </td>
 
             <td>
@@ -25,7 +51,7 @@
             </td>
 
             <td>
-                <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle"></asp:Label>
+                <asp:Label ID="lblvehicle" runat="server" Text="SelectVehicle"/>
             </td>
 
             <td>
@@ -33,7 +59,7 @@
             </td>
 
             <td>
-                <asp:Label ID="lblmonth" runat="server" Text="Select&nbsp;Month"></asp:Label>
+                <asp:Label ID="lblmonth" runat="server" Text="MonthOfRegistration"></asp:Label>
             </td>
             <td>
                 <asp:DropDownList ID="ddlmonth" runat="server" style="width: 100px" AutoPostBack="true">
@@ -55,11 +81,12 @@
 
             </td>
             <td>
-                <asp:Label ID="lblyear" runat="server" Text="Select&nbsp;Year"></asp:Label>
+                <asp:Label ID="lblyear" runat="server" Text="YearOfRegistration"></asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddlyear" runat="server" style="width: 100px" AutoPostBack="true">
+                    <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                     <asp:ListItem Text="2004" Value="2004"></asp:ListItem>
                     <asp:ListItem Text="2005" Value="2005"></asp:ListItem>
                     <asp:ListItem Text="2006" Value="2006"></asp:ListItem>
@@ -81,7 +108,7 @@
                 </asp:DropDownList>
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnsubmit_Click"></asp:Button>
             </td>
 
             <td>

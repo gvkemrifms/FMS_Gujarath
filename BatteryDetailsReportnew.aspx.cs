@@ -9,6 +9,7 @@ public partial class BatteryDetailsReportnew : Page
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             BindDistrictdropdown();
             Withoutdist();
         }
@@ -19,7 +20,7 @@ public partial class BatteryDetailsReportnew : Page
         try
         {
             var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid ", ddldistrict);
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
         catch (Exception ex)
         {

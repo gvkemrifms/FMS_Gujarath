@@ -26,7 +26,7 @@ public partial class GpsKm : Page
     {
         try
         {
-            var query = "select id, vehiclenumber,fuelentrydate, kmpl, unitprice, GpsKms, entrydate,expprice,petrocardnum,canpush from t_expfuelDump";
+            var query = ConfigurationManager.AppSettings["SqlQuery"];
             var dtData = _helper.ExecuteSelectStmt(query);
             if (dtData == null) throw new ArgumentNullException(nameof(dtData));
             if (dtData.Rows.Count <= 0)

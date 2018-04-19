@@ -4,8 +4,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/Validation.js"></script>
     <div id="main" class="row">
         <div class="row">
             <div class="col-xs-12">

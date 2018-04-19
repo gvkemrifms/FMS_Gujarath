@@ -293,6 +293,8 @@ public partial class BaseVehicleDetails : Page
     {
         if (_basevehdet != null)
         {
+            try
+            {
             _basevehdet.InvoiceNo = txtInvoiceNo.Text;
             _basevehdet.VehicleID = int.Parse(ddlEngineNo.SelectedItem.Value);
             _basevehdet.InvoiceDate = DateTime.Parse(txtInvoiceDate.Text);
@@ -431,6 +433,11 @@ public partial class BaseVehicleDetails : Page
                             break;
                         }
                     }
+            }
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
             }
         }
     }

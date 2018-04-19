@@ -62,6 +62,15 @@ function isValidPAN(pan) {
     }
 }
 
+function isValidEmail(email) {
+    if (email.match(/^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/)) {
+        return true;
+    } else {
+        alert("Enter a valid Email Address");
+        return false;
+    }
+}
+
 function validateDecimal(value) {
     var re = "^\d*\.?\d{0,2}$";
     if(re.test(value)){

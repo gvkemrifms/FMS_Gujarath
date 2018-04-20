@@ -14,7 +14,6 @@ public partial class HrDisciplinaryActions : Page
         {
             BindData();
             GetVehicleNumbers();
-            ddlCause.Enabled = true;
         }
     }
 
@@ -40,10 +39,10 @@ public partial class HrDisciplinaryActions : Page
             {
                 _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[0], "FA_Details", "FA_ID");
                 _helper.FillDifferentDataTables(ddlMajor, ds.Tables[1], "MajA_Details", "MajA_ID");
-                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[2], "MajlossA_Details", "MajlossA_ID");
-                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[3], "MA_Details", "MA_ID");
-                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[4], "SevInj_Details", "SevInj_ID");
-                _helper.FillDifferentDataTables(ddlFatalAcc, ds.Tables[5], "SituationOfAccident", "AccidentId");
+                _helper.FillDifferentDataTables(ddlMajorOrtotLoss, ds.Tables[2], "MajlossA_Details", "MajlossA_ID");
+                _helper.FillDifferentDataTables(ddlMinor, ds.Tables[3], "MA_Details", "MA_ID");
+                _helper.FillDifferentDataTables(ddlSevereInj, ds.Tables[4], "SevInj_Details", "SevInj_ID");
+                _helper.FillDifferentDataTables(ddlSitIfAction, ds.Tables[5], "SituationOfAccident", "AccidentId");
             }
             catch (Exception ex)
             {
@@ -68,6 +67,8 @@ public partial class HrDisciplinaryActions : Page
                     var x = ddlSitIfAction.SelectedIndex;
                     var ds = _obj.GetCausesforAcc(x);
                     if (ds == null) throw new ArgumentNullException(nameof(ds));
+                    if (ds.Tables[0].Rows.Count>0)
+                        ds.Tables[0].Rows[0].Delete();
                     _helper.FillDropDownHelperMethodWithDataSet(ds, "CauseOfAccident", "CauseId", ddlCause);
                     break;
             }
@@ -84,8 +85,8 @@ public partial class HrDisciplinaryActions : Page
         ddlSevereInj.SelectedIndex = 0;
         ddlMajorOrtotLoss.SelectedIndex = 0;
         ddlFatalAcc.SelectedIndex = 0;
-        ddlMinorAcc.SelectedIndex = 0;
         ddlMajor.SelectedIndex = 0;
+        ddlMinor.SelectedIndex = 0;
         ddlCause.SelectedIndex = 0;
         ddlVehicleno.SelectedIndex = 0;
     }
@@ -94,10 +95,10 @@ public partial class HrDisciplinaryActions : Page
     {
         if (ddlVehicleno != null) _obj.VehicleNumber = Convert.ToString(ddlVehicleno.SelectedItem.Text);
         if (ddlSitIfAction != null) _obj.sitOfAcc = ddlSitIfAction.SelectedItem.ToString();
-        if (ddlCause != null) _obj.CauseAcc = ddlCause.SelectedItem.ToString();
-        if (ddlMinorAcc != null) _obj.minAcc = ddlMinorAcc.SelectedItem.ToString();
+        if (ddlSitIfAction != null && ddlSitIfAction.SelectedIndex>0 && ddlCause != null) _obj.CauseAcc = ddlCause.SelectedItem.ToString();
         if (ddlMajor != null) _obj.majACC = ddlMajor.SelectedItem.ToString();
-        if (ddlMajorOrtotLoss != null) _obj.majLoss = ddlMajorOrtotLoss.SelectedIndex.ToString();
+        if (ddlMinor != null) _obj.minAcc = ddlMinor.SelectedItem.ToString();
+        if (ddlMajorOrtotLoss != null) _obj.majLoss = ddlMajorOrtotLoss.SelectedItem.ToString();
         if (ddlSevereInj != null) _obj.sevInj = ddlSevereInj.SelectedItem.ToString();
         if (ddlFatalAcc != null) _obj.fatalAcc = ddlFatalAcc.SelectedItem.ToString();
         if (_obj == null) return;

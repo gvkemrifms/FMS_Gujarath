@@ -8,25 +8,25 @@
 
         function validationInsuranceDetails() {
             switch (document.getElementById("<%= txtInsuranceAgency.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Insurance Agency Name");
                 document.getElementById("<%= txtInsuranceAgency.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtAddress.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Address");
                 document.getElementById("<%= txtAddress.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtContactPerson.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter ContactPerson Name");
                 document.getElementById("<%= txtContactPerson.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtContactNo.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter  Contact Number");
                 document.getElementById("<%= txtContactNo.ClientID %>").focus();
                 return false;

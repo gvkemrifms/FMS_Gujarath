@@ -22,7 +22,6 @@ public partial class MaintenanceWorksMaster : Page
             FillGrid_MaintenanceWorksMaster();
             btnSaveMaintenanceWorksMaster.Attributes.Add("onclick", "javascript:return validationMaintenanceWorksMaster()");
             txtServiceName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            txtSSName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
             ddlMaintenanceManufacturerName.Enabled = false;
             ddlServiceGroupName.SelectedIndex = 0;
             //Permissions
@@ -59,7 +58,7 @@ public partial class MaintenanceWorksMaster : Page
 
     private void MaintenanceWorksMasterReset()
     {
-        txtSSName.Visible = true;
+        txtCategories.Visible = true;
         ddlSSName.Visible = false;
         linkCat.Visible = true;
         linkNew.Visible = false;
@@ -67,7 +66,7 @@ public partial class MaintenanceWorksMaster : Page
         ddlMaintenanceManufacturerName.SelectedIndex = 0;
         ddlMaintenanceManufacturerName.Enabled = false;
         txtServiceName.Text = "";
-        txtSSName.Text = "";
+        txtCategories.Text = "";
         txtCostGrade.Text = "";
         txtCostOtherGrade.Text = "";
         btnSaveMaintenanceWorksMaster.Text = "Save";
@@ -126,7 +125,7 @@ public partial class MaintenanceWorksMaster : Page
                 {
                     if (!ddlSSName.Visible)
                     {
-                        if (txtSSName.Text == "") Show("Please enter category");
+                        if (txtCategories.Text == "") Show("Please enter category");
                     }
                     else
                     {
@@ -151,7 +150,7 @@ public partial class MaintenanceWorksMaster : Page
                     }
                     else
                     {
-                        subserviceName = txtSSName.Text;
+                        subserviceName =txtCategories.Text;
                         flag = 0;
                     }
 
@@ -178,7 +177,7 @@ public partial class MaintenanceWorksMaster : Page
                     int serviceId = Convert.ToInt16(hidWorksMasterId.Value);
                     var serviceName = txtServiceName.Text;
                     var serviceGroupId = Convert.ToInt32(ddlServiceGroupName.SelectedValue);
-                    var subserviceName = txtSSName.Text;
+                    var subserviceName = txtCategories.Text;
                     var costAGrade = Convert.ToDecimal(txtCostGrade.Text);
                     var costOtherThanAGrade = Convert.ToDecimal(txtCostOtherGrade.Text);
                     var timeTaken = txtTimeTaken.Text;
@@ -280,7 +279,7 @@ public partial class MaintenanceWorksMaster : Page
         GetSubService(ds.Tables[0].Rows[0]["Aggregates"].ToString());
         ddlMaintenanceManufacturerName.SelectedValue = manufacturerName;
         txtServiceName.Text = Convert.ToString(ds.Tables[0].Rows[0]["Sub Categories"].ToString());
-        txtSSName.Text = Convert.ToString(ds.Tables[0].Rows[0]["Categories"].ToString());
+        txtCategories.Text = Convert.ToString(ds.Tables[0].Rows[0]["Categories"].ToString());
         var cGrade = Convert.ToString(ds.Tables[0].Rows[0]["Cost"].ToString()).Split('.');
         txtCostGrade.Text = cGrade[0] + '.' + cGrade[1].Substring(0, 2);
         var coAGrade = Convert.ToString(ds.Tables[0].Rows[0]["Cost_Other_Than_A_Grade"].ToString()).Split('.');
@@ -307,7 +306,7 @@ public partial class MaintenanceWorksMaster : Page
 
     protected void linkCat_Click(object sender, EventArgs e)
     {
-        txtSSName.Visible = false;
+        txtCategories.Visible = false;
         ddlSSName.Visible = true;
         linkCat.Visible = false;
         linkNew.Visible = true;
@@ -316,7 +315,7 @@ public partial class MaintenanceWorksMaster : Page
 
     protected void linkNew_Click(object sender, EventArgs e)
     {
-        txtSSName.Visible = true;
+        txtCategories.Visible = true;
         ddlSSName.Visible = false;
         linkCat.Visible = true;
         linkNew.Visible = false;
@@ -324,7 +323,7 @@ public partial class MaintenanceWorksMaster : Page
 
     protected void ddlMaintenanceManufacturerName_SelectedIndexChanged(object sender, EventArgs e)
     {
-        txtSSName.Visible = true;
+        txtCategories.Visible = true;
         ddlSSName.Visible = false;
         linkCat.Visible = true;
         linkNew.Visible = false;

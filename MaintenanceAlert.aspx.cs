@@ -13,6 +13,7 @@ public partial class MaintenanceAlert : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(Session["User_Name"]==null)Response.Redirect("Login.aspx");
         if (!IsPostBack) GetVehicles();
     }
 
@@ -42,6 +43,7 @@ public partial class MaintenanceAlert : Page
 
     public string CreateHtml(DataSet ds)
     {
+        if (ds == null) throw new ArgumentNullException(nameof(ds));
         var htmlText = "";
         if (ds.Tables.Count > 0)
         {
@@ -77,9 +79,17 @@ public partial class MaintenanceAlert : Page
 
     protected void btnSendMail_Click1(object sender, EventArgs e)
     {
-        var subject = "Vehicle Maintenance Alert";
-        var mailBody = CreateHtml((DataSet) ViewState["ds"]);
-        MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        try
+        {
+            var subject = "Vehicle Maintenance Alert";
+            var mailBody = CreateHtml((DataSet)ViewState["ds"]);
+            MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
+        
     }
 
     protected void ddlVehicle_SelectedIndexChanged(object sender, EventArgs e)

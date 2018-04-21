@@ -4,6 +4,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
         <ContentTemplate>
@@ -22,7 +23,7 @@
                                 <td class="columnseparator">
                                 </td>
                                 <td>
-                                    <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehNumber" runat="server" AutoPostBack="true"
+                                    <cc1:ComboBox AutoCompleteMode="Append" name="vehicleNumber" ID="ddlVehNumber" runat="server" AutoPostBack="true"
                                                   onselectedindexchanged="ddlVehNumber_SelectedIndexChanged" DropDownStyle="DropDownList">
 
                                     </cc1:ComboBox>
@@ -50,7 +51,7 @@
                             </div>
                             <div>
                                 <asp:Button runat="server" ID="btnUpdate" Text="Update"
-                                            OnClientClick="return validationFuelEntry();" onclick="btnUpdate_Click"/>
+                                            OnClientClick="if(!validationFuelEntry()) return false;" onclick="btnUpdate_Click"/>
                             </div>
                         </div>
                         <div>
@@ -99,23 +100,19 @@
             <script type="text/javascript" language="javascript">
 
                 function validationFuelEntry() {
-
+                    var districts = document.getElementById("<%= ddlVehNumber.ClientID %>").control._textBoxControl.value;
+                    switch (districts) {
+                    case '--Select--':
+                      return  alert("Please Select the VehicleNumber");
+                      
+                    }
                     switch (document.getElementById("<%= txtKMPL.ClientID %>").value) {
-                    case 0:
-                        alert("KMPL Should not be Blank");
-                        document.getElementById("<%= txtKMPL.ClientID %>").focus();
-                        return false;
-
+                        case '':
+                            document.getElementById("<%= txtKMPL.ClientID %>").focus();
+                        return alert("KMPL Should not be Blank");
                     }
 
-                    var districts = document.getElementById('<%= ddlVehNumber.ClientID %>');
-
-                    switch (districts.selectedIndex) {
-                    case 0:
-                        alert("Please Select the VehicleNumber");
-                        districts.focus();
-                        return false;
-                    }
+                  
                     return true;
                 }
             </script>

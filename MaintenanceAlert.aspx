@@ -74,7 +74,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click1"/>
+                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click1" OnClientClick="if(!validationFuelEntry()) return false;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,6 +86,16 @@
                     </td>
                 </tr>
             </table>
+            <script type="text/javascript">
+                function validationFuelEntry() {
+                    var districts = document.getElementById("<%= ddlVehicle.ClientID %>").control._textBoxControl.value;
+                    switch (districts) {
+                    case '--Select--':
+                        return alert("Please Select the VehicleNumber");
+                    }
+                    return true;
+                }
+            </script>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

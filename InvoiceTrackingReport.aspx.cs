@@ -7,6 +7,7 @@ public partial class InvoiceTrackingReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlbillno.Enabled = false;
@@ -18,7 +19,7 @@ public partial class InvoiceTrackingReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
+            _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle);
         }
         catch (Exception ex)
         {
@@ -35,7 +36,7 @@ public partial class InvoiceTrackingReport : Page
             ddlbillno.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "Billno", ddlvehicle, ddlbillno, null, null, "@vehNo");
+                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno","", ddlvehicle, ddlbillno, null, null, "@vehNo",null,null,null,null,null,null,null,null,1);
             }
             catch (Exception ex)
             {

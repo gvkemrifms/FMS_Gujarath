@@ -2,8 +2,19 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <script type="text/javascript">
+        function Validations() {
+            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') {
+                return alert("Please select District");
+            }
+            return true;
+        }
+    </script>
+   
     <table>
         <tr>
             <td>
@@ -22,7 +33,7 @@
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 100px"></asp:DropDownList>
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>

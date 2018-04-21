@@ -3,8 +3,41 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script type="text/javascript">
+        function Validations() {
+            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') {
+                return alert("Please select District");
+            }
+            var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+               return alert("Please select Vehicle");
+            }
+            var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
+            var txtToDate = $('#<%= txttodate.ClientID %>').val();
+            if (txtFirstDate === "") {
+                return alert('From Date is Mandatory');
+            }
+            if (txtToDate === "") {
+                return alert("End Date is Mandatory");
+            }
+            var fromDate = (txtFirstDate).replace(/\D/g, '/');
+            var toDate = (txtToDate).replace(/\D/g, '/');
+            var ordFromDate = new Date(fromDate);
+            var ordToDate = new Date(toDate);
+            var currentDate = new Date();
+            if (ordFromDate > currentDate) {
+               return alert("From date should not be greater than today's date");
+            }
+            if (ordToDate < ordFromDate) {
+                alert("Please select valid date range");
+            }
+            return true;
+        }
+    </script>
     <table>
         <tr>
             <td>
@@ -63,7 +96,7 @@
 
             </td>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </td>
 
             <td>

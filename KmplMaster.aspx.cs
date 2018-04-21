@@ -19,7 +19,7 @@ public partial class KmplMaster : Page
         {
             BindData();
             Bindgrid();
-            txtKMPL.Attributes.Add("onkeypress", "javascript:return numeric(this,event)");
+            txtKMPL.Attributes.Add("onkeypress", "javascript:return numeric_only(this)");
         }
     }
 
@@ -28,7 +28,7 @@ public partial class KmplMaster : Page
         try
         {
             _dataset = null;
-            if (_fmsobj != null) _dataset = _fmsobj.GetVehicleNumber();
+           if (_fmsobj != null) _dataset = _fmsobj.GetVehicleNumber();
             _helper.FillDropDownHelperMethodWithDataSet(_dataset, "VehicleNumber", "VehicleID", null, ddlVehNumber);
             ViewState["dsVehicles"] = _dataset;
         }

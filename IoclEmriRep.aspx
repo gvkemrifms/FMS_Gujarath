@@ -3,6 +3,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
+
     <script>
         function exp() {
             window.open('data:application/vnd.ms-excel,' +
@@ -81,7 +83,42 @@
 
         });
     </script>
+    <script type="text/javascript">
+   
+       function ValidatePage()
+        {
+            var ddlVehicle = $('#<%= ddlvehicleNo.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+               return alert("Please select Vehicle");
 
+            }
+            var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
+            var txtToDate = $('#<%= txttodate.ClientID %>').val();
+            if (txtFirstDate === "") {
+                //txtFirstDate.focus();
+                return alert('From Date is Mandatory');
+             
+            }
+            if (txtToDate === "") {         
+               // txtToDate.focus();
+                return alert("End Date is Mandatory");
+            }
+            var fromDate = (txtFirstDate).replace(/\D/g, '/');
+            var toDate = (txtToDate).replace(/\D/g, '/');
+            var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+            var currentDate = new Date();
+            if (ordFromDate > currentDate) {
+               return alert("From date should not be greater than today's date");
+            }
+            if (ordToDate < ordFromDate) {
+               return alert("Please select valid date range");
+            }
+            return true;
+        }
+                
+         
+  
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -156,7 +193,7 @@
             <div class="row" style="margin-top: 30px">
                 <div class="col-sm-12" style="">
                     <asp:Button ID="btnShow" runat="server" class="btn btn-primary"
-                                Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click">
+                                Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" OnClientClick="if(!ValidatePage()) {return false;}">
                     </asp:Button>
                 </div>
             </div>

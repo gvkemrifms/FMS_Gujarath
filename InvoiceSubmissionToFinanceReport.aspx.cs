@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class InvoiceSubmissionToFinanceReport : Page
@@ -7,14 +8,16 @@ public partial class InvoiceSubmissionToFinanceReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) BindDistrictdropdown();
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+        if (!IsPostBack)
+            BindDistrictdropdown();
     }
 
     private void BindDistrictdropdown()
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -66,7 +69,7 @@ public partial class InvoiceSubmissionToFinanceReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_ReportsVendorWiseINvoiceSubtoFinance", null, null, ddldistrict, ddlvendor, txtfrmDate, txttodate, "@districtID", "@VehicleID", "@From", "@To", null, Grddetails);
+            _helper.FillDropDownHelperMethodWithSp("P_ReportsVendorWiseINvoiceSubtoFinance", null, null, ddldistrict, ddlvendor, txtfrmDate, txttodate, "@districtID", "@VendorID", "@From", "@To", null, Grddetails);
         }
         catch (Exception ex)
         {

@@ -2,19 +2,19 @@
 
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validationMaintenanceWorksServiceGroup() {
             switch (document.getElementById("<%= txtServiceGroupName.ClientID %>").value) {
             case "":
-                alert("Please Enter Service Group Name");
+                
                 document.getElementById("<%= txtServiceGroupName.ClientID %>").focus();
-                return false;
+                return alert("Please Enter Service Group Name");
             }
             switch (document.getElementById("<%= ddlManufacturerName.ClientID %>").selectedIndex) {
             case 0:
-                alert("Please Select Manufacturer Name");
+
                 document.getElementById("<%= ddlManufacturerName.ClientID %>").focus();
-                return false;
+                return alert("Please Select Manufacturer Name");
             }
             return true;
         }
@@ -71,7 +71,7 @@
                                         <td style="height: 58px; width: 140px;"></td>
                                         <td style="height: 58px; width: 400px;">
                                             <asp:Button ID="btnSaveMaintenanceWorksServiceGroup" runat="server" Text="Save"
-                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click"/>
+                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click" OnClientClick="if(!validationMaintenanceWorksServiceGroup()) return false;"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <asp:Button ID="btnResetMaintenanceWorksServiceGroup" runat="server" Text="Reset"
                                                         OnClick="btnResetMaintenanceWorksServiceGroup_Click"/>

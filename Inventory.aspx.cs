@@ -10,6 +10,7 @@ public partial class Inventory : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         div1.InnerHtml = CreateChart1();
     }
 
@@ -51,6 +52,7 @@ public partial class Inventory : Page
 
         strXml += " </dataset>";
         strXml += "</graph>";
-        return FusionCharts.RenderChartHTML("FusionCharts/FCF_MSColumn3D.swf", "", strXml, "myNext", "700", "500", false);
+        var myChart=FusionCharts.RenderChartHTML("FusionCharts/FCF_MSColumn3D.swf", "", strXml, "myNext", "700", "500", false);
+        return myChart;
     }
 }

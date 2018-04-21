@@ -2,39 +2,61 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
+
     function validationMaintenanceWorksMaster() {
         switch (document.getElementById("<%= ddlServiceGroupName.ClientID %>").selectedIndex) {
-        case 0:
-            alert("Please Select Service Group Name");
+        case 0:     
             document.getElementById("<%= ddlServiceGroupName.ClientID %>").focus();
+            alert("Please Select Service Group Name");
+            return false;
+        }       
+        switch (document.getElementById("<%= ddlMaintenanceManufacturerName.ClientID %>").selectedIndex) {
+        case 0:        
+            document.getElementById("<%= ddlMaintenanceManufacturerName.ClientID %>").focus();
+            alert("Please Enter Manufacturer Name"); 
             return false;
         }
+        if ($('#<%= txtCategories.ClientID %>').is(":visible")) {
+            var value = $("#<%= txtCategories.ClientID %>").val();
+            switch (value) {
+            case '':
+                $("<%= txtCategories.ClientID %>").focus();
+                return alert("Please Enter Category Name(Or) Select Existing Category");
+            }
+        } else {
+            switch (document.getElementById("<%= ddlSSName.ClientID %>").selectedIndex) {
+            case 0:        
+                document.getElementById("<%= ddlSSName.ClientID %>").focus();
+                return alert("Please select Category"); 
 
-        switch (document.getElementById("<%= ddlMaintenanceManufacturerName.ClientID %>").selectedIndex) {
-        case 0:
-            alert("Please Enter Manufacturer Name");
-            document.getElementById("<%= ddlMaintenanceManufacturerName.ClientID %>").focus();
-            return false;
+            }
         }
         switch (document.getElementById("<%= txtServiceName.ClientID %>").value) {
-        case 0:
-            alert("Please Enter Service Name");
+        case '':
             document.getElementById("<%= txtServiceName.ClientID %>").focus();
+            alert("Please Enter Service Name");
             return false;
         }
         switch (document.getElementById("<%= txtCostGrade.ClientID %>").value) {
-        case 0:
-            alert("Please Enter Cost For A Grade");
+        case '':
             document.getElementById("<%= txtCostGrade.ClientID %>").focus();
+            alert("Please Enter Cost For A Grade");
             return false;
         }
         switch (document.getElementById("<%= txtCostOtherGrade.ClientID %>").value) {
-        case 0:
-            alert("Please Enter Cost For Other Grade");
+        case '':
             document.getElementById("<%= txtCostOtherGrade.ClientID %>").focus();
+            alert("Please Enter Cost For Other Grade");
             return false;
+        }
+        switch (document.getElementById("<%= txtTimeTaken.ClientID %>").value) {
+        case '':
+            document.getElementById("<%= txtTimeTaken.ClientID %>").focus();
+            alert("Please Enter Time taken");
+            return false;           
         }
         return true;
     }
@@ -88,7 +110,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSName" runat="server" Height="18px" onkeypress="return OnlyAlphabets(event)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCategories" runat="server" Height="18px" onkeypress="return OnlyAlphabets(event)"></asp:TextBox>
                                         &nbsp;&nbsp;
                                         <asp:DropDownList ID="ddlSSName" runat="server" Visible="false" Height="20px" Width="127px"/>
                                     </td>
@@ -123,7 +145,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtCostGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return isDecimalNumberKey(event)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCostGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -136,7 +158,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtCostOtherGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return isDecimalNumberKey(event)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCostOtherGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -149,7 +171,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtTimeTaken" runat="server" Height="18px" MaxLength="5" onkeypress="return isDecimalNumberKey(event) "></asp:TextBox>
+                                        <asp:TextBox ID="txtTimeTaken" runat="server" Height="18px" MaxLength="5" onkeypress="return numericOnly(this) "></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -158,7 +180,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" colspan="3">
-                                        <asp:Button ID="btnSaveMaintenanceWorksMaster" runat="server" Text="Save" OnClick="btnSaveMaintenanceWorksMaster_Click"/>
+                                        <asp:Button ID="btnSaveMaintenanceWorksMaster" runat="server" Text="Save" OnClick="btnSaveMaintenanceWorksMaster_Click" OnClientClick="if(!validationMaintenanceWorksMaster()) return false;"/>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:Button ID="btnResetMaintenanceWorksMaster" runat="server" Text="Reset" OnClick="btnResetMaintenanceWorksMaster_Click"/>
                                     </td>

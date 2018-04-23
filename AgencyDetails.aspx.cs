@@ -21,12 +21,9 @@ public partial class AgencyDetails : Page
             FillDistricts(0);
             ddlDistrict.Enabled = false;
             FillGridAgencyDetails();
-            btnSaveAgencyDetails.Attributes.Add("onclick", "javascript:return  validationAgencyDetails()");
             txtAddress.Attributes.Add("onkeypress", "javascript:return  remark(this,event)");
             txtAgencyName.Attributes.Add("onkeypress", "javascript:return  OnlyAlphabets(this,event)");
-            txtContactNo.Attributes.Add("onkeypress", "javascript:return  isNumberKey(this,event)");
-            txtTin.Attributes.Add("onkeypress", "javascript:return  isNumberKey(this,event)");
-            txtPanNo.Attributes.Add("onkeypress", "javascript:return  OnlyAlphaNumeric(this,event)");
+            txtTin.Attributes.Add("onkeypress", "javascript:return  numeric_only(this,event)");
             //Permissions
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";

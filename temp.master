@@ -6,7 +6,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <script src="js/js/jquery.min.js"></script>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="js/js/chosen.jquery.min.js"></script>
+    <link href="css/chosen.min.css" rel="stylesheet" />
+    <link href="css/TextBoxCssStyles.css" rel="stylesheet" />
+    <script src="js/Validation.js"></script>
+    <link href="css/CalenderStyles.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">

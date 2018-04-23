@@ -5,20 +5,18 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="Scripts/jquery-1.4.4.js"></script>
-    <script src="Scripts/jquery.validate.js"></script>
     <script type ="text/javascript">
         $(function() {
-            $('#<%=btnSubmit.ClientID%>').click(function(){
+            $('#<%= ddldistrict.ClientID %>').chosen();
+        });
+        function Validations() 
+            {
                 var ddlDistrict = $('#<%=ddldistrict.ClientID%> option:selected').text().toLowerCase();
                 if (ddlDistrict === '--select--') {
-                    //$('#lblDisplayError').text("Please select District").css("color","red");
-                    alert("Please select District");
-                    e.preventDefault();
+                   return alert("Please select District");
                 }
-            });
-
-        });
+            return true;
+        };
       
     </script>  
     <table>
@@ -29,7 +27,6 @@
         </tr>
         <tr>
             <td>
-                <label id="lblDisplayError">*</label>
 
             </td>
         </tr>
@@ -37,20 +34,20 @@
     <table style="width: 70px; margin-left: 125px;">
         <tr>
 
-            <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+            <td >            
+                Select  District<span style="color: Red; width: 150px; ">*</span>             
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 100px"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
             </tr>
             <tr>
                 <td>
-                    <asp:Button runat="server" ID="btnSubmit" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                    <asp:Button runat="server" ID="btnSubmit" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
                 </td>
                 <td>
-                    <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
+                    <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
 
                 </td>
 
@@ -58,8 +55,8 @@
     </table>
 
     <div>
-        <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grdtyre" runat="server"></asp:GridView>
+        <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;margin-top:30px">
+            <asp:GridView ID="Grdtyre" runat="server" BorderStyle="Inset" BorderColor="cyan" BorderWidth="2px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

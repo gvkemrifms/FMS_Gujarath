@@ -3,51 +3,60 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript" language="javascript">
+    $(function() {
+        $('#<%= ddlState.ClientID %>').chosen();
+        $('#<%= ddlDistrict.ClientID %>').chosen();
+    });
+
     function validationAgencyDetails() {
-        if (document.getElementById("<%= txtAgencyName.ClientID %>").value === "") {
+        $('#<%= ddlState.ClientID %>').chosen();
+        var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
+        if (ddlstate === '--select--') {
+            return alert("Please Select State");
+        }
+           
+        $('#<%= ddlDistrict.ClientID %>').chosen();
+        var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
+        if (ddldistrict === '--select--') {
+            return alert("Please Select District");
+        }
+           
+        if (document.getElementById('<%= txtAgencyName.ClientID %>').value === "") {
             alert("Please Enter Agency Name");
             document.getElementById("<%= txtAgencyName.ClientID %>").focus();
             return false;
         }
-        if (document.getElementById("<%= ddlState.ClientID %>").selectedIndex === 0) {
-            alert("Please Select State");
-            document.getElementById("<%= ddlState.ClientID %>").focus();
-            return false;
-        }
-        if (document.getElementById("<%= ddlDistrict.ClientID %>").selectedIndex === 0) {
-            alert("Please Select District");
-            document.getElementById("<%= ddlDistrict.ClientID %>").focus();
-            return false;
-        }
+       
         if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
-            alert("Please Enter Address");
-            document.getElementById("<%= txtAddress.ClientID %>").focus();
-            return false;
+            document.getElementById("<%= txtAddress.ClientID %>").focus();           
+            return alert("Please Enter Address");
+           
         }
         if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
-            alert("Please Enter Contact Number");
             document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return false;
+            return alert("Please Enter Contact Number");
         }
 
         var phone = document.getElementById("<%= txtContactNo.ClientID %>").value;
         if (isNaN(parseInt(phone))) {
-            alert("The Contact number contains illegal characters");
             document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return false;
+            return alert("The Contact number contains illegal characters");
         }
         if (!((phone.length >= 10) && (phone.length <= 15))) {
-            alert("The Contact number is the wrong length");
             document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return false;
+            return alert("The Contact number is the wrong length");
         }
 
 
         if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
-            alert("Please Enter PAN");
             document.getElementById("<%= txtPanNo.ClientID %>").focus();
+            return alert("Please Enter PAN");
+        
+      
+        }
+        var pan=document.getElementById("<%= txtPanNo.ClientID %>").value;
+        if (isValidPAN(pan) === false) {
             return false;
         }
 
@@ -57,11 +66,10 @@
             return false;
         }
 
-
         if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
-            alert("Please Enter TIN");
             document.getElementById("<%= txtTin.ClientID %>").focus();
-            return false;
+            return  alert("Please Enter TIN");
+           
         }
         return true;
     }
@@ -84,7 +92,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 200px">
-                <asp:TextBox ID="txtAgencyName" runat="server" MaxLength="35"></asp:TextBox>
+                <asp:TextBox ID="txtAgencyName" runat="server" MaxLength="35" CssClass="txtbox"></asp:TextBox>
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 146px">
@@ -92,7 +100,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left">
-                <asp:DropDownList ID="ddlState" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlState"   runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -105,7 +113,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 200px">
-                <asp:TextBox ID="txtContactNo" runat="server" MaxLength="15"></asp:TextBox>
+                <asp:TextBox ID="txtContactNo" runat="server" MaxLength="15" CssClass="txtbox" onkeypress="return numeric_only(event)"></asp:TextBox>
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 146px">
@@ -113,7 +121,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left">
-                <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" >
                 </asp:DropDownList>
             </td>
         </tr>
@@ -126,7 +134,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 200px">
-                <asp:TextBox ID="txtPanNo" runat="server" MaxLength="10"></asp:TextBox>
+                <asp:TextBox ID="txtPanNo" runat="server" MaxLength="10" CssClass="txtbox"></asp:TextBox>
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 146px">
@@ -148,7 +156,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left" style="width: 200px">
-                <asp:TextBox ID="txtTin" runat="server" MaxLength="11"></asp:TextBox>
+                <asp:TextBox ID="txtTin" CssClass="txtbox" runat="server" MaxLength="11"></asp:TextBox>
             </td>
             <td class="columnseparator"></td>
 
@@ -192,10 +200,10 @@
         <tr>
             <td align="center" colspan="8">
                 <asp:Button ID="btnSaveAgencyDetails" runat="server" Width="55px" Height="20px" OnClick="btnSaveAgencyDetails_Click"
-                            Text="Save"/>
+                            Text="Save" class="form-submit-button" ClientIDMode="static" EnableViewState="True"  OnClientClick="if(!validationAgencyDetails()) return false;"/>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="btnResetAgencyDetails" runat="server" Width="55px" Height="20px"
-                            OnClick="btnResetAgencyDetails_Click" Text="Reset"/>
+                            OnClick="btnResetAgencyDetails_Click" class="form-reset-button" Text="Reset"/>
             </td>
         </tr>
     </tr>
@@ -223,7 +231,7 @@
                             <asp:GridView ID="grvAgencyDetails" runat="server" AutoGenerateColumns="False" CellPadding="3"
                                           CellSpacing="2" CssClass="gridviewStyle" GridLines="None" OnPageIndexChanging="grvAgencyDetails_PageIndexChanging"
                                           OnRowDeleting="grvAgencyDetails_RowDeleting" OnRowEditing="grvAgencyDetails_RowEditing">
-                                <RowStyle CssClass="rowStyleGrid"/>
+                                <RowStyle CssClass="rowStyleGrid" BorderStyle="Solid" BorderColor="brown" BorderWidth="1px"/>
                                 <Columns>
                                     <asp:TemplateField HeaderText="Agency Id">
                                         <ItemTemplate>

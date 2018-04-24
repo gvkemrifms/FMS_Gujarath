@@ -11,9 +11,10 @@ public partial class BaseVehicleDetails : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {
+        {        
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
@@ -109,7 +110,7 @@ public partial class BaseVehicleDetails : Page
                     txtTRNo.ReadOnly = true;
                     ViewState["VehNo"] = "Present";
                 }
-
+               
                 break;
         }
     }

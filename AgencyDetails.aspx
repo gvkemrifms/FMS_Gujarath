@@ -3,20 +3,19 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script type="text/javascript" language="javascript">
-    $(function() {
-        $('#<%= ddlState.ClientID %>').chosen();
+    <script type="text/javascript">
+        $(function () {
+            $('#<%=ddlState.ClientID%>').chosen();
         $('#<%= ddlDistrict.ClientID %>').chosen();
     });
 
-    function validationAgencyDetails() {
-        $('#<%= ddlState.ClientID %>').chosen();
+        function validationAgencyDetails() {
+            $('#<%=ddlState.ClientID%>').chosen();
         var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
         if (ddlstate === '--select--') {
             return alert("Please Select State");
         }
-           
-        $('#<%= ddlDistrict.ClientID %>').chosen();
+            $('#<%= ddlDistrict.ClientID %>').chosen();
         var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
         if (ddldistrict === '--select--') {
             return alert("Please Select District");
@@ -100,7 +99,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left">
-                <asp:DropDownList ID="ddlState"   runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlState"   runat="server" AutoPostBack="True"  CssClass="search_3" Width="150px" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
         </tr>

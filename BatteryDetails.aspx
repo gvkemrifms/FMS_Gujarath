@@ -3,9 +3,11 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+  
+
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+              <script type="text/javascript">
         
         function validationBatteryDetails() {
             switch (document.getElementById("<%= txtBatteryItemCode.ClientID %>").value) {
@@ -61,8 +63,6 @@
 
     </script>
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
             <table id="table1" cellspacing="0" cellpadding="0" width="500px" align="center" border="0"
                    style="height: 37px">
                 <tr>
@@ -83,7 +83,7 @@
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
-                                                        <asp:TextBox ID="txtBatteryItemCode" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                                        <asp:TextBox ID="txtBatteryItemCode" runat="server" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -95,7 +95,7 @@
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td style="height: 23px">
-                                                        <asp:TextBox ID="txtBatteryMake" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                                        <asp:TextBox ID="txtBatteryMake" runat="server" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -107,7 +107,7 @@
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
-                                                        <asp:TextBox ID="txtBatteryModel" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                                        <asp:TextBox ID="txtBatteryModel" runat="server" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -119,7 +119,7 @@
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
-                                                        <asp:TextBox ID="txtBatteryCapacity" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                                        <asp:TextBox ID="txtBatteryCapacity" runat="server" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -129,13 +129,13 @@
                                                     <td>Battery Expiry Date <span style="color: Red" class="labelErr">*</span></td>
                                                     <td></td>
                                                     <td>
-                                                        <asp:TextBox ID="txtBatteryExpiryDate" runat="server" onkeypress="return false" MaxLength="20" oncut="return false;" onpaste="return false;" oncopy="return false;"></asp:TextBox>
+                                                        <asp:TextBox ID="txtBatteryExpiryDate" runat="server" onkeypress="return false" MaxLength="20" oncut="return false;" CssClass="search_3" onpaste="return false;" oncopy="return false;"></asp:TextBox>
                                                         <ajaxToolKit:CalendarExtender ID="ccl1" runat="server" TargetControlID="txtBatteryExpiryDate"
                                                                                       Format="MM/dd/yyyy" PopupButtonID="imgBtnCalendarInvoiceDate">
                                                         </ajaxToolKit:CalendarExtender>
                                                     </td>
                                                     <td nowrap="nowrap" style="width: 51px">
-                                                        <asp:ImageButton ID="imgBtnCalendarInvoiceDate" runat="server" alt="" src="images/Calendar.gif"
+                                                        <asp:ImageButton ID="imgBtnCalendarInvoiceDate" runat="server" CssClass="cal_Theme1" alt="" src="images/Calendar.gif"
                                                                          Style="vertical-align: top"/>
                                                     </td>
                                                 </tr>
@@ -145,12 +145,12 @@
                                                 <tr>
                                                     <td colspan="3" style="height: 41px">
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <asp:Button ID="btnBatterySave" runat="server" CssClass="button"
+                                                        <asp:Button ID="btnBatterySave" runat="server" CssClass="form-submit-button"
                                                                     OnClick="btnBatterySave_Click1"
                                                                     OnClientClick="return validationBatteryDetails();" Text="Save" Width="55px"/>
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <asp:Button ID="btnManufacturerReset" runat="server"
-                                                                    CausesValidation="false" CssClass="button" OnClick="btnManufacturerReset_Click"
+                                                                    CausesValidation="false" CssClass="form-submit-button" OnClick="btnManufacturerReset_Click"
                                                                     Text="Reset" Width="55px"/>
                                                         <input id="hidBatText" runat="server" type="hidden"/>
                                                     </td>
@@ -169,12 +169,13 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
+                <br />
                 <tr>
                     <td>
                         <fieldset style="padding: 10px;">
                             <asp:GridView ID="grvBatteryDetails" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                                           CellPadding="3" CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnRowEditing="grvBatteryDetails_RowEditing"
-                                          PageSize="5" OnPageIndexChanging="grvBatteryDetails_PageIndexChanging">
+                                          PageSize="5" OnPageIndexChanging="grvBatteryDetails_PageIndexChanging" BorderWidth="1px" BorderStyle="Inset" BorderColor="brown">
                                 <RowStyle CssClass="rowStyleGrid"/>
                                 <Columns>
                                     <asp:TemplateField HeaderText="Id">

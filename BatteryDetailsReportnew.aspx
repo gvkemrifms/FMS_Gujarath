@@ -1,55 +1,64 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BatteryDetailsReportnew.aspx.cs" Inherits="BatteryDetailsReportnew" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script type="text/javascript">
-    $(function() {
-        $('#<%=btnShowReport.ClientID%>').click(function() {
-            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-            if (ddlDistrict === '--select--') {
-                alert("Please select District");
-                e.preventDefault();
-            }
-        });
-    });
-        </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>  
+    <script type="text/javascript">
+        $(function() {
+            $('#<%= ddldistrict.ClientID %>').chosen();
+        });
+        function Validations() {
+            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') {
+                return alert("Please select District");
+             
+            }
+            return true;
+        }
+
+    </script>
+    <style>
+        .btnShowReport {
+            margin-left: 100px;
+        }
+    </style>
     <table>
         <tr>
             <td>
                 <asp:Label ID="lblcardtypereport" style="font-size: 20px; color: brown" runat="server" Text="Battery&nbsp;Details&nbsp;Report"></asp:Label>
             </td>
         </tr>
-    </table>
-    <table style="width: 70px; margin-left: 125px;">
+    </table >
+    <table align="center" >
         <tr>
 
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+               Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red;margin-right: 1px">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 100px"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
-
-
-            <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnsubmit_Click"></asp:Button>
-            </td>
-
-
-            <td>
-                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
-
-            </td>
-
         </tr>
+            </table>
+            <table align="center">
+                <tr>
+                    <td>
+                        <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" CssClass="form-submit-button"  OnClick="btnsubmit_Click" OnClientClick="if(!Validations())return false;"></asp:Button>
+                    </td>
+
+
+                    <td>
+                        <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
+
+                    </td>
+                </tr>
     </table>
-    <div>
+    <br/>
+    <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="GrdBataryData" runat="server"></asp:GridView>
+            <asp:GridView ID="GrdBataryData" runat="server" BorderColor="brown" BorderWidth="1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

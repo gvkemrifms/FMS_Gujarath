@@ -3,9 +3,17 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
-    <script src="js/jquery-1.10.2.min.js"></script>
- <script language="javascript" type="text/javascript">
+
+<asp:UpdatePanel ID="up1" runat="server">
+<ContentTemplate>
+ <script type="text/javascript">
+     function pageLoad() {
+         
+         $('#<%= ddlEngineNo.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+         $('#<%= ddlDistrict.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+         } 
+ </script>
+<script>
      var publicData;
      var vehcostdata;
      var inVoiceDate;
@@ -899,45 +907,33 @@
 
 
  </script>
-
-   
-    <asp:UpdatePanel ID="up1" runat="server">
-        <ContentTemplate>
             <asp:Panel ID="pnlBaseVehicleDetails" runat="server">
                 <asp:HiddenField ID="hdnStepNo" runat="server" />
-              
-                    <table style="width: 100%">
+            <legend align="center">Base Details </legend>
+                <br/>
+            <table align="center">
                         <tr>
-                            <td colspan="5" style="text-align: center">
-                                <b>Base Details </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="rowseparator" style="width: 164px">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="center">
+                            <td  >
                                 Engine No<span style="color: Red">*</span>
                             </td>
-                            <td align="center">
-                                <asp:DropDownList ID="ddlEngineNo" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlEngineNo_SelectedIndexChanged"
-                                    Width="150px" TabIndex="1">
+                            <td >
+                                <asp:DropDownList ID="ddlEngineNo" runat="server" AutoPostBack="True" CssClass="Dropdowncss" OnSelectedIndexChanged="ddlEngineNo_SelectedIndexChanged"
+                                   style="width: 150px;" TabIndex="1">
                                 </asp:DropDownList>
                             </td>
-                            <td align="center">
-                                Chassis No<span style="color: Red">*</span>
-                            </td>
-                            <td align="center">
-                                &nbsp;<asp:TextBox ID="txtChassisNo" runat="server" BackColor="DarkGray" ReadOnly="True"
-                                    Width="150px" TabIndex="2"></asp:TextBox></td>
-                        </tr>
+                            </tr>
+                <tr>
+                    <td>
+                        Chassis No<span style="color: Red; padding-left: 10px;">*</span>
+                    </td>
+                    <td  align>
+                        &nbsp;<asp:TextBox ID="txtChassisNo" runat="server" BackColor="DarkGray" CssClass="search_3" ReadOnly="True" Width="150px" TabIndex="2"></asp:TextBox></td>
+                </tr>                           
                     </table>
-                
-                &nbsp;&nbsp;&nbsp;
+                <br/>
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Invoice and Base Details</legend>
-                    <table style="width: 100%;">
+                    <table align="center">
                         <tr>
                             <td class="rowseparator" style="width: 164px">
                             </td>
@@ -959,7 +955,7 @@
                                 Invoice No<span style="color: Red">*</span>
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtInvoiceNo" runat="server" Width="100px" onkeypress="return alphanumeric_only(event);"
+                                <asp:TextBox ID="txtInvoiceNo" runat="server" Width="100px" CssClass="search_3" onkeypress="return alphanumeric_only(event);"
                                     MaxLength="15" TabIndex="3"></asp:TextBox>
                             </td>
                             <td>
@@ -973,8 +969,8 @@
                             </td>
                             <td style="width: 103px" nowrap="nowrap">
                                 <asp:TextBox ID="txtInvoiceDate" runat="server" oncut="return false;" onpaste="return false;"
-                                    Width="100px" onkeypress="return false" TabIndex="4"></asp:TextBox>
-                                <cc1:CalendarExtender ID="calExtInvoiceDate" runat="server" Enabled="True" PopupButtonID="imgBtnCalendarInvoiceDate"
+                                    Width="100px" onkeypress="return false" CssClass="search_3" TabIndex="4"></asp:TextBox>
+                                <cc1:CalendarExtender ID="calExtInvoiceDate" runat="server" Enabled="True" CssClass="cal_Theme1" PopupButtonID="imgBtnCalendarInvoiceDate"
                                     TargetControlID="txtInvoiceDate" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                             </td>
@@ -999,7 +995,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtBasicPrice" runat="server" name="floats" Width="100px" ondrop = "return false;"  
-                                             onpaste = "return false;" onkeypress="return numericOnly(this);"
+                                             onpaste = "return false;" CssClass="search_3" onkeypress="return numericOnly(this);"
                                     MaxLength="11" onchange="return vehicleCostAddition(this)" TabIndex="5"></asp:TextBox>
                             </td>s
                             <td>
@@ -1014,7 +1010,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtHandlingCharges" runat="server" name="floats" Width="100px" onkeypress="return numericOnly(this);"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="6"></asp:TextBox>
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" CssClass="search_3" TabIndex="6"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1033,7 +1029,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtExciseDuty" runat="server" name="floats" Width="100px"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" onkeypress="return numericOnly(this);" TabIndex="7"></asp:TextBox>
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" CssClass="search_3" onkeypress="return numericOnly(this);" TabIndex="7"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1047,7 +1043,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtEC" runat="server" Width="100px" 
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" onkeypress="return numericOnly(this);" TabIndex="8"></asp:TextBox>
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" CssClass="search_3" onkeypress="return numericOnly(this);" TabIndex="8"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1066,7 +1062,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtVAT" runat="server" Width="100px"  onkeypress="return numericOnly(this);"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="9"></asp:TextBox>
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" CssClass="search_3" TabIndex="9"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1080,7 +1076,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtUAV" runat="server" Width="100px" onkeypress="return numericOnly(this);"
-                                    MaxLength="8" onchange="return vehicleCostAddition(this)" TabIndex="10"></asp:TextBox>
+                                    MaxLength="8" onchange="return vehicleCostAddition(this)" CssClass="search_3" TabIndex="10"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1100,7 +1096,7 @@
                             <td colspan="2">
                                 <asp:TextBox ID="txtSHEC" runat="server" Width="100px" onkeypress="return numericOnly(this);"
                                     AutoPostBack="True" MaxLength="8" 
-                                    onchange="return vehicleCostAddition(this)" TabIndex="11"></asp:TextBox>
+                                    onchange="return vehicleCostAddition(this)" CssClass="search_3" TabIndex="11"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1114,7 +1110,7 @@
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtVehCost" runat="server" BackColor="DarkGray" Width="100px" 
-                                    onkeypress="return false" TabIndex="12"></asp:TextBox>
+                                    onkeypress="return false" CssClass="search_3" TabIndex="12"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1125,7 +1121,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>General Information</legend>
-                    <table style="width: 100%;">
+                    <table align="center">
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>General Information </b>
@@ -1143,7 +1139,7 @@
                                 Vehicle Model<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlVehicleModel" runat="server" Width="105px" 
+                                <asp:DropDownList ID="ddlVehicleModel" runat="server" Width="105px" CssClass="Dropdowncss" 
                                     TabIndex="13">
                                 </asp:DropDownList>
                             </td>
@@ -1158,7 +1154,7 @@
                                 KMPL<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtKmpl" runat="server" Width="100px" onkeypress="return numericOnly(this);"
+                                <asp:TextBox ID="txtKmpl" runat="server" Width="100px" CssClass="search_3" onkeypress="return numericOnly(this);"
                                     MaxLength="5" TabIndex="14"></asp:TextBox>
                             </td>
                             <td>
@@ -1177,7 +1173,7 @@
                                 Vehicle Type<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlVehicleType" runat="server" Width="105px" 
+                                <asp:DropDownList ID="ddlVehicleType" runat="server" Width="105px" CssClass="Dropdowncss"
                                     TabIndex="15">
                                 </asp:DropDownList>
                             </td>
@@ -1193,7 +1189,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtVehicleEmissionType" runat="server" Width="100px" MaxLength="10"
-                                    onkeypress="return alpha_only(event);" TabIndex="16"></asp:TextBox>
+                                    onkeypress="return alpha_only(event);" CssClass="search_3" TabIndex="16"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1212,9 +1208,9 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtPurchaseDate" runat="server" Width="100px" onkeypress="return false"
-                                    oncut="return false;" onpaste="return false;" TabIndex="17"></asp:TextBox>
+                                    oncut="return false;" onpaste="return false;" CssClass="search_3" TabIndex="17"></asp:TextBox>
                                 <cc1:CalendarExtender ID="calExtPurDate" runat="server" Enabled="True" PopupButtonID="imgbtPurchaseDate"
-                                    TargetControlID="txtPurchaseDate" Format="MM/dd/yyyy">
+                                    TargetControlID="txtPurchaseDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="imgbtPurchaseDate" runat="server" alt="" src="images/Calendar.gif"
                                     Style="vertical-align: top" TabIndex="18" />
@@ -1231,7 +1227,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtOwnerName" runat="server" Width="100px" MaxLength="35" 
-                                    onkeypress="return alpha_only_withspace(event);" TabIndex="19"></asp:TextBox>
+                                    onkeypress="return alpha_only_withspace(event);" CssClass="search_3" TabIndex="19"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1249,7 +1245,7 @@
                                 Manufacturer Name<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlManufacturerName" runat="server" Width="105px" 
+                                <asp:DropDownList ID="ddlManufacturerName" runat="server" Width="105px" CssClass="Dropdowncss"
                                     TabIndex="20">
                                 </asp:DropDownList>
                             </td>
@@ -1265,7 +1261,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtVehicleCost" runat="server" Width="100px" onkeypress="return numericOnly(this);"
-                                    MaxLength="11" ReadOnly="True" TabIndex="21"></asp:TextBox>
+                                    MaxLength="11" ReadOnly="True" CssClass="search_3" TabIndex="21"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1284,9 +1280,9 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtManufacturingDate" runat="server" Width="100px" onkeypress="return false"
-                                    oncut="return false;" onpaste="return false;" TabIndex="22"></asp:TextBox>
+                                    oncut="return false;" onpaste="return false;" CssClass="search_3" TabIndex="22"></asp:TextBox>
                                 <cc1:CalendarExtender ID="calExtManufDate" runat="server" Enabled="True" PopupButtonID="imgbtManufacturingDate"
-                                    TargetControlID="txtManufacturingDate" Format="MM/dd/yyyy">
+                                    TargetControlID="txtManufacturingDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="imgbtManufacturingDate" runat="server" alt="" src="images/Calendar.gif"
                                     Style="vertical-align: top" TabIndex="23" />
@@ -1303,7 +1299,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEngineCapacity" runat="server" Width="100px" onkeypress="return alphanumeric_only(event);"
-                                    MaxLength="8" TabIndex="24"></asp:TextBox>
+                                    MaxLength="8" CssClass="search_3" TabIndex="24"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1321,7 +1317,7 @@
                                 Fuel Type<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlFuelType" runat="server" Width="105px" TabIndex="25">
+                                <asp:DropDownList ID="ddlFuelType" runat="server" Width="105px" TabIndex="25" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1337,7 +1333,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Insurance Information</legend>
-                    <table style="width: 100%">
+                    <table align="center">
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>Insurance Information</b>
@@ -1355,7 +1351,7 @@
                                 District<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlDistrict" runat="server" Width="105px" TabIndex="26">
+                                <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" TabIndex="26" >
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1370,7 +1366,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInPolicyNo" runat="server" Width="100px" MaxLength="15" 
-                                    onkeypress="return alphanumeric_only(event);" TabIndex="27"></asp:TextBox>
+                                    onkeypress="return alphanumeric_only(event);" CssClass="search_3" TabIndex="27"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1388,7 +1384,7 @@
                                 Insurance Type<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlInsType" runat="server" Width="105px" TabIndex="28">
+                                <asp:DropDownList ID="ddlInsType" runat="server" Width="105px" TabIndex="28" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1403,7 +1399,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInsFee" runat="server" Width="100px" onkeypress="return numericOnly(this);"
-                                    MaxLength="11" TabIndex="29"></asp:TextBox>
+                                    MaxLength="11" CssClass="search_3" TabIndex="29"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1423,7 +1419,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInsuranceReceiptNo" runat="server" Width="100px" MaxLength="15"
-                                    onkeypress="return alphanumeric_only(event);" TabIndex="30"></asp:TextBox>
+                                    onkeypress="return alphanumeric_only(event);" CssClass="search_3" TabIndex="30"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1437,13 +1433,13 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInsuranceFeesPaidDate" runat="server" Width="100px" 
-                                     TabIndex="31" onkeypress="return false"></asp:TextBox>
+                                     TabIndex="31" CssClass="search_3" onkeypress="return false"></asp:TextBox>
                                 <cc1:CalendarExtender ID="txtInsuranceFeesPaidDate_CalendarExtender" runat="server"
-                                    Enabled="True" PopupButtonID="imgbtInsuranceFeesPaidDate" Format="MM/dd/yyyy"
+                                    Enabled="True" PopupButtonID="imgbtInsuranceFeesPaidDate" CssClass="cal_Theme1" Format="MM/dd/yyyy"
                                     TargetControlID="txtInsuranceFeesPaidDate">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="imgbtInsuranceFeesPaidDate" runat="server" alt="" src="images/Calendar.gif"
-                                    Style="vertical-align: top" TabIndex="32" />
+                                    Style="vertical-align: top;margin-top: -4px;position: relative;bottom: 30px;float:right" TabIndex="32" />
                             </td>
                             <td>
                                 &nbsp;
@@ -1461,7 +1457,7 @@
                                 Agency<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlAgency" runat="server" Width="105px" TabIndex="33">
+                                <asp:DropDownList ID="ddlAgency" runat="server" Width="150px" TabIndex="33" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1476,13 +1472,13 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtValiSDate" runat="server" Width="100px" AutoPostBack="True" OnTextChanged="txtValiSDate_TextChanged"
-                                    onkeypress="return false;" oncut="return false;" onpaste="return false;" 
+                                    onkeypress="return false;" CssClass="search_3" oncut="return false;" onpaste="return false;" 
                                     TabIndex="34"></asp:TextBox>
                                 <cc1:CalendarExtender ID="calExValiSDate" runat="server" Enabled="True" PopupButtonID="imgbtValiSdate"
-                                    TargetControlID="txtValiSDate" Format="MM/dd/yyyy">
+                                    TargetControlID="txtValiSDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="imgbtValiSdate" runat="server" alt="" src="images/Calendar.gif"
-                                    Style="vertical-align: top" TabIndex="35" />
+                                                 Style="vertical-align: top;margin-top: -4px;position: relative;bottom: 30px;float:right" TabIndex="32" />
                             </td>
                             <td>
                                 &nbsp;
@@ -1500,7 +1496,7 @@
                                 Policy Validity Period
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlPolicyValidityPeriod" runat="server" Width="105px" AutoPostBack="True"
+                                <asp:DropDownList ID="ddlPolicyValidityPeriod" runat="server" CssClass="Dropdowncss" Width="150px" AutoPostBack="True"
                                     OnSelectedIndexChanged="ddlPolicyValidityPeriod_SelectedIndexChanged" 
                                     TabIndex="36">
                                     <asp:ListItem Value="-1">--Select--</asp:ListItem>
@@ -1522,7 +1518,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtValEDate" runat="server" oncut="return false;" onpaste="return false;"
-                                    Width="100px" BackColor="DarkGray" ReadOnly="True" TabIndex="37"></asp:TextBox>
+                                    Width="100px" BackColor="DarkGray" CssClass="search_3" ReadOnly="True" TabIndex="37"></asp:TextBox>
                                
                             </td>
                             <td>
@@ -1538,7 +1534,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Inspection Information</legend>
-                    <table style="width: 100%">
+                    <table align="center">
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>Inspection Information </b>
@@ -1557,9 +1553,9 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInspectionDate" runat="server" Width="105px" onkeypress="return false;"
-                                    oncut="return false;" onpaste="return false;" TabIndex="38"></asp:TextBox>
+                                    oncut="return false;" CssClass="search_3" onpaste="return false;" TabIndex="38"></asp:TextBox>
                                 <cc1:CalendarExtender ID="calExtInspectionDate" runat="server" Enabled="True" PopupButtonID="imgbtInspectionDt"
-                                    TargetControlID="txtInspectionDate" Format="MM/dd/yyyy">
+                                    TargetControlID="txtInspectionDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="imgbtInspectionDt" runat="server" alt="" src="images/Calendar.gif"
                                     Style="vertical-align: top" TabIndex="39" />
@@ -1576,7 +1572,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtInspectedBy" runat="server" TabIndex="40" onkeypress="return alpha_only_withspace(event);"
-                                    Width="105px" MaxLength="35"></asp:TextBox>
+                                    Width="105px" CssClass="search_3" MaxLength="35"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1591,7 +1587,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Temporary Registration</legend>
-                    <table style="width: 100%">
+                    <table align="center">
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>Temporary Registration </b>
@@ -1609,7 +1605,7 @@
                                 T/R No<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtTRNo" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtTRNo" runat="server" Width="100px" MaxLength="10" CssClass="search_3"
                                     TabIndex="41"></asp:TextBox>
                             </td>
                             <td>
@@ -1624,9 +1620,9 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtTRDate" runat="server" oncut="return false;" onpaste="return false;"
-                                    Width="100px" onkeypress="return false;" TabIndex="42"></asp:TextBox>
+                                    Width="100px" CssClass="search_3" onkeypress="return false;" TabIndex="42"></asp:TextBox>
                                 <cc1:CalendarExtender ID="calExtTRDate" runat="server" Enabled="True" PopupButtonID="ImgbtTRDate"
-                                    TargetControlID="txtTRDate" Format="MM/dd/yyyy">
+                                    TargetControlID="txtTRDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                                 </cc1:CalendarExtender>
                                 <asp:ImageButton ID="ImgbtTRDate" runat="server" alt="" src="images/Calendar.gif"
                                     Style="vertical-align: top" TabIndex="43" />
@@ -1647,7 +1643,7 @@
                                 T/R District<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlTRDistrict" runat="server" Width="105px" TabIndex="44">
+                                <asp:DropDownList ID="ddlTRDistrict" runat="server" Width="105px" TabIndex="44" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1661,7 +1657,7 @@
                                 Vehicle RTA Circle<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtVeRTACircle" runat="server" Width="100px" MaxLength="20" 
+                                <asp:TextBox ID="txtVeRTACircle" runat="server" Width="100px" MaxLength="20" CssClass="search_3"
                                     onkeypress="return alpha_only_withspace(event);" TabIndex="45"></asp:TextBox>
                             </td>
                             <td>
@@ -1680,7 +1676,7 @@
                                 Road Tax Fee<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtRoadTaxFee" runat="server" Width="100px" onkeypress="return numericOnly(this);"
+                                <asp:TextBox ID="txtRoadTaxFee" runat="server" Width="100px" onkeypress="return numericOnly(this);" CssClass="search_3"
                                     MaxLength="9" TabIndex="46"></asp:TextBox>
                             </td>
                             <td>
@@ -1694,7 +1690,7 @@
                                 Seating Capacity<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSittingCapacity" runat="server" Width="100px" onkeypress="return numeric(event);"
+                                <asp:TextBox ID="txtSittingCapacity" runat="server" Width="100px" onkeypress="return numeric(event);" CssClass="search_3"
                                     MaxLength="2" TabIndex="47"></asp:TextBox>
                             </td>
                             <td>
@@ -1710,7 +1706,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Tyre Information</legend>
-                    <table style="width: 100%">
+                    <table align="center" >
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>Tyre Information </b>
@@ -1728,7 +1724,7 @@
                                 FL<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtFL" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtFL" runat="server" Width="100px" MaxLength="10"  CssClass="search_3"
                                     onkeypress="return alphanumeric_only(event);" TabIndex="48"></asp:TextBox>
                             </td>
                             <td>
@@ -1742,7 +1738,7 @@
                                 FR<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtFR" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtFR" runat="server" Width="100px" MaxLength="10" CssClass="search_3"
                                     onkeypress="return alphanumeric_only(event);" TabIndex="49"></asp:TextBox>
                             </td>
                             <td>
@@ -1761,7 +1757,7 @@
                                 RL<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtRL" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtRL" runat="server" Width="100px" MaxLength="10" CssClass="search_3"
                                     onkeypress="return alphanumeric_only(event);" TabIndex="50"></asp:TextBox>
                             </td>
                             <td>
@@ -1775,7 +1771,7 @@
                                 RR<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtRR" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtRR" runat="server" Width="100px" MaxLength="10" CssClass="search_3"
                                     onkeypress="return alphanumeric_only(event);" TabIndex="51"></asp:TextBox>
                             </td>
                             <td>
@@ -1794,7 +1790,7 @@
                                 Spare Wheel<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSpareWheel" runat="server" Width="100px" MaxLength="10" 
+                                <asp:TextBox ID="txtSpareWheel" runat="server" Width="100px" MaxLength="10" CssClass="search_3"
                                     onkeypress="return alphanumeric_only(event);" TabIndex="52"></asp:TextBox>
                             </td>
                             <td>
@@ -1808,7 +1804,7 @@
                                 Make<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlTyreMake" runat="server" Width="105px" TabIndex="53">
+                                <asp:DropDownList ID="ddlTyreMake" runat="server" Width="105px" TabIndex="53" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1827,7 +1823,7 @@
                                 Model-Size<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlModelSize" runat="server" Width="105px" TabIndex="54">
+                                <asp:DropDownList ID="ddlModelSize" runat="server" Width="105px" TabIndex="54" CssClass="Dropdowncss">
                                 </asp:DropDownList>
                             </td>
                             <td>
@@ -1842,7 +1838,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtOdometerReading" runat="server" Width="100px" onkeypress="return OnlyNumbers(event);"
-                                    MaxLength="12" TabIndex="55"></asp:TextBox>
+                                    MaxLength="12" CssClass="search_3" TabIndex="55"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1857,7 +1853,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <fieldset style="padding: 10px; width: 645px;">
                     <legend>Battery Information</legend>
-                    <table style="width: 100%">
+                    <table align="center" >
                         <tr>
                             <td colspan="10" style="text-align: center">
                                 <b>Battery Information </b>
@@ -1876,7 +1872,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtBattery1" runat="server" Width="100px" MaxLength="10" 
-                                    onkeypress="return alphanumeric_only(event);" TabIndex="56"></asp:TextBox>
+                                    onkeypress="return alphanumeric_only(event);" CssClass="search_3" TabIndex="56"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1890,7 +1886,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtBattery2" runat="server" Width="100px" MaxLength="10" 
-                                    onkeypress="return alphanumeric_only(event);" TabIndex="57"></asp:TextBox>
+                                    onkeypress="return alphanumeric_only(event);" CssClass="search_3" TabIndex="57"></asp:TextBox>
                             </td>
                             <td>
                                 &nbsp;
@@ -1908,7 +1904,7 @@
                                 Make<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlBatteryMake" runat="server" Width="105px" 
+                                <asp:DropDownList ID="ddlBatteryMake" runat="server" Width="105px" CssClass="Dropdowncss" 
                                     TabIndex="58">
                                 </asp:DropDownList>
                             </td>
@@ -1923,7 +1919,7 @@
                                 Model Capacity<span style="color: Red">*</span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlModelCapacity" runat="server" Width="105px" 
+                                <asp:DropDownList ID="ddlModelCapacity" runat="server" Width="150px" CssClass="Dropdowncss"
                                     TabIndex="59">
                                 </asp:DropDownList>
                             </td>
@@ -1957,22 +1953,23 @@
                 </fieldset>
                 <asp:Button ID="btnValidate" runat="server" Text="validate" Style="display: none" />
             </asp:Panel>
-            <table align="center" style="margin-top: 20px">
+            <table align="center" >
                 <tr>
                     <td>
                         <asp:Button ID="btnSave" runat="server" Text="Submit" Width="60px" TabIndex="60"
-                            OnClientClick="return validation();" Height="30px" 
+                            OnClientClick="return validation();" Height="30px" CssClass="form-submit-button" 
                             OnClick="btnSave_Click" />
                     </td>
                     <td style="width: 10px">
                     </td>
                     <td>
                         <asp:Button ID="btnReset" runat="server" Text="Reset" TabIndex="61" Height="30px"
-                            Width="60px" OnClick="btnReset_Click" />
+                            Width="60px" CssClass="form-submit-button"  OnClick="btnReset_Click" />
                     </td>
                 </tr>
             </table>
-        </ContentTemplate>
+    
+   </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
 

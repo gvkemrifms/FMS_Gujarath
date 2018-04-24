@@ -4,8 +4,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
         function validation() {
             var dcNumberPopup = document.getElementById('<%= txtDcNumberPopup.ClientID %>');
             var dcDate = document.getElementById('<%= txtDcDate.ClientID %>');

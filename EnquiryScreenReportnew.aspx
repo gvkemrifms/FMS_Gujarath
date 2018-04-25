@@ -2,51 +2,60 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
         $(function() {
-            $('#<%= btnShowReport.ClientID %>').click(function () {
-                var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
-                if (ddlVehicle === '--select--') {
-                    alert("Please select Vehicle");
-                    e.preventDefault();
-                }
-            });
+            $('#<%= ddlvehicle.ClientID %>').chosen();
         });
+        function Validations()  
+        {
+            var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+                return alert("Please select Vehicle");
+            }
+            return true;
+        }
     </script>
    
-    <table>
+    <table align="center">
         <tr>
             <td>
                 <asp:Label ID="lblenquiryreport" style="font-size: 20px; color: brown" runat="server" Text="Enquiry&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
-    <table style="width: 70px; margin-left: 125px;">
+    <br/>
+    <table align="center">
         <tr>
 
             <td>
-                <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle"></asp:Label>
+                Select Vehicle<asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 100px"></asp:DropDownList>
+                <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
+            </tr>
+        <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btClick_ShowReport"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btClick_ShowReport" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </td>
 
             <td>
-                <asp:Button runat="server" Text="ExportExcel"></asp:Button>
+                <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button"></asp:Button>
 
             </td>
-            <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-                <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
-            </asp:Panel>
-
         </tr>
-    </table>
+
+</table>
+            <br />
+    <div align="center">
+        <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
+            <asp:GridView ID="Grddetails" runat="server" BorderWidth="1px" BorderColor="brown"></asp:GridView>
+        </asp:Panel>
+    </div>
+         
+  
 </asp:Content>
 

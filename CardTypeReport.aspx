@@ -5,23 +5,21 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
    <script type="text/javascript">
        $(function() {
-           $('#<%=btnShowReport.ClientID%>').click(function() {
-               var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-               var ddlStation = $('#<%= ddlstation.ClientID %> option:selected').text().toLowerCase();
-               if (ddlDistrict === '--select--') {
-                   alert("Please select District");
-                   e.preventDefault();
-               }
-              
-               if (ddlStation === '--select--') {
-                   alert("Please select Vehicle");
-                   e.preventDefault();
-               }
-           });
+           $('#<%= ddldistrict.ClientID %>').chosen();
+           $('#<%= ddlstation.ClientID %>').chosen();
        });
+       function Validations() {
+           var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+           var ddlStation = $('#<%= ddlstation.ClientID %> option:selected').text().toLowerCase();
+           if (ddlDistrict === '--select--')
+               return alert("Please select District");          
+           if (ddlStation === '--select--') 
+               return alert("Please select Station");
+           return true;
+       }
+
    </script>
     <table>
         <tr>
@@ -34,35 +32,36 @@
         <tr>
 
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+                Select District<asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 100px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+            </td>
+</tr>
+        <tr>
+            <td>
+                Select Station <asp:Label ID="lblstation" runat="server" Text="Select&nbsp;Service&nbsp;Station" style="color: red;margin-top: 20px">*</asp:Label>
             </td>
 
             <td>
-                <asp:Label ID="lblstation" runat="server" Text="Select&nbsp;Service&nbsp;Station"></asp:Label>
+                <asp:DropDownList ID="ddlstation" runat="server" style="width: 200px;margin-top: 20px"></asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddlstation" runat="server" style="width: 100px"></asp:DropDownList>
+                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"  CssClass="form-reset-button"></asp:Button>
             </td>
-
-            <td>
-                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btnsubmit_Click"></asp:Button>
-            </td>
-
-            <td>
-                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
-            </td>
-
-
         </tr>
     </table>
+    <br/>
     <div>
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="GrdcardData" runat="server"></asp:GridView>
+            <asp:GridView ID="GrdcardData" runat="server" BorderWidth="1px" BorderColor="brown"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

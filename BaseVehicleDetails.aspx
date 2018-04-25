@@ -3,12 +3,10 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
 <asp:UpdatePanel ID="up1" runat="server">
 <ContentTemplate>
  <script type="text/javascript">
-     function pageLoad() {
-         
+     function pageLoad() {        
          $('#<%= ddlEngineNo.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
          $('#<%= ddlDistrict.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
          } 

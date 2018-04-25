@@ -41,16 +41,34 @@
             font-weight: bold;
         }
     </style>
-    <script src="js/Validation.js"></script>
-    <script type="text/javascript" language="javascript">
+    
 
-        function validation() {
+
+    <asp:UpdatePanel ID="updtpnlVehMapping" runat="server">
+        <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {        
+                    $('#<%= ddlVehicleNumber.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    $('#<%= ddlDistrict.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    $('#<%= ddlMandal.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    $('#<%= ddlCity.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    $('#<%= ddlBaseLocation.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    $('#<%= ddlVehType.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                } 
+            </script>
+            <script type="text/javascript" >
+
+                function validation()
+                {
 
             var fldDistrict = document.getElementById('<%= ddlDistrict.ClientID %>');
             var fldVehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
             var fldMandals = document.getElementById('<%= ddlMandal.ClientID %>');
             var fldCity = document.getElementById('<%= ddlCity.ClientID %>');
-            var fldContactNumber = document.getElementById('<%= txtContactNumber.ClientID %>');
+                    var fldContactNumber = document.getElementById('<%= txtContactNumber.ClientID %>');
+                    var vehicleType = document.getElementById('<%=ddlVehType.ClientID %>');
+                    var txtLatitudes = document.getElementById('<%=txtLatitude.ClientID %>');
+                    var txtLongitudes=document.getElementById('<%=txtLongitude.ClientID %>');
             var inputs = fldVehicleNumber.getElementsByTagName('input');
             var i;
             for (i = 0; i < inputs.length; i++) {
@@ -62,6 +80,11 @@
                     }
                     break;
                 }
+            }
+            if (fldVehicleNumber.selectedIndex === 0) {
+                alert("Please Select Vehicle");
+                fldVehicleNumber.focus();
+                return false;
             }
             if (fldDistrict && fldDistrict.selectedIndex === 0) {
                 alert("Please Select District");
@@ -83,9 +106,18 @@
 
             if (!RequiredValidation(fldContactNumber, "Please select Contact Number"))
                 return false;
-            return true;
-        }
+                    if (vehicleType.selectedIndex === 0) {
+                        alert("Please Select VehicleType");
+                        return false;
+              }
+                        if (!RequiredValidation(txtLatitudes, "Please select Latitude"))
+                            return false;
+                        if (!RequiredValidation(txtLongitudes, "Please select Longitude"))
+                            return false;
+                    return true;
+                }
 
+                
         function open() {
             var modal = document.getElementById('myModal');
             var span = document.getElementsByClassName("close")[0];
@@ -101,10 +133,6 @@
         }
 
     </script>
-
-
-    <asp:UpdatePanel ID="updtpnlVehMapping" runat="server">
-        <ContentTemplate>
             <div style="width: 50%; float: left">
 
                 <table align="center">
@@ -117,7 +145,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlVehicleNumber" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlVehicleNumber" runat="server" AutoPostBack="true" Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -131,7 +159,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -149,7 +177,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlMandal" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlMandal_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlMandal" runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlMandal_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -163,7 +191,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -174,17 +202,17 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Base Location<span class="labelErr" style="color: Red">*</span>
+                                        Base Location
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
                                         <table width="100%">
                                             <tr>
                                                 <td style="width: 20%">
-                                                    <asp:DropDownList ID="ddlBaseLocation" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlBaseLocation_SelectedIndexChanged">
+                                                    <asp:DropDownList ID="ddlBaseLocation" runat="server" AutoPostBack="True" Width="150px" OnSelectedIndexChanged="ddlBaseLocation_SelectedIndexChanged">
                                                         <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                                     </asp:DropDownList>
-                                                    <asp:TextBox ID="txtBaseLocation" runat="server" Width="200px" Visible="false"></asp:TextBox>
+                                                    <asp:TextBox ID="txtBaseLocation" runat="server" Width="150px" CssClass="search_3" Visible="false"></asp:TextBox>
                                                 </td>
                                                 <td style="margin: 5px">
                                                     <script>
@@ -229,11 +257,11 @@
 
                                 <tr>
                                     <td>
-                                        Contact Number<span class="labelErr" style="color: Red">*</span>
+                                        Contact Number<span  style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtContactNumber" runat="server" onkeypress="return numeric(event)"
+                                        <asp:TextBox ID="txtContactNumber" runat="server" class="search_3" Width="150px" onkeypress="return numeric_only(event)"
                                                      MaxLength="10">
                                         </asp:TextBox>
                                     </td>
@@ -243,22 +271,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Vehicle Type
+                                        Vehicle Type <span style="color: red">*</span>
                                     </td>
                                     <td></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlVehType" class="text1" runat="server"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlVehType" Width="150px" runat="server"></asp:DropDownList>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="lblLatitude" runat="server" Text="Latitude" Visible="false"></asp:Label>
+                                        <asp:Label ID="lblLatitude" runat="server" Text="Latitude" Visible="false" ></asp:Label>
                                         <asp:Label ID="lblMandatory1" runat="server" Text="*" ForeColor="Red" Visible="false"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtLatitude" Class="txtLatitude" runat="server" Visible="false" onblur="isDecimal(this);"
-                                                     onkeydown="return OnlyNumPeriod(event);">
+                                        <asp:TextBox ID="txtLatitude"  runat="server" Width="150px" Visible="false" CssClass="search_3" onblur="isDecimal(this);"
+                                                     onkeydown="return numericOnly(this);">
                                         </asp:TextBox>
                                     </td>
                                 </tr>
@@ -270,10 +298,10 @@
                                         <asp:Label ID="lblLongitude" runat="server" Text="Longitude" Visible="false"></asp:Label>
                                         <asp:Label ID="lblMandatory2" runat="server" Text="*" ForeColor="Red" Visible="false"></asp:Label>
                                     </td>
-                                    <td class="columnseparator"></td>
+                                    <td class="columnseparator"></td> 
                                     <td>
-                                        <asp:TextBox ID="txtLongitude" Class="txtLongitude" runat="server" Visible="false" onblur="isDecimal(this);"
-                                                     onkeydown="return OnlyNumPeriod(event);">
+                                        <asp:TextBox ID="txtLongitude" runat="server" CssClass="search_3" Width="150px" Visible="false" onblur="isDecimal(this);"
+                                                     onkeydown="return numericOnly(this);">
                                         </asp:TextBox>
                                     </td>
                                 </tr>
@@ -285,11 +313,11 @@
                             <table align="center">
                                 <tr>
                                     <td align="center">
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"/>
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="form-submit-button" />
                                     </td>
                                     <td class="columnseparator" style="width: 50px"></td>
                                     <td align="center">
-                                        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click"/>
+                                        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" CssClass="form-submit-button" />
                                     </td>
                                 </tr>
                             </table>
@@ -301,6 +329,7 @@
                 <div>
                 </div>
             </div>
+            <br/>
             <div style="width: 50%; float: right">
                 <div>
                     <asp:Label ID="lblVeh" runat="server"></asp:Label>

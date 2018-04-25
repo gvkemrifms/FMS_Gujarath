@@ -48,7 +48,7 @@ public partial class DistrictVehicleMapping : Page
         lblMandatory2.Visible = true;
         txtLatitude.Visible = true;
         txtLongitude.Visible = true;
-        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", "open()", true);
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", null, true);
     }
 
     protected void lnkbtnExtngBaseLoc_Click(object sender, EventArgs e)
@@ -61,8 +61,8 @@ public partial class DistrictVehicleMapping : Page
         lblLongitude.Visible = false;
         lblMandatory1.Visible = false;
         lblMandatory2.Visible = false;
-        txtLatitude.Text = "";
-        txtLongitude.Text = "";
+        txtLatitude.Visible = false;
+        txtLongitude.Visible = false;
     }
 
     protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)

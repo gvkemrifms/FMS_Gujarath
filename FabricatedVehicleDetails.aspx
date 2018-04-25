@@ -1,11 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FabricatedVehicleDetails.aspx.cs" Inherits="FabricatedVehicleDetails" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
     function validation() {
         var fabricatorName = document.getElementById('<%= ddlFabricatorName.ClientID %>');
         var invoiceNo = document.getElementById('<%= txtInvoiceNo.ClientID %>');
@@ -24,7 +20,7 @@
             switch (inputs[i].type) {
             case 'text':
                 if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                    alert('Select the Vehicle');
+                    alert('Select the T/R Number');
                     return false;
                 }
                 break;
@@ -134,13 +130,17 @@
         return true;
     }
 
-
 </script>
 
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
-
+<script type="text/javascript">
+    function pageLoad() {        
+       
+        $('#<%= ddlFabricatorName.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+    } 
+</script>
 <table>
 <tr>
     <td class="rowseparator"></td>
@@ -188,7 +188,7 @@
                         Invoice No<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtInvoiceNo" runat="server" Width="145px" MaxLength="15" onkeypress="return alphanumeric_only(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtInvoiceNo" runat="server" CssClass="search_3" Width="145px" MaxLength="15" onkeypress="return alphanumeric_only(event);"></asp:TextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -198,13 +198,13 @@
                         Invoice Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtInvoiceDate" runat="server" Width="145px" onkeypress="return false"
+                        <asp:TextBox ID="txtInvoiceDate" runat="server" CssClass="search_3" Width="145px" onkeypress="return false"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imgBtnCalendarInvoiceDate"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
                         <cc1:CalendarExtender ID="calExtInvoiceDate" runat="server" TargetControlID="txtInvoiceDate"
-                                              PopupButtonID="imgBtnCalendarInvoiceDate" Format="MM/dd/yyyy">
+                                              PopupButtonID="imgBtnCalendarInvoiceDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
                     <td></td>
@@ -215,7 +215,7 @@
                         Fabrication Cost<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtFabricationCost" runat="server" Width="145px" onkeypress="return numericOnly(this);"
+                        <asp:TextBox ID="txtFabricationCost" runat="server" CssClass="search_3" Width="145px" onkeypress="return numericOnly(this);"
                                      MaxLength="9">
                         </asp:TextBox>
                     </td>
@@ -227,12 +227,12 @@
                         Vehicle Handover to Fabricator Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtVehicleHandoverDate" runat="server" Width="145px" onkeypress="return false"
+                        <asp:TextBox ID="txtVehicleHandoverDate" runat="server" CssClass="search_3" Width="145px" onkeypress="return false"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imgbtHandover"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExHandover" runat="server" TargetControlID="txtVehicleHandoverDate"
+                        <cc1:CalendarExtender ID="calExHandover" runat="server" CssClass="cal_Theme1" TargetControlID="txtVehicleHandoverDate"
                                               PopupButtonID="imgbtHandover" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -244,12 +244,12 @@
                         Fabrication Completion Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtFabricationCompDate" runat="server" Width="145px" onkeypress="return false"
+                        <asp:TextBox ID="txtFabricationCompDate" runat="server" CssClass="search_3" Width="145px" onkeypress="return false"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imgbtFabricationDate"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtFabricationDate" runat="server" TargetControlID="txtFabricationCompDate"
+                        <cc1:CalendarExtender ID="calExtFabricationDate" runat="server" CssClass="cal_Theme1" TargetControlID="txtFabricationCompDate"
                                               PopupButtonID="imgbtFabricationDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -261,7 +261,7 @@
                         Inspected By<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtInspecetedBy" runat="server" Width="145px" MaxLength="15" onkeypress="return alpha_only_withspace(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtInspecetedBy" runat="server" Width="145px" CssClass="search_3" MaxLength="15" onkeypress="return alpha_only_withspace(event);"></asp:TextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -271,12 +271,12 @@
                         Inspection Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtInspectionDate" runat="server" Width="145px" onkeypress="return false"
+                        <asp:TextBox ID="txtInspectionDate" runat="server" CssClass="search_3" Width="145px" onkeypress="return false"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imgbtInspectionDate"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtInspectionDate" runat="server" TargetControlID="txtInspectionDate"
+                        <cc1:CalendarExtender ID="calExtInspectionDate" runat="server" CssClass="cal_Theme1" TargetControlID="txtInspectionDate"
                                               PopupButtonID="imgbtInspectionDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -299,10 +299,10 @@
                 <tr>
                     <td style="width: 314px"></td>
                     <td align="center" style="width: 458px">
-                        <asp:Button ID="btSave" Text="Save" runat="server" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" Text="Save" runat="server" CssClass="form-submit-button" style="margin-top: 10px" OnClick="btSave_Click"/>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:Button ID="btReset" Text="Reset" runat="server" OnClick="btReset_Click"/>
+                        <asp:Button ID="btReset" Text="Reset" runat="server" CssClass="form-submit-button" style="margin-top: 10px"  OnClick="btReset_Click"/>
                     </td>
                     <td></td>
                 </tr>

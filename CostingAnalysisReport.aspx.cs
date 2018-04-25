@@ -8,9 +8,10 @@ public partial class CostingAnalysisReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
-            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+           
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }

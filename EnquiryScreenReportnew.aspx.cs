@@ -6,11 +6,10 @@ public partial class EnquiryScreenReportnew : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {
-            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+
             BindVehicledropdown();
-        }
     }
 
     private void BindVehicledropdown()

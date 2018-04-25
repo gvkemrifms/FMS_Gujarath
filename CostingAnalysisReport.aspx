@@ -2,24 +2,23 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
-            $('#<%= btnShowReport.ClientID %>').click(function () {
-                var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-                if (ddlDistrict === '--select--') {
-                    alert("Please select District");
-                    e.preventDefault();
-                }
-                var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
-                if (ddlVehicle === '--select--') {
-                    alert("Please select Vehicle");
-                    e.preventDefault();
-                }             
-            });
-        })
+        $(function() {
+            $('#<%= ddldistrict.ClientID %>').chosen();
+            $('#<%= ddlvehicle.ClientID %>').chosen();
+        });
+        function Validations() {
+            var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') 
+                return alert("Please select District");
+
+            var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') 
+                return alert("Please select Vehicle");
+            return true;
+        }
     </script>
     <table>
         <tr>
@@ -33,37 +32,36 @@
         <tr>
 
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+              Select District  <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 100px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+            </td>
+</tr>
+        <tr>
+            <td>
+               Select Vehicle <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle"></asp:Label>
-            </td>
-
-            <td>
-                <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 100px"></asp:DropDownList>
-            </td>
-
-
-            <td>
-                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btnsubmit_Click"></asp:Button>
-            </td>
-
-            <td>
-                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
-            </td>
-
-
+                <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 150px"></asp:DropDownList>
+            </td>      
         </tr>
+           <tr>
+               <td>
+                   <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
+               </td>
 
+               <td>
+                   <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
+               </td>
+           </tr>
     </table>
+    <br/>
     <div>
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grdcosdetails" runat="server"></asp:GridView>
+            <asp:GridView ID="Grdcosdetails" runat="server" BorderWidth="1px" BorderColor="brown"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

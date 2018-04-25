@@ -8,13 +8,10 @@ public partial class BillsOutstandingSummaryReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {
-            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
-            BindDistrictdropdown();
-        }
-            
+           
+            BindDistrictdropdown();       
     }
 
     private void BindDistrictdropdown()

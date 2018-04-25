@@ -94,10 +94,7 @@ public class Helper
         if (dropDownValue != null && gridView == null && dropDownValue2 == null)
         {
             if (parameterValue1 != null)
-            {
                 cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedValue);
-            }
-
             CommonMethod(textFieldValue, valueField, dropDownValue, ds, cmd);
             dropDownValue.Items.Insert(0, new ListItem("--Select--", "0"));
         }
@@ -109,12 +106,9 @@ public class Helper
         }
         else if (dropDownValue != null && dropDownValue2 != null && gridView == null)
         {
-            if (filter == null)
-                cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
-            else
-                cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Text);
-               CommonMethod(textFieldValue, valueField, dropDownValue2, ds, cmd);
-                dropDownValue2.Items.Insert(0, new ListItem("--Select--", "0"));
+            cmd.Parameters.AddWithValue(parameterValue1, filter == null ? dropDownValue.SelectedItem.Value : dropDownValue.SelectedItem.Text);
+            CommonMethod(textFieldValue, valueField, dropDownValue2, ds, cmd);
+            dropDownValue2.Items.Insert(0, new ListItem("--Select--", "0"));
         }
 
         else if (gridView != null)

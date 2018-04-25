@@ -17,7 +17,6 @@ public partial class DistrictUserMapping : Page
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
         if (!IsPostBack)
         {
-            btnMapping.Attributes.Add("onclick", "return validation()");
             FillUserList();
             GetDistrict();
         }

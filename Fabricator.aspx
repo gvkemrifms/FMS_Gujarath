@@ -1,9 +1,8 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Fabricator.aspx.cs" Inherits="Fabricator" Language="C#" MasterPageFile="~/temp.master" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
 <script type="text/javascript">
-    
+  
     function validationFabricator() {
         switch (document.getElementById("<%= txtFabricatorName.ClientID %>").value) {
         case '':
@@ -100,9 +99,21 @@
         return true;
     }
 </script>
-<script src="js/Validation.js"></script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlFabricatorState.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlFabricatorDistrict.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+            placeholder: "Select an option"
+        });
+    } 
+</script>
+
 <table id="table1" cellspacing="0" cellpadding="0" width="100%" align="center" border="0"
        style="height: 37px">
 <tr>
@@ -111,9 +122,9 @@
 <tr>
     <td style="height: 281px">
         <fieldset style="padding: 10px">
-            <legend>Fabricator</legend>
+            <legend align="center" style="color: brown">Fabricator</legend>
             <asp:Panel ID="pnlfabricator" runat="server">
-                <table id="table2" class="bordergreen" width="91%" align="center">
+                <table id="table2"align="center">
                     <tr>
                         <td style="height: 294px; width: 518px">
                             <table>
@@ -123,7 +134,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorName" runat="server"  MaxLength="35"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorName" runat="server" CssClass="search_3" Width="150px"  MaxLength="35"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -135,7 +146,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlFabricatorType" runat="server" >
+                                        <asp:DropDownList ID="ddlFabricatorType" CssClass="search_3" Width="150px" runat="server" >
                                             <asp:ListItem Value="0">--Select--</asp:ListItem>
                                             <asp:ListItem Value="1">Body</asp:ListItem>
                                             <asp:ListItem Value="2">FRP</asp:ListItem>
@@ -152,7 +163,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlFabricatorState" runat="server"  AutoPostBack="True"
+                                        <asp:DropDownList ID="ddlFabricatorState" runat="server" Width="150px"  AutoPostBack="True"
                                                           OnSelectedIndexChanged="ddlFabricatorState_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -166,7 +177,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" 
+                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" Width="150px" 
                                                           AutoPostBack="True" OnSelectedIndexChanged="ddlFabricatorDistrict_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -176,12 +187,12 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Address <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine" 
+                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine"  CssClass="search_3" Height="50px"
                                                      onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                         </asp:TextBox>
                                     </td>
@@ -195,7 +206,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" 
+                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" Width="150px"  CssClass="search_3"
                                                      MaxLength="15">
                                         </asp:TextBox>
                                     </td>
@@ -205,12 +216,12 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        Contact Person
+                                        Contact Person <span style="color: red">*</span>
 
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactPerson" runat="server" 
+                                        <asp:TextBox ID="txtFabricatorContactPerson" Width="150px" runat="server"  CssClass="search_3"
                                                      MaxLength="35">
                                         </asp:TextBox>
                                     </td>
@@ -224,7 +235,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server"  MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server" Width="150px"  CssClass="search_3"  MaxLength="10"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -236,7 +247,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorEmailId" runat="server"  MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorEmailId"  CssClass="search_3" Width="150px" runat="server"  MaxLength="50"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -248,7 +259,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorTin" runat="server"  MaxLength="11" onkeypress="return numeric_only(event);" ></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorTin"  CssClass="search_3" Width="150px" runat="server"  MaxLength="11" onkeypress="return numeric_only(event);" ></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -260,7 +271,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorErn" MaxLength="11" runat="server" name="floats" Width="100px" ondrop = "return false;" onpaste = "return false;" onkeypress="return numeric_only(event);"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorErn" MaxLength="11"  CssClass="search_3" Width="150px" runat="server" name="floats"  ondrop = "return false;" onpaste = "return false;" onkeypress="return numeric_only(event);"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -269,10 +280,10 @@
                                 <tr>
                                     <td colspan="3" style="height: 41px">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnFabricatorSave" runat="server" CssClass="button" OnClick="btnFabricatorSave_Click"
+                                        <asp:Button ID="btnFabricatorSave" runat="server" CssClass="form-submit-button" OnClick="btnFabricatorSave_Click"
                                                     OnClientClick="return validationFabricator();" Text="Save" Width="55px"/>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnFabricatorReset" runat="server" CausesValidation="false" CssClass="button"
+                                        <asp:Button ID="btnFabricatorReset" runat="server" CausesValidation="false" CssClass="form-reset-button"
                                                     OnClick="btnFabricatorReset_Click" Text="Reset" Width="55px"/>
                                         <input id="hidBatText" runat="server" type="hidden"/>
                                     </td>
@@ -288,10 +299,11 @@
 <tr>
     <td class="rowseparator"></td>
 </tr>
+<br />
 <tr>
-    <td>
+    <td align="center">
         <fieldset style="padding: 10px">
-            <asp:GridView ID="grvFabricatorDetails" runat="server" AllowPaging="True" PageSize="5"
+            <asp:GridView ID="grvFabricatorDetails" runat="server" AllowPaging="True" PageSize="5" BorderWidth="1px" BorderColor="brown"
                           AutoGenerateColumns="False" CellPadding="3" GridLines="None" CssClass="gridviewStyle"
                           CellSpacing="2" OnPageIndexChanging="grvFabricatorDetails_PageIndexChanging"
                           OnRowEditing="grvFabricatorDetails_RowEditing">

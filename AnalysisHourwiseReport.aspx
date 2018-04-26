@@ -6,9 +6,19 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-        $(function() {
-            $('#<%=ddldistrict.ClientID%>').chosen();
-            $('#<%= ddlvehicle.ClientID %>').chosen();
+        $(function () {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlvehicle.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
         })
     </script>
 

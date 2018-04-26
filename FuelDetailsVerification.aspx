@@ -1,9 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelDetailsVerification.aspx.cs" Inherits="FuelDetailsVerification" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
-    <table>
+    <table align="center" >
         <tr>
             <td class="rowseparator">
             </td>
@@ -11,9 +8,20 @@
         <tr>
             <td>
                 <fieldset style="padding: 10px">
-                    <legend>Fuel Detail Verification</legend>
+                    <legend align="center" style="color: brown">Fuel Detail Verification</legend>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        
                         <ContentTemplate>
+                            <script type="text/javascript">
+                                function pageLoad() {        
+                                    $('#<%= ddlVehicleNumber.ClientID %>').select2({
+                                        disable_search_threshold: 5,
+                                        search_contains: true,
+                                        minimumResultsForSearch: 20,
+                                        placeholder: "Select an option"
+                                    });
+                                } 
+                            </script>
                             <table style="width: 100%">
                                 <tr>
                                     <td align="right">
@@ -23,7 +31,7 @@
 
                                     </td>
                                     <td align="left">
-                                        <asp:DropDownList ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
+                                        <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="170px" AutoPostBack="True"
                                                           onselectedindexchanged="ddlVehicleNumber_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -37,8 +45,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <asp:GridView ID="gvVerification" runat="server" AutoGenerateEditButton="False" AutoGenerateColumns="false"
+                                    <br />
+                                    <td colspan="2" align="center">
+                                        <asp:GridView ID="gvVerification" runat="server" BorderWidth="1px" BorderColor="brown" AutoGenerateEditButton="False" AutoGenerateColumns="false"
                                                       GridLines="None" CssClass="gridviewStyle" Width="434px" CellPadding="3" CellSpacing="2"
                                                       OnRowEditing="gvVerification_RowEditing"
                                                       EmptyDataText="No Records to Approve/Reject" AllowPaging="True"
@@ -111,13 +120,13 @@
                                         <table align="left" style="width: 66%">
                                             <tr>
                                                 <td align="center">
-                                                    <asp:Button ID="Approve" runat="server" Text="Approve" OnClick="Approve_Click"/>
-                                                    <asp:Button ID="btnHdnApprove" runat="server" onclick="btnHdnApprove_Click" style="display: none;"/>
+                                                    <asp:Button ID="Approve" runat="server" Text="Approve" CssClass="form-submit-button" OnClick="Approve_Click"/>
+                                                    <asp:Button ID="btnHdnApprove" runat="server" CssClass="form-submit-button" onclick="btnHdnApprove_Click" style="display: none;"/>
 
                                                 </td>
                                                 <td align="center">
-                                                    <asp:Button ID="Reject" runat="server" Text="Reject" OnClick="Reject_Click"/>
-                                                    <asp:Button ID="btnHdnReject" runat="server" onclick="btnHdnReject_Click" style="display: none;"/>
+                                                    <asp:Button ID="Reject" runat="server" Text="Reject" CssClass="form-reset-button" OnClick="Reject_Click"/>
+                                                    <asp:Button ID="btnHdnReject" runat="server" onclick="btnHdnReject_Click" CssClass="form-reset-button" style="display: none;"/>
                                                 </td>
                                             </tr>
                                         </table>

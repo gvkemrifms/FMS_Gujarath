@@ -6,10 +6,18 @@
 <asp:UpdatePanel ID="up1" runat="server">
 <ContentTemplate>
  <script type="text/javascript">
-     function pageLoad() {        
-         $('#<%= ddlEngineNo.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-         $('#<%= ddlDistrict.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-         } 
+     function pageLoad() {
+         $('#<%= ddlEngineNo.ClientID %>').select2({
+             disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+             placeholder: "Select an option"
+         });
+         $('#<%= ddlDistrict.ClientID %>').select2({
+             disable_search_threshold: 5,
+             search_contains: true,
+             minimumResultsForSearch: 2,
+             placeholder: "Select an option"
+         });
+     } 
  </script>
 <script>
      var publicData;

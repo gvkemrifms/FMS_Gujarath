@@ -4,77 +4,88 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-        $(function () {
-            $('#<%=ddlState.ClientID%>').chosen();
-        $('#<%= ddlDistrict.ClientID %>').chosen();
-    });
-
         function validationAgencyDetails() {
             $('#<%=ddlState.ClientID%>').chosen();
-        var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
-        if (ddlstate === '--select--') {
-            return alert("Please Select State");
-        }
+            var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
+            if (ddlstate === '--select--') {
+                return alert("Please Select State");
+            }
             $('#<%= ddlDistrict.ClientID %>').chosen();
-        var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
-        if (ddldistrict === '--select--') {
-            return alert("Please Select District");
-        }
+            var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddldistrict === '--select--') {
+                return alert("Please Select District");
+            }
            
-        if (document.getElementById('<%= txtAgencyName.ClientID %>').value === "") {
-            alert("Please Enter Agency Name");
-            document.getElementById("<%= txtAgencyName.ClientID %>").focus();
-            return false;
-        }
+            if (document.getElementById('<%= txtAgencyName.ClientID %>').value === "") {
+                alert("Please Enter Agency Name");
+                document.getElementById("<%= txtAgencyName.ClientID %>").focus();
+                return false;
+            }
        
-        if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
-            document.getElementById("<%= txtAddress.ClientID %>").focus();           
-            return alert("Please Enter Address");
+            if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
+                document.getElementById("<%= txtAddress.ClientID %>").focus();           
+                return alert("Please Enter Address");
            
-        }
-        if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
-            document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return alert("Please Enter Contact Number");
-        }
+            }
+            if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
+                document.getElementById("<%= txtContactNo.ClientID %>").focus();
+                return alert("Please Enter Contact Number");
+            }
 
-        var phone = document.getElementById("<%= txtContactNo.ClientID %>").value;
-        if (isNaN(parseInt(phone))) {
-            document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return alert("The Contact number contains illegal characters");
-        }
-        if (!((phone.length >= 10) && (phone.length <= 15))) {
-            document.getElementById("<%= txtContactNo.ClientID %>").focus();
-            return alert("The Contact number is the wrong length");
-        }
+            var phone = document.getElementById("<%= txtContactNo.ClientID %>").value;
+            if (isNaN(parseInt(phone))) {
+                document.getElementById("<%= txtContactNo.ClientID %>").focus();
+                return alert("The Contact number contains illegal characters");
+            }
+            if (!((phone.length >= 10) && (phone.length <= 15))) {
+                document.getElementById("<%= txtContactNo.ClientID %>").focus();
+                return alert("The Contact number is the wrong length");
+            }
 
 
-        if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
-            document.getElementById("<%= txtPanNo.ClientID %>").focus();
-            return alert("Please Enter PAN");
+            if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
+                document.getElementById("<%= txtPanNo.ClientID %>").focus();
+                return alert("Please Enter PAN");
         
       
-        }
-        var pan=document.getElementById("<%= txtPanNo.ClientID %>").value;
-        if (isValidPAN(pan) === false) {
-            return false;
-        }
+            }
+            var pan=document.getElementById("<%= txtPanNo.ClientID %>").value;
+            if (isValidPAN(pan) === false) {
+                return false;
+            }
 
-        if (!isValidPAN(document.getElementById("<%= txtPanNo.ClientID %>").value)) {
-            document.getElementById("<%= txtPanNo.ClientID %>").value = "";
-            document.getElementById("<%= txtPanNo.ClientID %>").focus();
-            return false;
-        }
+            if (!isValidPAN(document.getElementById("<%= txtPanNo.ClientID %>").value)) {
+                document.getElementById("<%= txtPanNo.ClientID %>").value = "";
+                document.getElementById("<%= txtPanNo.ClientID %>").focus();
+                return false;
+            }
 
-        if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
-            document.getElementById("<%= txtTin.ClientID %>").focus();
-            return  alert("Please Enter TIN");
+            if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
+                document.getElementById("<%= txtTin.ClientID %>").focus();
+                return  alert("Please Enter TIN");
            
+            }
+            return true;
         }
-        return true;
-    }
-</script>
+    </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlState.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,            
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    }
+</script>
 <table>
     <tr>
         <td class="rowseparator "></td>

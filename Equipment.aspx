@@ -8,8 +8,11 @@
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <script type="text/javascript">
-    function pageLoad() {        
-        $('#<%= ddlistVehicleNumber.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+    function pageLoad() {
+        $('#<%= ddlistVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
     } 
 </script>
 <script  type="text/javascript">

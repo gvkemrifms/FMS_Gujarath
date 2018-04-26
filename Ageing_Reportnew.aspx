@@ -6,8 +6,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type ="text/javascript">
-        $(function() {
-            $('#<%= ddldistrict.ClientID %>').chosen();
+        $(function () {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
         });
         function Validations() 
             {
@@ -19,10 +22,10 @@
         };
       
     </script>  
-    <table>
+    <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" style="font-size: 20px; color: brown" runat="server" Text="Ageing&nbsp;DetailsReport"></asp:Label>
+                <asp:Label ID="lblcardtypereport" style="font-size: 20px; color: brown" runat="server" Text="Ageing&nbsp;Details Report"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -31,7 +34,8 @@
             </td>
         </tr>
     </table>
-    <table style="width: 70px; margin-left: 125px;">
+    <br/>
+    <table align="center">
         <tr>
 
             <td >            
@@ -54,9 +58,9 @@
             </tr>
     </table>
 
-    <div>
+    <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;margin-top:30px">
-            <asp:GridView ID="Grdtyre" runat="server" BorderStyle="Inset" BorderColor="cyan" BorderWidth="2px"></asp:GridView>
+            <asp:GridView ID="Grdtyre" runat="server" BorderStyle="Inset" BorderColor="brown" BorderWidth="1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

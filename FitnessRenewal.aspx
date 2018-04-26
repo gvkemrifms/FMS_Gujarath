@@ -1,11 +1,15 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FitnessRenewal.aspx.cs" Inherits="FitnessRenewal" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <link href="css/FitnessRenewal.css" rel="stylesheet"/>
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
+    $('#<%= ddlVehicleNumber.ClientID %>').select2({
+        disable_search_threshold: 5,
+        search_contains: true,
+        minimumResultsForSearch: 20,
+        placeholder: "Select an option"
+    });
     function validation() {
         var fitnessValidityStartDate = document.getElementById('<%= txtFitnessValidityStartDate.ClientID %>');
         var fitnessValidityPeriod = document.getElementById('<%= ddlFitnessValidityPeriod.ClientID %>');
@@ -13,7 +17,6 @@
         var fitnessReceiptNo = document.getElementById('<%= txtFitnessReceiptNo.ClientID %>');
         var fitnessFee = document.getElementById('<%= txtFitnessFee.ClientID %>');
         var vehiclePurchaseDate = document.getElementById('<%= vehiclePurchaseDate.ClientID %>');
-
         var now = new Date();
         var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
         var inputs = id.getElementsByTagName('input');
@@ -28,7 +31,6 @@
                 break;
             }
         }
-
         if (!RequiredValidation(fitnessValidityStartDate, "Fitness Validity Start Date Cannot be Blank"))
             return false;
 
@@ -73,7 +75,8 @@
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
-
+    <legend align="center" style="color:brown">Fitness Renewal</legend>
+<br/>
 <table>
 <tr>
     <td class="rowseparator"></td>
@@ -91,13 +94,13 @@
                         Vehicle Number<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" Width="150px"
+                        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" Width="140px" Height="30px"
                                       OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged"
-                                      AutoPostBack="True" DropDownStyle="DropDownList">
+                                      AutoPostBack="True" DropDownStyle="DropDownList" CssClass="CustomComboBoxStyle">
                             <asp:ListItem Value="-1">--SELECT--</asp:ListItem>
                             <asp:ListItem Value="0">Dummy</asp:ListItem>
                         </cc1:ComboBox>
-                        <asp:TextBox ID="txtVehicleNumber" class="text1" runat="server" MaxLength="6" onkeypress="return isDecimalNumberKey(event);"
+                        <asp:TextBox ID="txtVehicleNumber" class="text1" runat="server" MaxLength="6" CssClass="search_3" onkeypress="return numericOnly(this);"
                                      ReadOnly="True" Visible="False" Width="145px">
                         </asp:TextBox>
                     </td>
@@ -110,11 +113,11 @@
                     </td>
                     <td align="left" colspan="2">
                         <asp:TextBox ID="txtFitnessValidityStartDate" class="text1" AutoPostBack="true" runat="server"
-                                     Width="145px" OnTextChanged="txtFitnessValidityStartDate_TextChanged1" onkeypress="return false;"
+                                     Width="145px" OnTextChanged="txtFitnessValidityStartDate_TextChanged1" CssClass="search_3" onkeypress="return false;"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <cc1:CalendarExtender ID="calextFitnessValidityStartDate" runat="server" TargetControlID="txtFitnessValidityStartDate"
-                                              PopupButtonID="imgBtnFitnessValidityStartDate" Format="MM/dd/yyyy">
+                                              PopupButtonID="imgBtnFitnessValidityStartDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
                     <td align="left">
@@ -128,7 +131,7 @@
                         Fitness Validity Period<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:DropDownList ID="ddlFitnessValidityPeriod" class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlFitnessValidityPeriod_SelectedIndexChanged"
+                        <asp:DropDownList ID="ddlFitnessValidityPeriod" class="text1" runat="server" CssClass="search_3" Width="150px" OnSelectedIndexChanged="ddlFitnessValidityPeriod_SelectedIndexChanged"
                                           AutoPostBack="True">
                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             <asp:ListItem Value="3">3 Month</asp:ListItem>
@@ -146,7 +149,7 @@
                         Fitness Validity End Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtFitnessValidityEndDate" class="text1" runat="server" Width="145px" BackColor="DarkGray"
+                        <asp:TextBox ID="txtFitnessValidityEndDate" class="text1" runat="server" CssClass="search_3" Width="150px" BackColor="DarkGray"
                                      ReadOnly="True">
                         </asp:TextBox>
                     </td>
@@ -160,7 +163,7 @@
                         Vehicle RTA Circle<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtVehicleRTACircle" class="text1" runat="server" Width="145px" MaxLength="35"
+                        <asp:TextBox ID="txtVehicleRTACircle" class="text1" runat="server" CssClass="search_3" Width="150px" MaxLength="35"
                                      onkeypress="return alphanumeric_only(event);">
                         </asp:TextBox>
                     </td>
@@ -174,7 +177,7 @@
                         Fitness Receipt No.<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtFitnessReceiptNo" class="text1" runat="server" Width="145px" MaxLength="15"
+                        <asp:TextBox ID="txtFitnessReceiptNo" class="text1" runat="server" CssClass="search_3" Width="145px" MaxLength="15"
                                      onkeypress="return alphanumeric_only(event);">
                         </asp:TextBox>
                     </td>
@@ -186,7 +189,7 @@
                         Fitness Fee<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtFitnessFee" runat="server" class="text1" onkeypress="return numericOnly(this);"
+                        <asp:TextBox ID="txtFitnessFee" runat="server" class="text1" CssClass="search_3" onkeypress="return numericOnly(this);"
                                      Width="145px" MaxLength="9">
                         </asp:TextBox>
                     </td>
@@ -209,10 +212,10 @@
                 <tr>
                     <td align="center"></td>
                     <td align="center" style="width: 226px">
-                        <asp:Button ID="btSave" runat="server" Text="Save" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btSave_Click"/>
                     </td>
                     <td align="left">
-                        <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click"/>
+                        <asp:Button ID="btReset" runat="server" CssClass="form-submit-button" Text="Reset" OnClick="btReset_Click"/>
                     </td>
                     <td align="center" style="width: 50px">
                         &nbsp;
@@ -237,8 +240,8 @@
     <td class="rowseparator"></td>
 </tr>
 <tr align="center">
-    <td>
-        <asp:GridView ID="gvFitnessRenewal" runat="server" AutoGenerateColumns="False" CellPadding="4"
+    <td >
+        <asp:GridView ID="gvFitnessRenewal" runat="server" AutoGenerateColumns="False" CellPadding="4" BorderWidth="1px" BorderColor="brown"
                       ForeColor="#333333" GridLines="None" OnRowCommand="gvFitnessRenewal_RowCommand"
                       Width="630px" OnRowDataBound="gvFitnessRenewal_RowDataBound" AllowPaging="True"
                       EmptyDataText="No Records Found" OnPageIndexChanging="gvFitnessRenewal_PageIndexChanging"

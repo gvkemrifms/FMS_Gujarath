@@ -47,11 +47,23 @@
     <asp:UpdatePanel ID="updtpnlVehMapping" runat="server">
         <ContentTemplate>
             <script type="text/javascript">
-                function pageLoad() {        
-                    $('#<%= ddlVehicleNumber.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-                    $('#<%= ddlDistrict.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-                    $('#<%= ddlMandal.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-                    $('#<%= ddlCity.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                function pageLoad() {
+                    $('#<%= ddlVehicleNumber.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlDistrict.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlMandal.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlCity.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        placeholder: "Select an option"
+                    }); 
                     $('#<%= ddlBaseLocation.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
                     $('#<%= ddlVehType.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
                 } 

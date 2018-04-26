@@ -1,9 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FleetManufacturers.aspx.cs" Inherits="FleetManufacturers" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
 
     function validationFleetManufacturers() {
         switch (document.getElementById("<%= txtManufacturerName.ClientID %>").value) {
@@ -98,6 +95,22 @@
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlManufacturerState.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlFleetManufacturerDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    } 
+</script>
 <table id="table1" cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="table table-striped table-bordered table-hover"
        style="height: 37px">
 <tr>
@@ -106,31 +119,31 @@
 <tr>
     <td>
         <fieldset style="padding: 10px">
-            <legend>Fleet Manufacturers Details</legend>
+            <legend align="center" style="color: brown">Fleet Manufacturers Details</legend>
             <asp:Panel ID="pnlFleetManufacturers" runat="server">
                 <table id="table2" class="bordergreen" width="91%" align="center">
                     <tr>
                         <td>
                             <table class="logtable" align="center">
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Manufacturer Name <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerName" runat="server" CssClass="textbox180" MaxLength="35"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerName" runat="server" Width="150px" CssClass="search_3" MaxLength="35"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Manufacturer Type <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlManufacturerType" runat="server" CssClass="textbox180">
+                                        <asp:DropDownList ID="ddlManufacturerType" runat="server" Width="150px" CssClass="search_3">
                                             <asp:ListItem Value="0">--Select--</asp:ListItem>
                                             <asp:ListItem Value="1">Battery</asp:ListItem>
                                             <asp:ListItem Value="2">Body</asp:ListItem>
@@ -141,24 +154,24 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Model <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:TextBox ID="txtManufacturerModel" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerModel" runat="server" Width="150px" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px; height: 25px;" align="left">
+                                    <td style="width: 150px; height: 25px;" align="left">
                                         State <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlManufacturerState" runat="server" CssClass="textbox180"
+                                        <asp:DropDownList ID="ddlManufacturerState" Width="150px" runat="server" 
                                                           OnSelectedIndexChanged="ddlManufacturerState_SelectedIndexChanged" AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
@@ -167,13 +180,13 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         District
 
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:DropDownList ID="ddlFleetManufacturerDistrict" runat="server" OnSelectedIndexChanged="ddlFleetManufacturerDistrict_SelectedIndexChanged"
+                                        <asp:DropDownList ID="ddlFleetManufacturerDistrict" runat="server" Width="150px" OnSelectedIndexChanged="ddlFleetManufacturerDistrict_SelectedIndexChanged"
                                                           AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
@@ -182,12 +195,12 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Address <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerAddress" runat="server" TextMode="MultiLine" CssClass="textbox180"
+                                        <asp:TextBox ID="txtManufacturerAddress" Width="150px"  runat="server" TextMode="MultiLine" CssClass="search_3"
                                                      onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                         </asp:TextBox>
                                     </td>
@@ -196,12 +209,12 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Contact Number <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerContactNumber" runat="server" CssClass="textbox180"
+                                        <asp:TextBox ID="txtManufacturerContactNumber" Width="150px" runat="server" CssClass="search_3"
                                                      MaxLength="15" onkeypress="return numeric_only(this)">
                                         </asp:TextBox>
                                     </td>
@@ -210,13 +223,13 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         Contact Person
 
                                     </td>
                                     <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:TextBox ID="txtManufacturerContactPerson" runat="server" CssClass="textbox180"
+                                    <td> 
+                                        <asp:TextBox ID="txtManufacturerContactPerson" Width="150px" runat="server" CssClass="search_3"
                                                      MaxLength="35">
                                         </asp:TextBox>
                                     </td>
@@ -225,36 +238,36 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         E-mail ID <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerEmailId" runat="server" CssClass="textbox180" MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerEmailId" Width="150px" runat="server" CssClass="search_3" MaxLength="50"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         TIN <span style="color: Red" class="labelErr">*</span> &nbsp;
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerTin" runat="server" CssClass="textbox180" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerTin" runat="server" Width="150px" CssClass="search_3" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px" align="left">
+                                    <td style="width: 150px" align="left">
                                         ERN <span style="color: Red" class="labelErr">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerErn" runat="server" CssClass="textbox180" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
+                                        <asp:TextBox ID="txtManufacturerErn" runat="server" Width="150px" CssClass="search_3" MaxLength="11" onkeypress="return numeric_only(this)"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -263,11 +276,11 @@
                                 <tr>
                                     <td colspan="3" style="height: 41px">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnManufacturerSave" Width="55px" runat="server" CssClass="button"
+                                        <asp:Button ID="btnManufacturerSave" Width="55px" runat="server" CssClass="form-submit-button"
                                                     Text="Save" OnClick="btnManufacturerSave_Click">
                                         </asp:Button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnManufacturerReset" Width="55px" runat="server" CssClass="button"
+                                        <asp:Button ID="btnManufacturerReset" Width="55px" runat="server"  CssClass="form-reset-button"
                                                     Text="Reset" CausesValidation="false" OnClick="btnManufacturerReset_Click">
                                         </asp:Button>
                                         <input type="hidden" id="hidBatText" runat="server"/>

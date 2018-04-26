@@ -4,38 +4,43 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#<%=ddlistVehicleNumber.ClientID%>').chosen();
-        });
-        function ClearItems() {
-           
-            $('#<%=ddlistVehicleNumber.ClientID%>').empty();
-            $('#<%=ddlistAttachmentPurpose.ClientID%>').empty();
-            $('#<%= txtRemarks.ClientID %>').val('');
-            $('#<%=ddlistVehicleNumber.ClientID%>').chosen();
-        }
-        function Validations()
-        {
-            $('#<%=ddlistVehicleNumber.ClientID%>').chosen();
-            var remarks = $('#<%= txtRemarks.ClientID %>').val();
-            var fileAttachments = $('#<%= fileAttachmentPurpose.ClientID %>').val();
-            var ddlVehicle = $('#<%= ddlistVehicleNumber.ClientID %> option:selected').text().toLowerCase();
-            var attachmentPurpose = $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text().toLowerCase();
-            if (ddlVehicle === '--select--') 
-                return alert("Please select Vehicle");
-            if (attachmentPurpose === 'select') 
-                return alert("Please select Attachment Purpose");             
-            if (fileAttachments === "") 
-                return alert("File Attachment is Mandatory");
-            if (remarks === "") 
-                return alert('Remarks is Mandatory');
-            return true;
-        }
-    </script>
+    
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad()
+                    {
+                    $('#<%= ddlistVehicleNumber.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+                function ClearItems() {
+           
+                    $('#<%=ddlistVehicleNumber.ClientID%>').empty();
+                    $('#<%=ddlistAttachmentPurpose.ClientID%>').empty();
+                    $('#<%= txtRemarks.ClientID %>').val('');
+                    $('#<%=ddlistVehicleNumber.ClientID%>').chosen();
+                }
+                function Validations()
+                {
+                    var remarks = $('#<%= txtRemarks.ClientID %>').val();
+                    var fileAttachments = $('#<%= fileAttachmentPurpose.ClientID %>').val();
+                    var ddlVehicle = $('#<%= ddlistVehicleNumber.ClientID %> option:selected').text().toLowerCase();
+                    var attachmentPurpose = $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text().toLowerCase();
+                    if (ddlVehicle === '--select--') 
+                        return alert("Please select Vehicle");
+                    if (attachmentPurpose === 'select') 
+                        return alert("Please select Attachment Purpose");             
+                    if (fileAttachments === "") 
+                        return alert("File Attachment is Mandatory");
+                    if (remarks === "") 
+                        return alert('Remarks is Mandatory');
+                    return true;
+                }
+            </script>
             <table align="center" >
                 <tr>
                     <td colspan="3">
@@ -54,7 +59,7 @@
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:DropDownList ID="ddlistVehicleNumber" Width="150px" CssClass="search_3" runat="server">
+                        <asp:DropDownList ID="ddlistVehicleNumber" Width="150px"  runat="server">
                         </asp:DropDownList>
                     </td>
                 </tr>

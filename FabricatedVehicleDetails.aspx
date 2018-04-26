@@ -136,9 +136,11 @@
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <script type="text/javascript">
-    function pageLoad() {        
-       
-        $('#<%= ddlFabricatorName.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+    function pageLoad() {              
+        $('#<%= ddlFabricatorName.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+            placeholder: "Select an option"
+        });
     } 
 </script>
 <table>

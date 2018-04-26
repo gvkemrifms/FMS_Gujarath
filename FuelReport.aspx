@@ -6,35 +6,35 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function() {
-            $('#<%=btnShow.ClientID%>').click(function() {
-                var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
-                var txtToDate = $('#<%= txttodate.ClientID %>').val();
-                if (txtFirstDate === "") {
-                    alert('From Date is Mandatory');
-                    txtFirstDate.focus();
-                    e.preventDefault();
-                }
-                if (txtToDate === "") {
-                    alert("End Date is Mandatory");
-                    txtToDate.focus();
-                    e.preventDefault();
-                }
-                var fromDate = (txtFirstDate).replace(/\D/g, '/');
-                var toDate = (txtToDate).replace(/\D/g, '/');
-                var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
-                var currentDate = new Date();
-                if (ordFromDate > currentDate) {
-                    alert("From date should not be greater than today's date");
-                    e.preventDefault();
-                }
-                if (ordToDate < ordFromDate) {
-                    alert("Please select valid date range");
-                }
-            });
-        });
+        function Validations() {
+            var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
+            var txtToDate = $('#<%= txttodate.ClientID %>').val();
+            if (txtFirstDate === "") {
+             return   alert('From Date is Mandatory');
+
+            }
+            if (txtToDate === "") {
+               return alert("End Date is Mandatory");
+
+            }
+            var fromDate = (txtFirstDate).replace(/\D/g, '/');
+            var toDate = (txtToDate).replace(/\D/g, '/');
+            var ordFromDate = new Date(fromDate);
+            var ordToDate = new Date(toDate);
+            var currentDate = new Date();
+            if (ordFromDate > currentDate) {
+              return  alert("From date should not be greater than today's date");
+
+            }
+            if (ordToDate < ordFromDate) {
+                return alert("Please select valid date range");
+            }
+            return true;
+        }
     </script>
-    <div id="main">
+    <legend align="center" style="color:brown">FuelReport</legend>
+    <br/>
+    <div id="main" align="center">
 
         <div id="mains" style="width: 100%;">
             <div id="first" style="float: left; width: 22%">
@@ -46,9 +46,9 @@
 
                         <div class="col-sm-6" style="width: 218px;" id="PVtSuppCode9">
                             <asp:TextBox ID="txtfromdate" style="width: 170px;" runat="server" placeholder="" MaxLength="20"
-                                         class="form-control">
+                                         class="search_3">
                             </asp:TextBox>
-                            <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="yyyy-MM-dd" TargetControlID="txtfromdate" Enabled="true" CssClass="test">
+                            <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="yyyy-MM-dd" TargetControlID="txtfromdate" Enabled="true" CssClass="cal_Theme1">
                             </cc1:CalendarExtender>
                             <style type="text/css">
                                 .test .ajax__calendar_body {
@@ -79,10 +79,10 @@
                         To&nbsp;Date
                     </label>
                     <div class="col-sm-6" style="width: 218px;" id="PVtSuppCode1">
-                        <asp:TextBox ID="txttodate" style="width: 170px;" runat="server" placeholder="" MaxLength="20"
+                        <asp:TextBox ID="txttodate" style="width: 170px;" CssClass="search_3" runat="server" placeholder="" MaxLength="20"
                                      class="form-control">
                         </asp:TextBox>
-                        <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="test">
+                        <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
                         </cc1:CalendarExtender>
                     </div>
                 </div>
@@ -93,20 +93,21 @@
             <div class="row" style="margin-top: 30px">
                 <div class="col-sm-12" style="">
                     <asp:Button ID="btnShow" runat="server" class="btn btn-primary"
-                                Text="Show" Style="height: 33px; width: 55px; border-radius: 3px;" OnClick="btnShow_Click">
+                                Text="Show" Style="height: 33px; width: 55px; border-radius: 3px;" OnClick="btnShow_Click" CssClass="form-submit-button">
                     </asp:Button>
                 </div>
             </div>
         </div>
         <div id="five" style="float: left; width: 5%">
             <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Excel" Style="height: 33px; font-size: 12px; width: 50px;"></asp:Button>
+                <asp:Button ID="btntoExcel" runat="server" CssClass="form-reset-button" OnClick="btntoExcel_Click" Text="Excel" Style="height: 33px; font-size: 12px; width: 50px;" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </div>
         </div>
 
     </div>
-    <div class="row" style="margin-left: 0%;">
-        <div style="margin-left: 0%; margin-right: auto;">
+    <br/>
+    <div align="center">
+        <div align="center">
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="margin-top: 2%;"
                           EmptyDataText="No Data Found" EmptyDataRowStyle-ForeColor="Red"
                           HeaderStyle-ForeColor="#337ab7" class="table table-striped table-bordered table-hover">

@@ -98,7 +98,16 @@
     font-size: 14px;
 }
 .selectdropdown {
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;       /* remove default arrow */
-   
+    appearance: none; /* remove default arrow */
+}
+.CustomComboBoxStyle .ajax__combobox_textboxcontainer input {
+    background-color:floralwhite;
+    border: solid 0px gray;
+    border-right: 0px none;
+}
+.CustomComboBoxStyle .ajax__combobox_buttoncontainer button {
+    background-color:floralwhite;
+    border: solid 1px grey;
+}

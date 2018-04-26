@@ -7,9 +7,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   
     <script type="text/javascript">
-        $(function() {
-            $('#<%= ddldistrict.ClientID %>').chosen();
-            $('#<%= ddlvendor.ClientID %>').chosen();
+        $(function () {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlvendor.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+                placeholder: "Select an option"
+            });
         });
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();

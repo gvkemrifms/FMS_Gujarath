@@ -1,10 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictUserMapping.aspx.cs" Inherits="DistrictUserMapping" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">  
-    <script type="text/javascript">
-        function pageLoad() {
-            $('#<%= ddlUserList.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-        }
-    </script>
+   
     <script  type="text/javascript">
                
         function validation() {
@@ -19,7 +15,15 @@
         }
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>             
+        <ContentTemplate>  
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlUserList.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        placeholder: "Select an option"
+                    });         
+                }
+            </script>
             <fieldset style="padding: 10px">
                 <legend>District User Mapping</legend>
                 <table style="width: 100%">

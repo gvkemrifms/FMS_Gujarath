@@ -1,35 +1,44 @@
 ﻿<%@ Page Title="" Language="C#" Debug="true" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelEntry.aspx.cs" Inherits="FuelEntry" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/Validation.js"></script>
-
 <asp:UpdatePanel ID="updPanel1" runat="server">
 <ContentTemplate>
+<script type="text/javascript">
+  $(function() {
+        $('#<%= ddlVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    });   
+
+</script>
+
 <fieldset style="padding: 10px">
-<legend>Fuel Entry</legend>
-<table>
+<legend align="center" style="color:brown">Fuel Entry</legend>
+<table align="center">
+<br />
 <tr>
-    <td class="rowseparator" colspan="4">
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px">
+    <td style="float: left" >
         Vehicle Number<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
-                      DropDownStyle="DropDownList" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
-        </cc1:ComboBox>
+    <td>
+     <asp:DropDownList AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
+                          OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" Width="150px">
+        </asp:DropDownList>
     </td>
-    <td align="left" style="width: 112px">
+ <%--   <td >
+        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
+                      DropDownStyle="DropDownList" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" CssClass="CustomComboBoxStyle" Width="140px">
+        </cc1:ComboBox>
+    </td>--%>
+    <td style="float: right;padding-right: 10px" >
         Borrowed Vehicle
     </td>
-    <td align="left" style="width: 100px">
+    <td >
         <asp:DropDownList AutoCompleteMode="Append" ID="ddlDistrict" runat="server" AutoPostBack="True"
-                          OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                          OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged" Width="150px" CssClass="search_3">
         </asp:DropDownList>
     </td>
 </tr>
@@ -44,7 +53,7 @@
     <td>
         <asp:Label ID="lblDistrict" runat="server"/>
     </td>
-    <td>
+    <td style="float: right;padding: 10px">
         Base Location
     </td>
     <td>
@@ -56,55 +65,42 @@
     </td>
 </tr>
 <tr>
-    <td align="left" style="width: 119px">
+    <td style="float: left">
         Date<span style="color: Red">*</span>
     </td>
-    <td align="left" nowrap="nowrap" style="width: 100px">
+    <td>
         <asp:TextBox ID="txtFuelEntryDate" runat="server" MaxLength="15" oncut="return false;"
-                     onkeypress="return false" onpaste="return false;">
+                     onkeypress="return false" CssClass="search_3" onpaste="return false;">
         </asp:TextBox>
-        <cc1:CalendarExtender ID="entDate" runat="server" Format="MM/dd/yyyy" PopupButtonID="ImageButton1"
-                              TargetControlID="txtFuelEntryDate">
+        <cc1:CalendarExtender ID="entDate" runat="server" Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="ImageButton1"
+                              TargetControlID="txtFuelEntryDate" >
         </cc1:CalendarExtender>
         <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif"
-                         Style="vertical-align: top"/>
+                        style="vertical-align: top;float: right"/>
     </td>
-    <td align="left" style="width: 112px">
+    <td style="float: right;padding: 10px">
         Bill Number<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtBillNumber" runat="server" MaxLength="16"></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtBillNumber" CssClass="search_3" runat="server" MaxLength="16"></asp:TextBox>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="left" nowrap="nowrap" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px; height: 19px">
+    <td >
         Odometer(km)<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px; height: 19px">
-        <asp:TextBox ID="txtOdometer" runat="server" MaxLength="6" ></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtOdometer" runat="server" CssClass="search_3" MaxLength="6" ></asp:TextBox>
     </td>
-    <td align="left" style="width: 112px; height: 19px">
+    <td style="float: right;padding-right: 10px">
         Bunk Name<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px; height: 19px">
+    <td >
         <div>
             <asp:DropDownList Style="float: left" ID="ddlBunkName" runat="server">
             </asp:DropDownList>
-            <asp:TextBox Style="float: left" ID="txtBunkName" runat="server" MaxLength="20" Enabled="false"></asp:TextBox>
+            <asp:TextBox Style="float: left" CssClass="search_3" ID="txtBunkName" runat="server" MaxLength="20" Enabled="false" Width="200px"></asp:TextBox>
         </div>
         <div>
             <asp:LinkButton ID="linkExisting" runat="server" Style="float: right" OnClick="linkExisting_Click"
@@ -117,174 +113,95 @@
     </td>
 </tr>
 <tr>
-    <td align="left" style="width: 119px; height: 19px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px; height: 19px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 112px; height: 19px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px; height: 19px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px">
+    <td >
         Paymode<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:DropDownList ID="ddlPaymode" runat="server" AutoCompleteMode="Append" AutoPostBack="True"
+    <td >
+        <asp:DropDownList ID="ddlPaymode" runat="server" CssClass="search_3" AutoCompleteMode="Append" AutoPostBack="True"
                           OnSelectedIndexChanged="ddlPaymode_SelectedIndexChanged">
         </asp:DropDownList>
     </td>
-    <td align="left" style="width: 112px">
+    <td style="float: right;padding-right: 10px">
         Quantity(Litres)<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtQuantity" runat="server" MaxLength="6" OnChange="onKeyPressBlockNumbers1(this.value);"></asp:TextBox>
+    <td>
+        <asp:TextBox ID="txtQuantity" CssClass="search_3" runat="server" MaxLength="6" OnChange="onKeyPressBlockNumbers1(this.value);"></asp:TextBox>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px">
+    <td >
         Petro Card Number<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:DropDownList ID="ddlPetroCardNumber" runat="server" AutoCompleteMode="Append"
+    <td >
+        <asp:DropDownList ID="ddlPetroCardNumber" CssClass="search_3" runat="server" AutoCompleteMode="Append"
                           AutoPostBack="True" OnSelectedIndexChanged="ddlPetroCardNumber_SelectedIndexChanged">
         </asp:DropDownList>
     </td>
-    <td align="left" style="width: 112px">
+    <td style="float: right;padding: 10px">
         Unit Price(Rs)<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtUnitPrice" runat="server" MaxLength="6" onchange="onKeyPressBlockNumbers(this.value);"></asp:TextBox>
+    <td>
+        <asp:TextBox ID="txtUnitPrice" CssClass="search_3" runat="server" MaxLength="6" onchange="onKeyPressBlockNumbers(this.value);"></asp:TextBox>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px; height: 22px">
+    <td >
         Agency<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px; height: 22px">
-        <asp:DropDownList ID="ddlAgency" runat="server" AutoCompleteMode="Append">
+    <td >
+        <asp:DropDownList ID="ddlAgency" CssClass="search_3" runat="server" AutoCompleteMode="Append">
         </asp:DropDownList>
     </td>
-    <td align="left" style="width: 112px; height: 22px">
+    <td style="float: right;padding-right: 10px">
         Amount(Rs)<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px; height: 22px">
-        <asp:TextBox ID="txtAmount" runat="server" Enabled="False"></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtAmount" runat="server" CssClass="search_3" Enabled="False"></asp:TextBox>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px; height: 22px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px; height: 22px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 112px; height: 22px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px; height: 22px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px">
+    <td >
         Location<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtLocation" runat="server" MaxLength="20"></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtLocation" runat="server" CssClass="search_3" MaxLength="20"></asp:TextBox>
     </td>
-    <td align="right" style="width: 112px; text-align: left;">
+    <td style="float: right;padding: 10px">
         Pilot ID<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtPilotID" runat="server" MaxLength="6"></asp:TextBox>
+    <td>
+        <asp:TextBox ID="txtPilotID" runat="server" CssClass="search_3" MaxLength="6"></asp:TextBox>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="right" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td align="left" style="width: 119px">
+    <td >
         Pilot Name<span style="color: Red">*</span>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtPilotName" runat="server"></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtPilotName" CssClass="search_3" runat="server"></asp:TextBox>
     </td>
-    <td align="left" style="width: 112px">
+    <td style="float: right;padding-right: 10px">
         Card Swiped
     </td>
-    <td align="left" style="width: 100px">
-        <asp:DropDownList ID="ddlCardSwiped" runat="server">
+    <td >
+        <asp:DropDownList ID="ddlCardSwiped" CssClass="search_3" runat="server">
             <asp:ListItem Text="--Select--" Value="-1"></asp:ListItem>
             <asp:ListItem Text="No" Value="0"></asp:ListItem>
             <asp:ListItem Text="Yes" Value="1"></asp:ListItem>
         </asp:DropDownList>
     </td>
 </tr>
+
 <tr>
-    <td align="left" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="right" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td>
+    <td style="padding: 10px">
         Remarks
     </td>
     <td>
-        <asp:TextBox ID="txtRemarks" runat="server"/>
+        <asp:TextBox ID="txtRemarks" CssClass="search_3" runat="server"/>
     </td>
 </tr>
 <tr>
@@ -292,41 +209,29 @@
     </td>
 </tr>
 <tr>
-    <td align="right" style="width: 119px">
-        <asp:TextBox ID="txtSegmentID" runat="server" Visible="False"></asp:TextBox>
+    <td >
+        <asp:TextBox ID="txtSegmentID" runat="server" CssClass="search_3" Visible="False"></asp:TextBox>
     </td>
-    <td align="center" style="width: 100px">
-        <asp:Button ID="Save" runat="server" OnClick="Save_Click" OnClientClick="return validationFuelEntry();"
+    <td >
+        <asp:Button ID="Save" runat="server" CssClass="form-submit-button" OnClick="Save_Click" OnClientClick="if(!validationFuelEntry()) return false;"
                     Text="Save"/>
     </td>
-    <td align="right" style="width: 112px">
-        <asp:Button ID="Reset" runat="server" OnClick="Reset_Click" Text="Reset"/>
+    <td >
+        <asp:Button ID="Reset" runat="server" OnClick="Reset_Click" Text="Reset"  CssClass="form-reset-button"/>
     </td>
-    <td align="left" style="width: 100px">
-        <asp:TextBox ID="txtEdit" runat="server" Visible="False"></asp:TextBox>
-    </td>
-</tr>
-<tr>
-    <td align="right" style="width: 119px">
-        &nbsp;
-    </td>
-    <td align="center" style="width: 100px">
-        &nbsp;
-    </td>
-    <td align="right" style="width: 112px">
-        &nbsp;
-    </td>
-    <td align="left" style="width: 100px">
-        &nbsp;
+    <td >
+        <asp:TextBox ID="txtEdit" CssClass="search_3" runat="server" Visible="False"></asp:TextBox>
     </td>
 </tr>
+
 </table>
+<br/>
 </fieldset>
 <fieldset style="padding: 10px">
     <table align="center" style="width: 615px">
         <tr>
             <td style="width: 100px">
-                <asp:GridView ID="gvFuelEntry" runat="server" AllowPaging="true" AutoGenerateColumns="False"
+                <asp:GridView ID="gvFuelEntry" runat="server" BorderWidth="1px" BorderColor="brown" AllowPaging="true" AutoGenerateColumns="False"
                               CellPadding="3" CellSpacing="2" EmptyDataText="No Records Found"
                               GridLines="None" OnPageIndexChanging="gvFuelEntry_PageIndexChanging" OnRowCommand="gvFuelEntry_RowCommand"
                               PageSize="5" Width="609px" class="table table-striped table-bordered table-hover">
@@ -399,7 +304,6 @@
 </fieldset>
 <asp:HiddenField ID="maxOdo" runat="server"/>
 <script type="text/javascript">
-
     function sum() {
         var text1 = parseFloat(document.getElementById("<%= txtQuantity.ClientID %>").value);
         var text2 = parseFloat(document.getElementById("<%= txtUnitPrice.ClientID %>").value);
@@ -407,16 +311,15 @@
         document.getElementById("<%= txtAmount.ClientID %>").value = text3.toFixed(2);
     }
     function validationFuelEntry() {
-        var vehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-
-        if (vehicleNumber.selectedIndex === -1) {
-            alert("Please select the Vehicle");
-            vehicleNumber.focus();
-            return false;
-        }      
+        var vehicleNumber = $("#<%= ddlVehicleNumber.ClientID %> option:selected").text().toLowerCase();
+        switch (vehicleNumber)
+        {
+        case '--select--':
+            return alert("Please Select the VehicleNumber");                   
+        }       
         var fuelEntryDate = document.getElementById('<%= txtFuelEntryDate.ClientID %>');
 
-        if (!RequiredValidation(fuelEntryDate, "FuelEntryDate Cannot be Blank"))
+        if (!RequiredValidation(fuelEntryDate, "Fuel Entry Date Cannot be Blank"))
             return false;
 
         if (trim(fuelEntryDate.value) !== "") {

@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="HrDisciplinaryActions.aspx.cs" Inherits="HrDisciplinaryActions" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
     <script src="Scripts/jquery.validate.min.js"></script>
     <script src="js/js/JqueryWrapper.js"></script>
     <style type="text/css">

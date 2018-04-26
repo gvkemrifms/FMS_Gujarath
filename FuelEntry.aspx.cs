@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -87,7 +88,7 @@ public partial class FuelEntry : Page
         if (ds == null) return;
         try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);
             ddlVehicleNumber.Enabled = true;
         }
         catch (Exception ex)
@@ -103,6 +104,8 @@ public partial class FuelEntry : Page
         if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
         lblDistrict.Text = dsDistrict.Tables[0].Rows[0]["District"].ToString();
         lblLocation.Text = dsDistrict.Tables[0].Rows[0]["BaseLocation"].ToString();
+        lblDistrict.ForeColor = Color.ForestGreen;
+        lblLocation.ForeColor=Color.ForestGreen;
     }
 
     private void FillServiceStn()
@@ -148,9 +151,20 @@ public partial class FuelEntry : Page
                 break;
         }
 
-        FillDistricts();
-        FillDistrictLocation();
-        FillServiceStnVeh();
+        if (ddlVehicleNumber.SelectedIndex > 0)
+        {
+            FillDistricts();
+
+            FillDistrictLocation();
+            FillServiceStnVeh();
+        }
+        else
+        {
+            lblDistrict.Text = "";
+            lblLocation.Text = "";
+            txtBunkName.Text = "";
+            ddlDistrict.Items.Clear();
+        }
     }
 
     private void FillPayMode()
@@ -666,7 +680,7 @@ public partial class FuelEntry : Page
                     ddlPaymode.ClearSelection();
                     ddlPaymode.Items.FindByValue(ds.Tables[0].Rows[0]["Paymode"].ToString()).Selected = true;
                     ddlVehicleNumber.ClearSelection();
-                    ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
+                   ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
                     ddlCardSwiped.ClearSelection();
                     ddlCardSwiped.Items.FindByValue(ds.Tables[0].Rows[0]["CardSwipedStatus"].ToString()).Selected = true;
                     ddlCardSwiped.Enabled = false;

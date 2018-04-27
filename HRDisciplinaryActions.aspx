@@ -1,138 +1,99 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="HrDisciplinaryActions.aspx.cs" Inherits="HrDisciplinaryActions" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="Scripts/jquery.validate.min.js"></script>
-    <script src="js/js/JqueryWrapper.js"></script>
-    <style type="text/css">
-        .ddlwidth { width: 200px; }
-    </style>
     <asp:UpdatePanel ID="updtpnlFinanceReceipt" runat="server">
         <ContentTemplate>
-            <table width="100%">
-                <tr>
-                    <td>
-                    <fieldset style="padding: 10px">
-                    <legend>
-                        HR Disciplinay Action<br/>
-                    </legend>
-                    <table>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlVehicleno.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+            </script>
+ <legend align="center"> HR Disciplinay Action</legend>
+                    <table align="center">                 
                     <tr>
-                        <td class="columnseparator"></td>
-                    </tr>                   
-                    <tr>
-                        <td style="width: 100px"></td>
                         <td>
-                            Vehicle No :
+                            Vehicle No <span style="color: red">*</span>
                         </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlVehicleno" runat="server"
-                                              CssClass="ddlwidth"/>
+                            <asp:DropDownList ID="ddlVehicleno" runat="server" Width="150px" />
                         </td>
-
                     </tr> 
                     <tr>
-                    <td class="rowseparator"></td>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Situation of Accident : </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlSitIfAction" runat="server"  CssClass="ddlwidth" AutoPostBack="True" OnSelectedIndexChanged="ddlSitIfAction_SelectedIndexChanged"/>
+                        Situation of Accident<span style="color: red">*</span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlSitIfAction" runat="server"  CssClass="search_3" AutoPostBack="True"  OnSelectedIndexChanged="ddlSitIfAction_SelectedIndexChanged"/>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 100px"></td>
-                        <td>Cause Of Accident </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlCause" runat="server" CssClass="ddlwidth"/>
+                            
+                            Cause Of Accident <span style="color: red">*</span>
+
                         </td>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Minor Accident(0-100000rs): </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlMinor" runat="server" CssClass="ddlwidth" onChange="javascript:MinorfilterChanged()" />
+                            <asp:DropDownList ID="ddlCause" runat="server" CssClass="search_3"/>
                         </td>
-                        <td class="rowseparator"></td>
                     </tr>
                     <tr>
-                        <td class="rowseparator"></td>
-                    </tr>                    
-                    <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Major Accident(100000-500000rs) : </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlMajor" runat="server" CssClass="ddlwidth" onChange="javascript:MajorfilterChanged()" />
+                            Minor Accident(0-100000rs)<span style="color: red">*</span>
                         </td>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Major loss/Total Loss : </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlMajorOrtotLoss" runat="server" CssClass="ddlwidth"/>
+                            <asp:DropDownList ID="ddlMinor" runat="server" CssClass="search_3" onChange="javascript:MinorfilterChanged()" />
                         </td>
-                        <td class="rowseparator"></td>
-                    </tr>
+                    </tr> 
                     <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Severe injuries to personnel : </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlSevereInj" runat="server" CssClass="ddlwidth"/>
+                            Major Accident(100000-500000rs) <span style="color: red">*</span>
                         </td>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px"></td>
-                        <td>Fatal Accident : </td>
-                        <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlFatalAcc" runat="server" CssClass="ddlwidth"/>
+                            <asp:DropDownList ID="ddlMajor" runat="server" CssClass="search_3" onChange="javascript:MajorfilterChanged()" />
                         </td>
-                        <td class="rowseparator"></td>
                     </tr>
-                </tr>
+                    <tr>
+                        <td>
+                            Major loss/Total Loss <span style="color: red">*</span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlMajorOrtotLoss"  runat="server" CssClass="search_3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Severe injuries to personnel <span style="color: red"></span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlSevereInj"  runat="server" CssClass="search_3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fatal Accident <span style="color: red"></span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlFatalAcc" runat="server" CssClass="search_3"/>
+                        </td>
+                    </tr>
             </table>
-            <table>
+            <br/>
+            <table align="center">
 
                 <tr>
-                    <td style="width: 250px"></td>
                     <td>
-                        <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" OnClientClick="if(!ValidatePage()) {return false;}"/>
+                        <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" CssClass="form-submit-button" OnClientClick="if(!ValidatePage()) {return false;}"/>
                     </td>
-                    <td class="columnseparator"></td>
                     <td>
-                        <asp:Button runat="server" ID="btnClear" Text="Reset"
+                        <asp:Button runat="server" ID="btnClear" CssClass="form-reset-button" Text="Reset"
                                     OnClick="btnClear_Click"/>
                     </td>
                 </tr>
             </table>
-        </fieldset>
-        </td>
-        </tr>
-        </table>
             <script type="text/javascript">
                 function commonMajor() {
                     var ddlMajorAccident = $('#<%= ddlMajor.ClientID %> option:selected').text().toLowerCase();
@@ -190,7 +151,7 @@
                         return (alert("Please select Type Of Accident"));
                     else
 
-                    return true;
+                        return true;
                 }
             </script>
         </ContentTemplate>

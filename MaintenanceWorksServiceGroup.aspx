@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceWorksServiceGroup.aspx.cs" Inherits="MaintenanceWorksServiceGroup" %>
 
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script  type="text/javascript">
         function validationMaintenanceWorksServiceGroup() {

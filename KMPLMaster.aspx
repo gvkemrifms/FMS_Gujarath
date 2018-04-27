@@ -1,21 +1,18 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="KmplMaster.aspx.cs" Inherits="KmplMaster" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
         <ContentTemplate>
-            <table width="100%">
+            <table align="center" width="100%">
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                        <legend>
+                        <legend style="color: brown">
                             KMPL<br/>
                         </legend>
-                        <table>
+                        <table align="center">
                             <tr>
                                 <td>
                                     Vehicle Number
@@ -36,7 +33,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td align="center">
                                     KMPL
                                 </td>
                                 <td class="columnseparator">
@@ -46,21 +43,21 @@
                                 </td>
                             </tr>
                         </table>
-                        <div>
+                        <div align="center">
                             <div style="float: left; width: 300px;">
                             </div>
                             <div>
-                                <asp:Button runat="server" ID="btnUpdate" Text="Update"
+                                <asp:Button runat="server" ID="btnUpdate" Text="Update" CssClass="form-submit-button" style="margin: 20px"
                                             OnClientClick="if(!validationFuelEntry()) return false;" onclick="btnUpdate_Click"/>
                             </div>
                         </div>
-                        <div>
-                            <div style="float: left; width: 200px;">
-                            </div>
-                            <div style="float: left">
+                        <div align="center">
+                       
+                  
+                            <div align="center">
                                 <asp:GridView ID="gvVehKmplDetails" runat="server" EmptyDataText="No records found" PageSize="20"
-                                              AllowSorting="true" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
-                                              CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="true"
+                                              AllowSorting="true" BorderWidth="1px" BorderColor="brown" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
+                                              CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px"  AllowPaging="true"
                                               EnableSortingAndPagingCallbacks="true"
                                               onrowcommand="gvVehKmplDetails_RowCommand"
                                               onpageindexchanging="gvVehKmplDetails_PageIndexChanging">

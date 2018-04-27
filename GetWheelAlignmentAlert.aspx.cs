@@ -6,12 +6,13 @@ using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.BLL.Alert;
 using GvkFMSAPP.BLL.VehicleMaintenance;
+using Page = System.Web.UI.Page;
 
 public partial class GetWheelAlignmentAlert : Page
 {
     private readonly Alert _fmsAlert = new Alert();
     private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
-
+    private readonly Helper _helper = new Helper();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -24,10 +25,17 @@ public partial class GetWheelAlignmentAlert : Page
 
     protected void btnSendMail_Click(object sender, EventArgs e)
     {
-        var subject = "";
-        var mailBody = "";
-        mailBody = CreateHtml((DataSet) ViewState["ds"]);
-        MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        try
+        {
+            var subject = "";
+            var mailBody = CreateHtml((DataSet)ViewState["ds"]);
+            MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
+       
     }
 
     public string CreateHtml(DataSet ds)

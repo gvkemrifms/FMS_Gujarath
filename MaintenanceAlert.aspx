@@ -1,38 +1,32 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceAlert.aspx.cs" Inherits="MaintenanceAlert" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:UpdatePanel ID="updtpnlMaintAlert" runat="server">
         <ContentTemplate>
-            <table>
-                <tr>
-                    <td class="rowseparator">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <fieldset style="padding: 10px">
-                            <legend>Maintenance Service Alert </legend>
-                            <table>
+            <style>
+                .setposition {
+                    position: relative;
+                    overflow: hidden;
+                }
+            </style>
+            <legend align="center" class="setposition" style="color: brown">Maintenance Service Alert </legend>
+            <br/>
+                            <table align="center">
                                 <tr>
                                     <td>
-                                        Select Vehicle :
+                                        Select Vehicle <span style="color: red"; >*</span>
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicle" runat="server" AutoPostBack="true"
-                                                      Width="155px" DropDownStyle="DropDownList"
+                                                      Width="155px"  style="margin: 25px" DropDownStyle="DropDownList"
                                                       onselectedindexchanged="ddlVehicle_SelectedIndexChanged">
                                         </cc1:ComboBox>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="rowseparator">
-                                    </td>
-                                </tr>
+                                <br />
                                 <tr>
                                     <td>
-                                        <asp:GridView ID="grdMaintAlert" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                                      ForeColor="#333333" GridLines="None" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
-                                                      CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdMaintAlert_PageIndexChanging">
+                                        <asp:GridView ID="grdMaintAlert"  runat="server" AutoGenerateColumns="False" CellPadding="4" 
+                                                      ForeColor="#333333" GridLines="None" BorderWidth="1px" BorderColor="brown" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
+                                                      CssClass="setposition" CellSpacing="2" OnPageIndexChanging="grdMaintAlert_PageIndexChanging">
                                             <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Vehicle Number" ItemStyle-HorizontalAlign="Center">
@@ -68,24 +62,13 @@
                                         </asp:GridView>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="rowseparator">
-                                    </td>
-                                </tr>
+
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click1" OnClientClick="if(!validationFuelEntry()) return false;"/>
+                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" CssClass="form-submit-button" OnClick="btnSendMail_Click1" OnClientClick="if(!validationFuelEntry()) return false;"/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator">
-                                    </td>
-                                </tr>
+                                </tr>                              
                             </table>
-                        </fieldset>
-                    </td>
-                </tr>
-            </table>
             <script type="text/javascript">
                 function validationFuelEntry() {
                     var districts = document.getElementById("<%= ddlVehicle.ClientID %>").control._textBoxControl.value;

@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="GetWheelAlignmentAlert.aspx.cs" Inherits="GetWheelAlignmentAlert" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table>
         <tr>
@@ -52,7 +51,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click"/>
+                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click" CssClass="form-submit-button"/>
                                     </td>
                                 </tr>
                                 <tr>

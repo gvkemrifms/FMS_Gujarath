@@ -3,9 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <link href="css/InsuranceClaimsPaymentStatus.css" rel="stylesheet"/>
-<script src="js/Validation.js"></script>
-
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     function validation() {
 
         var spotSurveyor = document.getElementById('<%= txtSpotSurveyor.ClientID %>');
@@ -86,8 +84,6 @@
         }
         return true;
     }
-
-
 </script>
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">

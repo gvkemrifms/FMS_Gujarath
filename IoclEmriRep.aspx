@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
 
     <script>
         function exp() {
@@ -84,7 +83,14 @@
         });
     </script>
     <script type="text/javascript">
-   
+        function pageLoad() {
+            $('#<%= ddlvehicleNo.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+        }
        function ValidatePage()
         {
             var ddlVehicle = $('#<%= ddlvehicleNo.ClientID %> option:selected').text().toLowerCase();
@@ -95,12 +101,10 @@
             var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
             if (txtFirstDate === "") {
-                //txtFirstDate.focus();
                 return alert('From Date is Mandatory');
              
             }
             if (txtToDate === "") {         
-               // txtToDate.focus();
                 return alert("End Date is Mandatory");
             }
             var fromDate = (txtFirstDate).replace(/\D/g, '/');
@@ -121,92 +125,76 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+   
+    <br/>
+    <table align="center" style="margin-top: 10px">
+        <tr>
+            <td>
+                Vehicle Number <span style="color: red">*</span>
+            </td>
+               <td>
+                   <asp:DropDownList ID="ddlvehicleNo" runat="server" class="form-control"></asp:DropDownList>
+               </td>
+        </tr>
+        <tr>
+            
+            <td>
+                From Date <span style="color: red">*</span>
+            </td>
+            <td>
+                <asp:TextBox ID="txtfromdate" Style="width: 170px;" CssClass="search_3" runat="server" placeholder="" MaxLength="20"
+                             class="form-control">
+                </asp:TextBox>
+                <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="yyyy-MM-dd" TargetControlID="txtfromdate" Enabled="true" CssClass="cal_Theme1">
+                </cc1:CalendarExtender>
+                <style type="text/css">
+                    .test .ajax__calendar_body {
+                        background-color: gainsboro;
+                        border: 1px solid;
+                        color: lightslategray;
+                        font-family: Courier New;
+                        font-weight: bold;
+                        margin-top: 10px;
+                        width: 170px;
+                    }
 
-    <div id="main" class="row">
+                    .test .ajax__calendar_header {
+                        background-color: gainsboro;
+                        width: 170px;
+                    }
+                </style>
+            </td>
+           
+        </tr>
+        <tr>
 
-        <div id="mains" style="width: 100%;">
-            <div id="first" style="float: left; width: 22%">
-                <div class="row" style="margin-top: 20px">
-                    <div class="col-sm-13" style="">
-                        <label for="textfield" class="control-label col-sm-4" style="float: left; width: 23%;" id="PVlSuppCode9">
-                            From&nbsp;Date
-                        </label>
-
-                        <div class="col-sm-6" style="width: 218px;" id="PVtSuppCode9">
-                            <asp:TextBox ID="txtfromdate" Style="width: 170px;" runat="server" placeholder="" MaxLength="20"
-                                         class="form-control">
-                            </asp:TextBox>
-                            <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="yyyy-MM-dd" TargetControlID="txtfromdate" Enabled="true" CssClass="test">
-                            </cc1:CalendarExtender>
-                            <style type="text/css">
-                                .test .ajax__calendar_body {
-                                    background-color: gainsboro;
-                                    border: 1px solid;
-                                    color: lightslategray;
-                                    font-family: Courier New;
-                                    font-weight: bold;
-                                    margin-top: 10px;
-                                    width: 170px;
-                                }
-
-                                .test .ajax__calendar_header {
-                                    background-color: gainsboro;
-                                    width: 170px;
-                                }
-                            </style>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="two" style="float: left; width: 20%">
-            <div class="row" style="margin-top: 20px">
-                <div class="col-sm-13" style="">
-                    <label for="textfield" class="control-label col-sm-4" style="float: left; width: 20%;" id="PVlSuppCode1">
-                        To&nbsp;Date
-                    </label>
-                    <div class="col-sm-6" style="width: 218px;" id="PVtSuppCode1">
-                        <asp:TextBox ID="txttodate" Style="width: 170px;" runat="server" placeholder="" MaxLength="20"
-                                     class="form-control">
-                        </asp:TextBox>
-                        <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="test">
-                        </cc1:CalendarExtender>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="float: left; width: 30%">
-            <div class="row" style="margin-top: 20px">
-                <div class="col-sm-13" style="">
-                    <label for="textfield" class="control-label col-sm-4" style="float: left; width: 20%;" id="PVlSuppCode1">
-                        Vehicle Number
-                    </label>
-                    <div class="col-sm-6">
-                        <asp:DropDownList ID="ddlvehicleNo" runat="server" class="form-control"></asp:DropDownList>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="four" style="float: left; width: 6%">
-            <div class="row" style="margin-top: 30px">
-                <div class="col-sm-12" style="">
-                    <asp:Button ID="btnShow" runat="server" class="btn btn-primary"
-                                Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" OnClientClick="if(!ValidatePage()) {return false;}">
-                    </asp:Button>
-                </div>
-            </div>
-        </div>
-        <div id="five" style="float: left; width: 5%">
-            <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Excel" Style="font-size: 12px; height: 33px; width: 50px;"></asp:Button>
-            </div>
-        </div>
-
-    </div>
+            <td>
+                To Date <span style="color: red">*</span>
+            </td>
+            <td>
+                <asp:TextBox ID="txttodate" Style="width: 170px;" CssClass="search_3" runat="server" placeholder="" MaxLength="20"
+                             class="form-control">
+                </asp:TextBox>
+                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
+                </cc1:CalendarExtender>
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <asp:Button ID="btnShow" CssClass="form-submit-button" runat="server" class="btn btn-primary"
+                            Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" OnClientClick="if(!ValidatePage()) {return false;}">
+                </asp:Button>
+            </td>
+            <td>
+                <asp:Button ID="btntoExcel" runat="server" CssClass="form-reset-button" OnClick="btntoExcel_Click" Text="Excel" Style="font-size: 12px; height: 33px; width: 50px;"></asp:Button>
+            </td>
+        </tr>
+        
+    </table>
+<br />
     <asp:Panel ID="Panel4" runat="server" Style="background-color: #F7F7F7; margin-left: 2px;">
-        <div class="row" style="margin-left: 0%;">
+        <div align="center">
             <div style="margin-left: 0%; margin-right: auto;">
                 <table id="tblHeader" runat="server" class="table table-bordered" style="margin-bottom: 0px">
                     <tr>
@@ -221,7 +209,9 @@
                         </td>
                     </tr>
                 </table>
-                <asp:GridView ID="grdRepData" runat="server" AutoGenerateColumns="true" CssClass="table table-bordered" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
+                <asp:GridView style="overflow-y: Scroll; overflow-x: auto; height: 200px; width:1000px;text-align: center;" runat="server" ID="grdRepData"  AutoGenerateColumns="true" CssClass="table table-bordered" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
+                    <HeaderStyle BackColor="#6D91BF" ForeColor="white" Wrap="true" Font-Bold="true" HorizontalAlign="center"
+                                 Font-Size="15px" Height="50px" />
                     <Columns>
                         <asp:TemplateField ItemStyle-Width="50px" HeaderText="Sno">
                             <ItemTemplate>

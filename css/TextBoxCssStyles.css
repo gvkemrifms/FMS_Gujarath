@@ -111,3 +111,8 @@
     background-color:floralwhite;
     border: solid 1px grey;
 }
+.gridview {
+    width: 100%; 
+    word-wrap:break-word;
+    table-layout: fixed;
+}

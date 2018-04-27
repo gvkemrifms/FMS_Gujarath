@@ -3,8 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
 
         function validationInsuranceDetails() {
             switch (document.getElementById("<%= txtInsuranceAgency.ClientID %>").value) {
@@ -48,16 +47,11 @@
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table id="table1" cellspacing="0" cellpadding="0" width="500px" align="center" border="0"
-                   style="height: 37px">
-                <tr>
-                    <td class="rowseparator">
-                    </td>
-                </tr>
+            <table align="center">
                 <tr>
                     <td style="height: 200px">
                         <fieldset style="padding: 10px;">
-                            <legend>Insurance Agency</legend>
+                            <legend align="center">Insurance Agency</legend>
                             <table id="table2" class="bordergreen" width="91%" align="center">
                                 <tr>
                                     <td>
@@ -69,7 +63,7 @@
                                                 <td class="columnseparator">
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox ID="txtInsuranceAgency" runat="server" CssClass="textbox180" Width="150px"
+                                                    <asp:TextBox ID="txtInsuranceAgency" runat="server" CssClass="search_3" Width="150px"
                                                                  MaxLength="35">
                                                     </asp:TextBox>
                                                 </td>
@@ -85,7 +79,7 @@
                                                 <td class="columnseparator">
                                                 </td>
                                                 <td style="height: 23px">
-                                                    <asp:TextBox ID="txtAddress" runat="server" CssClass="textbox180" TextMode="MultiLine"
+                                                    <asp:TextBox ID="txtAddress" runat="server" CssClass="search_3" TextMode="MultiLine"
                                                                  onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                                     </asp:TextBox>
                                                 </td>
@@ -101,7 +95,7 @@
                                                 <td class="columnseparator">
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox ID="txtContactPerson" runat="server" CssClass="textbox180" MaxLength="35"></asp:TextBox>
+                                                    <asp:TextBox ID="txtContactPerson" runat="server" CssClass="search_3" MaxLength="35"></asp:TextBox>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -115,7 +109,7 @@
                                                 <td class="columnseparator">
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox ID="txtContactNo" runat="server" CssClass="textbox180" MaxLength="15"></asp:TextBox>
+                                                    <asp:TextBox ID="txtContactNo" runat="server" CssClass="search_3" MaxLength="15"></asp:TextBox>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -125,12 +119,12 @@
                                             <tr>
                                                 <td colspan="3" style="height: 41px">
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <asp:Button ID="btnInsuranceUpdate" Width="55px" runat="server" CssClass="button"
-                                                                Text="Insert" OnClientClick="return validationInsuranceDetails();" OnClick="btnInsuranceUpdate_Click">
+                                                    <asp:Button ID="btnInsuranceUpdate" Width="55px" runat="server" CssClass="form-submit-button"
+                                                                Text="Insert"  OnClientClick="return validationInsuranceDetails();" OnClick="btnInsuranceUpdate_Click">
                                                     </asp:Button>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <asp:Button ID="btnInsuranceReset" Width="55px" runat="server"
-                                                                CssClass="button" Text="Reset" CausesValidation="false" OnClick="btnInsuranceReset_Click">
+                                                                CssClass="form-submit-button"   Text="Reset" CausesValidation="false" OnClick="btnInsuranceReset_Click">
                                                     </asp:Button>
                                                     <input type="hidden" id="hidBatText" runat="server"/>
                                                 </td>

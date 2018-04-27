@@ -2,9 +2,7 @@
 <%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
 
     function validationMaintenanceWorksMaster() {
         switch (document.getElementById("<%= ddlServiceGroupName.ClientID %>").selectedIndex) {
@@ -79,7 +77,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlServiceGroupName" runat="server" Height="20px" Width="127px"
+                                        <asp:DropDownList ID="ddlServiceGroupName" CssClass="search_3" runat="server"  Width="150px"
                                                           AutoPostBack="True" OnSelectedIndexChanged="ddlServiceGroupName_SelectedIndexChanged">
                                             <asp:ListItem></asp:ListItem>
                                         </asp:DropDownList>
@@ -95,8 +93,8 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlMaintenanceManufacturerName" runat="server" AutoPostBack="true"
-                                                          Height="18px" Width="120px"
+                                        <asp:DropDownList ID="ddlMaintenanceManufacturerName" CssClass="search_3" runat="server" AutoPostBack="true"
+                                                           Width="150px"
                                                           OnSelectedIndexChanged="ddlMaintenanceManufacturerName_SelectedIndexChanged"/>
                                         &nbsp;&nbsp;
                                     </td>
@@ -110,9 +108,9 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtCategories" runat="server" Height="18px" onkeypress="return OnlyAlphabets(event)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCategories" CssClass="search_3" runat="server"  onkeypress="return OnlyAlphabets(event)"></asp:TextBox>
                                         &nbsp;&nbsp;
-                                        <asp:DropDownList ID="ddlSSName" runat="server" Visible="false" Height="20px" Width="127px"/>
+                                        <asp:DropDownList ID="ddlSSName" runat="server" Visible="false"  Width="127px"/>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -132,7 +130,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtServiceName" runat="server" Height="18px" onkeypress="return OnlyAlphabets(e)"></asp:TextBox>
+                                        <asp:TextBox ID="txtServiceName" CssClass="search_3" runat="server"  onkeypress="return OnlyAlphabets(e)"></asp:TextBox>
                                         &nbsp;&nbsp;
                                     </td>
                                 </tr>
@@ -145,7 +143,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtCostGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCostGrade" CssClass="search_3" runat="server"  MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -158,7 +156,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtCostOtherGrade" runat="server" Height="18px" MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
+                                        <asp:TextBox ID="txtCostOtherGrade" CssClass="search_3" runat="server"  MaxLength="10" onkeypress="return numericOnly(this)"></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -171,7 +169,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtTimeTaken" runat="server" Height="18px" MaxLength="5" onkeypress="return numericOnly(this) "></asp:TextBox>
+                                        <asp:TextBox ID="txtTimeTaken" runat="server" CssClass="search_3"  MaxLength="5" onkeypress="return numericOnly(this) "></asp:TextBox>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -180,9 +178,9 @@
                                 </tr>
                                 <tr>
                                     <td align="center" colspan="3">
-                                        <asp:Button ID="btnSaveMaintenanceWorksMaster" runat="server" Text="Save" OnClick="btnSaveMaintenanceWorksMaster_Click" OnClientClick="if(!validationMaintenanceWorksMaster()) return false;"/>
+                                        <asp:Button ID="btnSaveMaintenanceWorksMaster" CssClass="form-submit-button" runat="server" Text="Save" OnClick="btnSaveMaintenanceWorksMaster_Click" OnClientClick="if(!validationMaintenanceWorksMaster()) return false;"/>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnResetMaintenanceWorksMaster" runat="server" Text="Reset" OnClick="btnResetMaintenanceWorksMaster_Click"/>
+                                        <asp:Button ID="btnResetMaintenanceWorksMaster" CssClass="form-reset-button" runat="server" Text="Reset" OnClick="btnResetMaintenanceWorksMaster_Click"/>
                                     </td>
                                 </tr>
                             </table>
@@ -193,11 +191,12 @@
             <tr>
                 <td class="rowseparator"></td>
             </tr>
+            <br />
             <tr>
                 <td>
                     <fieldset style="padding: 10px">
                         <asp:GridView ID="grvMaintenanceWorksMasterDetails" runat="server" AllowPaging="True"
-                                      PageSize="5" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" GridLines="None"
+                                      PageSize="5" AutoGenerateColumns="False" BorderColor="brown" BorderWidth="1px" CellPadding="3" CellSpacing="2" GridLines="None"
                                       CssClass="gridviewStyle" OnRowEditing="grvMaintenanceWorksMasterDetails_RowEditing"
                                       OnPageIndexChanging="grvMaintenanceWorksMasterDetails_PageIndexChanging">
                             <RowStyle CssClass="rowStyleGrid"/>

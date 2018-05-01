@@ -2,13 +2,12 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 
     function isMandatory() {
 
         switch (document.getElementById("<%= txtPetroCardNumber.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please enter PetroCardNumber");
             document.getElementById("<%= txtPetroCardNumber.ClientID %>").focus();
             return false;
@@ -32,13 +31,13 @@
 
 
         switch (document.getElementById("<%= txtValidityEndDate.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Select ValidityEndDate");
             document.getElementById("<%= txtValidityEndDate.ClientID %>").focus();
             return false;
         }
         switch (document.getElementById("<%= txtIssuedDate.ClientID %>").value) {
-        case 0:
+        case '':
             alert("Please Select IssuedDate");
             document.getElementById("<%= txtIssuedDate.ClientID %>").focus();
             return false;
@@ -105,114 +104,99 @@
 </script>
 <asp:UpdatePanel ID="UpdPanel1" runat="server">
 <ContentTemplate>
-    <table>
-        <tr>
-            <td class="rowseparator">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <fieldset style="padding: 10px">
-                    <legend>Petro Card Issue</legend>
+  
+                    <legend align="center">Petro Card Issue</legend>
+    <br/>
                     <table align="center">
                         <tr>
-                            <td class="rowseparator">
+                            <td >
+                                 <asp:Label ID="lblDistrict" runat="server" Text="Select District" Visible="false" ></asp:Label>
                             </td>
-                        </tr>
-                        <tr>
-                            <td align="left" style="height: 19px; width: 121px;">
-                            </td>
-                            <td style="height: 19px; width: 101px;">
-                                <asp:DropDownList ID="ddlDistricts" runat="server" Width="153px" AutoPostBack="True"
-                                                  Visible="false" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged">
+                            <td >
+                                <asp:DropDownList ID="ddlDistricts" runat="server" Width="150px" AutoPostBack="True"
+                                                  Visible="false" CssClass="search_3" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </td>
-                            <td style="height: 19px; width: 135px;">
-                                <asp:TextBox ID="txtEdit" runat="server" Visible="False"></asp:TextBox>
+                            <td >
+                                <asp:TextBox ID="txtEdit" runat="server" width="150px" CssClass="search_3" Visible="False"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="height: 19px; width: 121px;">
+                            <td >
                                 PetroCardNumber<span style="color: Red">*</span>
                             </td>
-                            <td style="height: 19px; width: 101px;">
-                                <asp:TextBox ID="txtPetroCardNumber" runat="server" MaxLength="16"></asp:TextBox>
+                            <td >
+                                <asp:TextBox ID="txtPetroCardNumber" CssClass="search_3" runat="server" MaxLength="16"></asp:TextBox>
                             </td>
-                            <td style="height: 19px; width: 135px;">
-                            </td>
+                            
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px">
+                            <td >
                                 Agency<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px">
-                                <asp:DropDownList ID="ddlAgency" runat="server" Width="153px" AutoPostBack="True"
+                            <td >
+                                <asp:DropDownList ID="ddlAgency" CssClass="search_3" runat="server" Width="153px" AutoPostBack="True"
                                                   OnSelectedIndexChanged="ddlAgency_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </td>
-                            <td style="width: 135px">
-                            </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px">
+                            <td >
                                 Card Type<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px">
-                                <asp:DropDownList ID="ddlCardType" runat="server" Width="153px" AutoPostBack="True">
+                            <td >
+                                <asp:DropDownList ID="ddlCardType" CssClass="search_3" runat="server" Width="153px" AutoPostBack="True">
                                 </asp:DropDownList>
-                            </td>
-                            <td style="width: 135px">
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px">
+                            <td >
                                 ValidityEndDate<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px">
-                                <asp:TextBox ID="txtValidityEndDate" runat="server" oncut="return false;" onpaste="return false;"
+                            <td >
+                                <asp:TextBox ID="txtValidityEndDate" runat="server" CssClass="search_3" oncut="return false;" onpaste="return false;"
                                              oncopy="return false;" onkeypress="return false">
                                 </asp:TextBox>
                                 <cc1:CalendarExtender ID="calValEndDate" runat="server" TargetControlID="txtValidityEndDate"
-                                                      Format="dd/MM/yyyy" PopupButtonID="imgBtnCalendarInvoiceDate">
+                                                      Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="imgBtnCalendarInvoiceDate">
                                 </cc1:CalendarExtender>
                             </td>
-                            <td nowrap="nowrap" style="width: 51px">
+                            <td >
                                 <asp:ImageButton ID="imgBtnCalendarInvoiceDate" runat="server" alt="" src="images/Calendar.gif"
                                                  Style="vertical-align: top"/>
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" style="width: 121px">
+                            <td >
                                 Issued To FE<span style="color: Red">*</span>
                             </td>
-                            <td style="width: 101px">
-                                <asp:DropDownList ID="dd_listFe" runat="server" AutoPostBack="True"
+                            <td >
+                                <asp:DropDownList ID="dd_listFe" runat="server" CssClass="search_3" AutoPostBack="True"
                                                   onselectedindexchanged="dd_listFe_SelectedIndexChanged">
                                 </asp:DropDownList>
 
                             </td>
-                            <td style="width: 135px">
-                            </td>
+                           
                         </tr>
                         <tr>
-                            <td align="left" style="height: 19px; width: 121px;">
+                            <td >
                                 Issued Date<span style="color: Red">*</span>
                             </td>
-                            <td style="height: 19px; width: 101px;">
-                                <asp:TextBox ID="txtIssuedDate" runat="server" MaxLength="15" onkeypress="return false"
+                            <td >
+                                <asp:TextBox ID="txtIssuedDate" CssClass="search_3" runat="server" MaxLength="15" onkeypress="return false"
                                              oncut="return false;" onpaste="return false;" oncopy="return false;">
                                 </asp:TextBox>
                                 <cc1:CalendarExtender ID="calIssuedDate" runat="server" TargetControlID="txtIssuedDate"
-                                                      Format="dd/MM/yyyy" PopupButtonID="ImageButton1">
+                                                      Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="ImageButton1">
                                 </cc1:CalendarExtender>
                             </td>
-                            <td nowrap="nowrap" style="width: 51px">
+                            <td >
                                 <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif"
                                                  Style="vertical-align: top"/>
                             </td>
                         </tr>
                         <tr>
-                            <td align="right" style="height: 19px; text-align: left; width: 121px;">
+                            <td >
                                 Issued To Vehicle<span style="color: Red">*</span>
                             </td>
                             <td style="height: 19px; width: 101px;">
@@ -222,46 +206,32 @@
 
 
                             </td>
-                            <td style="height: 19px; width: 135px;">
-                            </td>
                         </tr>
                         <tr>
-                            <td align="right" style="height: 19px; text-align: left; width: 121px;">
+                            <td >
                                 Issued To District<span style="color: Red">*</span>
                             </td>
-                            <td style="height: 19px; width: 101px;">
-                                <asp:DropDownList ID="ddlFeuserDistrict" runat="server" AutoPostBack="True"
+                            <td>
+                                <asp:DropDownList ID="ddlFeuserDistrict" CssClass="search_3" runat="server" AutoPostBack="True"
                                                   Enabled="False">
                                 </asp:DropDownList>
                             </td>
-                            <td style="height: 19px; width: 135px;">
-                                &nbsp;
-                            </td>
                         </tr>
                         <tr>
-                            <td align="right" style="height: 19px; width: 121px;">
-                            <asp:Button ID="btSave" runat="server" Text="Save" OnClick="btSave_Click"/>
-                            <td style="height: 19px; width: 135px;" align="center">
-                                <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click"/>
+                            <td >
+                            <asp:Button ID="btSave" runat="server" Text="Save" CssClass="form-submit-button" OnClick="btSave_Click"/>
+                            <td >
+                                <asp:Button ID="btReset" runat="server" Text="Reset" CssClass="form-reset-button" OnClick="btReset_Click"/>
                             </td>
                         </tr>
                     </table>
-                </fieldset>
-            </td>
-        </tr>
-        <tr>
-            <td class="rowseparator">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <fieldset style="padding: 10px">
-                    <table style="height: 99px; width: 102px;" align="center">
+    <br/>
+                    <table align="center">
                         <tr>
-                            <td style="height: 99px; width: 102px;">
-                                <asp:GridView ID="gvPetroCardIssue" runat="server" Width="102px" AllowPaging="True"
+                            <td>
+                                <asp:GridView ID="gvPetroCardIssue" runat="server" Width="1000px" AllowPaging="True"
                                               OnPageIndexChanging="gvPetroCardIssue_PageIndexChanging" PageSize="5" CellPadding="3"
-                                              CellSpacing="2" GridLines="None" CssClass="gridviewStyle" HorizontalAlign="Justify"
+                                              CellSpacing="2" GridLines="both" wrap="nowrap" CssClass="gridview" HorizontalAlign="Justify"
                                               OnRowEditing="gvPetroCardIssue_RowEditing" OnRowDeleting="gvPetroCardIssue_RowDeleting"
                                               AutoGenerateColumns="False" OnRowCommand="gvPetroCardIssue_RowCommand" EmptyDataText="No Records Found">
                                     <RowStyle CssClass="rowStyleGrid"/>
@@ -299,10 +269,6 @@
                             </td>
                         </tr>
                     </table>
-                </fieldset>
-            </td>
-        </tr>
-    </table>
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>

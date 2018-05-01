@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" masterpagefile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceWorksMaster.aspx.cs" Inherits="MaintenanceWorksMaster" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <script  type="text/javascript">

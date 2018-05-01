@@ -3,8 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function isMandatory(evt) {
             var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
             var inputs = id.getElementsByTagName('input');
@@ -27,7 +26,7 @@
             }
 
             switch (document.getElementById("<%= txtIssDate.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please enter Issued Date");
                 document.getElementById("<%= txtIssDate.ClientID %>").focus();
                 return false;
@@ -45,7 +44,7 @@
     </script>
     <asp:UpdatePanel ID="UpdPanel1" runat="server">
         <ContentTemplate>
-            <table>
+            <table align="center">
                 <tr>
                     <td class="rowseparator">
                     </td>
@@ -61,8 +60,8 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 100px">
-                                        <asp:GridView ID="gvPetroCardMapping" runat="server" Width="459px" CellPadding="3"
-                                                      CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnPageIndexChanging="gvPetroCardMapping_PageIndexChanging"
+                                        <asp:GridView ID="gvPetroCardMapping" runat="server" Width="700px" CellPadding="3"
+                                                      CellSpacing="2" GridLines="Both" CssClass="gridview" OnPageIndexChanging="gvPetroCardMapping_PageIndexChanging"
                                                       OnRowEditing="gvPetroCardMapping_RowEditing" AutoGenerateColumns="False" OnRowCommand="gvPetroCardMapping_RowCommand" EmptyDataText="No Records Found">
                                             <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
@@ -114,7 +113,7 @@
                                         Petro Card Number<span style="color: Red">*</span>
                                     </td>
                                     <td style="width: 109px">
-                                        <asp:DropDownList ID="ddlPetroCardNumber" runat="server" AutoPostBack="True" Width="154px"
+                                        <asp:DropDownList ID="ddlPetroCardNumber" CssClass="search_3" runat="server" AutoPostBack="True" Width="154px"
                                                           OnSelectedIndexChanged="ddlPetroCardNumber_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -126,7 +125,7 @@
                                         Card Validity<span style="color: Red">*</span>
                                     </td>
                                     <td style="width: 109px">
-                                        <asp:TextBox ID="txtCardValidity" runat="server" ReadOnly="True"></asp:TextBox>
+                                        <asp:TextBox ID="txtCardValidity" CssClass="search_3" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
                                     <td style="width: 100px">
                                     </td>
@@ -136,7 +135,7 @@
                                         Agency<span style="color: Red">*</span>
                                     </td>
                                     <td style="width: 109px">
-                                        <asp:TextBox ID="txtAgency" runat="server" ReadOnly="True"></asp:TextBox>
+                                        <asp:TextBox ID="txtAgency" CssClass="search_3" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
                                     <td style="width: 100px">
                                     </td>
@@ -146,7 +145,7 @@
                                         Card Type<span style="color: Red">*</span>
                                     </td>
                                     <td style="width: 109px">
-                                        <asp:TextBox ID="txtCardType" runat="server" ReadOnly="True"></asp:TextBox>
+                                        <asp:TextBox ID="txtCardType" CssClass="search_3" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
                                     <td style="width: 100px">
                                         <asp:TextBox ID="txtEdit" runat="server" Visible="False"></asp:TextBox>
@@ -157,23 +156,23 @@
                                         Issue To Ambulance Date<span style="color: Red">*</span>
                                     </td>
                                     <td align="left" style="width: 109px">
-                                        <asp:TextBox ID="txtIssDate" runat="server" oncut="return false;" onpaste="return false;"
+                                        <asp:TextBox ID="txtIssDate" CssClass="search_3" runat="server" oncut="return false;" onpaste="return false;"
                                                      oncopy="return false;" onkeypress="return false" MaxLength="15">
                                         </asp:TextBox>
                                         <cc1:CalendarExtender ID="IssDate" runat="server" TargetControlID="txtIssDate" Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
                                         </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
                                     </td>
-                                    <td nowrap="nowrap" style="width: 51px">
+                                    <td wrap="nowrap" style="width: 51px">
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="right" style="width: 155px">
-                                        <asp:RadioButton ID="Deactivate" runat="server" Text="Deactivate" OnCheckedChanged="Deactivate_CheckedChanged"
+                                        <asp:RadioButton ID="Deactivate" CssClass="form-submit-button" runat="server" Text="Deactivate" OnCheckedChanged="Deactivate_CheckedChanged"
                                                          AutoPostBack="true" Visible="false" GroupName="kk"/>
                                     </td>
                                     <td style="width: 109px">
-                                        <asp:RadioButton ID="TransfertoNewVehicle" runat="server" OnCheckedChanged="TransfertoNewVehicle_CheckedChanged"
+                                        <asp:RadioButton ID="TransfertoNewVehicle" CssClass="form-submit-button" runat="server" OnCheckedChanged="TransfertoNewVehicle_CheckedChanged"
                                                          Text="Transfer" AutoPostBack="true" Visible="false" GroupName="kk"/>
                                     </td>
                                     <td style="width: 100px">
@@ -185,12 +184,12 @@
                                         <asp:Label ID="lbReason" runat="server" Text="Reason" Visible="False"></asp:Label>
                                     </td>
                                     <td style="height: 19px; width: 109px;">
-                                        <asp:DropDownList ID="ddlReason" runat="server" AutoPostBack="True" Width="154px"
+                                        <asp:DropDownList ID="ddlReason" CssClass="search_3" runat="server" AutoPostBack="True" Width="154px"
                                                           Visible="false" OnSelectedIndexChanged="ddlReason_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="height: 19px; width: 100px;">
-                                        <asp:TextBox ID="txtRemarks" runat="server" Visible="False" onkeypress="return OnlyAlphabets(event);"
+                                        <asp:TextBox ID="txtRemarks" CssClass="search_3" runat="server" Visible="False" onkeypress="return OnlyAlphabets(event);"
                                                      MaxLength="15">
                                         </asp:TextBox>
                                     </td>
@@ -225,11 +224,11 @@
                                 </tr>
                                 <tr>
                                     <td align="right" style="height: 19px; width: 100px;">
-                                        <asp:Button ID="Save" runat="server" Text="Save" OnClientClick="return isMandatory();"
+                                        <asp:Button ID="Save" runat="server" Text="Save" CssClass="form-submit-button" style="margin-top: -10px" OnClientClick="return isMandatory();"
                                                     OnClick="Save_Click"/>&nbsp;
                                     </td>
                                     <td align="left" style="height: 19px; width: 99px;">
-                                        &nbsp;<asp:Button ID="Reset" runat="server" Text="Reset" OnClick="Reset_Click"/>
+                                        &nbsp;<asp:Button ID="Reset" CssClass="form-submit-button"  runat="server" style="margin-top: -10px"  Text="Reset" OnClick="Reset_Click"/>
                                     </td>
                                 </tr>
                             </table>

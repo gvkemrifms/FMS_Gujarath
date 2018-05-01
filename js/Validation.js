@@ -248,7 +248,7 @@ function remark(e) {
 }
 
 function isValidDate(subject) {
-    return !!subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
+    return subject.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/);
 }
 
 function RequiredValidation(ctrl, msg) {

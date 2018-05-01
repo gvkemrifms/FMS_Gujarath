@@ -13,6 +13,7 @@ public partial class RefurbishmentAlert : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) FillGrid();
     }
 
@@ -68,10 +69,8 @@ public partial class RefurbishmentAlert : Page
     {
         try
         {
-            var subject = "";
-            var mailBody = "";
-            subject = "Vehicle Refurbishment Alert";
-            mailBody = CreateHtml((DataSet) ViewState["ds"]);
+            var subject = "Vehicle Refurbishment Alert";
+            var mailBody = CreateHtml((DataSet) ViewState["ds"]);
             MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
         }
         catch (Exception ex)

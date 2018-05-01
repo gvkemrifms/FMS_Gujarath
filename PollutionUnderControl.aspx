@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="PollutionUnderControl.aspx.cs" Inherits="PollutionUnderControl" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <link href="css/PollutionUnderControl.css" rel="stylesheet"/>
 
 <script language="javascript" type="text/javascript">
@@ -12,18 +11,10 @@
         var pollutionFee = document.getElementById('<%= txtPollutionFee.ClientID %>');
         var vehiclePurchaseDate = document.getElementById('<%= vehiclePurchaseDate.ClientID %>');
         var now = new Date();
-        var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-            case 'text':
-                if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                    alert('Select the Vehicle');
-                    return false;
-                }
-                break;
-            }
+        var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>').control._textBoxControl.value;;
+        if (id === '') {
+            alert('Please select Vehicle');
+            return false;
         }
         if (!RequiredValidation(pollutionValidityStartDate, "Pollution Validity Start Date Cannot be Blank"))
             return false;
@@ -89,7 +80,7 @@
                                       Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" DropDownStyle="DropDownList">
                             <asp:ListItem></asp:ListItem>
                         </cc1:ComboBox>
-                        <asp:TextBox ID="txtVehicleNumber" class="text1" runat="server" MaxLength="15" Visible="False"
+                        <asp:TextBox ID="txtVehicleNumber" class="text1" CssClass="search_3" runat="server" MaxLength="15" Visible="False"
                                      Width="145px" ReadOnly="True">
                         </asp:TextBox>
                     </td>
@@ -101,7 +92,7 @@
                         Pollution Validity Start Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtPollutionValidityStartDate" class="text1" AutoPostBack="true" runat="server"
+                        <asp:TextBox ID="txtPollutionValidityStartDate" CssClass="search_3" class="text1" AutoPostBack="true" runat="server"
                                      Width="145px" OnTextChanged="txtPollutionValidityStartDate_TextChanged1" onkeypress="return false"
                                      oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
@@ -109,7 +100,7 @@
                     <td align="left">
                         <asp:ImageButton ID="imgBtnPollutionValidityStartDate" runat="server" Style="vertical-align: top"
                                          alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calextPollutionValidityStartDate" runat="server" TargetControlID="txtPollutionValidityStartDate"
+                        <cc1:CalendarExtender ID="calextPollutionValidityStartDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtPollutionValidityStartDate"
                                               PopupButtonID="imgBtnPollutionValidityStartDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -120,7 +111,7 @@
                         Pollution Validity Period<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:DropDownList ID="ddlPollutionValidityPeriod" class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlPollutionValidityPeriod_SelectedIndexChanged"
+                        <asp:DropDownList ID="ddlPollutionValidityPeriod" CssClass="search_3" class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlPollutionValidityPeriod_SelectedIndexChanged"
                                           AutoPostBack="True">
                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             <asp:ListItem Value="3">3 Month</asp:ListItem>
@@ -137,7 +128,7 @@
                         Pollution Validity End Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtPollutionValidityEndDate" class="text1" runat="server" Width="145px" BackColor="DarkGray"
+                        <asp:TextBox ID="txtPollutionValidityEndDate" CssClass="search_3" class="text1" runat="server" Width="145px" BackColor="DarkGray"
                                      ReadOnly="True">
                         </asp:TextBox>
                     </td>
@@ -149,7 +140,7 @@
                         Pollution Receipt No.<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtPollutionReceiptNo" class="text1" runat="server" Width="145px" MaxLength="15"
+                        <asp:TextBox ID="txtPollutionReceiptNo" CssClass="search_3" class="text1" runat="server" Width="145px" MaxLength="15"
                                      onkeypress="return alphanumeric_only(event);">
                         </asp:TextBox>
                     </td>
@@ -161,7 +152,7 @@
                         Pollution Fee<span style="color: Red">*</span>
                     </td>
                     <td align="left" colspan="2">
-                        <asp:TextBox ID="txtPollutionFee" class="text1" runat="server" Width="145px" onkeypress="return isDecimalNumberKey(event);"
+                        <asp:TextBox ID="txtPollutionFee" CssClass="search_3" class="text1" runat="server" Width="145px" onkeypress="return numericOnly(event);"
                                      MaxLength="9">
                         </asp:TextBox>
                     </td>
@@ -189,10 +180,10 @@
                         &nbsp;
                     </td>
                     <td align="center" style="width: 226px">
-                        <asp:Button ID="btSave" runat="server" Text="Save" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button"  Text="Save" OnClick="btSave_Click"/>
                     </td>
                     <td align="left">
-                        <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click"/>
+                        <asp:Button ID="btReset" CssClass="form-submit-button" runat="server" Text="Reset" OnClick="btReset_Click"/>
                     </td>
                     <td align="center" style="width: 50px">
                         &nbsp;
@@ -231,7 +222,7 @@
 <tr align="center">
     <td>
         <asp:GridView ID="gvPollutionUnderControl" runat="server" AutoGenerateColumns="False"
-                      CellPadding="4" Width="630px" ForeColor="#333333" GridLines="None" OnRowCommand="gvPollutionUnderControl_RowCommand"
+                      CellPadding="4" Width="630px" ForeColor="#333333" GridLines="Both" OnRowCommand="gvPollutionUnderControl_RowCommand"
                       OnRowDataBound="gvPollutionUnderControl_RowDataBound" EmptyDataText="No Records Found"
                       AllowPaging="True" OnPageIndexChanging="gvPollutionUnderControl_PageIndexChanging"
                       CssClass="mydatagrid" PagerStyle-CssClass="pager"

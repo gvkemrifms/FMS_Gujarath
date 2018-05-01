@@ -6,8 +6,8 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <fieldset style="padding: 10px">
-                <legend>Vehicle Wise Record</legend>
-                <table>
+                <legend align="center" style="color: brown">Vehicle Wise Record</legend>
+                <table align="center">
                     <tr>
                         <td class="rowseparator">
                             <div style="height: 500px; overflow: scroll;">
@@ -17,7 +17,7 @@
                                         <%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>
                                     </HeaderTemplate>
                                     <ContentTemplate>
-                                        <table cellpadding="2" cellspacing="2" width="600px">
+                                        <table cellpadding="2" cellspacing="2" width="600px" border="1px solid brown">
                                             <tr>
                                                 <td class="rowseparator" colspan="5"></td>
                                             </tr>

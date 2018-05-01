@@ -4,7 +4,6 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.PL;
 using ServiceReference2;
 
 public partial class PetroCardIssue : Page

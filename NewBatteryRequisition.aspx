@@ -1,36 +1,24 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="NewBatteryRequisition.aspx.cs" Inherits="NewBatteryRequisition" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
-    function validationInventoryBatteryVehicleType() {
-        var id = document.getElementById('<%= ddlInventoryVehicles.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-            case 'text':
-                if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                    alert('Select the Vehicle');
-                    return false;
-                }
-                break;
 
-            }
-        }
+<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+<ContentTemplate>
+<script type="text/javascript">
+    function validationInventoryBatteryVehicleType() {
+        var value = document.getElementById("<%= ddlInventoryVehicles.ClientID %>").control._textBoxControl.value;
+        if (value === "")
+            return alert("Please select Vehicle");
         return true;
     }
 
 
 </script>
-<asp:UpdatePanel ID="UpdatePanel1" runat="server">
-<ContentTemplate>
 <fieldset style="padding: 10px">
-<legend>Battery Requisition</legend>
-<table style="width: 600px">
+<legend align="center" style="color: brown">Battery Requisition</legend>
+<table align="center">
 <tr>
     <td class="rowseparator"></td>
 </tr>
@@ -44,9 +32,7 @@
                 <tr>
                     <td align="center">
                         <asp:Label ID="lbVehicles" runat="server" Text="Vehicles"></asp:Label>
-                        <span style="color: Red">
-                            *
-                        </span>
+                        <span style="color: Red">*</span>
                         <ajaxToolkit:ComboBox AutoCompleteMode="Append" ID="ddlInventoryVehicles" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlInventoryVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
                         </ajaxToolkit:ComboBox>
                     </td>
@@ -94,11 +80,11 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <asp:Button ID="btnNewBatteryReqSave" runat="server" Text="Save" OnClick="btnNewBatteryReqSave_Click"/>
+                        <asp:Button ID="btnNewBatteryReqSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btnNewBatteryReqSave_Click" OnClientClick="if (!validationInventoryBatteryVehicleType())return false;"/>
                         &nbsp;&nbsp;
-                        <asp:Button ID="btnNewBatteryReqReset" runat="server" Text="Reset" OnClick="btnNewBatteryReqReset_Click"/>
+                        <asp:Button ID="btnNewBatteryReqReset" runat="server" CssClass="form-submit-button"  Text="Reset" OnClick="btnNewBatteryReqReset_Click"/>
                         &nbsp;&nbsp;
-                        <asp:Button ID="btnNewBatteryReqViewHistory" runat="server" Text="View History" OnClick="btnNewBatteryReqViewHistory_Click" OnClientClick="return validationInventoryBatteryVehicleType();"/>
+                        <asp:Button ID="btnNewBatteryReqViewHistory" runat="server" CssClass="form-submit-button" Text="View History" OnClick="btnNewBatteryReqViewHistory_Click" OnClientClick="if(!validationInventoryBatteryVehicleType()) return false;"/>
                     </td>
                 </tr>
             </table>
@@ -111,6 +97,7 @@
             <tr>
                 <td class="rowseparator"></td>
             </tr>
+            <br />
             <tr>
                 <td>
                     <asp:GridView ID="grvBatteryPendingForApproval" runat="server" CellPadding="3" CellSpacing="2"

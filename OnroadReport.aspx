@@ -1,26 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="OnroadReport.aspx.cs" Inherits="OnroadReport" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div id="main">
-        <div id="four" style="float: left; width: 6%">
-            <div class="row" style="margin-top: 30px">
-                <div class="col-sm-12" style="">
-                    <asp:Button ID="btnShow" runat="server" class="btn btn-primary"
-                                Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click">
-                    </asp:Button>
-                </div>
-            </div>
-        </div>
-        <div id="five" style="float: left; width: 5%">
-            <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Excel" Style="font-size: 12px; height: 33px; width: 50px;"></asp:Button>
-            </div>
-        </div>
-
-    </div>
-    <div class="row" style="margin-left: 0%;">
+    <legend align="center" style="color: brown">OnRoad Report</legend>
+    <br />
+    <table align="center">
+        <tr>
+            <td>
+                 <asp:Button ID="btnShow" runat="server" CssClass="form-submit-button" class="btn btn-primary"
+                                Text="Show"  OnClick="btnShow_Click">
+                 </asp:Button>
+            </td>
+            <td>
+                 <asp:Button ID="btntoExcel" runat="server" CssClass="form-submit-button" OnClick="btntoExcel_Click" style="margin-left: 20px" Text="Excel"></asp:Button>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <div align="center">
         <div style="margin-left: 0%; margin-right: auto;">
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="margin-top: 2%;"
                           EmptyDataText="No Data Found" EmptyDataRowStyle-ForeColor="Red"

@@ -130,7 +130,7 @@
                         Vehicle Received From<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:DropDownList ID="ddlVehicleReceived" runat="server" Width="150px">
+                        <asp:DropDownList ID="ddlVehicleReceived" CssClass="search_3" runat="server" Width="150px">
                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             <asp:ListItem Value="0">Dummy</asp:ListItem>
                         </asp:DropDownList>
@@ -143,11 +143,11 @@
                         Received Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtReceivedDate" runat="server" Width="145px" onkeypress="return false" oncut="return false;" onpaste="return false;">
+                        <asp:TextBox ID="txtReceivedDate" CssClass="search_3" runat="server" Width="145px" onkeypress="return false" oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imgBtnCalendarReceivedDate" runat="server" Style="vertical-align: top"
                                          alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtReceivedDate" runat="server" TargetControlID="txtReceivedDate"
+                        <cc1:CalendarExtender ID="calExtReceivedDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtReceivedDate"
                                               PopupButtonID="imgBtnCalendarReceivedDate" Format="yyyy/MM/dd">
                         </cc1:CalendarExtender>
                     </td>
@@ -159,7 +159,7 @@
                         Odometer<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtOdometer" runat="server" Width="145px" onkeypress="return isDecimalNumberKey(event);"
+                        <asp:TextBox ID="txtOdometer" CssClass="search_3" runat="server" Width="145px" onkeypress="return numericOnly(event);"
                                      MaxLength="6">
                         </asp:TextBox>
                     </td>
@@ -171,7 +171,7 @@
                         PDI By<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtPDIBy" runat="server" Width="145px" MaxLength="35" onkeypress="return alpha_only_withspace(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtPDIBy" CssClass="search_3" runat="server" Width="145px" MaxLength="35" onkeypress="return alpha_only_withspace(event);"></asp:TextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -181,11 +181,11 @@
                         PDI Date<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:TextBox ID="txtPDIDate" runat="server" Width="145px" onkeypress="return false" oncut="return false;" onpaste="return false;">
+                        <asp:TextBox ID="txtPDIDate" CssClass="search_3" runat="server" Width="145px" onkeypress="return false" oncut="return false;" onpaste="return false;">
                         </asp:TextBox>
                         <asp:ImageButton ID="imbtnPDIDate" runat="server" Style="vertical-align: top"
                                          alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtPDIDate" runat="server" TargetControlID="txtPDIDate"
+                        <cc1:CalendarExtender ID="calExtPDIDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtPDIDate"
                                               PopupButtonID="imbtnPDIDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -210,10 +210,10 @@
                         &nbsp;
                     </td>
                     <td align="center" style="width: 300px">
-                        <asp:Button ID="btSave" Text="Save" runat="server" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" Text="Save" CssClass="form-submit-button" runat="server" OnClick="btSave_Click"/>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:Button ID="btReset" Text="Reset" runat="server" OnClick="btReset_Click"/>
+                        <asp:Button ID="btReset" Text="Reset" CssClass="form-reset-button" runat="server" OnClick="btReset_Click"/>
                     </td>
                     <td></td>
                 </tr>
@@ -241,7 +241,8 @@
 </tr>
 <tr>
     <td>
-        <table>
+        <br />
+        <table align="center">
             <tr align="center">
                 <td>
                     <asp:GridView ID="gvPreDeliveryInspection" runat="server" EmptyDataText="No Records Found"

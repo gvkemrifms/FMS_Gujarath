@@ -10,7 +10,7 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                            <legend>Refurbishment Alert </legend>
+                            <legend align="center" style="color: brown">Refurbishment Alert </legend>
                             <table>
                                 <tr>
                                     <td class="rowseparator">
@@ -19,7 +19,7 @@
                                 <tr>
                                     <td>
                                         <asp:GridView ID="grdRefAlert" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                                      ForeColor="#333333" GridLines="None" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
+                                                      ForeColor="#333333" GridLines="Both" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
                                                       CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdRefAlert_PageIndexChanging">
                                             <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
@@ -62,7 +62,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click"/>
+                                        <asp:Button ID="btnSendMail" CssClass="form-submit-button" runat="server" Text="Send Mail" OnClick="btnSendMail_Click"/>
                                     </td>
                                 </tr>
                                 <tr>

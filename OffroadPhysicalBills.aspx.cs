@@ -198,12 +198,12 @@ public partial class OffroadPhysicalBills : Page
                 ddlBillNo.Enabled = false;
                 txtBillAmount.Text = ((Label) row.FindControl("lblBillAmount")).Text;
                 var dt2 = Convert.ToDateTime(((Label) row.FindControl("lblDownTime")).Text);
-                txtDownTime.Text = dt2.ToString(CultureInfo.InvariantCulture);
+                txtDownTime.Text = dt2.ToString(CultureInfo.CurrentCulture);
                 var dt3 = Convert.ToDateTime(((Label) row.FindControl("lblUptime")).Text);
-                txtUpTime.Text = dt3.ToString(CultureInfo.InvariantCulture);
+                txtUpTime.Text = dt3.ToString(CultureInfo.CurrentCulture);
                 lblBreakdwn.Text = ((Label) row.FindControl("lblBrkdwn")).Text;
                 var dt = Convert.ToDateTime(((Label) row.FindControl("lblReceiptDate")).Text);
-                txtReceiptDate.Text = dt.ToString(CultureInfo.InvariantCulture);
+                txtReceiptDate.Text = dt.ToString(CultureInfo.CurrentCulture);
                 txtCourierName.Text = ((Label) row.FindControl("lblCourier_Name")).Text;
                 txtDocketNo.Text = ((Label) row.FindControl("lblDocketNo")).Text;
                 break;

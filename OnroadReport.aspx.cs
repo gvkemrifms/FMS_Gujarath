@@ -7,6 +7,7 @@ public partial class OnroadReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
     }
 
     protected void btnShow_Click(object sender, EventArgs e)

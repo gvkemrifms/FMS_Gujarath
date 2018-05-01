@@ -29,53 +29,47 @@
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
+            <table align="center">             
                 <tr>
                     <td>
-                        <fieldset style="padding: 10px;">
-                            <legend>Maintenance Works-Service Group</legend>
+                        <fieldset">
+                            <legend  style="color: brown">Maintenance Works-Service Group</legend>
+                            <br />
                             <asp:Panel ID="pnlmaintenanceworksServiceGrp" runat="server">
-                                <table style="height: 119px; width: 99%;" align="center">
+                                <table align="center">
                                     <tr>
-                                        <td class="rowseparator"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 140px" align="left">
+                                        <td >
                                             Service Group Name <span style="color: Red">*</span> &nbsp;
                                         </td>
-                                        <td style="width: 400px">
-                                            <asp:TextBox ID="txtServiceGroupName" runat="server" Height="18px" MaxLength="15"></asp:TextBox>
+                                        <td >
+                                            <asp:TextBox ID="txtServiceGroupName" CssClass="search_3" runat="server" Width="150px" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 140px" align="left">
+                                        <td>
                                             Manufacturer Name <span style="color: Red">*</span> &nbsp;
                                         </td>
-                                        <td style="width: 400px">
-                                            <asp:DropDownList ID="ddlManufacturerName" runat="server" Height="20px" Width="127px">
+                                        <td >
+                                            <asp:DropDownList ID="ddlManufacturerName" Cssclass="search_3" runat="server"  Width="150px">
                                             </asp:DropDownList>
-                                            &nbsp;&nbsp;
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="rowseparator"></td>
                                     </tr>
+                                    <br />
                                     <tr>
-                                        <td style="height: 58px; width: 140px;"></td>
-                                        <td style="height: 58px; width: 400px;">
+                                        <td >
                                             <asp:Button ID="btnSaveMaintenanceWorksServiceGroup" runat="server" Text="Save"
-                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click" OnClientClick="if(!validationMaintenanceWorksServiceGroup()) return false;"/>
+                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click" Cssclass="form-submit-button" OnClientClick="if(!validationMaintenanceWorksServiceGroup()) return false;"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btnResetMaintenanceWorksServiceGroup" runat="server" Text="Reset"
+                                            <asp:Button ID="btnResetMaintenanceWorksServiceGroup" Cssclass="form-submit-button" runat="server" Text="Reset"
                                                         OnClick="btnResetMaintenanceWorksServiceGroup_Click"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btnCancelMaintenanceWorksServiceGroup" runat="server" Text="Cancel"
+                                            <asp:Button ID="btnCancelMaintenanceWorksServiceGroup" Cssclass="form-submit-button" runat="server" Text="Cancel"
                                                         PostBackUrl="~/FleetMaster/MaintenanceWorksMaster.aspx"/>
                                         </td>
                                     </tr>
@@ -87,11 +81,13 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
+                <br />
+                <br />
                 <tr>
                     <td>
-                        <fieldset style="padding: 10px">
-                            <asp:GridView ID="grvMaintenanceWorksServiceGroupDetails" runat="server" AllowPaging="True"
-                                          PageSize="5" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" GridLines="None"
+                        <fieldset >
+                            <asp:GridView style="margin-top:20px" ID="grvMaintenanceWorksServiceGroupDetails"   runat="server" AllowPaging="True"
+                                          PageSize="5" AutoGenerateColumns="False"  CellPadding="3"  CellSpacing="2"   GridLines="None"
                                           CssClass="gridviewStyle" OnPageIndexChanging="grvMaintenanceWorksServiceGroupDetails_PageIndexChanging"
                                           OnRowEditing="grvMaintenanceWorksServiceGroupDetails_RowEditing">
                                 <RowStyle CssClass="rowStyleGrid"/>

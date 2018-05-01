@@ -3,13 +3,15 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<script src="js/Validation.js"></script>
+
+<asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
+<ContentTemplate>
 <script type="text/javascript">
     function dateselect(ev) {
         var calendarBehavior1 = window.$find("cc1");
         var d = calendarBehavior1._selectedDate;
         var now = new Date();
-        calendarBehavior1.get_element().value = d.format("dd/MM/yyyy") + " " + now.format("HH:mm:ss");
+        calendarBehavior1.get_element().value = d.format("MM/dd/yyyy");
     }
 
     function validation2() {
@@ -34,39 +36,32 @@
 
         var fldDistrict = document.getElementById('<%= ddlDistricts.ClientID %>');
         var fldDocketNo = document.getElementById('<%= txtDocketNo.ClientID %>');
-        var fldVehicleno = document.getElementById('<%= ddlVehicleNo.ClientID %>');
+        var fldVehicleno = document.getElementById('<%= ddlVehicleNo.ClientID %>').control._textBoxControl.value;
         var fldBillNo = document.getElementById('<%= ddlBillNo.ClientID %>');
         var fldReceiptDate = document.getElementById('<%= txtReceiptDate.ClientID %>');
         var fldCourierName = document.getElementById('<%= txtCourierName.ClientID %>');
-        var fldBillAm = document.getElementById('<%= txtBillAmount.ClientID %>');
         var now = new Date();
-
-
-        if (fldDistrict && fldDistrict.selectedIndex === 0) {
+        
+        if (fldDistrict.selectedIndex === 0) {
             alert("Please Select District");
-            fldDistrict.focus();
             return false;
         }
-        if (fldVehicleno && fldVehicleno.selectedIndex === 0) {
+        if (fldVehicleno === '--Select--') {
             alert("Please select Vehicle");
-            fldVehicleno.focus();
             return false;
         }
-        if (fldDocketNo && fldBillNo.selectedIndex === 0) {
+         if (!RequiredValidation(fldReceiptDate, "Receipt Date cannot be left blank"))
+            return false;
+        if (!RequiredValidation(fldCourierName, "Courier Name cannot be left blank"))
+            return false;
+
+        if (!RequiredValidation(fldDocketNo, "Docket Number cannot be left blank"))
+            return false;
+
+        if (fldBillNo.selectedIndex === 0) {
             alert("Please select BillNo");
-            fldBillNo.focus();
             return false;
         }
-
-        if (!window.requiredValidation(fldBillAm, "Bill Amount cannot be left blank"))
-            return false;
-        if (!window.requiredValidation(fldReceiptDate, "Receipt Date cannot be left blank"))
-            return false;
-        if (!window.requiredValidation(fldCourierName, "Courier Name cannot be left blank"))
-            return false;
-
-        if (!window.requiredValidation(fldDocketNo, "Docket Number cannot be left blank"))
-            return false;
         if (Date.parse(fldReceiptDate.value) > Date.parse(now)) {
             alert("Receipts Date should not be greater than Current Date");
             fldReceiptDate.focus();
@@ -78,40 +73,23 @@
 
 
 </script>
-<asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
-<ContentTemplate>
-<table width="100%">
-<tr>
-<td>
-<fieldset style="padding: 10px">
-<legend>
+<legend style="color: brown">
     Off Road Physical Bills<br/>
 </legend>
-<table>
-    <tr>
-        <td style="width: 85px" class="rowseparator">
-        </td>
-    </tr>
+<table align="center">
     <tr>
         <td>
-            District
-        </td>
-        <td class="columnseparator">
+            District<span style="color:red">*</span>
         </td>
         <td>
-            <asp:DropDownList ID="ddlDistricts" Height="16px" Width="120px" runat="server" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged"
+            <asp:DropDownList ID="ddlDistricts" Width="150px" runat="server" CssClass="search_3" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged"
                               AutoPostBack="true">
             </asp:DropDownList>
         </td>
-
-
-        <td class="columnseparator">
-        </td>
-
+</tr>
+    <tr>
         <td>
-            Vehicle No
-        </td>
-        <td class="columnseparator">
+            Vehicle No<span style="color:red">*</span>
         </td>
         <td>
         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNo" runat="server" AutoPostBack="true"
@@ -120,137 +98,100 @@
 
     </tr>
     <tr>
-        <td style="width: 85px" class="rowseparator">
-        </td>
-    </tr>
-    <tr>
         <td>
-            Bill No
-        </td>
-        <td class="columnseparator">
+            Receipt Date<span style="color:red">*</span>
         </td>
         <td>
-            <asp:DropDownList runat="server" ID="ddlBillNo" Width="122px"
-                              AutoPostBack="True"
-                              onselectedindexchanged="ddlBillNo_SelectedIndexChanged"/>
-        </td>
-        <td class="columnseparator">
-
-        </td>
-        <td>
-            BreakDown ID
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:Label runat="server" ID="lblBreakdwn"/>
-        </td>
-
-    </tr>
-
-    <tr>
-        <td style="width: 85px" class="rowseparator">
-        </td>
-    </tr>
-</table>
-<table>
-    <tr>
-        <td>
-            Bill Amount
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:TextBox ID="txtBillAmount" runat="server"
-                         onkeypress="return numeric_only(event);"/>
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            Down Time
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:TextBox ID="txtDownTime" runat="server" Enabled="false"/>
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            Up Time
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:TextBox ID="txtUpTime" runat="server" Enabled="false"/>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 85px" class="rowseparator">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Receipt Date
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:TextBox runat="server" ID="txtReceiptDate" Width="114px" onkeypress="false;"/>
-            <cc1:CalendarExtender ID="calExtMaintenanceDate" runat="server" TargetControlID="txtReceiptDate"
-                                  PopupButtonID="imgBtnCalendarMaintenanceDate" Format="dd'/'MM'/'yyyy HH':'mm':'ss"
+            <asp:TextBox runat="server" ID="txtReceiptDate" CssClass="search_3" Width="150px" onkeypress="false;"/>
+            <cc1:CalendarExtender ID="calExtMaintenanceDate" runat="server" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy"
                                   OnClientDateSelectionChanged="dateselect">
             </cc1:CalendarExtender>
         </td>
-        <td class="columnseparator">
+</tr>
+        <tr>
+               <td>
+            Courier Name<span style="color:red">*</span>
         </td>
         <td>
-            Courier Name
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            <asp:TextBox runat="server" ID="txtCourierName" onkeypress="return alpha_only_withspace(event);"/>
-        </td>
-        <td class="columnseparator">
-        </td>
-        <td>
-            Docket No
-        </td>
-        <td class="columnseparator">
+            <asp:TextBox runat="server" ID="txtCourierName" CssClass="search_3" width="150px" onkeypress="return alpha_only_withspace(event);"/>
+        </td> 
+        </tr>
+    
+        <tr>
+           <td>
+            Docket No<span style="color:red">*</span>
         </td>
         <td>
-            <asp:TextBox runat="server" ID="txtDocketNo" onkeypress="return numeric_only(event);"/>
+            <asp:TextBox runat="server" ID="txtDocketNo" CssClass="search_3" onkeypress="return numeric_only(event);"/>
+        </td> 
+        </tr>
+        <tr>
+        <td>
+            Bill No<span style="color:red">*</span>
         </td>
-    </tr>
+            <td>
+            <asp:DropDownList runat="server" CssClass="search_3" ID="ddlBillNo" Width="150px"
+                              AutoPostBack="True"
+                              onselectedindexchanged="ddlBillNo_SelectedIndexChanged"/>
+        </td>
+            </tr>  
     <tr>
-        <td class="rowseparator">
+          <td>
+            BreakDown ID
         </td>
-    </tr>
+        <td>
+            <asp:Label runat="server" ID="lblBreakdwn" style="margin-left: 10px" ForeColor="red"/>
+        </td> 
+    </tr> 
+    <tr>
+
+        <td>
+            Bill Amount
+        </td>
+        <td>
+            <asp:TextBox ID="txtBillAmount" CssClass="search_3" runat="server"
+                         onkeypress="return numeric_only(event);"/>
+        </td>
+        </tr>
+    <tr>
+        <td>
+            Down Time
+        </td>
+        <td>
+            <asp:TextBox ID="txtDownTime" CssClass="search_3"  runat="server" Enabled="false"/>
+        </td>
+<tr>
+         <td>
+            Up Time<span style="color:red">*</span>
+        </td>
+
+        <td>
+            <asp:TextBox ID="txtUpTime" CssClass="search_3" runat="server" Enabled="false"/>
+        </td> 
+</tr>
+    
 </table>
-<table>
+    <br />
+<table align="center">
     <tr>
         <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
             <asp:Button runat="server" ID="btnSave" Text="Save"
-                        onclick="btnSave_Click" OnClientClick="return validation()"/>
+                        onclick="btnSave_Click" CssClass="form-submit-button" OnClientClick="if(!validation()) return false;"/>
 
             <asp:HiddenField ID="HiddenField1" runat="server"/>
             <asp:Button runat="server" ID="btnUpdate" Visible="false" Text="Update"
-                        onclick="btnUpdate_Click" OnClientClick="return validation2()"/>
-            <asp:Button runat="server" ID="btnReset" Text="Reset" onclick="btnReset_Click"/>
-            <%----%>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        onclick="btnUpdate_Click" CssClass="form-submit-button" OnClientClick="if(!validation2()) return false;"/>
+            <asp:Button runat="server" ID="btnReset" Text="Reset" CssClass="form-submit-button" onclick="btnReset_Click"/>
+            
         </td>
     </tr>
 </table>
-<div>
-    <div style="float: left; width: 200px;">
-    </div>
-    <div style="float: left">
+    <br/>
+    <div align="center">
         <asp:GridView ID="gvVehiclePhysicalBillDetails" runat="server" EmptyDataText="No Records Found"
                       AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
-                      CellPadding="4" ForeColor="#333333" GridLines="None" Width="650px" AllowPaging="True"
+                      CellPadding="4" ForeColor="#333333" GridLines="Both" Width="650px" AllowPaging="True"
                       EnableSortingAndPagingCallbacks="True"
                       onrowcommand="gvVehiclePhysicalBillDetails_RowCommand" onpageindexchanging="gvVehiclePhysicalBillDetails_PageIndexChanging">
             <RowStyle CssClass="rowStyleGrid"/>
@@ -326,10 +267,6 @@
         </asp:GridView>
     </div>
 </div>
-</fieldset>
-</td>
-</tr>
-</table>
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>

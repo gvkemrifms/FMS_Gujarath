@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:content id="Content1" contentplaceholderid="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script type="text/javascript">
         function PressButton() {
             document.getElementById('<%= btnPopUp.ClientID %>').click();
@@ -55,7 +54,7 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                        <legend>
+                        <legend align="center" style="color: brown">
                             Non Offroad Approval<br/>
                         </legend>
                         <table>
@@ -64,13 +63,13 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Approval Date
+                                    Approval Date<span style="color: red">*</span>
                                 </td>
                                 <td class="columnseparator">
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtApprovalDate" runat="server"/>
-                                    <cc1:CalendarExtender ID="calExtApprovalDate" runat="server" TargetControlID="txtApprovalDate"
+                                    <asp:TextBox ID="txtApprovalDate" runat="server" CssClass="search_3" style="margin-right: 10px"/>
+                                    <cc1:CalendarExtender ID="calExtApprovalDate" runat="server" TargetControlID="txtApprovalDate" CssClass="cal_Theme1"
                                                           PopupButtonID="imgBtnCalendarApprovalDate" Format="MM/dd/yyyy">
                                     </cc1:CalendarExtender>
                                 </td>
@@ -86,15 +85,15 @@
                                 </td>
                             </tr>
                         </table>
-                        <div>
-                            <asp:GridView ID="gvNonOffroadApprovalPage" runat="server" EmptyDataText="No Records Found"
-                                          AllowSorting="True" AutoGenerateColumns="False"
-                                          CssClass="gridviewStyle" CellSpacing="2"
-                                          CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="True"
+                        <div align="center">
+                            <asp:GridView ID="gvNonOffroadApprovalPage" style="margin-top: 10px; width: auto; border-width: 1px;border-color: brown" runat="server" EmptyDataText="No Records Found"
+                                          AllowSorting="True" AutoGenerateColumns="True"
+                                          CssClass="gridview" CellSpacing="2"
+                                          CellPadding="4" wrap="nowrap" ForeColor="#333333" GridLines="Both"  AllowPaging="True"
                                           EnableSortingAndPagingCallbacks="True"
                                           onrowcommand="gvNonOffroadApprovalPage_RowCommand"
                                           onpageindexchanging="gvNonOffroadApprovalPage_PageIndexChanging"
-                                          onrowdatabound="gvNonOffroadApprovalPage_RowDataBound">
+                                          onrowdatabound="gvNonOffroadApprovalPage_RowDataBound" >
 
                                 <RowStyle CssClass="rowStyleGrid"/>
                                 <Columns>

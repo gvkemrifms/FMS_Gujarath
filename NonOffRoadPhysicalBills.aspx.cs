@@ -96,40 +96,55 @@ public partial class NonOffRoadPhysicalBills : Page
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        if (_obj != null)
+        try
         {
-            _obj.District = ddlDistricts.SelectedItem.ToString();
-            _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
-            _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
-            _obj.ReceiptDate = Convert.ToDateTime(txtReceiptDate.Text);
-            _obj.CourierName = txtCourierName.Text;
-            _obj.DocketNo = txtDocketNo.Text;
-            _obj.NonOffAmount = txtBillAmount.Text;
-            _obj.MandalId = int.Parse(lblBrkdwn.Text);
-            _obj.VenName = HiddenField1.Value;
-            int i = _obj.InsertNonoffroadPhysicalBills();
-            switch (i)
+            if (_obj != null)
             {
-                case 0:
-                    Show("Records not inserted successfully");
-                    break;
-                default:
-                    Show("Records inserted successfully");
-                    BindGridView();
-                    ddlDistricts.SelectedIndex = 0;
-                    ddlVehicleno.Items.Clear();
-                    ddlBillNo.Items.Clear();
-                    txtReceiptDate.Text = "";
-                    txtCourierName.Text = "";
-                    txtDocketNo.Text = "";
-                    txtBillAmount.Text = "";
-                    lblBrkdwn.Text = "";
-                    break;
+                _obj.District = ddlDistricts.SelectedItem.ToString();
+                _obj.SrcVehNo = ddlVehicleno.SelectedItem.ToString();
+                _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
+                _obj.ReceiptDate = Convert.ToDateTime(txtReceiptDate.Text);
+                _obj.CourierName = txtCourierName.Text;
+                _obj.DocketNo = txtDocketNo.Text;
+                _obj.NonOffAmount = txtBillAmount.Text;
+                if (lblBrkdwn.Text != "")
+                {
+                    _obj.MandalId = int.Parse(lblBrkdwn.Text);
+                    if (HiddenField1 != null) _obj.VenName = HiddenField1.Value;
+                    int i = _obj.InsertNonoffroadPhysicalBills();
+                    switch (i)
+                    {
+                        case 0:
+                            Show("Records not inserted successfully");
+                            break;
+                        default:
+                            Show("Records inserted successfully");
+                            BindGridView();
+                            ddlDistricts.SelectedIndex = 0;
+                            ddlVehicleno.Items.Clear();
+                            ddlBillNo.Items.Clear();
+                            txtReceiptDate.Text = "";
+                            txtCourierName.Text = "";
+                            txtDocketNo.Text = "";
+                            txtBillAmount.Text = "";
+                            lblBrkdwn.Text = "";
+                            break;
+                    }
+                }
+                else
+                {
+                    Show("Breakdown value should not be null.Record not saved");
+                }
             }
         }
-    }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
 
-    public void BindGridView()
+    
+}
+public void BindGridView()
     {
         var ds = _obj.GetNonOffPhysicalBills();
         if (ds == null) throw new ArgumentNullException(nameof(ds));
@@ -219,9 +234,13 @@ public partial class NonOffRoadPhysicalBills : Page
             _obj.NonOffBillNo = ddlBillNo.SelectedItem.ToString();
             DataSet ds = _obj.GetNonOffroadBillAmt();
             if (ds == null) throw new ArgumentNullException(nameof(ds));
+if(ds.Tables[0].Rows.Count>0)
             txtBillAmount.Text = ds.Tables[0].Rows[0][0].ToString();
-            lblBrkdwn.Text = ds.Tables[1].Rows[0][0].ToString();
-            HiddenField1.Value = ds.Tables[1].Rows[0][1].ToString();
+            if (ds.Tables[1].Rows.Count > 0)
+            {
+                lblBrkdwn.Text = ds.Tables[1].Rows[0][0].ToString();
+                HiddenField1.Value = ds.Tables[1].Rows[0][1].ToString();
+            }
         }
         else
             txtBillAmount.Text = "";

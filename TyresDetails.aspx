@@ -1,36 +1,35 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyresDetails.aspx.cs" Inherits="TyresDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validation() {
             switch (document.getElementById("<%= txtTyreItemCode.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Tyre Item Code");
                 document.getElementById("<%= txtTyreItemCode.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtTyreNumber.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Tyre Number");
                 document.getElementById("<%= txtTyreNumber.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtTyreMake.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Tyre Make");
                 document.getElementById("<%= txtTyreMake.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtTyreModel.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Tyre Model");
                 document.getElementById("<%= txtTyreModel.ClientID %>").focus();
                 return false;
             }
 
             switch (document.getElementById("<%= txtTyreSize.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Tyre Size");
                 document.getElementById("<%= txtTyreSize.ClientID %>").focus();
                 return false;
@@ -41,23 +40,18 @@
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table>
-                <tr>
-                    <td class="rowseparator" style="width: 450px"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="width: 450px">
-                        <fieldset style="padding: 10px">
-                            <legend>Tyres Details </legend>
+            
+                            <legend style="align:center">Tyres Details </legend>
+               
                             <asp:Panel ID="pnltyredetails" runat="server">
-                                <table>
+                                <table align="center">
                                     <tr>
                                         <td align="left">
                                             Tyre Item Code <span style="color: Red">*</span>
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtTyreItemCode" runat="server" MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="txtTyreItemCode" CssClass="search_3" runat="server" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -69,7 +63,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtTyreNumber" runat="server" MaxLength="10"></asp:TextBox>
+                                            <asp:TextBox ID="txtTyreNumber" CssClass="search_3" runat="server" MaxLength="10"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -81,7 +75,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtTyreMake" runat="server" MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="txtTyreMake" CssClass="search_3" runat="server" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -93,7 +87,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtTyreModel" runat="server" MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="txtTyreModel" CssClass="search_3" runat="server" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -105,7 +99,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtTyreSize" runat="server" MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="txtTyreSize" CssClass="search_3" runat="server" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -113,10 +107,10 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3" align="center">
-                                            <asp:Button ID="btnTyresDetailsSave" runat="server" Text="Save" OnClick="btnTyresDetailsSave_Click"
+                                            <asp:Button ID="btnTyresDetailsSave" CssClass="form-submit-button" runat="server" Text="Save" OnClick="btnTyresDetailsSave_Click"
                                                         OnClientClick="return validation();"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btnTyresDetailsReset" runat="server" Text="Reset" OnClick="btnTyresDetailsReset_Click"/>
+                                            <asp:Button ID="btnTyresDetailsReset" CssClass="form-reset-button" runat="server" Text="Reset" OnClick="btnTyresDetailsReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -127,11 +121,12 @@
                 <tr>
                     <td class="rowseparator" style="width: 450px"></td>
                 </tr>
+            <br />
                 <tr>
                     <td style="width: 450px">
                         <fieldset style="padding: 10px">
                             <asp:GridView ID="grvTyresDetails" runat="server" align="center" AllowPaging="True"
-                                          PageSize="5" AutoGenerateColumns="False" GridLines="None" CssClass="gridviewStyle"
+                                          PageSize="5" AutoGenerateColumns="False" GridLines="Both"  BorderColor="Brown" BorderWidth="1px"
                                           CellPadding="3" CellSpacing="2" OnPageIndexChanging="grvTyresDetails_PageIndexChanging"
                                           OnRowEditing="grvTyresDetails_RowEditing">
                                 <RowStyle CssClass="rowStyleGrid"/>

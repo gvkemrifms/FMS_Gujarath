@@ -3,8 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validation() {
             var fldSparePartName = document.getElementById('<%= txtSparePartName.ClientID %>');
             var fldManufacturerSpareId = document.getElementById('<%= txtManufacturerSpareID.ClientID %>');
@@ -37,7 +36,20 @@
                     return false;
             return true;
         }
-
+        function OnlyAlphabets(myfield, e, dec) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            var keychar = String.fromCharCode(key);
+            if ((("!@#$%^&*()_+=-';{}[]|?<>:,/\".1234567890").indexOf(keychar) > -1))
+                return false;
+            else
+                return true;
+        }
         function onKeyPressBlockNumbers(value) {
             var reg = /^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
             if (!reg.test(value)) {
@@ -59,80 +71,67 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                            <legend>Spare Parts Details</legend>
+                            <legend align="center" style="color:brown">Spare Parts Details</legend>
                             <asp:Panel ID="pnlsparepart" runat="server">
-                                <table>
+                                <table align="center">
                                     <tr>
-                                        <td align="left">
+                                        <td >
                                             <asp:Label ID="lbSparePartName" runat="server" Text="Spare Part Name"></asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtSparePartName" runat="server" MaxLength="22"></asp:TextBox>
+                                       
+                                        <td>
+                                            <asp:TextBox ID="txtSparePartName" onkeypress="return alpha_only_withspace(event);" CssClass="search_3" runat="server" MaxLength="22"></asp:TextBox>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:Label ID="lbManufacturerSpareID" runat="server" Text="Manufacturer Spare ID"
-                                                onkeypress="return numeric(event)">
+                                        
+                                        <td >
+                                            <asp:Label ID="lbManufacturerSpareID" runat="server" Text="Manufacturer Spare ID" style="margin-left:20px"
+                                               >
                                             </asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtManufacturerSpareID" runat="server" MaxLength="16" onkeypress="return numeric(event)"></asp:TextBox>
+                                        <td>
+                                            <asp:TextBox ID="txtManufacturerSpareID" CssClass="search_3" runat="server" MaxLength="16" onkeypress="return numeric_only(event)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator"></td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">
+                                        <td>
                                             <asp:Label ID="lbManufacturerID" runat="server" Text="Manufacturer Name"></asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:DropDownList ID="ddlManufacturerID" runat="server" Width="120px" />
+                                        <td >
+                                            <asp:DropDownList ID="ddlManufacturerID" CssClass="search_3" runat="server" Width="150px" />
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:Label ID="lbSparePartGroupID" runat="server" Text="Spare Part Group ID"></asp:Label>
+                                        <td>
+                                            <asp:Label ID="lbSparePartGroupID" runat="server" style="margin-left:20px" Text="Spare Part Group ID"></asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtSparePartGroupID" runat="server" MaxLength="10" onkeypress="return numeric(event)"></asp:TextBox>
+                                        <td>
+                                            <asp:TextBox ID="txtSparePartGroupID"  CssClass="search_3" runat="server" MaxLength="10" onkeypress="return numeric_only(event)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator"></td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">
+                                        <td >
                                             <asp:Label ID="lbGroupName" runat="server" Text="Group Name"></asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtGroupName" runat="server" MaxLength="15"></asp:TextBox>
+                                        <td >
+                                            <asp:TextBox ID="txtGroupName" CssClass="search_3" runat="server" MaxLength="15"  onkeypress="return alpha_only_withspace(event);" ></asp:TextBox>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:Label ID="lbCost" runat="server" Text="Cost"></asp:Label>
+                                        <td >
+                                            <asp:Label ID="lbCost" runat="server"  style="margin-left:20px" Text="Cost"></asp:Label>
                                             <span style="color: Red">*</span>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtCost" runat="server" MaxLength="6" onchange="onKeyPressBlockNumbers(this.value);" onkeypress="return numeric(event)"></asp:TextBox>
+                                      
+                                        <td >
+                                            <asp:TextBox ID="txtCost" CssClass="search_3" runat="server" MaxLength="6" onchange="onKeyPressBlockNumbers(this.value);" onkeypress="return numeric(event)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <asp:TextBox ID="txtSparePartID" runat="server" Visible="False"></asp:TextBox>
+                                            <asp:TextBox ID="txtSparePartID" CssClass="search_3" runat="server" Visible="False"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -140,13 +139,12 @@
                                     </tr>
                                     <tr>
                                         <td colspan="7" align="center">
-                                            <asp:Button ID="btSave" runat="server" OnClick="btSave_Click" Text="Save" OnClientClick="return validation();" />
+                                            <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" OnClick="btSave_Click" Text="Save" OnClientClick="return validation();" />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btReset" runat="server" OnClick="btReset_Click" Text="Reset" />
+                                            <asp:Button ID="btReset" runat="server"  CssClass="form-reset-button" OnClick="btReset_Click" Text="Reset" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="rowseparator"></td>
                                     </tr>
                                 </table>
                             </asp:Panel>
@@ -156,11 +154,12 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
+                <br />
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
                             <asp:GridView ID="gvSpareParts" runat="server" AutoGenerateColumns="False" CellPadding="3"
-                                CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnPageIndexChanging="gvSpareParts_PageIndexChanging"
+                                CellSpacing="2" GridLines="Both" CssClass="gridviewStyle" BorderColor="Brown" BorderWidth="1px" OnPageIndexChanging="gvSpareParts_PageIndexChanging"
                                 OnRowDeleting="gvSpareParts_RowDeleting" OnRowEditing="gvSpareParts_RowEditing">
                                 <RowStyle CssClass="rowStyleGrid" />
                                 <Columns>

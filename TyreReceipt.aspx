@@ -3,10 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
-
-
+    <script type="text/javascript">
         function validation() {
             var tyreRecDate = document.getElementById('<%= txtTyreRecDate.ClientID %>');
             var remarks = document.getElementById('<%= txtRemarks.ClientID %>');

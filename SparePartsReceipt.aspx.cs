@@ -54,6 +54,7 @@ public partial class SparePartsReceipt : Page
 
     protected void ddlVehicles_SelectedIndexChanged(object sender, EventArgs e)
     {
+    
         switch (ddlVehicles.SelectedIndex)
         {
             case 0:
@@ -66,7 +67,7 @@ public partial class SparePartsReceipt : Page
     }
 
     private void FillGridIssueDetails(int vehicleId, int fleetInventoryItemId)
-    {
+{
         var ds = ObjInventory.GetInventoryIssueDetailsForVehicle1(vehicleId, fleetInventoryItemId);
         if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvIssueDetails.DataSource = ds;

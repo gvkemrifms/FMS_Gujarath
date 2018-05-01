@@ -4,7 +4,6 @@
 
     <asp:UpdatePanel ID="upd1" runat="server">
         <ContentTemplate>
-            <script src="js/Validation.js"></script>
             <script type="text/javascript">
 
                 function validation() {
@@ -34,7 +33,7 @@
                                         <tr>
                                             <td align="center" colspan="4">
                                                 <asp:GridView ID="gvSparePartDiscrepancy" runat="server" AutoGenerateColumns="False"
-                                                    GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" EmptyDataText="No Records Found">
+                                                    GridLines="None" CssClass="gridview" CellPadding="3" CellSpacing="2" EmptyDataText="No Records Found">
                                                     <Columns>
                                                         <asp:TemplateField HeaderText="">
                                                             <ItemTemplate>
@@ -92,10 +91,10 @@
                                         <tr>
                                             <td class="columnseparator"></td>
                                             <td align="right">
-                                                <asp:Button ID="btSave" runat="server" Text="Submit" OnClick="btSave_Click" />
+                                                <asp:Button ID="btSave" CssClass="form-submit-button" runat="server" Text="Submit" OnClick="btSave_Click" />
                                             </td>
                                             <td align="left">
-                                                <asp:Button ID="btCancel" runat="server" Text="Cancel" OnClick="btCancel_Click" />
+                                                <asp:Button ID="btCancel"  CssClass="form-reset-button" runat="server" Text="Cancel" OnClick="btCancel_Click" />
                                             </td>
                                             <td class="columnseparator"></td>
                                         </tr>

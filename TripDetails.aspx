@@ -2,14 +2,13 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="up1" runat="server">
         <ContentTemplate>
             <div class="center">
                 <fieldset style="padding: 10px">
-                    <legend>Trip Details Entry</legend>
+                    <legend align="center" style="color:brown">Trip Details Entry</legend>
                     <br/>
-                    <table>
+                    <table align="center">
                         <tr>
                             <td colspan="4">
                                 &nbsp;
@@ -18,18 +17,18 @@
                         <tr>
 
                             <td style="width: 93px">
-                                Trip Date&nbsp;
+                                Trip Date<span style="color:red">*</span>
                             </td>
                             <td style="width: 229px">
                                 <asp:TextBox ID="txtTripDate" runat="server"
-                                             onKeyPress="javascript: return false;" onPaste="javascript: return false;">
+                                             onKeyPress="javascript: return false;" CssClass="search_3" onPaste="javascript: return false;">
                                 </asp:TextBox>
                                 <cc1:CalendarExtender ID="CalendarExtender1" runat="server"
                                                       TargetControlID="txtTripDate" PopupButtonID="ImageButton1">
-                                </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
+                                </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1"  runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
                             </td>
                             <td style="width: 127px">
-                                Vehicle
+                                Vehicle<span style="color:red">*</span>
                             </td>
                             <td>
                                 <cc1:ComboBox AutoCompleteMode="Append" ID="ddlAmbulanceID" runat="server"
@@ -55,18 +54,18 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                Trip Type&nbsp;
+                                Trip Type<span style="color:red">*</span>
                             </td>
                             <td style="width: 229px">
-                                <asp:DropDownList ID="ddlTripType" runat="server">
+                                <asp:DropDownList ID="ddlTripType" CssClass="search_3" runat="server">
                                     <asp:ListItem>--Select--</asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                             <td>
-                                Destination
+                                Destination<span style="color:red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtDestinationLocation" runat="server"
+                                <asp:TextBox ID="txtDestinationLocation" CssClass="search_3" runat="server"
                                              MaxLength="20">
                                 </asp:TextBox>
 
@@ -88,21 +87,21 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                Start Time&nbsp;
+                                Start Time<span style="color:red">*</span>
                             </td>
                             <td style="width: 229px">
-                                <asp:DropDownList ID="ddlHours" runat="server" AutoPostBack="true">
+                                <asp:DropDownList ID="ddlHours" CssClass="search_3" runat="server" AutoPostBack="true">
                                     <asp:ListItem Value="-1">--hh--</asp:ListItem>
                                 </asp:DropDownList>
-                                <asp:DropDownList ID="ddlMinutes" runat="server" AutoPostBack="true">
+                                <asp:DropDownList ID="ddlMinutes" CssClass="search_3" runat="server" AutoPostBack="true">
                                     <asp:ListItem Value="-1">--mm--</asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                             <td>
-                                Start Odo
+                                Start Odo<span style="color:red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtStartOdo" runat="server" MaxLength="6"></asp:TextBox>
+                                <asp:TextBox ID="txtStartOdo" CssClass="search_3" runat="server" MaxLength="6" onkeypress=" return numeric_only(this)"></asp:TextBox>
 
                             </td>
                         </tr>
@@ -122,22 +121,22 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                End Time
+                                End Time<span style="color:red">*</span>
                             </td>
                             <td style="width: 229px">
-                                <asp:DropDownList ID="ddlHours1" runat="server" AutoPostBack="true">
+                                <asp:DropDownList ID="ddlHours1" CssClass="search_3" runat="server" AutoPostBack="true">
                                     <asp:ListItem Value="-1">--hh--</asp:ListItem>
                                 </asp:DropDownList>
-                                <asp:DropDownList ID="ddlMinutes2" runat="server" AutoPostBack="true">
+                                <asp:DropDownList ID="ddlMinutes2" CssClass="search_3" runat="server" AutoPostBack="true">
                                     <asp:ListItem Value="-1">--mm--</asp:ListItem>
                                 </asp:DropDownList>
 
                             </td>
                             <td>
-                                End Odo
+                                End Odo<span style="color:red">*</span>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtEndOdo" runat="server" MaxLength="6"></asp:TextBox>
+                                <asp:TextBox ID="txtEndOdo" CssClass="search_3" runat="server" MaxLength="6" onkeypress="return numeric_only(this)"></asp:TextBox>
 
                             </td>
                         </tr>
@@ -157,10 +156,10 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                &nbsp;Remarks&nbsp;
+                                &nbsp;Remarks<span style="color:red">*</span>
                             </td>
                             <td colspan="3">
-                                <asp:TextBox ID="txtRemarks" runat="server" TextMode="MultiLine"
+                                <asp:TextBox ID="txtRemarks" CssClass="search_3" runat="server" TextMode="MultiLine"
                                              MaxLength="50" onkeypress="return remark(event);" onkeyup="CheckLength(this,50)">
                                 </asp:TextBox>
 
@@ -179,8 +178,8 @@
                         <tr>
                             <td colspan="4" align="center">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" OnClientClick="return validationFuelEntry();"/>
-                                <asp:Button ID="btnReset" runat="server" Text="Reset"
+                                <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="form-submit-button" OnClick="btnSubmit_Click" OnClientClick="return validationFuelEntry();"/>
+                                <asp:Button ID="btnReset"  CssClass="form-reset-button" runat="server" Text="Reset"
                                             onclick="btnReset_Click"/>
                                 <asp:LinkButton ID="lbtnViewHistory" runat="server"
                                                 Text="View History" onclick="lbtnViewHistory_Click" Visible="False">

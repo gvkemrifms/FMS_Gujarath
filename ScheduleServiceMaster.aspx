@@ -2,115 +2,101 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
-        <ContentTemplate>
-            <table width="100%">
-                <tr>
-                    <td>
-                        <fieldset style="padding: 10px">
-                            <legend>Schedule Service Master<br />
+        <ContentTemplate>     
+            <script type="text/javascript">
+                function Validations() {
+                    var ddlDistrict = $('#<%= ddlManufactName.ClientID %> option:selected').text().toLowerCase();
+                    if (ddlDistrict === '--select--') {
+                        return alert("Please select Manufacturer Name");
+                    }
+                    var generalService = $('#<%= txtGeneralService.ClientID %>').val();
+                    if(generalService=='')
+                    {
+                        return alert('Please select general Service')
+                    }
+                    return true;
+                }
+            </script>
+                            <legend align="center">
+                                Schedule Service Master
                             </legend>
-                            <div style="height: 246px; width: 150px; float: left"></div>
-                            <table>
+            <br />                          
+                            <table align="center">
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Manufacturer Name :
+                                    <td >
+                                        Manufacturer Name<span style="color:red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlManufactName" runat="server"
+                                        <asp:DropDownList ID="ddlManufactName" runat="server" CssClass="search_3"
                                             OnSelectedIndexChanged="ddlManufactName_SelectedIndexChanged"
                                             AutoPostBack="True" />
                                     </td>
                                 </tr>
+                               
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">General Service :
-                                    </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtGeneralService" runat="server" />
+                                        General Service <span style="color:red">*</span>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Schedule Service Alert1 :
-                                    </td>
-                                    <td class="columnseparator"></td>
+   
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert1" runat="server" />
+                                        <asp:TextBox ID="txtGeneralService" CssClass="search_3" onkeypress="return numeric_only(event)" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Schedule Service Alert2 :
+                                    <td >
+                                        Schedule Service Alert1 <span style="color:red"></span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert2" runat="server" />
+                                        <asp:TextBox ID="txtSSAlert1"  CssClass="search_3"  onkeypress="return numeric_only(event)" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Schedule Service Alert3 :
+                                    <td >
+                                        Schedule Service Alert2 <span style="color:red"></span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert3" runat="server" />
+                                        <asp:TextBox ID="txtSSAlert2" CssClass="search_3"  onkeypress="return numeric_only(event)" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Schedule Service Alert4 :
-                                    </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert4" runat="server" />
+                                        Schedule Service Alert3 <span style="color:red"></span>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 176px">Schedule Service Alert5 :
-                                    </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtSSAlert5" runat="server" />
+                                        <asp:TextBox ID="txtSSAlert3" CssClass="search_3"  onkeypress="return numeric_only(event)"  runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator" style="width: 176px"></td>
+                                    <td >
+                                        Schedule Service Alert4 <span style="color:red"></span>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtSSAlert4" CssClass="search_3"  onkeypress="return numeric_only(event)"  runat="server" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 176px"></td>
+                                    <td >
+                                        Schedule Service Alert5 <span style="color:red"></span>
+                                    </td>
                                     <td>
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
+                                        <asp:TextBox ID="txtSSAlert5" CssClass="search_3"  onkeypress="return numeric_only(event)"  runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:Button ID="btnSave" CssClass="form-submit-button" runat="server" Text="Save" OnClick="btnSave_Click" OnClientClick="if(!Validations()) return false;" />
                                     </td>
 
                                     <td>
-                                        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" />
+                                        <asp:Button ID="btnUpdate" CssClass="form-reset-button" runat="server" Text="Update" OnClick="btnUpdate_Click" />
                                     </td>
                                 </tr>
                             </table>
-                            <div>
-                                <div style="width: 200px; float: left">
-                                </div>
-                                <div style="float: left">
+            <br />
+                            <div align="center">
                                     <asp:GridView ID="gvScheduleServiceMaster" runat="server" EmptyDataText="No Records Found"
-                                        AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="650px" AllowPaging="True"
+                                        AllowSorting="True" AutoGenerateColumns="False" CssClass="gridview" CellSpacing="2"
+                                        CellPadding="4" ForeColor="#333333" GridLines="Both" Width="650px" AllowPaging="True"
                                         EnableSortingAndPagingCallbacks="True" OnRowCommand="gvScheduleServiceMaster_RowCommand">
                                         <RowStyle CssClass="rowStyleGrid" />
                                         <Columns>
@@ -158,17 +144,13 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
-                                        <FooterStyle CssClass="footerStylegrid" />
+                                                                                <FooterStyle CssClass="footerStylegrid" />
                                         <PagerStyle CssClass="pagerStylegrid" />
                                         <SelectedRowStyle CssClass="selectedRowStyle" />
                                         <HeaderStyle CssClass="headerStyle" />
                                     </asp:GridView>
-                                </div>
                             </div>
-                        </fieldset>
-                    </td>
-                </tr>
-            </table>
+  
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

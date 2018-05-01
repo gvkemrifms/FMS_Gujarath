@@ -1,39 +1,50 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyreAndBatteryDistrictWise.aspx.cs" Inherits="TyreAndBatteryDistrictWise" %>
-
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script>
+  $(function () {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+          
+  });     
+    </script>
+   
     <table>
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" Style="font-size: 20px; color: brown" runat="server" Text="TyreAndBattery District wise&nbsp;Details&nbsp;Report"></asp:Label>
+                <asp:Label ID="lblcardtypereport" Style="font-size: 20px; color: brown" runat="server" Text="Tyre And Battery District wise Details Report"></asp:Label>
             </td>
         </tr>
     </table>
-    <table style="width: 70px; margin-left: 125px;">
+    <table align="center">
         <tr>
 
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District"></asp:Label>
+                Select District<asp:Label ID="lbldistrict" runat="server" Text="" style="color:red"></asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 100px"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
+            </tr>
+        <tr>
+
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" ></asp:Button>
             </td>
 
             <td>
-                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
+                <asp:Button runat="server" CssClass="form-reset-button"  Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>
             </td>
         </tr>
     </table>
-    <div>
+    <br />
+    <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="GrdtyreBattery" runat="server"></asp:GridView>
+            <asp:GridView ID="GrdtyreBattery" BorderColor="Brown" BorderWidth="1px" runat="server"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

@@ -48,7 +48,7 @@ public partial class ScheduleServiceMaster : Page
         _obj.ManufacturerId = Convert.ToInt16(ddlManufactName.SelectedValue);
         _obj.ManufacturerName = ddlManufactName.SelectedItem.Text;
         _obj.GSAlert = txtGeneralService.Text == string.Empty ? (long?) null : Convert.ToInt64(txtGeneralService.Text);
-        _obj.ScheduleServ1 = txtGeneralService.Text == string.Empty ? (long?) null : Convert.ToInt64(txtSSAlert1.Text);
+        _obj.ScheduleServ1 = txtSSAlert1.Text == string.Empty ? (long?) null : Convert.ToInt64(txtSSAlert1.Text);
         _obj.ScheduleServ2 = txtSSAlert2.Text == string.Empty ? (long?) null : Convert.ToInt64(txtSSAlert2.Text);
         _obj.ScheduleServ3 = txtSSAlert3.Text == string.Empty ? (long?) null : Convert.ToInt64(txtSSAlert3.Text);
         _obj.ScheduleServ4 = txtSSAlert4.Text == string.Empty ? (long?) null : Convert.ToInt64(txtSSAlert4.Text);

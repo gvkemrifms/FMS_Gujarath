@@ -28,7 +28,7 @@
 <ContentTemplate>
 <fieldset style="padding: 10px">
 <legend>Tyre Requisition</legend>
-<table style="width: 600px">
+<table align="center">
 <tr>
     <td class="rowseparator"></td>
 </tr>
@@ -51,6 +51,7 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
+                <br />
                 <tr>
                     <td>
                         <asp:GridView ID="gvTyreRequisition" runat="server" AutoGenerateColumns="False" GridLines="None"
@@ -89,9 +90,9 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <asp:Button ID="btSave" runat="server" OnClick="btSave_Click" Text="Submit"/>
-                        <asp:Button ID="btCancel" runat="server" Text="Cancel" OnClick="btCancel_Click"/>
-                        <asp:Button ID="btnTyreReqHistory" runat="server" Text="View History" OnClick="btnTyreReqHistory_Click" OnClientClick="return validationInventoryBatteryVehicleType();"/>
+                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" OnClick="btSave_Click" Text="Submit"/>
+                        <asp:Button ID="btCancel" runat="server"  CssClass="form-submit-button" Text="Cancel" OnClick="btCancel_Click"/>
+                        <asp:Button ID="btnTyreReqHistory"  CssClass="form-submit-button" runat="server" Text="View History" OnClick="btnTyreReqHistory_Click" OnClientClick="return validationInventoryBatteryVehicleType();"/>
                     </td>
                 </tr>
             </table>
@@ -104,9 +105,10 @@
             <tr>
                 <td class="rowseparator"></td>
             </tr>
+            <br />
             <tr>
                 <td>
-                    <asp:GridView ID="gvTyrePendingForApproval" runat="server" GridLines="None" CssClass="gridviewStyle"
+                    <asp:GridView ID="gvTyrePendingForApproval" runat="server" GridLines="Both" CssClass="gridviewStyle"
                                   AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="gvTyrePendingForApproval_PageIndexChanging"
                                   PageSize="5" OnRowCommand="gvTyrePendingForApproval_RowCommand">
                         <Columns>
@@ -169,12 +171,11 @@
                     <asp:Button ID="btnShowPopup" runat="server" Style="display: none"/>
                     <ajaxToolKit:ModalPopupExtender ID="gv_ModalPopupExtender1" BehaviorID="mdlPopup"
                                                     runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
-                    <asp:Panel ID="pnlPopup" runat="server" Style="display: none; padding: 30px; position: inherit;" CssClass="modalPanel"
+                    <asp:Panel ID="pnlPopup" runat="server" Style="display:block; padding: 30px; position: inherit;" CssClass="modalPanel"
                                Width="500px">
                         <fieldset style="padding: 10px; width: auto">
-                            <legend>Tyre Request Details</legend>
-                            <table>
-                                <tr>
+                            
+                            <table style="margin-left:480px;margin-top:180px">
                                     <td>
                                         <asp:Label ID="lbVehicleNo" runat="server" Text="VehicleNo"></asp:Label>
                                     </td>

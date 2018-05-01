@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script type="text/javascript">
     function validation() {
         var vehicleId = document.getElementById('<%= ddlVehicles.ClientID %>');
@@ -104,9 +103,7 @@
 <tr>
     <td align="center">
         <asp:Label ID="lbVehicles" runat="server" Text="Vehicles"></asp:Label>
-        <span style="color: Red">
-            *
-        </span>
+        <span style="color: Red">*</span>
         <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="True"
                               OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
         </ajaxToolKit:ComboBox>

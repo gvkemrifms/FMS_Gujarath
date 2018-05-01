@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script type="text/javascript">
 
         function validation() {
@@ -74,7 +73,7 @@
     <asp:UpdatePanel ID="UpdPanel1" runat="server">
         <ContentTemplate>
             <fieldset style="padding: 10px">
-                <legend>Spare Parts Issue</legend>
+                <legend align="center" style="color:brown">Spare Parts Issue</legend>
                 <table style="width: 100%">
                     <tr>
                         <td class="rowseparator"></td>
@@ -82,8 +81,7 @@
                     <tr>
                         <td align="center">
                             <asp:Label ID="lb_Vehicles" runat="server" Text="Vehicles"></asp:Label>
-                            <span style="color: Red">*
-                            </span>&nbsp;
+                            <span style="color: Red">*</span>&nbsp;
         <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server"
             AutoPostBack="True" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged"
             DropDownStyle="DropDownList">
@@ -91,12 +89,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
                         <td align="center">
                             <asp:GridView ID="gvApprovedRequisition" runat="server" CellPadding="3" CellSpacing="2"
-                                EmptyDataText="Details are not available" GridLines="None" CssClass="gridviewStyle"
+                                EmptyDataText="Details are not available" GridLines="Both" CssClass="gridviewStyle"
                                 OnPageIndexChanging="gvApprovedRequisition_PageIndexChanging" AutoGenerateColumns="false"
                                 OnRowCommand="gvApprovedRequisition_RowCommand">
                                 <Columns>

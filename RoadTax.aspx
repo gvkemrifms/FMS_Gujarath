@@ -2,8 +2,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validation() {
             var roadTaxValidityStartDate = document.getElementById('<%= txtRoadTaxValidityStartDate.ClientID %>');
         var roadTaxValidityPeriod = document.getElementById('<%= ddlRoadTaxValidityPeriod.ClientID %>');
@@ -41,9 +40,7 @@
         }
 
         if (Date.parse(roadTaxValidityStartDate.value) < Date.parse(vehicleRegistrationDate.value)) {
-            alert("Road Tax Validity Start Date should be greater than Registration Date.(Registration Date-" +
-                vehicleRegistrationDate.value +
-                ")");
+            alert("Road Tax Validity Start Date should be greater than Registration Date.(Registration Date-" +vehicleRegistrationDate.value +")");
             roadTaxValidityStartDate.focus();
             return false;
         }
@@ -72,55 +69,38 @@
     </script>
     <asp:UpdatePanel ID="upPanel" runat="server">
         <ContentTemplate>
-            <table>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
+            <table align="center">
                 <tr>
                     <td>
                         <asp:Panel ID="pnlRoadtax" runat="server">
-                            <table style="width: 100%">
+                            <table align="center">
+                      
                                 <tr>
-                                    <td align="center" style="font-size: small; font-weight: bold" colspan="4"></td>
-                                </tr>
-                                <tr>
-                                    <td align="center" colspan="4"></td>
-                                </tr>
-                                <tr>
-                                    <td align="center" colspan="4"></td>
-                                </tr>
-                                <tr>
-                                    <td align="center" colspan="4"></td>
-                                </tr>
-                                <tr>
-                                    <td align="center" colspan="4"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 300px"></td>
-                                    <td align="left" style="width: 350px" nowrap="nowrap">Vehicle Number<span style="color: Red">*</span>
+                                    <td>
+                                  Vehicle Number<span style="color: Red">*</span>
                                     </td>
-                                    <td align="left" colspan="2">
+                                    <td >
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" DropDownStyle="DropDownList">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                             <asp:ListItem Value="0">Dummy</asp:ListItem>
                                         </cc1:ComboBox>
-                                        <asp:TextBox ID="txtVehicleNumber" class="text1" runat="server" ReadOnly="True" Visible="False"
+                                        <asp:TextBox ID="txtVehicleNumber"  class="text1" runat="server" ReadOnly="True" Visible="False"
                                             Width="145px">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="center" style="width: 185px"></td>
-                                </tr>
+                                    </tr>
+                        
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">Road Tax Validity Start Date<span style="color: Red">*</span>
-                                    </td>
-                                    <td align="left" colspan="2">
-                                        <asp:TextBox ID="txtRoadTaxValidityStartDate" class="text1" AutoPostBack="true" runat="server"
+                                    <td>
+                                        Road Tax Validity Start Date<span style="color: Red">*</span>
+                                    </td>                                                              
+                                    <td >
+                                        <asp:TextBox ID="txtRoadTaxValidityStartDate" CssClass="search_3" class="text1" AutoPostBack="true" runat="server"
                                             Width="145px" OnTextChanged="txtRoadTaxValidityStartDate_TextChanged" onkeypress="return false"
                                             oncut="return false;" onpaste="return false;">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="left">
+                                    <td >
                                         <asp:ImageButton ID="imgBtnRoadTaxValidityStartDate" runat="server" Style="vertical-align: top"
                                             alt="" src="images/Calendar.gif" />
                                         <cc1:CalendarExtender ID="calextRoadTaxValidityStartDate" runat="server" TargetControlID="txtRoadTaxValidityStartDate"
@@ -129,11 +109,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">Road Tax Validity Period<span style="color: Red">*</span>
+                                    
+                                    <td >
+                                        Road Tax Validity Period<span style="color: Red">*</span>
                                     </td>
-                                    <td align="left" colspan="2">
-                                        <asp:DropDownList ID="ddlRoadTaxValidityPeriod" class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlRoadTaxValidityPeriod_SelectedIndexChanged"
+                                    <td >
+                                        <asp:DropDownList ID="ddlRoadTaxValidityPeriod" CssClass="search_3" class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlRoadTaxValidityPeriod_SelectedIndexChanged"
                                             AutoPostBack="True">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                             <asp:ListItem Value="3">3 Month</asp:ListItem>
@@ -142,120 +123,79 @@
                                             <asp:ListItem Value="12">1 Year</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
-                                    <td align="center"></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">Road Tax Validity End Date<span style="color: Red">*</span>
+                                    <td >
+                                        Road Tax Validity End Date<span style="color: Red">*</span>
                                     </td>
-                                    <td align="left" colspan="2">
-                                        <asp:TextBox ID="txtRoadTaxValidityEndDate" class="text1" runat="server" Width="145px" BackColor="DarkGray"
+                                    <td>
+                                        <asp:TextBox ID="txtRoadTaxValidityEndDate" class="text1" CssClass="search_3" runat="server" Width="145px" BackColor="DarkGray"
                                             ReadOnly="True">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="center"></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">
+                                    <td >
                                         <asp:CheckBox ID="chkbxTaxExempted" class="text1" runat="server" Text="Tax Exempted" AutoPostBack="True"
                                             OnCheckedChanged="chkbxTaxExempted_CheckedChanged" />
                                     </td>
-                                    <td align="left" colspan="2"></td>
-                                    <td align="center"></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">
+                                    <td >
                                         <asp:Label ID="lblVehicleRTACircle" runat="server" Text="Vehicle RTA Circle"></asp:Label>
                                         <asp:Label ID="lblVehRTACirStar" runat="server" ForeColor="Red" Text="*"></asp:Label>
                                     </td>
-                                    <td align="left" colspan="2">
-                                        <asp:TextBox ID="txtVehicleRTACircle" class="text1" runat="server" Width="145px" MaxLength="35"
+                                    <td >
+                                        <asp:TextBox ID="txtVehicleRTACircle" CssClass="search_3" class="text1" runat="server" Width="145px" MaxLength="35"
                                             onkeypress="return alphanumeric_only(event);">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="center"></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">
+                                    <td >
                                         <asp:Label ID="lblRoadTaxReceiptNo" runat="server" Text="Road Tax Receipt No."></asp:Label>
                                         <asp:Label ID="lblRoadTaxReceiptNoStar" runat="server" ForeColor="Red" Text="*"></asp:Label>
                                     </td>
-                                    <td align="left" colspan="2">
-                                        <asp:TextBox ID="txtRoadTaxReceiptNo" class="text1" runat="server" Width="145px" MaxLength="15"
+                                    <td >
+                                        <asp:TextBox ID="txtRoadTaxReceiptNo"  CssClass="search_3" class="text1" runat="server" Width="145px" MaxLength="15"
                                             onkeypress="return alphanumeric_only(event);">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="center"></td>
                                 </tr>
                                 <tr>
-                                    <td align="center"></td>
-                                    <td align="left">
+                                   
+                                    <td >
                                         <asp:Label ID="lblRoadTaxFee" runat="server" Text="Road Tax Fee"></asp:Label>
                                         <asp:Label ID="lblRoadTaxFeeStar" runat="server" ForeColor="Red" Text="*"></asp:Label>
                                     </td>
-                                    <td align="left" colspan="2">
-                                        <asp:TextBox ID="txtRoadTaxFee" class="text1" runat="server" Width="145px" onkeypress="return isDecimalNumberKey(event);"
+                                    <td >
+                                        <asp:TextBox ID="txtRoadTaxFee" CssClass="search_3" class="text1" runat="server" Width="145px" onkeypress="return numericOnly(event);"
                                             MaxLength="9">
                                         </asp:TextBox>
                                     </td>
-                                    <td align="center"></td>
                                 </tr>
+                    
                                 <tr>
-                                    <td align="center">&nbsp;
+         
+                                    <td >
+                                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btSave_Click" />
                                     </td>
-                                    <td align="left">&nbsp;
+                                    <td >
+                                        <asp:Button ID="btReset" runat="server" Text="Reset" CssClass="form-reset-button" OnClick="btReset_Click" />
                                     </td>
-                                    <td align="left" colspan="2">&nbsp;
-                                    </td>
-                                    <td align="center">&nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">&nbsp;
-                                    </td>
-                                    <td align="center">
-                                        <asp:Button ID="btSave" runat="server" Text="Save" OnClick="btSave_Click" />
-                                    </td>
-                                    <td align="left" colspan="2">
-                                        <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click" />
-                                    </td>
-                                    <td align="center">
+                                    <td >
                                         <asp:LinkButton ID="lbtnViewHistory" runat="server" Visible="False">View History</asp:LinkButton>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="left" colspan="2"></td>
-                                    <td align="center"></td>
-                                </tr>
-                                <tr>
-                                    <td align="center">&nbsp;
-                                    </td>
-                                    <td align="center">&nbsp;
-                                    </td>
-                                    <td align="left" colspan="2">&nbsp;
-                                    </td>
-                                    <td align="center">&nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" colspan="4"></td>
                                 </tr>
                             </table>
                         </asp:Panel>
                     </td>
                 </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
+                <br />
                 <tr align="center">
                     <td>
                         <asp:GridView ID="gvRoadTax" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                            Width="630px" ForeColor="#333333" GridLines="None" OnRowCommand="gvRoadTax_RowCommand"
+                            Width="630px" style="margin-top:20px" ForeColor="#333333" GridLines="None" OnRowCommand="gvRoadTax_RowCommand"
                             OnRowDataBound="gvRoadTax_RowDataBound" AllowPaging="True" EmptyDataText="No Records Found"
                             OnPageIndexChanging="gvRoadTax_PageIndexChanging" CssClass="table table-striped table-bordered table-hover" PagerStyle-CssClass="pager"
                             HeaderStyle-ForeColor="#337ab7" CellSpacing="2">

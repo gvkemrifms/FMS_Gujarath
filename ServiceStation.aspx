@@ -4,18 +4,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
-        <ContentTemplate>
-            <table width="100%">
-                <tr>
-                    <td>
-                        <fieldset style="padding: 10px">
-                            <legend>Service Station<br />
+        <ContentTemplate>         
+                            <legend align="center">
+                                Service Station
                             </legend>
-                            <table>
+                            <table align="center">
                                 <tr>
                                     <td>Vehicle Number<span style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
                                             DropDownStyle="DropDownList"
@@ -24,44 +20,30 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
                                     <td>Service Station Name<span style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtServiceSrationName" runat="server" />
+                                        <asp:TextBox ID="txtServiceSrationName" CssClass="search_3" runat="server" />
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td>District<span style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlDistricts" runat="server" Enabled="false" />
+                                        <asp:DropDownList ID="ddlDistricts" CssClass="search_3" runat="server" Enabled="false" />
                                     </td>
                                 </tr>
                             </table>
-                            <div>
-                                <div style="float: left; width: 300px;">
-                                </div>
-                                <div>
-                                    <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" OnClientClick="return validationFuelEntry();" />
-                                    <asp:Button runat="server" ID="btnUpdate" Text="Update" OnClientClick="return validationFuelEntry();"
+                            <div align="center">
+                                    <asp:Button runat="server" ID="btnSave" Text="Save" CssClass="form-submit-button" OnClick="btnSave_Click" OnClientClick="return validationFuelEntry();" />
+                                    <asp:Button runat="server" ID="btnUpdate" Text="Update" CssClass="form-reset-button"  OnClientClick="return validationFuelEntry();"
                                         OnClick="btnUpdate_Click" />
                                 </div>
-                            </div>
-                            <div>
-                                <div style="float: left; width: 200px;">
-                                </div>
-                                <div style="float: left">
+            <br />
+                            <div align="center">
                                     <asp:GridView ID="gvServiceStationDetails" Visible="false" runat="server" EmptyDataText="No records found"
                                         AllowSorting="true" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="true"
+                                        CellPadding="4" ForeColor="#333333" GridLines="Both" Width="630px" AllowPaging="true"
                                         EnableSortingAndPagingCallbacks="true"
                                         OnRowCommand="gvServiceStationDetails_RowCommand"
                                         OnPageIndexChanging="gvServiceStationDetails_PageIndexChanging">
@@ -106,7 +88,6 @@
                                         <HeaderStyle CssClass="headerStyle" />
                                     </asp:GridView>
                                 </div>
-                            </div>
                     </td>
                 </tr>
             </table>
@@ -115,19 +96,19 @@
 
                 function validationFuelEntry() {
 
+                     var vehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>').control._textBoxControl.value;
+                    if (vehicleNumber === '--Select--') {
+                        alert("Please select the Vehicle");
+                        return false;
+                    }
+
                     if (document.getElementById("<%= txtServiceSrationName.ClientID %>").value == 0) {
                         alert("Service Station Cannot be Blank");
                         document.getElementById("<%= txtServiceSrationName.ClientID %>").focus();
                         return false;
                     }
 
-                    var vehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-                    if (vehicleNumber.selectedIndex === 0) {
-                        alert("Please select the Vehicle");
-                        districts.focus();
-                        return false;
-                    }
-
+                   
                     var districts = document.getElementById('<%= ddlDistricts.ClientID %>');
 
                     if (districts.selectedIndex === 0) {

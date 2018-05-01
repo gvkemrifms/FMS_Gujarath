@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Web.UI;
 
 public partial class SparePartwiseReport : Page
@@ -9,6 +8,7 @@ public partial class SparePartwiseReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlvehicle.Enabled = false;
@@ -21,7 +21,7 @@ public partial class SparePartwiseReport : Page
     {
         try
         {
-            var sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -73,7 +73,7 @@ public partial class SparePartwiseReport : Page
             ddlvendor.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, txtfrmDate, txttodate, "@DistrictID");
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor,null, null, "@DistrictID");
             }
             catch (Exception ex)
             {

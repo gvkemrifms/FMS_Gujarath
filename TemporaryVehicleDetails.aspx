@@ -3,9 +3,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <link href="css/newStyles.css" rel="stylesheet"/>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
     var now = new Date();
     var inspectedDate;
     var purchaseDate;

@@ -2,7 +2,6 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using GvkFMSAPP.PL;
 using BaseVehicleDetails = GvkFMSAPP.BLL.BaseVehicleDetails;
 
 public partial class TemporaryVehicleDetails : Page
@@ -13,7 +12,7 @@ public partial class TemporaryVehicleDetails : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];

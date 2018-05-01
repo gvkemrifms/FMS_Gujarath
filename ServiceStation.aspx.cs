@@ -191,7 +191,7 @@ public partial class ServiceStation : Page
         DataSet dsDistrict = _fmsg.GetDistrictLoc();
         if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
         BindData();
-        if (dsDistrict.Tables[0].Rows.Count <= 0)
+        if (dsDistrict.Tables[0].Rows.Count >= 0)
             ddlDistricts.Enabled = true;
         else
             ddlDistricts.Items.FindByText(dsDistrict.Tables[0].Rows[0]["District"].ToString()).Selected = true;

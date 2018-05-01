@@ -3,13 +3,10 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function validation() {
             var tyreCost = document.getElementById('<%= txtTyreCost.ClientID %>');
-
-
             var dcNumPopup = document.getElementById('<%= txtDcNumberPopup.ClientID %>');
             var dcDate = document.getElementById('<%= txtDcDate.ClientID %>');
             var courierName = document.getElementById('<%= txtCourierName.ClientID %>');

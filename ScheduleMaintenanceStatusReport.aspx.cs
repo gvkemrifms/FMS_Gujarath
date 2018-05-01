@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
 
 public partial class ScheduleMaintenanceStatusReport : Page
@@ -7,6 +8,7 @@ public partial class ScheduleMaintenanceStatusReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlvehicle.Enabled = false;
@@ -18,12 +20,12 @@ public partial class ScheduleMaintenanceStatusReport : Page
     {
         try
         {
-            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
         {
-_helper.ErrorsEntry(ex);
+           _helper.ErrorsEntry(ex);
         }
 
     }
@@ -37,7 +39,7 @@ _helper.ErrorsEntry(ex);
             ddlvehicle.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", null, null, ddldistrict, ddlvehicle, null, null, "@districtID");
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
             catch (Exception ex)
             {

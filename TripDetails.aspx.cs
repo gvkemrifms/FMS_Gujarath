@@ -20,8 +20,6 @@ public partial class TripDetails : Page
             FillHoursandMins();
             txtDestinationLocation.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
             txtRemarks.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            txtStartOdo.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
-            txtEndOdo.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
         }
     }
 

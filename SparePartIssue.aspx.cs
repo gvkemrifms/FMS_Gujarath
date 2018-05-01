@@ -4,13 +4,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.PL;
+using System.Configuration;
 
 public partial class SparePartIssue : Page
 {
     public IInventory ObjInventory = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
-
+    public int fleetInventoryCategoryId = Convert.ToInt32(ConfigurationManager.AppSettings["fICategoryId"]);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -62,15 +63,16 @@ public partial class SparePartIssue : Page
                 gvApprovedRequisition.Visible = false;
                 break;
             default:
-                FillGridApprovedRequisitions(2, Convert.ToInt32(ddlVehicles.SelectedValue));
+                FillGridApprovedRequisitions(Convert.ToInt32(ddlVehicles.SelectedValue));
                 gvApprovedRequisition.Visible = true;
                 break;
         }
     }
 
-    private void FillGridApprovedRequisitions(int fleetInventoryCategoryId, int vehicleId)
+    private void FillGridApprovedRequisitions( int vehicleId)
     {
-        var ds = ObjInventory.GetApprovedInventoryRequisitions(2, vehicleId);
+       
+        var ds = ObjInventory.GetApprovedInventoryRequisitions(fleetInventoryCategoryId, vehicleId);
         gvApprovedRequisition.DataSource = ds;
         gvApprovedRequisition.DataBind();
     }
@@ -78,7 +80,7 @@ public partial class SparePartIssue : Page
     protected void gvApprovedRequisition_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvApprovedRequisition.PageIndex = e.NewPageIndex;
-        var ds = ObjInventory.GetApprovedInventoryRequisitions(2, Convert.ToInt32(ddlVehicles.SelectedValue));
+        var ds = ObjInventory.GetApprovedInventoryRequisitions(fleetInventoryCategoryId, Convert.ToInt32(ddlVehicles.SelectedValue));
         gvApprovedRequisition.DataSource = ds;
         gvApprovedRequisition.DataBind();
     }
@@ -93,7 +95,7 @@ public partial class SparePartIssue : Page
             if (DateTime.Parse(ds.Tables[0].Rows[0]["RegDate"].ToString()) < DateTime.Parse(txtDCDate.Text))
             {
                 InsertIssueDetails(Convert.ToInt32(txtInvReqID.Text), Convert.ToInt32(txtDCNumber.Text), Convert.ToDateTime(txtDCDate.Text), Convert.ToString(txtCourierName.Text), Convert.ToString(txtRemarks.Text), issuedQuantity, Convert.ToInt32(txtVehicleID.Text));
-                FillGridApprovedRequisitions(2, Convert.ToInt32(ddlVehicles.SelectedValue));
+                FillGridApprovedRequisitions(Convert.ToInt32(ddlVehicles.SelectedValue));
                 Reset();
             }
             else

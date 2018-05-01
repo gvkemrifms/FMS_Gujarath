@@ -35,7 +35,7 @@
 <asp:UpdatePanel ID="updPanel1" runat="server">
 <ContentTemplate>
 <fieldset style="padding: 10px;">
-<legend>Spare Parts Requisiton</legend>
+<legend  align="center" style="color:brown">Spare Parts Requisiton</legend>
 <table style="width: 100%">
 <tr align="center">
     <td>
@@ -51,7 +51,7 @@
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
+                        <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" style="margin-bottom:15px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
                         </ajaxToolKit:ComboBox>
                     </td>
                 </tr>
@@ -60,9 +60,9 @@
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
-                        <asp:GridView ID="grvNewSparePartsRequisition" runat="server" AutoGenerateColumns="False"
+                        <asp:GridView ID="grvNewSparePartsRequisition" runat="server" AutoGenerateColumns="False" style="margin-top:30px"
                                       OnRowDeleting="grvNewSparePartsRequisition_RowDeleting" CellPadding="3" CellSpacing="2"
-                                      GridLines="None" CssClass="gridviewStyle" OnSelectedIndexChanged="grvNewSparePartsRequisition_SelectedIndexChanged">
+                                      GridLines="Both" CssClass="gridviewStyle" OnSelectedIndexChanged="grvNewSparePartsRequisition_SelectedIndexChanged">
                             <Columns>
                                 <asp:BoundField HeaderText="S.No" DataField="SNo"/>
                                 <asp:TemplateField HeaderText="Spare Part Name">
@@ -98,10 +98,10 @@
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
-                        <asp:Button ID="btnAddRow" runat="server" Text="Add Row" OnClick="btnAddRow_Click"/>
-                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click"/>
-                        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click"/>
-                        <asp:Button ID="btnSparePartsReqHistory" runat="server" Text="View History" OnClick="btnSparePartsReqHistory_Click" OnClientClick="return validation();"/>
+                        <asp:Button ID="btnAddRow" runat="server" Text="Add Row" CssClass="form-submit-button" OnClick="btnAddRow_Click"/>
+                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="form-submit-button" OnClick="btnSubmit_Click"/>
+                        <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="form-submit-button" OnClick="btnReset_Click"/>
+                        <asp:Button ID="btnSparePartsReqHistory" runat="server" CssClass="form-submit-button" Text="View History" OnClick="btnSparePartsReqHistory_Click" OnClientClick="return validation();"/>
                     </td>
                 </tr>
             </table>
@@ -110,13 +110,11 @@
 </tr>
 <tr>
     <td>
-        <table>
-        <tr>
-            <td class="rowseparator"></td>
-        </tr>
+        <table style="margin-top:50px">
+
         <tr>
             <td align="left">
-                <asp:Label ID="lbPendingforissue" runat="server" Text="Requisitions Pending For Issue"></asp:Label>
+                <asp:Label ID="lbPendingforissue" runat="server" Text="Requisitions Pending For Issue" ></asp:Label>
             </td>
         </tr>
         <tr>
@@ -126,7 +124,7 @@
             <td align="center">
                 <asp:GridView ID="grvPendingforApproval" runat="server" AutoGenerateColumns="False"
                               EmptyDataText="Details are not available" DataKeyNames="FleetInventoryReqID"
-                              CellPadding="3" CellSpacing="2" GridLines="None" CssClass="gridviewStyle" OnRowCommand="grvPendingforApproval_RowCommand">
+                              CellPadding="3" CellSpacing="2" GridLines="Both" CssClass="gridviewdsd" OnRowCommand="grvPendingforApproval_RowCommand">
                     <Columns>
                         <asp:BoundField HeaderText="Row_ID" DataField="Row_ID"/>
                         <asp:BoundField HeaderText="Total Spare Parts Quantity" DataField="RequestedQty"/>
@@ -155,13 +153,17 @@
         <tr>
             <td>
                 <asp:Panel ID="RequisitionHistory" runat="server">
-                    <fieldset style="padding: 10px; width: auto">
-                        <legend>Requisition History </legend>
                         <table>
                             <tr>
                                 <td>
+                                    <legend style="margin-top:40px">Requisition History </legend>
+                                </td>
+                                </tr>
+                            <br />
+                            <tr>
+                                <td>
                                     <asp:GridView ID="grvRequisitionHistory" runat="server" AutoGenerateColumns="True"
-                                                  PageSize="5" GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2"
+                                                  PageSize="5" GridLines="Both" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2"
                                                   Width="95%" OnPageIndexChanging="grvRequisitionHistory_PageIndexChanging" AllowPaging="True" EmptyDataText="No History Found">
                                         <RowStyle CssClass="rowStyleGrid"/>
                                         <FooterStyle CssClass="footerStylegrid"/>
@@ -172,8 +174,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <asp:Button ID="hideHistory" runat="server" Text="Hide History" Visible="false" OnClick="hideHistory_Click"/>
-                    </fieldset>
+                        <asp:Button ID="hideHistory" runat="server" CssClass="form-submit-button" Text="Hide History" Visible="false" OnClick="hideHistory_Click"/>
                 </asp:Panel>
             </td>
         </tr>
@@ -188,42 +189,35 @@
         <asp:Panel ID="pnlPopup" runat="server" Style="display: none; padding: 10px" CssClass="modalPanel">
             <asp:UpdatePanel ID="updPnlReqDetail" runat="server">
                 <ContentTemplate>
-                    <div align="center">
-                        <fieldset style="padding: 10px;">
-                            <legend>
-                                <asp:Label ID="lblReqDetail" runat="server" Text="Request Detail"/>
-                            </legend>
-                            <table width="70%">
+               
+                            <table  style="margin-left:700px;margin-top:290px ;border:1px">
                                 <tr>
-                                    <td class="rowseparator"></td>
+                                    <td>
+                                        <legend>Request Details</legend>
+                                    </td>
                                 </tr>
+                                <br />
+
                                 <tr>
-                                    <td align="left">
+                                    <td >
                                         <asp:Label ID="lblVehicleNum" runat="server" Text="VehicleNum"/>
                                     </td>
-                                    <td class="columnseparator"></td>
-                                    <td align="left">
-                                        <asp:TextBox ID="txtVehicleNumber" runat="server" ReadOnly="true"></asp:TextBox>
+                                    <td >
+                                        <asp:TextBox ID="txtVehicleNumber"  runat="server" ReadOnly="true"></asp:TextBox>
                                     </td>
                                 </tr>
-                                <caption>
-                                    .
+
+      
                                     <tr>
-                                        <td class="rowseparator"></td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">
+                                        <td>
                                             <asp:Label ID="lblReqID" runat="server" Text="InvReqID"/>
                                         </td>
-                                        <td class="columnseparator"></td>
-                                        <td align="left">
-                                            <asp:TextBox ID="txtReqID" runat="server" ReadOnly="true"></asp:TextBox>
+                                        <td >
+                                            <asp:TextBox ID="txtReqID"  runat="server" ReadOnly="true"></asp:TextBox>
                                         </td>
                                     </tr>
+ 
                                     <tr>
-                                        <td class="rowseparator"></td>
-                                    </tr>
-                                    <tr align="left">
                                         <td colspan="3">
                                             <asp:GridView ID="grvBatteryRequestDetails" runat="server" align="left" AutoGenerateColumns="true"
                                                           CellPadding="3" CellSpacing="2" CssClass="gridviewStyle" GridLines="None" Width="400px">
@@ -239,25 +233,24 @@
                                         <td class="rowseparator"></td>
                                     </tr>
                                     <tr>
-                                        <td align="center" colspan="3">
-                                            <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click" Text="Approve" Width="50px"/>
+                                        <td >
+                                            <asp:Button ID="btnOk" runat="server" CssClass="form-submit-button" OnClick="btnOk_Click" Text="Approve" Width="70px"/>
                                             <ajaxToolKit:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" ConfirmText="Are you sure You want to Approve?"
                                                                                TargetControlID="btnOk">
                                             </ajaxToolKit:ConfirmButtonExtender>
-                                            <asp:Button ID="btnNo" runat="server" OnClick="btnNo_Click" Text="Reject" Width="50px"/>
+                                            <asp:Button ID="btnNo" CssClass="form-submit-button" runat="server" OnClick="btnNo_Click" Text="Reject" Width="70px"/>
                                             <ajaxToolKit:ConfirmButtonExtender ID="ConfirmButtonExtender2" runat="server" ConfirmText="Are you sure You want to Reject?"
                                                                                TargetControlID="btnNo">
                                             </ajaxToolKit:ConfirmButtonExtender>
-                                            <asp:Button ID="btnCancel" runat="server" OnClick="btnCancel_Click" Text="Cancel"/>
+                                            <asp:Button ID="btnCancel" CssClass="form-submit-button" Width="70px" runat="server" OnClick="btnCancel_Click" Text="Cancel"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="rowseparator"></td>
                                     </tr>
-                                </caption>
+                                
                             </table>
                         </fieldset>
-                    </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </asp:Panel>

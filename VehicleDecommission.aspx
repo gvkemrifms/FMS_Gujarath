@@ -3,8 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validation() {
 
             var district = document.getElementById('<%= ddlDistrict.ClientID %>');
@@ -59,33 +58,25 @@
     </script>
     <asp:UpdatePanel ID="updtpnlVehDecomm" runat="server">
         <ContentTemplate>
+
             <fieldset style="padding: 10px">
-                <legend>Vehicle Decommission</legend>
-                <table width="100%">
-                    <tr>
-                        <td>
+                <legend align="center" style="color:brown">Vehicle Decommission</legend>
+<br />
                             <table align="center">
                                 <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
-                                    <td>District<span class="labelErr" style="color: Red">*</span>
-                                    </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                                        District<span class="labelErr" style="color: Red">*</span>
+                                    </td>
+                                    <td>
+                                        <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
                                         <asp:TextBox ID="txtDistrict" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
                                     <td>Vehicle Number<span class="labelErr" style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="true"
                                             DropDownStyle="DropDownList">
@@ -95,57 +86,42 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
                                     <td>Decommission Reason<span class="labelErr" style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtDecommReason" runat="server" Width="200px"></asp:TextBox>
+                                        <asp:TextBox ID="txtDecommReason" CssClass="search_3" runat="server" Width="150px"></asp:TextBox>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td>Decommission Date<span style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
-                                    <td style="width: 250px">
-                                        <asp:TextBox ID="txtDecommDate" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
+                                    <td >
+                                        <asp:TextBox ID="txtDecommDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
                                         <asp:ImageButton ID="imgbtnDecommDate" runat="server" Style="vertical-align: top"
                                             alt="" src="images/Calendar.gif" />
-                                        <cc1:CalendarExtender ID="calExtndrDecommDate" runat="server" TargetControlID="txtDecommDate"
+                                        <cc1:CalendarExtender ID="calExtndrDecommDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtDecommDate"
                                             PopupButtonID="imgbtnDecommDate" Format="MM/dd/yyyy">
                                         </cc1:CalendarExtender>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
                                     <td>Decommission Remark<span class="labelErr" style="color: Red">*</span>
                                     </td>
-                                    <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtDecommRemark" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:TextBox ID="txtDecommRemark" CssClass="search_3" runat="server" TextMode="MultiLine"></asp:TextBox>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
                                         <table align="center">
                                             <tr>
-                                                <td style="width: 125px">
-                                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+                                                <td >
+                                                    <asp:Button ID="btnSubmit" CssClass="form-submit-button" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
                                                 </td>
                                                 <td>
-                                                    <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" />
+                                                    <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnReset_Click" />
                                                 </td>
-                                                <td style="width: 55px"></td>
+                                        
                                             </tr>
                                         </table>
                                     </td>
@@ -160,7 +136,7 @@
                     <tr align="center">
                         <td>
                             <asp:GridView ID="grdvwDecommVehicles" runat="server" AutoGenerateColumns="False"
-                                CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="True"
+                                CellPadding="4" ForeColor="#333333" BorderWidth="1px" BorderColor="Brown" GridLines="Both" Width="630px" AllowPaging="True"
                                 EmptyDataText="No Records Found" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdvwDecommVehicles_PageIndexChanging"
                                 OnRowCommand="grdvwDecommVehicles_RowCommand">
                                 <RowStyle CssClass="rowStyleGrid" />
@@ -191,14 +167,14 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Edit">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="lnkEdit" runat="server" CommandName="DecommVehEdit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
+                                            <asp:LinkButton ID="lnkEdit" CssClass="form-submit-button" runat="server" CommandName="DecommVehEdit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
                                                 Text="Edit">
                                             </asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Revert">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="lnkRevert" runat="server" CommandName="DecommVehRevert" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
+                                            <asp:LinkButton ID="lnkRevert" CssClass="form-submit-button" runat="server" CommandName="DecommVehRevert" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
                                                 Text="Revert">
                                             </asp:LinkButton>
                                             <cc1:ConfirmButtonExtender ID="confrmbtnextndrRevert" runat="server" TargetControlID="lnkRevert"
@@ -212,9 +188,6 @@
                                 <SelectedRowStyle CssClass="selectedRowStyle" />
                                 <HeaderStyle CssClass="headerStyle" />
                             </asp:GridView>
-                        </td>
-                    </tr>
-                </table>
             </fieldset>
         </ContentTemplate>
     </asp:UpdatePanel>

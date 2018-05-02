@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function validation() {
@@ -139,9 +138,25 @@
     </script>
     <asp:UpdatePanel ID="updtpnlVehAllocation" runat="server">
         <ContentTemplate>
-            <fieldset style="padding: 10px">
-                <legend>Vehicle Allocation</legend>
-                <table style="width: 600px;">
+          
+                <script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,            
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    }
+</script>
+                <legend align="center" style="color:brown">Vehicle Allocation</legend>
+                <table align="center">
                     <tr>
                         <td colspan="7"></td>
                     </tr>
@@ -164,7 +179,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:DropDownList ID="ddlVehicleNumber" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
+                            <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="150px" AutoPostBack="true" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </asp:DropDownList>
                         </td>
@@ -177,14 +192,14 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:TextBox ID="txtReasonforDown" runat="server" TextMode="MultiLine" onkeypress="return false;"></asp:TextBox>
+                            <asp:TextBox ID="txtReasonforDown" CssClass="search_3" runat="server" TextMode="MultiLine" onkeypress="return false;"></asp:TextBox>
                         </td>
                         <td class="columnseparator"></td>
                         <td>DownTime<span class="labelErr" style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="2">
-                            <asp:TextBox ID="txtDownTime" runat="server" onkeypress="return false;"></asp:TextBox>
+                            <asp:TextBox ID="txtDownTime" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -195,11 +210,11 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="2">
-                            <asp:TextBox ID="txtOdo" runat="server" onkeypress="return numeric(event)" MaxLength="6"
-                                Width="80%">
+                            <asp:TextBox ID="txtOdo" runat="server" CssClass="search_3" onkeypress="return numeric_only(event)" MaxLength="6"
+                                Width="90%">
                             </asp:TextBox>
                         </td>
-                        <td>PreviousODO<span class="labelErr" style="color: Red">*</span>
+                        <td>Previous ODO<span class="labelErr" style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -214,7 +229,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
-                            <asp:TextBox ID="txtReqBy" runat="server" onkeypress="return false;"></asp:TextBox>
+                            <asp:TextBox ID="txtReqBy" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -225,7 +240,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
-                            <asp:TextBox ID="txtExpDateOfRec" runat="server" onkeypress="return false;"></asp:TextBox>
+                            <asp:TextBox ID="txtExpDateOfRec" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -239,18 +254,20 @@
                             <table style="width: 100%">
                                 <tr>
                                     <td nowrap="nowrap" style="width: 20%">
-                                        <asp:TextBox ID="txtUptimeDate" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
-                                        <asp:ImageButton ID="imgBtnUptimeDate" runat="server" Style="vertical-align: top"
-                                            alt="" src="images/Calendar.gif" />
-                                        <cc1:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="txtUptimeDate"
+                                       
+                                        <asp:TextBox ID="txtUptimeDate" CssClass="search_3" runat="server" Width="150px" onkeypress="return false;"></asp:TextBox>
+                                        
+                                        <cc1:CalendarExtender ID="CalendarExtender3" runat="server" CssClass="cal_Theme1" TargetControlID="txtUptimeDate"
                                             PopupButtonID="imgBtnUptimeDate" Format="dd/MM/yyyy">
                                         </cc1:CalendarExtender>
+                                         <asp:ImageButton ID="imgBtnUptimeDate" runat="server" Style="vertical-align: top;"
+                                            alt="" src="images/Calendar.gif" />
                                     </td>
                                     <td style="width: 80%">
-                                        <asp:DropDownList ID="ddlUPHour" runat="server" Width="55px">
+                                        <asp:DropDownList ID="ddlUPHour" CssClass="search_3" style="margin-left:50px" runat="server" Width="55px">
                                             <asp:ListItem Value="-1">--hh--</asp:ListItem>
                                         </asp:DropDownList>
-                                        <asp:DropDownList ID="ddlUPMin" runat="server" Width="60px">
+                                        <asp:DropDownList ID="ddlUPMin" CssClass="search_3" runat="server" Width="60px">
                                             <asp:ListItem Value="-1">--mm--</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -271,7 +288,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
-                            <asp:TextBox ID="txtContactNumber" runat="server" onkeypress="return numeric(event)"
+                            <asp:TextBox ID="txtContactNumber" CssClass="search_3" runat="server" onkeypress="return numeric_only(event)"
                                 MaxLength="10">
                             </asp:TextBox>
                         </td>
@@ -286,7 +303,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:TextBox ID="txtLatitude" runat="server" Visible="false" onblur="isDecimal(this);"
+                            <asp:TextBox ID="txtLatitude" CssClass="search_3" runat="server" Visible="false" onblur="numericOnly(this);"
                                 onkeydown="return OnlyNumPeriod(event);">
                             </asp:TextBox>
                         </td>
@@ -301,7 +318,7 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:TextBox ID="txtLongitude" runat="server" Visible="false" onblur="isDecimal(this);"
+                            <asp:TextBox ID="txtLongitude" CssClass="search_3" runat="server" Visible="false" onblur="numericOnly(this);"
                                 onkeydown="return OnlyNumPeriod(event);">
                             </asp:TextBox>
                         </td>
@@ -315,17 +332,16 @@
                         <tr>
                             <td align="center" colspan="7" style="">
                                 <asp:Panel ID="pnlButton" runat="server">
-                                    <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click"
+                                    <asp:Button ID="btnSubmit" CssClass="form-submit-button" runat="server" OnClick="btnSubmit_Click"
                                         Text="Submit" />
                                     &nbsp;&nbsp;&nbsp;
-                                <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click"
+                                <asp:Button ID="btnReset" CssClass="form-reset-button" runat="server" OnClick="btnReset_Click"
                                     Text="Reset" />
                                 </asp:Panel>
                             </td>
                         </tr>
                     </caption>
                 </table>
-            </fieldset>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

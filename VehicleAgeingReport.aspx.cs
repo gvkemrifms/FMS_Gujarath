@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
 using Exception = System.Exception;
 
@@ -12,19 +11,28 @@ public partial class VehicleAgeingReport : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {
-            GetDistricts();
-            CheckUser();
-            GetVehicleAgeingReport();
+        {          
+               GetDistricts();
+                CheckUser();
+                GetVehicleAgeingReport();          
         }
     }
 
     protected void GetVehicleAgeingReport()
     {
-        var reportpath = ConfigurationManager.AppSettings["reportServerPath"] + "?%2f" + ConfigurationManager.AppSettings["reportFolderPath"] + "%2f";
-        var vehicleageingreport = reportpath + "FMSReport_VehicleAging&rs%3aCommand=Render&rc:Parameters=false&rc:Toolbar=false&districtid=" + _vehreg.DistrictId;
-        iframe_VehicleAgeingReport.Attributes.Add("src", vehicleageingreport);
+        try
+        {
+            var reportpath = ConfigurationManager.AppSettings["reportServerPath"] + "?%2f" + ConfigurationManager.AppSettings["reportFolderPath"] + "%2f";
+            var vehicleageingreport = reportpath + "FMSReport_VehicleAging&rs%3aCommand=Render&rc:Parameters=false&rc:Toolbar=false&districtid=" + _vehreg.DistrictId;
+            iframe_VehicleAgeingReport.Attributes.Add("src", vehicleageingreport);
+        }
+        catch(Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
+        
     }
 
     public void GetDistricts()
@@ -34,7 +42,6 @@ public partial class VehicleAgeingReport : Page
             var ds = _vehreg.GetDistrcts(); //FMS.BLL.VehicleRegistration.GetDistrcts();
             if (ds == null) return;
             _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
-            ddlDistrict.Items.Insert(1, new ListItem("All", "-1"));
         }
         catch (Exception ex)
         {
@@ -51,16 +58,23 @@ public partial class VehicleAgeingReport : Page
 
     protected void CheckUser()
     {
-        _vehreg.DistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-        switch (_vehreg.DistrictId)
+        try
         {
-            case -1:
-                ddlDistrict.Items.FindByValue("-1").Selected = true;
-                break;
-            default:
-                ddlDistrict.Items.FindByValue(_vehreg.DistrictId.ToString()).Selected = true;
-                ddlDistrict.Enabled = false;
-                break;
+            if (Session["UserdistrictId"] != null) _vehreg.DistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            switch (_vehreg.DistrictId)
+            {
+                case -1:
+                    ddlDistrict.Items.FindByValue("-1").Selected = true;
+                    break;
+                default:
+                    ddlDistrict.Items.FindByValue(_vehreg.DistrictId.ToString()).Selected = true;
+                    ddlDistrict.Enabled = false;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
 

@@ -5,38 +5,87 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlVehicleDetailsReports" runat="server">
         <ContentTemplate>
-            <table cellpadding="2" cellspacing="2">
-                <tr>
-                    <td></td>
-                </tr>
+            <script type="text/javascript">
+        function pageLoad() {
+            $('#<%= ddlDistrict.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlVehNumber.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+        };
+        function Validations() {
+            var ddlDistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
+            if (ddlDistrict === '--select--') {
+                return alert("Please select District");
+            }
+            var ddlVehicle = $('#<%= ddlVehNumber.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+                return alert("Please select Vehicle");
+            }
+            var txtFirstDate = $('#<%= txtFrom.ClientID %>').val();
+            var txtToDate = $('#<%= txtEnd.ClientID %>').val();
+            if (txtFirstDate === "") {
+                return alert('From Date is Mandatory');
+            }
+            if (txtToDate === "") {
+                return alert("End Date is Mandatory");
+            }
+            var fromDate = (txtFirstDate).replace(/\D/g, '/');
+            var toDate = (txtToDate).replace(/\D/g, '/');
+            var ordFromDate = new Date(fromDate);
+            var ordToDate = new Date(toDate);
+            var currentDate = new Date();
+            if (ordFromDate > currentDate) {
+                return alert("From date should not be greater than today's date");
+            }
+            if (ordToDate < ordFromDate) {
+                alert("Please select valid date range");
+            }
+            return true;
+        }
+    </script>
+            <legend align="center" style="color:brown">Vehicle Details Report</legend>
+            <br />
+            <table align="center">
+             
                 <tr>
                     <td>
-                        Select District :
-                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                        Select District <span style="color:red">*</span>
+                        </td>
+                    <td>
+                        <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
-                    <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Select Vehicle <span style="color:red">*</span>
+                        </td>
                     <td>
-                        Select Vehicle :
-                        <asp:DropDownList ID="ddlVehNumber" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlVehNumber_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddlVehNumber" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlVehNumber_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
-                </tr>
-                <tr>
-                    <td style="height: 21px"></td>
-                </tr>
+                    </tr>
                 <tr>
                     <td>
-                        From :
-                        <asp:TextBox runat="server" ID="txtFrom" Width="114px"/>
+                        From <span style="color:red">*</span>
+                        </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtFrom" CssClass="search_3" Width="150px"/>
                         <cc1:CalendarExtender ID="CalFromDate" runat="server" TargetControlID="txtFrom" PopupButtonID="imgBtnCalendarMaintenanceDate"
                                               Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
-                    <td></td>
+               </tr>
+                <tr>
                     <td>
-                        To :
-                        <asp:TextBox runat="server" ID="txtEnd" Width="114px"/>
+                        To <span style="color:red">*</span>
+                        </td>
+                    <td>
+                        <asp:TextBox runat="server" CssClass="search_3" ID="txtEnd" Width="150px"/>
                         <cc1:CalendarExtender ID="CalToDate" runat="server" TargetControlID="txtEnd" PopupButtonID="imgBtnCalendarMaintenanceDate"
                                               Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
@@ -44,12 +93,12 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="btnShowReport" runat="server" OnClick="btnShowReport_Click" Text="Show Report"
-                                    OnClientClick="return validationFuelEntry();"/>
+                        <asp:Button ID="btnShowReport" CssClass="form-submit-button" runat="server" OnClick="btnShowReport_Click" Text="Show Report"
+                                    OnClientClick=" if(!Validations()) return false;"/>
                     </td>
-                    <td></td>
+                 
                     <td>
-                        <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
+                        <asp:Button ID="btnExportToExcel" runat="server" CssClass="form-reset-button" Text="Export To Excel" Width="142px"
                                     OnClick="btnExportToExcel_Click"/>
                     </td>
                 </tr>
@@ -57,7 +106,7 @@
                     <td></td>
                 </tr>
             </table>
-            <table cellpadding="2" cellspacing="2">
+            <table align="center" style="margin-top:20px">
                 <tr>
                     <td>
                         <iframe id="iframe_VehicleDetailsReport" runat="server"></iframe>

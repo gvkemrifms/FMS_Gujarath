@@ -3,25 +3,43 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlVehicleHistoryReport" runat="server">
         <ContentTemplate>
-            <table cellpadding="2" cellspacing="2">
-                <tr>
-                    <td></td>
-                </tr>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlDistrict.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlVehNumber.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+            </script>
+            <legend align="center" style="color:brown">Vehicle History Report</legend>
+            <table align="center">
+                
                 <tr>
                 <td>
-                    Select District :
-                    <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                    Select District <span style="color:red">*</span>
+                    <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                     </asp:DropDownList>
                 </td>
+                    </tr>
+                <tr>
+
                 <td>
-                    Select Vehicle :
-                    <asp:DropDownList ID="ddlVehNumber" runat="server" AutoPostBack="True"
+                    Select Vehicle <span style="color:red">*</span>
+                    <asp:DropDownList ID="ddlVehNumber" Width="150px" runat="server" AutoPostBack="True"
                                       OnSelectedIndexChanged="ddlVehNumber_SelectedIndexChanged">
                     </asp:DropDownList>
                 </td>
+                    </tr>
+                <tr>
                 <td>
-                    Select Month :
-                    <asp:DropDownList ID="ddlMonth" runat="server" AutoPostBack="True"
+                    Select Month <span style="color:red">*</span>
+                    </td>
+                    <td>
+                    <asp:DropDownList CssClass="search_3" Width="150px" ID="ddlMonth" style="margin-left:-150px" runat="server" AutoPostBack="True"
                                       OnSelectedIndexChanged="ddlMonth_SelectedIndexChanged">
                         <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                         <asp:ListItem Text="All" Value="-1"></asp:ListItem>
@@ -39,10 +57,13 @@
                         <asp:ListItem Text="December" Value="12"></asp:ListItem>
                     </asp:DropDownList>
                 </td>
-                <td></td>
+                    </tr>
+           <tr>
                 <td>
-                    Year :
-                    <asp:DropDownList ID="ddlYear" runat="server" AutoPostBack="True">
+                    Select Year<span style="color:red">*</span>
+                    </td>
+               <td>
+                    <asp:DropDownList CssClass="search_3" Width="150px" ID="ddlYear" style="margin-left:-150px" runat="server" AutoPostBack="True">
                         <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                         <asp:ListItem Text="2004" Value="2004"></asp:ListItem>
                         <asp:ListItem Text="2005" Value="2005"></asp:ListItem>
@@ -59,15 +80,15 @@
                         <asp:ListItem Text="2016" Value="2016"></asp:ListItem>
                     </asp:DropDownList>
                 </td>
-                <td></td>
+         </tr>
                 <tr>
-                    <td></td>
-                    <td>
-                        <asp:Button ID="btnShowRpt" runat="server" Text="Show Report"
+                  
+                    <td align="center">
+                        <asp:Button ID="btnShowRpt"  CssClass="form-submit-button" runat="server" style="margin-bottom:40px" Width="100px" Text="Show Report"
                                     OnClick="btnShowRpt_Click"/>
                     </td>
-                    <td>
-                        <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
+                    <td align="center">
+                        <asp:Button ID="btnExportToExcel" CssClass="form-reset-button" runat="server" style="margin-left:-60px;margin-bottom:40px" Text="Export To Excel" Width="120px"
                                     OnClick="btnExportToExcel_Click"/>
                     </td>
                 </tr>
@@ -76,7 +97,7 @@
                 <td></td>
             </tr>
             </table>
-            <table cellpadding="2" cellspacing="2">
+            <table align="center">
                 <tr>
                     <td>
                         <iframe id="iframe_VehicleHistoryReport" runat="server"></iframe>

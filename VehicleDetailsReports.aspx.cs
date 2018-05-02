@@ -11,6 +11,7 @@ public partial class VehicleDetailsReports : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             GetDistricts();
@@ -81,28 +82,11 @@ public partial class VehicleDetailsReports : Page
     }
 
     protected void btnShowReport_Click(object sender, EventArgs e)
-    {
-        switch (ddlDistrict.SelectedIndex)
-        {
-            case 0:
-                Show("Select District");
-                break;
-            default:
-                if (ddlVehNumber.SelectedIndex == 0)
-                    Show("Select Vehicle");
-                else if (txtFrom.Text == "" || txtEnd.Text == "")
-                    Show("Select Dates");
-                else if (Convert.ToDateTime(txtFrom.Text) > DateTime.Now)
-                    Show(" Selected Date should less than today date ");
-                else
-                {
-                    _vehreg.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-                    GetVehicleDetailsReport();
-                }
-
-                break;
-        }
+    {      
+          _vehreg.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+           GetVehicleDetailsReport();
     }
+
 
     protected void ddlVehNumber_SelectedIndexChanged(object sender, EventArgs e)
     {

@@ -11,7 +11,7 @@
                 <asp:GridView ID="gvVasOffroad" runat="server" EmptyDataText="No Records Found"
                               AllowSorting="True" AutoGenerateColumns="False"
                               CssClass="gridviewStyle" CellSpacing="2"
-                              CellPadding="4" ForeColor="#333333" border-width="1px" GridLines="Both"
+                              CellPadding="4" ForeColor="#333333" BorderColor="Brown" border-width="1px" GridLines="Both"
                               Width="630px" AllowPaging="True"
                               EnableSortingAndPagingCallbacks="True"
                               OnPageIndexChanging="gvVasOffroad_PageIndexChanging"
@@ -60,7 +60,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Approve">
                             <ItemTemplate>
-                                <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve" CommandArgument=" <%# Container.DataItemIndex %>"
+                                <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve"  CssClass="form-submit-button" CommandArgument=" <%# Container.DataItemIndex %>"
                                                 Text="Approve">
                                 </asp:LinkButton>
 
@@ -69,7 +69,7 @@
                         <asp:TemplateField HeaderText="Reject">
                             <ItemTemplate>
 
-                                <asp:LinkButton OnClientClick="PressButton()" ID="lnkReject" runat="server" CommandName="Reject" CommandArgument=" <%# Container.DataItemIndex %>"
+                                <asp:LinkButton OnClientClick="PressButton()" ID="lnkReject" runat="server" CommandName="Reject" CssClass="form-submit-button" CommandArgument=" <%# Container.DataItemIndex %>"
                                                 Text="Reject">
                                 </asp:LinkButton>
 

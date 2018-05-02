@@ -3,27 +3,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="updtpnlVehicleAgeingReport" runat="server">
         <ContentTemplate>
-            <table cellpadding="2" cellspacing="2">
-                <tr>
-                    <td></td>
-                </tr>
+            <legend align="center" style="color:brown"> Vehicle Ageing Report</legend>
+            <table align="center">            
                 <tr>
                     <td>
-                        Select District :
-                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                        Select District<span style="color:red">*</span>
+                        </td>
+                    <td>
+                          <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                         </asp:DropDownList>
-                    </td>
-                    <td></td>
-                    <td>
-                        <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
+                        </td>                      
+                   <tr>
+ <td>
+                        <asp:Button ID="btnExportToExcel" CssClass="form-submit-button" runat="server" Text="Export To Excel" Width="142px"
                                     OnClick="btnExportToExcel_Click"/>
                     </td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
+                   </tr>
+
             </table>
-            <table cellpadding="2" cellspacing="2">
+            <br />
+            <table align="center" style="margin-top:20px">
                 <tr>
                     <td>
                         <iframe id="iframe_VehicleAgeingReport" runat="server"></iframe>

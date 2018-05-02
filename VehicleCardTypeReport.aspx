@@ -1,7 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleCardTypeReport.aspx.cs" Inherits="VehicleCardTypeReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
+      
         function validationFuelEntry() {
 
             var district = document.getElementById('<%= ddlDistrict.ClientID %>');
@@ -24,34 +25,51 @@
     </script>
     <asp:UpdatePanel ID="updtpanlVehcardtypereport" runat="server">
         <ContentTemplate>
-            <table cellpadding="2" cellspacing="2">
-                <tr>
-                    <td></td>
-                </tr>
+            <script>
+                function pageLoad()
+                {
+                     $('#<%= ddlDistrict.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlSSN.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+                }
+            </script>
+            <legend align="center" style="color:brown">Vehicle Card Type Report</legend>
+            <br />
+            <table align="center">
                 <tr>
                     <td>
-                        Select District :
-                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                        Select District <span style="color:red">*</span>
+                        </td>
+
+                        <td>
+                        <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
-                    <td></td>
+                    </tr>
+                <tr>
                     <td>
-                        Service Station Name:
-                        <asp:DropDownList ID="ddlSSN" runat="server" AutoPostBack="True"
+                        Service Station Name<span style="color:red">*</span>
+                        </td>
+                    <td>
+                        <asp:DropDownList ID="ddlSSN" CssClass="search_3" runat="server" AutoPostBack="True"
                                           OnSelectedIndexChanged="ddlSSN_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
-                    <td></td>
+                    </tr>
+                <tr>
                     <td>
-                        <asp:Button ID="btnExportToExcel" runat="server" Text="Export To Excel" Width="142px"
+                        <asp:Button ID="btnExportToExcel" CssClass="form-submit-button" runat="server" Text="Export To Excel" Width="142px"
                                     OnClick="btnExportToExcel_Click"/>
                     </td>
                 </tr>
-                <tr>
-                    <td></td>
-                </tr>
             </table>
-            <table cellpadding="2" cellspacing="2">
+            <br />
+            <table align="center" style="margin-top:30px">
                 <tr>
                     <td>
                         <iframe id="iframe_VehicleCardTypeReport" runat="server"></iframe>

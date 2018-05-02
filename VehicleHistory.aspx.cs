@@ -19,6 +19,7 @@ public partial class VehicleHistory : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) FillVehicleNumber();
     }
 

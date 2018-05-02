@@ -4,8 +4,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
 
     function validation() {
         var district = document.getElementById('<%= txtDistrict.ClientID %>');
@@ -132,7 +131,6 @@
 
 </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-
 <ContentTemplate>
 <div class="dropdown">
 <table style="width: 103%" cellpadding="2" cellspacing="2" align="right">
@@ -257,7 +255,7 @@
             Fees Paid<span style="color: Red">*</span>
         </td>
         <td align="left">
-            <asp:TextBox ID="txtFeesPaid" runat="server" class="text1" MaxLength="10" onkeypress="return isDecimalNumberKey(event);"
+            <asp:TextBox ID="txtFeesPaid" runat="server" class="text1" MaxLength="10" onkeypress="return numericOnly(this);"
                          Width="145px">
             </asp:TextBox>
         </td>

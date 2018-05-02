@@ -3,14 +3,13 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
         <ContentTemplate>
             <div>
                 <asp:GridView ID="gvVasOffroad" runat="server" EmptyDataText="No Records Found"
                               AllowSorting="True" AutoGenerateColumns="False"
                               CssClass="gridviewStyle" CellSpacing="2"
-                              CellPadding="4" ForeColor="#333333" GridLines="None"
+                              CellPadding="4" ForeColor="#333333" GridLines="Both"
                               Width="630px" AllowPaging="True"
                               EnableSortingAndPagingCallbacks="True"
                               OnPageIndexChanging="gvVasOffroad_PageIndexChanging" OnRowCommand="gvVasOffroad_RowCommand">
@@ -92,11 +91,11 @@
                         </div>
                         <div style="width: 60%; float: right">
                             <div style="width: 50%; float: left">
-                                <asp:Button runat="server" ID="btnReason" Text="Submit"
+                                <asp:Button runat="server" ID="btnReason" CssClass="form-submit-button" Text="Submit"
                                             OnClick="btnReason_Click" OnClientClick="return Validation();"/>
                             </div>
                             <div style="width: 50%; float: right">
-                                <asp:Button runat="server" ID="btnCancel" OnClientClick="PressButton2()" Text="Close"/>
+                                <asp:Button runat="server" ID="btnCancel" CssClass="form-reset-button" OnClientClick="PressButton2()" Text="Close"/>
                             </div>
                         </div>
                         <div>

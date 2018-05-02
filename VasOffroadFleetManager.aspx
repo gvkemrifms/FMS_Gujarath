@@ -3,14 +3,15 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
         <ContentTemplate>
-            <div>
+            <legend align="center" style="color:brown">Offroad Fleet Manager</legend>
+            <br/>
+            <div align="center">
                 <asp:GridView ID="gvVasOffroad" runat="server" EmptyDataText="No Records Found"
                               AllowSorting="True" AutoGenerateColumns="False"
                               CssClass="gridviewStyle" CellSpacing="2"
-                              CellPadding="4" ForeColor="#333333" GridLines="None"
+                              CellPadding="4" ForeColor="#333333" border-width="1px" GridLines="Both"
                               Width="630px" AllowPaging="True"
                               EnableSortingAndPagingCallbacks="True"
                               OnPageIndexChanging="gvVasOffroad_PageIndexChanging"
@@ -57,8 +58,6 @@
                                 <asp:TextBox runat="server" ID="txtApprovedCost"/>
                             </ItemTemplate>
                         </asp:TemplateField>
-
-
                         <asp:TemplateField HeaderText="Approve">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve" CommandArgument=" <%# Container.DataItemIndex %>"
@@ -123,7 +122,7 @@
             </asp:ModalPopupExtender>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
         function PressButton() {
             document.getElementById('<%= btnPopUp.ClientID %>').click();
         }

@@ -4,8 +4,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
-    <script language="javascript" type="text/javascript">
+    <script  type="text/javascript">
         function validation(obj, id) {
             var now = new Date();
             id = document.getElementById('<%= ddlistVehicleNumber.ClientID %>');
@@ -162,21 +161,12 @@
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <asp:Panel ID="pnlVehicleAccidentDetails" runat="server">
-                <table>
-                    <tr>
-                        <td class="rowseparator"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <fieldset style="padding: 10px">
-                                <legend>
+            <asp:Panel ID="pnlVehicleAccidentDetails" runat="server">            
+                                <legend align="center" style="color:brown">
                                     <b>Vehicle Accident Details</b>
                                 </legend>
                                 <table cellpadding="2" cellspacing="2" width="100%" style="margin-right: 15px;">
                                     <tr>
-                                        <td colspan="3">&nbsp;
-                                        </td>
                                         <td valign="top" colspan="3">
                                             <tr>
                                                 <td colspan="3">
@@ -185,7 +175,7 @@
                                                 <td colspan="3" valign="top">
                                                     <b>Resource Details</b>
                                                     <tr>
-                                                        <td>Vehicle Number <font color="red">*</font>
+                                                        <td>Vehicle Number <span style="color:red">*</span>
                                                         </td>
                                                         <td colspan="2">
                                                             <cc1:ComboBox AutoCompleteMode="Append" ID="ddlistVehicleNumber" runat="server" Width="130px"
@@ -195,24 +185,24 @@
 
 
                                                         </td>
-                                                        <td>Pilot Name<font color="red">*</font>
+                                                        <td>Pilot Name<span style="color:red">*</span>
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtPilotName" runat="server" Width="130px" onkeypress="return alpha_only(event);"></asp:TextBox>
+                                                            <asp:TextBox ID="txtPilotName" CssClass="search_3" runat="server" Width="130px" onkeypress="return alpha_only(event);"></asp:TextBox>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Incident Title<font color="red">*</font>
+                                                        <td>Incident Title<span style="color:red">*</span>
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtIncidentTitle" runat="server" MaxLength="20" Width="130px"
+                                                            <asp:TextBox ID="txtIncidentTitle" CssClass="search_3"  runat="server" MaxLength="20" Width="130px"
                                                                 onkeypress="return alphanumeric_only_withspace(event);">
                                                             </asp:TextBox>
                                                         </td>
-                                                        <td>Driving License Number <font color="red">*</font>
+                                                        <td>Driving License Number <span style="color:red">*</span>
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtDrivingLicenseNumber" runat="server" MaxLength="20" Width="130px"
+                                                            <asp:TextBox ID="txtDrivingLicenseNumber" CssClass="search_3" runat="server" MaxLength="20" Width="130px"
                                                                 onkeypress="return alphanumeric_only(event);">
                                                             </asp:TextBox>
                                                         </td>
@@ -221,12 +211,12 @@
                                                         <td>Age of the Vehicle
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtAgeofVehicle" runat="server" MaxLength="10" Width="130px" onkeypress="return isDecimalNumberKey(event);" ReadOnly="true"></asp:TextBox>
+                                                            <asp:TextBox ID="txtAgeofVehicle" CssClass="search_3" runat="server" MaxLength="10" Width="130px" onkeypress="return isDecimalNumberKey(event);" ReadOnly="true"></asp:TextBox>
                                                         </td>
-                                                        <td>Expiry Date<font color="red">*</font>
+                                                        <td>Expiry Date<span style="color:red">*</span>
                                                         </td>
                                                         <td>
-                                                            <asp:TextBox ID="txtExpiryDate" runat="server" MaxLength="20" Width="130px" onkeypress="return false;"></asp:TextBox>
+                                                            <asp:TextBox ID="txtExpiryDate" CssClass="search_3" runat="server" MaxLength="20" Width="130px" onkeypress="return false;"></asp:TextBox>
                                                             <cc1:CalendarExtender ID="txtExpiryDate_CalendarExtender" runat="server" Format="MM/dd/yyyy"
                                                                 PopupButtonID="imgBtnHandOverDate" TargetControlID="txtExpiryDate">
                                                             </cc1:CalendarExtender>
@@ -236,24 +226,24 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Kilometer Run<font color="red">*</font>
+                                                        <td>Kilometer Run<span style="color:red">*</span>
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtKilometerRun" runat="server" MaxLength="15" onkeypress="return isDecimalNumberKey(event);"
+                                                            <asp:TextBox ID="txtKilometerRun" CssClass="search_3" runat="server" MaxLength="15" onkeypress="return isDecimalNumberKey(event);"
                                                                 Width="130px">
                                                             </asp:TextBox>
                                                         </td>
                                                         <td>EMT Name
                                                         </td>
                                                         <td>
-                                                            <asp:TextBox ID="txtEmtName" runat="server" Width="130px" onkeypress="return alpha_only(event);"></asp:TextBox>
+                                                            <asp:TextBox ID="txtEmtName" CssClass="search_3" runat="server" Width="130px" onkeypress="return alpha_only(event);"></asp:TextBox>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Incident Handled By
                                                         </td>
                                                         <td colspan="2">
-                                                            <asp:TextBox ID="txtIncidentHandledBy" runat="server" MaxLength="35" Width="130px"
+                                                            <asp:TextBox ID="txtIncidentHandledBy" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                                 onkeypress="return alpha_only_withspace(event);">
                                                             </asp:TextBox>
                                                         </td>
@@ -290,42 +280,42 @@
                                                     <td rowspan="2">Accident Description
                                                     </td>
                                                     <td colspan="2" rowspan="2">
-                                                        <asp:TextBox ID="txtAccidentDescription" runat="server" MaxLength="250" TextMode="MultiLine"
+                                                        <asp:TextBox ID="txtAccidentDescription" CssClass="search_3" runat="server" MaxLength="250" TextMode="MultiLine"
                                                             Width="130px" onkeypress="return remark(event);">
                                                         </asp:TextBox>
                                                     </td>
                                                     <td>Injuries to EMRI Staff
                                                     </td>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txtInjuriestoEMRIStaff" runat="server" MaxLength="20" Width="130px"
-                                                            onkeypress="return isDecimalNumberKey(event);">
+                                                        <asp:TextBox ID="txtInjuriestoEMRIStaff" CssClass="search_3" runat="server" MaxLength="20" Width="130px"
+                                                            onkeypress="return numericOnly(this);">
                                                         </asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td nowrap="nowrap">Injuries to 3rd Party Personal
+                                                    <td wrap="nowrap">Injuries to 3rd Party Personal
                                                     </td>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txt3rdPartyPersonal" runat="server" MaxLength="20" Width="130px"
-                                                            onkeypress="return isDecimalNumberKey(event);">
+                                                        <asp:TextBox ID="txt3rdPartyPersonal" CssClass="search_3" runat="server" MaxLength="20" Width="130px"
+                                                            onkeypress="return numericOnly(this);">
                                                         </asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="height: 14px" rowspan="2">Accident Date and Time<font color="red">*</font>
+                                                    <td style="height: 14px" rowspan="2">Accident Date and Time<span style="color:red">*</span>
                                                     </td>
                                                     <td style="height: 14px" rowspan="2">
-                                                        <asp:TextBox ID="txtAccidentDateTime" runat="server" MaxLength="20" Width="130px"
+                                                        <asp:TextBox ID="txtAccidentDateTime" CssClass="search_3" runat="server" MaxLength="20" Width="130px"
                                                             onkeypress="return false;">
                                                         </asp:TextBox>
                                                         <asp:ImageButton ID="imgPODate" runat="server" ImageUrl="images/Calendar.gif" />
                                                         <cc1:CalendarExtender ID="txtAccidentDateTime_CalendarExtender" runat="server" Format="MM/dd/yyyy"
-                                                            PopupButtonID="imgPODate" TargetControlID="txtAccidentDateTime">
+                                                            PopupButtonID="imgPODate" CssClass="cal_Theme1" TargetControlID="txtAccidentDateTime">
                                                         </cc1:CalendarExtender>
-                                                        <asp:DropDownList ID="ddlistHour" runat="server" Width="50px">
+                                                        <asp:DropDownList ID="ddlistHour" CssClass="search_3" runat="server" Width="50px">
                                                             <asp:ListItem Selected="True" Text="--hh--" Value="--hh--"></asp:ListItem>
                                                         </asp:DropDownList>
-                                                        <asp:DropDownList ID="ddlistMinute" runat="server" Width="50px">
+                                                        <asp:DropDownList ID="ddlistMinute" CssClass="search_3" runat="server" Width="50px">
                                                             <asp:ListItem Selected="True" Text="--mm--" Value="--hh--"></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </td>
@@ -333,7 +323,7 @@
                                                     <td style="height: 14px" nowrap="nowrap">Approx Repair Cost
                                                     </td>
                                                     <td style="height: 14px" colspan="2">
-                                                        <asp:TextBox ID="txtApproxRepairCost" runat="server" MaxLength="7" onkeypress="return isDecimalNumberKey(event);"
+                                                        <asp:TextBox ID="txtApproxRepairCost" CssClass="search_3" runat="server" MaxLength="7" onkeypress="return numericOnly(event);"
                                                             Width="130px">
                                                         </asp:TextBox>
                                                     </td>
@@ -348,23 +338,23 @@
                                                     <td>Action Initiated By
                                                     </td>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txtActionInitiatedBy" runat="server" MaxLength="35" Width="130px"
+                                                        <asp:TextBox ID="txtActionInitiatedBy" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                             onkeypress="return alpha_only_withspace(event);">
                                                         </asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Initiated Time<font color="red">*</font>
+                                                    <td>Initiated Time<span style="color:red">*</span>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtInitiatedTime" runat="server" MaxLength="20" Width="130px" onkeypress="return false;"></asp:TextBox>
+                                                        <asp:TextBox ID="txtInitiatedTime" CssClass="search_3" runat="server" MaxLength="20" Width="130px" onkeypress="return false;"></asp:TextBox>
                                                         <cc1:CalendarExtender ID="txtInitiatedTime_CalendarExtender" runat="server" Format="MM/dd/yyyy"
                                                             PopupButtonID="imgPOInitiatedTime" TargetControlID="txtInitiatedTime">
                                                         </cc1:CalendarExtender>
                                                         <asp:ImageButton ID="imgPOInitiatedTime" runat="server" ImageUrl="images/Calendar.gif" />
-                                                        <asp:DropDownList ID="ddlistInitiatedHr" runat="server" Width="50px">
+                                                        <asp:DropDownList ID="ddlistInitiatedHr" CssClass="search_3" runat="server" Width="50px">
                                                         </asp:DropDownList>
-                                                        <asp:DropDownList ID="ddlistInitiatedTimeMin" runat="server" Width="50px">
+                                                        <asp:DropDownList ID="ddlistInitiatedTimeMin" CssClass="search_3" runat="server" Width="50px">
                                                             <asp:ListItem Selected="True" Text="--mm--" Value="--hh--"></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </td>
@@ -378,14 +368,14 @@
                                                     <td>Initial Containment Action
                                                     </td>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txtInitialContainmentAction" runat="server" MaxLength="35" Width="130px"
+                                                        <asp:TextBox ID="txtInitialContainmentAction" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                             onkeypress="return alphanumeric_only_withspace(event);">
                                                         </asp:TextBox>
                                                     </td>
                                                     <td>Area Police Station
                                                     </td>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txtAreaPoliceStation" runat="server" MaxLength="35" Width="130px"
+                                                        <asp:TextBox ID="txtAreaPoliceStation" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                             onkeypress="return alphanumeric_only_withspace(event);">
                                                         </asp:TextBox>
                                                     </td>
@@ -395,14 +385,14 @@
                                                 <td>Accident Root Cause
                                                 </td>
                                                 <td colspan="2">
-                                                    <asp:TextBox ID="txtAccidentRootCause" runat="server" MaxLength="50" Width="130px"
+                                                    <asp:TextBox ID="txtAccidentRootCause" CssClass="search_3" runat="server" MaxLength="50" Width="130px"
                                                         onkeypress="return alphanumeric_only_withspace(event);">
                                                     </asp:TextBox>
                                                 </td>
                                                 <td>CD/FIR NO/Panchnama
                                                 </td>
                                                 <td colspan="2">
-                                                    <asp:TextBox ID="txtFirPanchname" runat="server" MaxLength="35" Width="130px"
+                                                    <asp:TextBox ID="txtFirPanchname" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                         onkeypress="return remark(event);">
                                                     </asp:TextBox>
                                                 </td>
@@ -413,7 +403,7 @@
                                                 <td style="width: 0">ReportedBy
                                                 </td>
                                                 <td width="100" colspan="2">
-                                                    <asp:TextBox ID="txtReportedBY" runat="server" MaxLength="35" Width="130px"
+                                                    <asp:TextBox ID="txtReportedBY" CssClass="search_3" runat="server" MaxLength="35" Width="130px"
                                                         onkeypress="return alpha_only_withspace(event);">
                                                     </asp:TextBox>
                                                 </td>
@@ -425,7 +415,7 @@
                                                 <td style="width: 0">Remarks
                                                 </td>
                                                 <td colspan="2" width="100">
-                                                    <asp:TextBox ID="txtRemarks" runat="server" MaxLength="200"
+                                                    <asp:TextBox ID="txtRemarks" CssClass="search_3" runat="server" MaxLength="200"
                                                         TextMode="MultiLine" Width="130px"
                                                         onkeypress="return remark(event);">
                                                     </asp:TextBox>
@@ -435,7 +425,7 @@
                                                 <td>Damage to Ambulance
                                                 </td>
                                                 <td colspan="2">
-                                                    <asp:TextBox ID="txtDamagetoAmbulance" runat="server" MaxLength="200" TextMode="MultiLine"
+                                                    <asp:TextBox ID="txtDamagetoAmbulance" CssClass="search_3" runat="server" MaxLength="200" TextMode="MultiLine"
                                                         Width="130px" onkeypress="return remark(event);">
                                                     </asp:TextBox>
                                                 </td>
@@ -453,7 +443,7 @@
                                                 <td nowrap="nowrap">Damage to 3rd Party Property
                                                 </td>
                                                 <td nowrap="nowrap" colspan="2">
-                                                    <asp:TextBox ID="txtDamageto3rdPartyProperty" runat="server" MaxLength="200" TextMode="MultiLine"
+                                                    <asp:TextBox ID="txtDamageto3rdPartyProperty" CssClass="search_3" runat="server" MaxLength="200" TextMode="MultiLine"
                                                         Width="130px" onkeypress="return remark(event);">
                                                     </asp:TextBox>
                                                 </td>
@@ -470,8 +460,8 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="6" align="center">
-                                                    <asp:Button ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
-                                                    <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click" Text="Reset" />
+                                                    <asp:Button ID="btnSave" runat="server" OnClick="btnSave_Click" CssClass="form-submit-button" Text="Save" />
+                                                    <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click" CssClass="form-reset-button" Text="Reset" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -486,16 +476,14 @@
                                     <tr>
                                         <td colspan="6" nowrap="nowrap" width="100"></td>
                                     </tr>
-                                </table>
-                            </fieldset>
-                        </td>
-                    </tr>
+
                 </table>
+                <br />
             </asp:Panel>
-            <table>
+            <table align="center">
                 <tr>
                     <td>
-                        <asp:GridView ID="grdVehicleAccidentDetails" runat="server" AllowPaging="True" AutoGenerateColumns="False"
+                        <asp:GridView ID="grdVehicleAccidentDetails" gridlines="Both" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                             OnPageIndexChanging="grdVehicleAccidentDetails_PageIndexChanging" Width="100%">
                             <Columns>
                                 <asp:TemplateField HeaderText="Accident Title">

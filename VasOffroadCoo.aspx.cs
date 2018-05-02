@@ -2,7 +2,6 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
-using Microsoft.Office.Interop.Excel;
 using Label = System.Web.UI.WebControls.Label;
 using Page = System.Web.UI.Page;
 using TextBox = System.Web.UI.WebControls.TextBox;
@@ -14,16 +13,23 @@ public partial class VasOffroadCoo : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) BindGridView();
     }
 
     private void BindGridView()
     {
-        var ds = _obj.GetVasOffroadCOO();
-        if (ds == null) throw new ArgumentNullException(nameof(ds));
-        gvVasOffroad.DataSource = ds.Tables[0];
-        gvVasOffroad.DataBind();
+        try
+        {
+            var ds = _obj.GetVasOffroadCOO();
+            gvVasOffroad.DataSource = ds.Tables[0];
+            gvVasOffroad.DataBind();
+        }
+        catch(Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
+       
     }
 
     protected void gvVasOffroad_PageIndexChanging(object sender, GridViewPageEventArgs e)

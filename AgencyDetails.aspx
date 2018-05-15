@@ -1,73 +1,72 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AgencyDetails.aspx.cs" Inherits="AgencyDetails" Language="C#" MasterPageFile="~/temp.master" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script type="text/javascript">
-        function validationAgencyDetails() {
-            $('#<%=ddlState.ClientID%>').chosen();
-            var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
-            if (ddlstate === '--select--') {
-                return alert("Please Select State");
-            }
-            $('#<%= ddlDistrict.ClientID %>').chosen();
-            var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
-            if (ddldistrict === '--select--') {
-                return alert("Please Select District");
-            }
-           
-            if (document.getElementById('<%= txtAgencyName.ClientID %>').value === "") {
-                alert("Please Enter Agency Name");
-                document.getElementById("<%= txtAgencyName.ClientID %>").focus();
-                return false;
-            }
-       
-            if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
-                document.getElementById("<%= txtAddress.ClientID %>").focus();           
-                return alert("Please Enter Address");
-           
-            }
-            if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
-                document.getElementById("<%= txtContactNo.ClientID %>").focus();
-                return alert("Please Enter Contact Number");
-            }
-
-            var phone = document.getElementById("<%= txtContactNo.ClientID %>").value;
-            if (isNaN(parseInt(phone))) {
-                document.getElementById("<%= txtContactNo.ClientID %>").focus();
-                return alert("The Contact number contains illegal characters");
-            }
-            if (!((phone.length >= 10) && (phone.length <= 15))) {
-                document.getElementById("<%= txtContactNo.ClientID %>").focus();
-                return alert("The Contact number is the wrong length");
-            }
-
-
-            if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
-                document.getElementById("<%= txtPanNo.ClientID %>").focus();
-                return alert("Please Enter PAN");
-        
-      
-            }
-            var pan=document.getElementById("<%= txtPanNo.ClientID %>").value;
-            if (isValidPAN(pan) === false) {
-                return false;
-            }
-
-            if (!isValidPAN(document.getElementById("<%= txtPanNo.ClientID %>").value)) {
-                document.getElementById("<%= txtPanNo.ClientID %>").value = "";
-                document.getElementById("<%= txtPanNo.ClientID %>").focus();
-                return false;
-            }
-
-            if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
-                document.getElementById("<%= txtTin.ClientID %>").focus();
-                return  alert("Please Enter TIN");
-           
-            }
-            return true;
+<script type="text/javascript">
+    function validationAgencyDetails() {
+        $('#<%= ddlState.ClientID %>').chosen();
+        var ddlstate = $('#<%= ddlState.ClientID %> option:selected').text().toLowerCase();
+        if (ddlstate === '--select--') {
+            return alert("Please Select State");
         }
-    </script>
+        $('#<%= ddlDistrict.ClientID %>').chosen();
+        var ddldistrict = $('#<%= ddlDistrict.ClientID %> option:selected').text().toLowerCase();
+        if (ddldistrict === '--select--') {
+            return alert("Please Select District");
+        }
+
+        if (document.getElementById('<%= txtAgencyName.ClientID %>').value === "") {
+            alert("Please Enter Agency Name");
+            document.getElementById("<%= txtAgencyName.ClientID %>").focus();
+            return false;
+        }
+
+        if (document.getElementById("<%= txtAddress.ClientID %>").value === "") {
+            document.getElementById("<%= txtAddress.ClientID %>").focus();
+            return alert("Please Enter Address");
+
+        }
+        if (document.getElementById("<%= txtContactNo.ClientID %>").value === "") {
+            document.getElementById("<%= txtContactNo.ClientID %>").focus();
+            return alert("Please Enter Contact Number");
+        }
+
+        var phone = document.getElementById("<%= txtContactNo.ClientID %>").value;
+        if (isNaN(parseInt(phone))) {
+            document.getElementById("<%= txtContactNo.ClientID %>").focus();
+            return alert("The Contact number contains illegal characters");
+        }
+        if (!((phone.length >= 10) && (phone.length <= 15))) {
+            document.getElementById("<%= txtContactNo.ClientID %>").focus();
+            return alert("The Contact number is the wrong length");
+        }
+
+
+        if (document.getElementById("<%= txtPanNo.ClientID %>").value === "") {
+            document.getElementById("<%= txtPanNo.ClientID %>").focus();
+            return alert("Please Enter PAN");
+
+
+        }
+        var pan = document.getElementById("<%= txtPanNo.ClientID %>").value;
+        if (isValidPAN(pan) === false) {
+            return false;
+        }
+
+        if (!isValidPAN(document.getElementById("<%= txtPanNo.ClientID %>").value)) {
+            document.getElementById("<%= txtPanNo.ClientID %>").value = "";
+            document.getElementById("<%= txtPanNo.ClientID %>").focus();
+            return false;
+        }
+
+        if (document.getElementById("<%= txtTin.ClientID %>").value === "") {
+            document.getElementById("<%= txtTin.ClientID %>").focus();
+            return alert("Please Enter TIN");
+
+        }
+        return true;
+    }
+</script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <script type="text/javascript">
@@ -75,7 +74,7 @@
         $('#<%= ddlState.ClientID %>').select2({
             disable_search_threshold: 5,
             search_contains: true,
-            minimumResultsForSearch: 20,            
+            minimumResultsForSearch: 20,
             placeholder: "Select an option"
         });
         $('#<%= ddlDistrict.ClientID %>').select2({
@@ -95,7 +94,7 @@
         <fieldset style="padding: 10px">
         <legend>Agency Details</legend>
         <asp:Panel ID="pnlagencydetails" runat="server">
-        <table style="width: 100%; height: 150px;">
+        <table style="height: 150px; width: 100%;">
         <tr>
             <td align="left" style="width: 141px">
                 Agency Name <span style="color: Red">*</span>
@@ -110,7 +109,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left">
-                <asp:DropDownList ID="ddlState"   runat="server" AutoPostBack="True"  CssClass="search_3" Width="150px" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlState" runat="server" AutoPostBack="True" CssClass="search_3" Width="150px" OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -131,7 +130,7 @@
             </td>
             <td class="columnseparator"></td>
             <td align="left">
-                <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" >
+                <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px">
                 </asp:DropDownList>
             </td>
         </tr>
@@ -210,7 +209,7 @@
         <tr>
             <td align="center" colspan="8">
                 <asp:Button ID="btnSaveAgencyDetails" runat="server" Width="55px" Height="20px" OnClick="btnSaveAgencyDetails_Click"
-                            Text="Save" class="form-submit-button" ClientIDMode="static" EnableViewState="True"  OnClientClick="if(!validationAgencyDetails()) return false;"/>
+                            Text="Save" class="form-submit-button" ClientIDMode="static" EnableViewState="True" OnClientClick="if (!validationAgencyDetails()) return false;"/>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="btnResetAgencyDetails" runat="server" Width="55px" Height="20px"
                             OnClick="btnResetAgencyDetails_Click" class="form-reset-button" Text="Reset"/>
@@ -231,7 +230,7 @@
 <tr>
     <td>
         <fieldset style="padding: 10px">
-            <table style="width: 100%; height: 60px;">
+            <table style="height: 60px; width: 100%;">
                 <caption>
                     <tr>
                         <td class="rowseparator "></td>
@@ -239,7 +238,7 @@
                     <tr>
                         <td align="center">
                             <asp:GridView ID="grvAgencyDetails" runat="server" AutoGenerateColumns="False" CellPadding="3"
-                                          CellSpacing="2" CssClass="gridviewStyle" GridLines="None" OnPageIndexChanging="grvAgencyDetails_PageIndexChanging"
+                                          CellSpacing="2" CssClass="gridviewStyle" GridLines="Both" OnPageIndexChanging="grvAgencyDetails_PageIndexChanging"
                                           OnRowDeleting="grvAgencyDetails_RowDeleting" OnRowEditing="grvAgencyDetails_RowEditing">
                                 <RowStyle CssClass="rowStyleGrid" BorderStyle="Solid" BorderColor="brown" BorderWidth="1px"/>
                                 <Columns>
@@ -308,5 +307,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-
-

@@ -5,12 +5,13 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
+using GvkFMSAPP.BLL.Admin;
 
 public partial class Equipment : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly DistrictVehicleMapping _distvehmapp = new DistrictVehicleMapping();
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFleetMaster = new FMSFleetMaster();
-    readonly GvkFMSAPP.BLL.Admin.DistrictVehicleMapping _distvehmapp = new GvkFMSAPP.BLL.Admin.DistrictVehicleMapping();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -35,7 +36,6 @@ public partial class Equipment : Page
     private void BindGrid(int number)
     {
         if (ObjFleetMaster != null)
-        {
             try
             {
                 var ds = ObjFleetMaster.GetSelectAllMedicalEquipmentByEquipmentTypeID(number);
@@ -71,7 +71,6 @@ public partial class Equipment : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     protected void BtnSave_Click(object sender, EventArgs e)
@@ -120,7 +119,9 @@ public partial class Equipment : Page
         }
 
         if (equipmentArray.Count <= 0)
+        {
             Show("Please Select The Equipments");
+        }
         else
         {
             ObjFleetMaster.IDeleteVehicleEquipmentMapping(int.Parse(ddlistVehicleNumber.SelectedItem.Value));

@@ -11,19 +11,13 @@
         var roadTaxFee = document.getElementById('<%= txtRoadTaxFee.ClientID %>');
         var vehicleRegistrationDate = document.getElementById('<%= vehicleRegistrationDate.ClientID %>');
         var now = new Date();
-        var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-                case 'text':
-                    if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                        alert('Select the Vehicle');
-                        return false;
-                    }
-                    break;
+            var ddlVehicle = $('#<%= ddlVehicleNumber.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+                alert("Please select Vehicle");
+                return false;
             }
-        }
+                
+     
         if (!RequiredValidation(roadTaxValidityStartDate, "RoadTax Validity Start Date Cannot be Blank"))
             return false;
 
@@ -69,6 +63,15 @@
     </script>
     <asp:UpdatePanel ID="upPanel" runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlVehicleNumber.ClientID %>').select2({
+                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                   
+                }
+            </script>
             <table align="center">
                 <tr>
                     <td>
@@ -80,10 +83,13 @@
                                   Vehicle Number<span style="color: Red">*</span>
                                     </td>
                                     <td >
-                                        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" DropDownStyle="DropDownList">
+                                        <asp:DropDownList ID="ddlVehicleNumber"  class="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged"
+                                                          AutoPostBack="True">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                             <asp:ListItem Value="0">Dummy</asp:ListItem>
-                                        </cc1:ComboBox>
+                                          
+                                        </asp:DropDownList>
+                                        
                                         <asp:TextBox ID="txtVehicleNumber"  class="text1" runat="server" ReadOnly="True" Visible="False"
                                             Width="145px">
                                         </asp:TextBox>
@@ -178,7 +184,7 @@
                                 <tr>
          
                                     <td >
-                                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btSave_Click" />
+                                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btSave_Click" OnClientClick="if(!validation()) return false" />
                                     </td>
                                     <td >
                                         <asp:Button ID="btReset" runat="server" Text="Reset" CssClass="form-reset-button" OnClick="btReset_Click" />

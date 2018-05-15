@@ -3,68 +3,67 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolKit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  
+
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-              <script type="text/javascript">
-        
-        function validationBatteryDetails() {
-            switch (document.getElementById("<%= txtBatteryItemCode.ClientID %>").value) {
-            case '':
-                alert("Please Enter Battery Item Code");
-                document.getElementById("<%= txtBatteryItemCode.ClientID %>").focus();
-                return false;
-            }
-            switch (document.getElementById("<%= txtBatteryMake.ClientID %>").value) {
-            case '':
-                alert("Please Enter Battery Make");
-                document.getElementById("<%= txtBatteryMake.ClientID %>").focus();
-                return false;
-            }
-            switch (document.getElementById("<%= txtBatteryModel.ClientID %>").value) {
-            case '':
-                alert("Please Enter Battery Model");
-                document.getElementById("<%= txtBatteryModel.ClientID %>").focus();
-                return false;
-            }
-            switch (document.getElementById("<%= txtBatteryCapacity.ClientID %>").value) {
-            case '':
-                alert("Please Enter Battery Capacity");
-                document.getElementById("<%= txtBatteryCapacity.ClientID %>").focus();
-                return false;
-            }
+            <script type="text/javascript">
 
-            switch (document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").value) {
-            case '':
-                alert("Please Enter Battery Expiry Date");
-                document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").focus();
-                return false;
-            }
+                function validationBatteryDetails() {
+                    switch (document.getElementById("<%= txtBatteryItemCode.ClientID %>").value) {
+                    case '':
+                        alert("Please Enter Battery Item Code");
+                        document.getElementById("<%= txtBatteryItemCode.ClientID %>").focus();
+                        return false;
+                    }
+                    switch (document.getElementById("<%= txtBatteryMake.ClientID %>").value) {
+                    case '':
+                        alert("Please Enter Battery Make");
+                        document.getElementById("<%= txtBatteryMake.ClientID %>").focus();
+                        return false;
+                    }
+                    switch (document.getElementById("<%= txtBatteryModel.ClientID %>").value) {
+                    case '':
+                        alert("Please Enter Battery Model");
+                        document.getElementById("<%= txtBatteryModel.ClientID %>").focus();
+                        return false;
+                    }
+                    switch (document.getElementById("<%= txtBatteryCapacity.ClientID %>").value) {
+                    case '':
+                        alert("Please Enter Battery Capacity");
+                        document.getElementById("<%= txtBatteryCapacity.ClientID %>").focus();
+                        return false;
+                    }
 
-            var dcDate = document.getElementById('<%= txtBatteryExpiryDate.ClientID %>');
+                    switch (document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").value) {
+                    case '':
+                        alert("Please Enter Battery Expiry Date");
+                        document.getElementById("<%= txtBatteryExpiryDate.ClientID %>").focus();
+                        return false;
+                    }
 
-            if (trim(dcDate.value) !== "" && !isValidDate(dcDate.value)) {
-                alert("Enter the Valid Date");
-                dcDate.focus();
-                return false;
-            }
+                    var dcDate = document.getElementById('<%= txtBatteryExpiryDate.ClientID %>');
 
-            var now = new Date();
-            if (Date.parse(dcDate.value) <= Date.parse(now)) {
-                alert("Expiry Date should be greater than Current Date");
-                dcDate.focus();
-                return false;
-            }
+                    if (trim(dcDate.value) !== "" && !isValidDate(dcDate.value)) {
+                        alert("Enter the Valid Date");
+                        dcDate.focus();
+                        return false;
+                    }
 
-            return true;
-        }
+                    var now = new Date();
+                    if (Date.parse(dcDate.value) <= Date.parse(now)) {
+                        alert("Expiry Date should be greater than Current Date");
+                        dcDate.focus();
+                        return false;
+                    }
+
+                    return true;
+                }
 
 
-    </script>
+            </script>
 
-            <table id="table1" cellspacing="0" cellpadding="0" width="500px" align="center" border="0"
-                   style="height: 37px">
+            <table align="center" id="table1">
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
@@ -72,14 +71,14 @@
                     <td style="height: 200px">
                         <fieldset style="padding: 10px;">
                             <legend>Battery Details</legend>
-                            <asp:Panel ID="pnlbatterydetails" runat="server">
-                                <table id="table2" class="bordergreen" width="91%" align="center">
+                            <asp:Panel runat="server">
+                                <table id="table2" align="center">
                                     <tr>
                                         <td>
-                                            <table class="logtable" align="center">
+                                            <table align="center">
                                                 <tr>
                                                     <td style="width: 150px" align="left">
-                                                        Battery Item Code <span style="color: Red" class="labelErr">*</span>
+                                                        Battery Item Code <span style="color: Red">*</span>
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
@@ -91,7 +90,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 150px" align="left">
-                                                        Make <span style="color: Red" class="labelErr">*</span>
+                                                        Make <span style="color: Red">*</span>
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td style="height: 23px">
@@ -103,7 +102,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 150px" align="left">
-                                                        Model <span style="color: Red" class="labelErr">*</span>
+                                                        Model <span style="color: Red">*</span>
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
@@ -114,8 +113,8 @@
                                                     <td class="rowseparator"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="width: 150px" align="left">
-                                                        Capacity <span style="color: Red" class="labelErr">*</span>
+                                                    <td style="width: 150px">
+                                                        Capacity <span style="color: Red">*</span>
                                                     </td>
                                                     <td class="columnseparator"></td>
                                                     <td>
@@ -126,15 +125,15 @@
                                                     <td class="rowseparator"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Battery Expiry Date <span style="color: Red" class="labelErr">*</span></td>
+                                                    <td>Battery Expiry Date <span style="color: Red">*</span></td>
                                                     <td></td>
                                                     <td>
                                                         <asp:TextBox ID="txtBatteryExpiryDate" runat="server" onkeypress="return false" MaxLength="20" oncut="return false;" CssClass="search_3" onpaste="return false;" oncopy="return false;"></asp:TextBox>
-                                                        <ajaxToolKit:CalendarExtender ID="ccl1" runat="server" TargetControlID="txtBatteryExpiryDate"
+                                                        <ajaxToolKit:CalendarExtender runat="server" TargetControlID="txtBatteryExpiryDate"
                                                                                       Format="MM/dd/yyyy" PopupButtonID="imgBtnCalendarInvoiceDate">
                                                         </ajaxToolKit:CalendarExtender>
                                                     </td>
-                                                    <td nowrap="nowrap" style="width: 51px">
+                                                    <td style="width: 51px">
                                                         <asp:ImageButton ID="imgBtnCalendarInvoiceDate" runat="server" CssClass="cal_Theme1" alt="" src="images/Calendar.gif"
                                                                          Style="vertical-align: top"/>
                                                     </td>
@@ -149,10 +148,10 @@
                                                                     OnClick="btnBatterySave_Click1"
                                                                     OnClientClick="return validationBatteryDetails();" Text="Save" Width="55px"/>
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <asp:Button ID="btnManufacturerReset" runat="server"
+                                                        <asp:Button runat="server"
                                                                     CausesValidation="false" CssClass="form-submit-button" OnClick="btnManufacturerReset_Click"
                                                                     Text="Reset" Width="55px"/>
-                                                        <input id="hidBatText" runat="server" type="hidden"/>
+                                                        <input runat="server" type="hidden"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -169,7 +168,7 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
-                <br />
+                <br/>
                 <tr>
                     <td>
                         <fieldset style="padding: 10px;">
@@ -234,4 +233,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

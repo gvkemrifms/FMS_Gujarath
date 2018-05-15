@@ -1,10 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="Equipment.aspx.cs" Inherits="Equipment" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
-
-
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <script type="text/javascript">
@@ -31,7 +26,7 @@
 <td>
 <fieldset style="padding: 10px;">
 <legend>Vehicle Equipment Mapping </legend>
-<asp:Panel ID="pnlmedEquipment" runat="server">
+<asp:Panel runat="server">
 <table align="center">
 <tr align="center">
     <td class="tdlabel">
@@ -222,7 +217,7 @@
 </table>
 <div align="center">
     <asp:Button ID="BtnSave" Text="Save" runat="server" CssClass="form-submit-button" OnClick="BtnSave_Click"/>
-    <asp:Button ID="Button1" runat="server" Text="Cancel" CssClass="form-reset-button" OnClick="Button1_Click"/>
+    <asp:Button runat="server" Text="Cancel" CssClass="form-reset-button" OnClick="Button1_Click"/>
 </div>
 </asp:Panel>
 </fieldset>

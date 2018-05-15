@@ -7,8 +7,8 @@ using GvkFMSAPP.PL;
 
 public partial class AgencyDetails : Page
 {
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFleetMaster = new FMSFleetMaster();
-    readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -154,9 +154,10 @@ public partial class AgencyDetails : Page
         {
             _helper.ErrorsEntry(ex);
         }
-            FillGridAgencyDetails();
-        }
-    
+
+        FillGridAgencyDetails();
+    }
+
 
     private void UpdateAgencyDetails(int agencyId, string agencyName, int stateId, int districtId, int mandalId, int cityId, long contactNum, string panNum, long tin, string address)
     {

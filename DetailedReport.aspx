@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DetailedReport.aspx.cs" Inherits="DetailedReport" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -38,7 +37,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblDetailedReport" style="font-size: 20px; color: brown" runat="server" Text="Detailed&nbsp;Report"></asp:Label>
+                <asp:Label style="font-size: 20px; color: brown" runat="server" Text="Detailed&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -57,21 +56,21 @@
 
         <tr>
             <td>
-                From Date<asp:Label ID="lblfromdate" runat="server" Text="FromDate" style="color: red">*</asp:Label>
+                From Date<asp:Label runat="server" Text="FromDate" style="color: red">*</asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtfrmDate" runat="server" CssClass="search_3"></asp:TextBox>
             </td>
             <td>
 
-                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
 
 
             </td>
             </tr>
         <tr>
             <td>
-                To date<asp:Label ID="lbltodate" runat="server" Text="To date" style="color: red">*</asp:Label>
+                To date<asp:Label runat="server" Text="To date" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -85,7 +84,7 @@
         </tr>
            <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnSubmit_Click" CssClass="form-submit-button" OnClientClick="if(! Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btnSubmit_Click" CssClass="form-submit-button" OnClientClick="if(! Validations()) return false;"></asp:Button>
             </td>
 
             <td>

@@ -22,58 +22,73 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlVehicles.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlMaintenanceType.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlVendorName.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+            </script>
+            
             <fieldset style="padding: 10px">
-                <legend>Vehicle Non OffRoad</legend>
-                <table style="width: 640px;">
+                <legend align="center" style="color:brown">Vehicle Non OffRoad</legend>
+                <table align="center">
                     <tr>
-                        <td colspan="7"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 162px">
-                            Vehicle Number<span class="labelErr" style="color: Red">*</span>
+                        <td >
+                            Vehicle Number<span  style="color: Red">*</span>
                         </td>
-                        <td class="columnseparator"></td>
-                        <td colspan="5">
-                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="true"
-                                          DropDownStyle="DropDownList"
-                                          OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
-                                <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </cc1:ComboBox>
-                        </td>
+                  <td>
+                      <asp:DropDownList ID="ddlVehicles" runat="server"  AutoPostBack="true" Width="150px"  OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
+                          <asp:ListItem Value="-1">--Select--</asp:ListItem>
+                      </asp:DropDownList>
+                  </td>
+                               
                     </tr>
-                    <tr>
-                        <td class="rowseparator" style="width: 162px"></td>
-                    </tr>
-                    <div id="divLocationDetails" runat="server">
                         <tr>
-                            <td style="width: 162px">
-                                District<span class="labelErr" style="color: Red">*</span>
-                            </td>
-                            <td class="columnseparator"></td>
-                            <td style="width: 148px">
-                                <asp:TextBox runat="server" ID="txtDistrict" Enabled="False"/>
-                            </td>
-                            <td class="columnseparator"></td>
                             <td>
-                                Location<span class="labelErr" style="color: Red">*</span>
+                                District<span  style="color: Red">*</span>
                             </td>
-                            <td class="columnseparator"></td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtLocation" Enabled="False"/>
+                            <td >
+                                <asp:TextBox runat="server" ID="txtDistrict" Width="150px" Enabled="False"/>
                             </td>
-                        </tr>
-                    </div>
+                            </tr>
+                    <tr>
+                        <td>
+                            Location<span  style="color: Red">*</span>
+                        </td>
+                        <td>
+                            <asp:TextBox runat="server" ID="txtLocation" Enabled="False"/>
+                        </td>
+                    </tr>
+                         
+               
+         
                 </table>
-                <asp:Panel ID="pnlBillDetails" runat="server">
+                <asp:Panel runat="server" style="margin-top: 50px">
                     <fieldset style="padding: 0px 0px 0px 0px">
-                        <legend>Maintenance Details </legend>
+                        <legend align="center">Maintenance Details </legend>
 
-                        <table>
+                        <table align="center">
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblMtype" Text="Maintenance Type" runat="server"></asp:Label>
+                                    <asp:Label Text="Maintenance Type" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:DropDownList ID="ddlMaintenanceType" runat="server">
@@ -83,20 +98,20 @@
                             <tr>
 
                                 <td>
-                                    <asp:Label ID="lblmdate" Text="Maintenance Date" runat="server"></asp:Label>
+                                    <asp:Label Text="Maintenance Date" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtMaintenanceDate" runat="server"
                                                  onkeypress="return false">
                                     </asp:TextBox>
-                                    <cc1:CalendarExtender ID="calextndrBillDate22" runat="server" Format="dd/MM/yyyy"
+                                    <cc1:CalendarExtender runat="server" Format="dd/MM/yyyy"
                                                           PopupButtonID="imgBtnQuotationDate" TargetControlID="txtMaintenanceDate">
                                     </cc1:CalendarExtender>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblvName" Text="Vendor Name" runat="server"></asp:Label>
+                                    <asp:Label Text="Vendor Name" runat="server"></asp:Label>
                                 </td>
 
                                 <td>
@@ -105,7 +120,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblBno" Text="Bill Number" runat="server"></asp:Label>
+                                    <asp:Label Text="Bill Number" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillNo" runat="server" MaxLength="10"
@@ -115,7 +130,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblBillDate" Text="Bill Date" runat="server"></asp:Label>
+                                    <asp:Label Text="Bill Date" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillDate" runat="server"
@@ -128,7 +143,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblPartCode" Text="Part Code" runat="server"></asp:Label>
+                                    <asp:Label Text="Part Code" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtPartCode" runat="server" MaxLength="10"
@@ -138,7 +153,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblItemDescription" Text="Item Description" runat="server"></asp:Label>
+                                    <asp:Label Text="Item Description" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtItemDesc" runat="server"
@@ -148,7 +163,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblQuantity" Text="Item Quantity" runat="server"></asp:Label>
+                                    <asp:Label Text="Item Quantity" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtQuant" runat="server" MaxLength="5"
@@ -159,7 +174,7 @@
 
                             <tr>
                                 <td>
-                                    <asp:Label ID="lblBillAmount" Text="Bill Amount" runat="server"></asp:Label>
+                                    <asp:Label Text="Bill Amount" runat="server"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillAmount" runat="server" MaxLength="12" onkeypress="return isDecimalNumberKey(event);"></asp:TextBox>
@@ -168,11 +183,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Button runat="server" ID="Button1" Text="Save" Width="52px"
+                                    <asp:Button runat="server" CssClass="form-submit-button" Text="Save" Width="52px"
                                                 OnClick="btnSave_Click" OnClientClick="return Validation()"/>
                                 </td>
                                 <td>
-                                    <asp:Button ID="btnSPReset" runat="server" Text="Reset"
+                                    <asp:Button runat="server" CssClass="form-reset-button" Text="Reset"
                                                 OnClick="btnSPReset_Click"/>
                                 </td>
                             </tr>

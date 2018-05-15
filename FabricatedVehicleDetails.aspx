@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FabricatedVehicleDetails.aspx.cs" Inherits="FabricatedVehicleDetails" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script  type="text/javascript">
+<script type="text/javascript">
     function validation() {
         var fabricatorName = document.getElementById('<%= ddlFabricatorName.ClientID %>');
         var invoiceNo = document.getElementById('<%= txtInvoiceNo.ClientID %>');
@@ -13,20 +13,12 @@
         var inspectionDate = document.getElementById('<%= txtInspectionDate.ClientID %>');
         var vehiclePurchaseDate = document.getElementById('<%= vehiclePurchaseDate.ClientID %>');
         var now = new Date();
-        var id = document.getElementById('<%= ddlTRNo.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-            case 'text':
-                if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                    alert('Select the T/R Number');
-                    return false;
-                }
-                break;
-            }
+        var trNo = document.getElementById('<%= ddlTRNo.ClientID %>');
+        if (trNo.selectedIndex === 0) {
+            alert("Please select a Vehicle");
+            trNo.focus();
+            return false;
         }
-
         switch (fabricatorName.selectedIndex) {
         case 0:
             alert("Please select Fabricator Name");
@@ -136,12 +128,20 @@
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
 <script type="text/javascript">
-    function pageLoad() {              
-        $('#<%= ddlFabricatorName.ClientID %>').select2({
-            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+    function pageLoad() {
+        $('#<%= ddlTRNo.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
             placeholder: "Select an option"
         });
-    } 
+        $('#<%= ddlFabricatorName.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
+            placeholder: "Select an option"
+        });
+    }
 </script>
 <table>
 <tr>
@@ -161,12 +161,11 @@
                         T/R No.<span style="color: Red">*</span>
                     </td>
                     <td align="left" style="width: 400px">
-                        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlTRNo" runat="server" Width="150px"
-                                      OnSelectedIndexChanged="ddlTRNo_SelectedIndexChanged" AutoPostBack="True"
-                                      Height="16px" DropDownStyle="DropDownList">
+                        <asp:DropDownList ID="ddlTRNo" CssClass="text1" runat="server" Width="150px" OnSelectedIndexChanged="ddlTRNo_SelectedIndexChanged" AutoPostBack="True">
                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             <asp:ListItem Value="0">Dummy</asp:ListItem>
-                        </cc1:ComboBox>
+                        </asp:DropDownList>
+
                         <asp:TextBox ID="txtTrNo" runat="server" Visible="False" CssClass="text1" Width="145px" ReadOnly="True"></asp:TextBox>
                     </td>
                     <td></td>
@@ -205,7 +204,7 @@
                         </asp:TextBox>
                         <asp:ImageButton ID="imgBtnCalendarInvoiceDate"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtInvoiceDate" runat="server" TargetControlID="txtInvoiceDate"
+                        <cc1:CalendarExtender runat="server" TargetControlID="txtInvoiceDate"
                                               PopupButtonID="imgBtnCalendarInvoiceDate" CssClass="cal_Theme1" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -234,7 +233,7 @@
                         </asp:TextBox>
                         <asp:ImageButton ID="imgbtHandover"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExHandover" runat="server" CssClass="cal_Theme1" TargetControlID="txtVehicleHandoverDate"
+                        <cc1:CalendarExtender runat="server" CssClass="cal_Theme1" TargetControlID="txtVehicleHandoverDate"
                                               PopupButtonID="imgbtHandover" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -251,7 +250,7 @@
                         </asp:TextBox>
                         <asp:ImageButton ID="imgbtFabricationDate"
                                          runat="server" Style="vertical-align: top" alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtFabricationDate" runat="server" CssClass="cal_Theme1" TargetControlID="txtFabricationCompDate"
+                        <cc1:CalendarExtender runat="server" CssClass="cal_Theme1" TargetControlID="txtFabricationCompDate"
                                               PopupButtonID="imgbtFabricationDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -304,7 +303,7 @@
                         <asp:Button ID="btSave" Text="Save" runat="server" CssClass="form-submit-button" style="margin-top: 10px" OnClick="btSave_Click"/>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:Button ID="btReset" Text="Reset" runat="server" CssClass="form-submit-button" style="margin-top: 10px"  OnClick="btReset_Click"/>
+                        <asp:Button ID="btReset" Text="Reset" runat="server" CssClass="form-submit-button" style="margin-top: 10px" OnClick="btReset_Click"/>
                     </td>
                     <td></td>
                 </tr>
@@ -340,7 +339,7 @@
                                   AllowSorting="True" OnSorting="gridView_Sorting" OnPageIndexChanging="gridView_PageIndexChanging"
                                   AutoGenerateColumns="False" OnRowCommand="gvFabricatedVehicleDetails_RowCommand"
                                   class="table table-striped table-bordered table-hover" PagerStyle-CssClass="pager"
-                                  HeaderStyle-ForeColor="#337ab7" CellSpacing="2" style="text-align: center; margin-top: 100px;">
+                                  HeaderStyle-ForeColor="#337ab7" CellSpacing="2" style="margin-top: 100px; text-align: center;">
                         <RowStyle CssClass="rows"/>
                         <Columns>
                             <asp:TemplateField HeaderText="T/R No">
@@ -402,5 +401,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-
-

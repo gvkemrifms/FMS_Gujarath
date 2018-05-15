@@ -4,14 +4,13 @@ using System.Web.UI;
 
 public partial class CostingAnalysisReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
-           
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
@@ -19,14 +18,16 @@ public partial class CostingAnalysisReport : Page
 
     private void BindDistrictdropdown()
     {
-        string sqlQuery = ConfigurationManager.AppSettings["Query"];
+        var sqlQuery = ConfigurationManager.AppSettings["Query"];
         _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvehicle.Enabled = false;
+        }
         else
         {
             ddlvehicle.Enabled = true;

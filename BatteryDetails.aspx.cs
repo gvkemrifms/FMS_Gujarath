@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
@@ -63,7 +62,9 @@ public partial class BatteryDetails : Page
                 var ds = ObjFmsBatDet.IFillGrid_BatteryDetails();
                 if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Battery_Item_Code='" + txtBatteryItemCode.Text + "'").Length > 0)
+                {
                     Show("Battery Item Code already exists");
+                }
                 else
                 {
                     var mbatteryitemcode = txtBatteryItemCode.Text;
@@ -87,7 +88,9 @@ public partial class BatteryDetails : Page
                             FleetBatteryDetailsReset();
                         }
                         else
+                        {
                             Show("This Battery details already exists");
+                        }
                     }
                 }
 
@@ -118,7 +121,9 @@ public partial class BatteryDetails : Page
                     }
                 }
                 else
+                {
                     Show("Battery Item Code already exists");
+                }
 
                 break;
             }
@@ -143,7 +148,8 @@ public partial class BatteryDetails : Page
         txtBatteryMake.Text = Convert.ToString(ds.Tables[0].Rows[0]["Make"].ToString());
         txtBatteryModel.Text = Convert.ToString(ds.Tables[0].Rows[0]["Model"].ToString());
         txtBatteryCapacity.Text = Convert.ToString(ds.Tables[0].Rows[0]["CapaCity"].ToString());
-        txtBatteryExpiryDate.Text = Convert.ToString(ds.Tables[0].Rows[0]["BatteryExpiryDate"].ToString());
+        var shortDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["BatteryExpiryDate"]);
+        txtBatteryExpiryDate.Text = shortDate.ToShortDateString();
     }
 
     #endregion

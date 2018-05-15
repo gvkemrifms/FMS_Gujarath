@@ -429,7 +429,7 @@ public partial class VehicleOffroad : Page
             default:
                 _vehallobj.DistrictId = int.Parse(ddlDistrict.SelectedItem.Value);
                 var ds = _vehallobj.GetActiveVehiclesForOffRoad_new();
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle", "VehicleNumber", null, ddlVehicleNumber);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "Vehicle", "VehicleNumber", ddlVehicleNumber);
                 ddlVehicleNumber.Items[0].Value = "0";
                 ddlVehicleNumber.SelectedIndex = 0;
                 Session["dsvehilce"] = ds;
@@ -461,8 +461,12 @@ public partial class VehicleOffroad : Page
                 ddlreasons_SelectedIndexChanged(this, null);
                 txtContactNumber.Text = "";
                 var ds = ObjInventory.GetVehicleContactNumber(ddlVehicleNumber.SelectedItem.Text, ConfigurationManager.AppSettings["StrCTIAPPS"]);
-                foreach (DataRow dr in ds.Tables[0].Rows) txtContactNumber.Text = dr["vi_VehicleContact"].ToString();
-                foreach (DataRow dr in ds.Tables[1].Rows) txtOdo.Text = dr["Odometer"].ToString();
+                if (ds != null || ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows) txtContactNumber.Text = dr["vi_VehicleContact"].ToString();
+                    foreach (DataRow dr in ds.Tables[1].Rows) txtOdo.Text = dr["Odometer"].ToString();
+                    
+                }
                 break;
         }
 

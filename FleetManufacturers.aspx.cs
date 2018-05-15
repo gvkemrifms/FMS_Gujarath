@@ -7,14 +7,14 @@ using GvkFMSAPP.PL;
 
 public partial class FleetManufacturers : Page
 {
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFmsMan = new FMSFleetMaster();
-    readonly Helper _helper = new Helper();
 
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             grvManufacturerDetails.Columns[0].Visible = false;
@@ -85,7 +85,6 @@ public partial class FleetManufacturers : Page
     {
         var ds = ObjFmsMan.IFillStates();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlManufacturerState);
@@ -95,7 +94,6 @@ public partial class FleetManufacturers : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     #endregion
@@ -106,7 +104,6 @@ public partial class FleetManufacturers : Page
     {
         var ds = ObjFmsMan.IFillDistricts(stateId);
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFleetManufacturerDistrict);
@@ -116,7 +113,6 @@ public partial class FleetManufacturers : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     #endregion
@@ -145,10 +141,6 @@ public partial class FleetManufacturers : Page
     protected void ddlFleetManufacturerDistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
     }
-
-    #endregion
-
-    #region Selected Index Change for Mandal Drop Down List
 
     #endregion
 
@@ -201,7 +193,9 @@ public partial class FleetManufacturers : Page
                                 }
                             }
                             else
+                            {
                                 Show("Manufacturer Name Already Exists");
+                            }
                         }
 
                         break;
@@ -240,7 +234,9 @@ public partial class FleetManufacturers : Page
                             }
                         }
                         else
+                        {
                             Show("Manufacturer Name Already Exists");
+                        }
 
                         break;
                     }
@@ -330,4 +326,8 @@ public partial class FleetManufacturers : Page
     {
         ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('" + message + "');", true);
     }
+
+    #region Selected Index Change for Mandal Drop Down List
+
+    #endregion
 }

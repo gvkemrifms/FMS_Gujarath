@@ -43,11 +43,34 @@
         }
 
     </script>
-    <asp:UpdatePanel ID="updtpnlVehSwapping" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlDistrict.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,            
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlSrcVehicle.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlDestVehicle.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                   
+                }
+            </script>
             <fieldset style="padding: 10px">
-                <legend>Vehicle Swapping</legend>
-                <table style="width: 600px;">
+                <legend align="center" style="color: brown">Vehicle Swapping</legend>
+                <table style="width: 600px;" align="center">
                     <tr>
                         <td class="rowseparator"></td>
                     </tr>
@@ -81,10 +104,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlSrcVehicle" runat="server" AutoPostBack="true"
-                                          Width="155px" OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                            <asp:DropDownList ID="ddlSrcVehicle" runat="server" AutoPostBack="true" Width="155px"
+                                              OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </cc1:ComboBox>
+                            </asp:DropDownList>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -92,10 +115,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlDestVehicle" runat="server" AutoPostBack="true"
-                                          Width="155px" OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                            <asp:DropDownList ID="ddlDestVehicle" runat="server" AutoPostBack="true" Width="155px"
+                                              OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </cc1:ComboBox>
+                            </asp:DropDownList>
                         </td>
                     </tr>
                     <tr>
@@ -154,10 +177,10 @@
                         <tr>
                             <td align="center" colspan="7" style="">
                                 <asp:Panel ID="pnlButton" runat="server">
-                                    <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click"
+                                    <asp:Button ID="btnSubmit" runat="server" CssClass="form-submit-button" OnClick="btnSubmit_Click"
                                                 Text="Submit"/>
                                     &nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click"
+                                    <asp:Button ID="btnReset" runat="server"  CssClass="form-reset-button" OnClick="btnReset_Click"
                                                 Text="Reset"/>
                                 </asp:Panel>
                             </td>

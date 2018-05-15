@@ -7,6 +7,13 @@
 <script  type="text/javascript">
 
     function validation() {
+         var id = document.getElementById('<%= ddlVehicleNo.ClientID %>');
+        switch (id.selectedIndex) {
+            case 0:
+                alert("Please select Vehicle");
+                id.focus();
+                return false;
+        }
         var district = document.getElementById('<%= txtDistrict.ClientID %>');
         var insuranceType = document.getElementById('<%= txtInsuranceType.ClientID %>');
         var insuranceTypeDdl = document.getElementById('<%= ddlInsuranceType.ClientID %>');
@@ -20,20 +27,7 @@
         var policyStartDate = document.getElementById('<%= txtPolicyStartDate.ClientID %>');
         var policyValidityPeriod = document.getElementById('<%= ddlPolicyValidityPeriod.ClientID %>');
         var now = new Date();
-        var id = document.getElementById('<%= ddlVehicleNo.ClientID %>');
-        var inputs = id.getElementsByTagName('input');
-        var i;
-        for (i = 0; i < inputs.length; i++) {
-            switch (inputs[i].type) {
-            case 'text':
-                if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                    alert('Select the Vehicle');
-                    return false;
-                }
-                break;
-            }
-        }
-
+       
         if (!RequiredValidation(district, "District Cannot be Blank"))
             return false;
 
@@ -132,25 +126,33 @@
 </script>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
+    <script>
+        function pageLoad()
+        {
+            $('#<%= ddlVehicleNo.ClientID %>').select2({
+                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+        }
+    </script>
+    <legend align="center" style="color:brown">Vehicle Insurance</legend>
 <div class="dropdown">
-<table style="width: 103%" cellpadding="2" cellspacing="2" align="right">
+    
+<table align="left">
     <tr>
-        <td style="width: 261px">
-            &nbsp; &nbsp;
-        </td>
-        <td style="width: 75px" width="300px" align="right">
-            <a href="VehicleInsuranceViewHistory.aspx">View History</a>
+        <td >
+            <a href="VehicleInsuranceViewHistory.aspx" style="color:dodgerblue">View History</a>
         </td>
     </tr>
 </table>
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered table-hover" align="center">
 <tr>
-    <td class="rowseparator" style="width: 589px"></td>
+    <td class="rowseparator" ></td>
 </tr>
 <tr>
-<td style="width: 589px">
+<td >
 <asp:Panel ID="pnlVehicleInsurance" runat="server" Width="688px">
-<table style="width: 86%" cellpadding="2" cellspacing="2">
+<table align="center">
 
     <tr>
         <td style="width: 296px"></td>
@@ -159,11 +161,10 @@
             Vehicle No.<span style="color: Red">*</span>
         </td>
         <td align="left">
-            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNo" runat="server" Width="150px" OnSelectedIndexChanged="ddlVehicleNo_SelectedIndexChanged"
-                          AutoPostBack="True" DropDownStyle="DropDownList">
+            <asp:DropDownList ID="ddlVehicleNo"  runat="server" OnSelectedIndexChanged="ddlVehicleNo_SelectedIndexChanged" Width="150px">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                <asp:ListItem Value="0">Dummy</asp:ListItem>
-            </cc1:ComboBox>
+                <asp:ListItem Value="0">--Dummy--</asp:ListItem>
+            </asp:DropDownList>
         </td>
         <td>
             &nbsp;
@@ -175,14 +176,14 @@
             District<span style="color: Red">*</span>
         </td>
         <td align="left">
-            <asp:TextBox ID="txtDistrict" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                         Width="145px">
+            <asp:TextBox ID="txtDistrict" CssClass="search_3" runat="server" BackColor="DarkGray" ReadOnly="True"
+                         Width="150px">
             </asp:TextBox>
         </td>
-        <td rowspan="2">
+        <td rowspan="3">
             <asp:CheckBox ID="chkBoxChangeInsuranceDetails" runat="server" AutoPostBack="True"
                           OnCheckedChanged="chkBoxChangeInsuranceDetails_CheckedChanged" Text="Change Insurance Details"
-                          Width="100px"/>
+                          Width="180px"/>
         </td>
     </tr>
     <tr>
@@ -191,10 +192,10 @@
             Insurance Type<span style="color: Red">*</span>
         </td>
         <td align="left">
-            <asp:TextBox ID="txtInsuranceType" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
-                         Width="145px">
+            <asp:TextBox ID="txtInsuranceType" CssClass="search_3"  runat="server" BackColor="Red" ReadOnly="True"
+                         Width="150px">
             </asp:TextBox>
-            <asp:DropDownList ID="ddlInsuranceType" class="text1" runat="server" OnSelectedIndexChanged="ddlInsuranceType_SelectedIndexChanged"
+            <asp:DropDownList ID="ddlInsuranceType"  CssClass="search_3" runat="server" OnSelectedIndexChanged="ddlInsuranceType_SelectedIndexChanged"
                               Visible="False" Width="150px">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
@@ -206,10 +207,10 @@
             Insurance Agency<span style="color: Red">*</span>
         </td>
         <td align="left">
-            <asp:TextBox ID="txtInsuranceAgency" class="text1" runat="server" BackColor="DarkGray" ReadOnly="True"
+            <asp:TextBox ID="txtInsuranceAgency" CssClass="search_3" runat="server" BackColor="DarkGray" ReadOnly="True"
                          Width="145px">
             </asp:TextBox>
-            <asp:DropDownList ID="ddlInsuranceAgency" class="text1" runat="server" OnSelectedIndexChanged="ddlInsuranceAgency_SelectedIndexChanged"
+            <asp:DropDownList ID="ddlInsuranceAgency" CssClass="search_3" runat="server" OnSelectedIndexChanged="ddlInsuranceAgency_SelectedIndexChanged"
                               Visible="False" Width="150px">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>

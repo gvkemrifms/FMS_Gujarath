@@ -1,23 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BillProcessingManagementReport.aspx.cs" Inherits="BillProcessingManagementReport" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 2,
                 placeholder: "Select an option"
             });
         });
-        function Validations()
-        {
+
+        function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
             if (ddlDistrict === '--select--') {
-              return  alert("Please select District");
+                return alert("Please select District");
             }
             return true;
         }
@@ -25,11 +24,11 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblBillProcessingManagementReport" style="font-size: 20px; color: brown" runat="server" Text="Bill Processing Management Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Bill Processing Management Report"></asp:Label>
             </td>
         </tr>
     </table>
-    <table align="center" style="margin-top: 10px" >
+    <table align="center" style="margin-top: 10px">
         <tr>
 
             <td>
@@ -39,12 +38,12 @@
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
-        </table>
+        </tr>
+    </table>
     <table align="center">
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations())return false;" CssClass="form-submit-button"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;" CssClass="form-submit-button"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
@@ -59,4 +58,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelDetailsVerification.aspx.cs" Inherits="FuelDetailsVerification" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <table align="center" >
+    <table align="center">
         <tr>
             <td class="rowseparator">
             </td>
@@ -10,17 +10,17 @@
                 <fieldset style="padding: 10px">
                     <legend align="center" style="color: brown">Fuel Detail Verification</legend>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        
+
                         <ContentTemplate>
                             <script type="text/javascript">
-                                function pageLoad() {        
+                                function pageLoad() {
                                     $('#<%= ddlVehicleNumber.ClientID %>').select2({
                                         disable_search_threshold: 5,
                                         search_contains: true,
                                         minimumResultsForSearch: 20,
                                         placeholder: "Select an option"
                                     });
-                                } 
+                                }
                             </script>
                             <table style="width: 100%">
                                 <tr>
@@ -45,7 +45,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <br />
+                                    <br/>
                                     <td colspan="2" align="center">
                                         <asp:GridView ID="gvVerification" runat="server" BorderWidth="1px" BorderColor="brown" AutoGenerateEditButton="False" AutoGenerateColumns="false"
                                                       GridLines="None" CssClass="gridviewStyle" Width="434px" CellPadding="3" CellSpacing="2"
@@ -149,4 +149,3 @@
         </tr>
     </table>
 </asp:Content>
-

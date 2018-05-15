@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FleetManufacturers.aspx.cs" Inherits="FleetManufacturers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script  type="text/javascript">
+<script type="text/javascript">
 
     function validationFleetManufacturers() {
         switch (document.getElementById("<%= txtManufacturerName.ClientID %>").value) {
@@ -109,7 +109,7 @@
             minimumResultsForSearch: 20,
             placeholder: "Select an option"
         });
-    } 
+    }
 </script>
 <table id="table1" cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="table table-striped table-bordered table-hover"
        style="height: 37px">
@@ -124,10 +124,10 @@
                 <table id="table2" class="bordergreen" width="91%" align="center">
                     <tr>
                         <td>
-                            <table class="logtable" align="center">
+                            <table align="center">
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Manufacturer Name <span style="color: Red" class="labelErr">*</span>
+                                        Manufacturer Name <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -139,7 +139,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Manufacturer Type <span style="color: Red" class="labelErr">*</span>
+                                        Manufacturer Type <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -155,7 +155,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Model <span style="color: Red" class="labelErr">*</span>
+                                        Model <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
@@ -166,12 +166,12 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 150px; height: 25px;" align="left">
-                                        State <span style="color: Red" class="labelErr">*</span>
+                                    <td style="height: 25px; width: 150px;" align="left">
+                                        State <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlManufacturerState" Width="150px" runat="server" 
+                                        <asp:DropDownList ID="ddlManufacturerState" Width="150px" runat="server"
                                                           OnSelectedIndexChanged="ddlManufacturerState_SelectedIndexChanged" AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
@@ -196,11 +196,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Address <span style="color: Red" class="labelErr">*</span>
+                                        Address <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtManufacturerAddress" Width="150px"  runat="server" TextMode="MultiLine" CssClass="search_3"
+                                        <asp:TextBox ID="txtManufacturerAddress" Width="150px" runat="server" TextMode="MultiLine" CssClass="search_3"
                                                      onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                         </asp:TextBox>
                                     </td>
@@ -210,7 +210,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Contact Number <span style="color: Red" class="labelErr">*</span>
+                                        Contact Number <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -228,7 +228,7 @@
 
                                     </td>
                                     <td class="columnseparator"></td>
-                                    <td> 
+                                    <td>
                                         <asp:TextBox ID="txtManufacturerContactPerson" Width="150px" runat="server" CssClass="search_3"
                                                      MaxLength="35">
                                         </asp:TextBox>
@@ -239,7 +239,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        E-mail ID <span style="color: Red" class="labelErr">*</span>
+                                        E-mail ID <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -251,7 +251,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        TIN <span style="color: Red" class="labelErr">*</span> &nbsp;
+                                        TIN <span style="color: Red">*</span> &nbsp;
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -263,7 +263,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        ERN <span style="color: Red" class="labelErr">*</span>
+                                        ERN <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -280,10 +280,10 @@
                                                     Text="Save" OnClick="btnManufacturerSave_Click">
                                         </asp:Button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <asp:Button ID="btnManufacturerReset" Width="55px" runat="server"  CssClass="form-reset-button"
+                                        <asp:Button Width="55px" runat="server" CssClass="form-reset-button"
                                                     Text="Reset" CausesValidation="false" OnClick="btnManufacturerReset_Click">
                                         </asp:Button>
-                                        <input type="hidden" id="hidBatText" runat="server"/>
+                                        <input type="hidden" runat="server"/>
                                         &nbsp;
                                     </td>
                                 </tr>
@@ -359,4 +359,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

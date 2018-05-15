@@ -1,39 +1,34 @@
 ﻿<%@ Page Title="" Language="C#" Debug="true" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelEntry.aspx.cs" Inherits="FuelEntry" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<asp:UpdatePanel ID="updPanel1" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
 <script type="text/javascript">
-  $(function() {
+    $(function() {
         $('#<%= ddlVehicleNumber.ClientID %>').select2({
             disable_search_threshold: 5,
             search_contains: true,
             minimumResultsForSearch: 20,
             placeholder: "Select an option"
         });
-    });   
+    });
 
 </script>
 
 <fieldset style="padding: 10px">
-<legend align="center" style="color:brown">Fuel Entry</legend>
+<legend align="center" style="color: brown">Fuel Entry</legend>
 <table align="center">
-<br />
+<br/>
 <tr>
-    <td style="float: left" >
+    <td style="float: left">
         Vehicle Number<span style="color: Red">*</span>
     </td>
     <td>
-     <asp:DropDownList AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
+        <asp:DropDownList AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
                           OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" Width="150px">
         </asp:DropDownList>
     </td>
- <%--   <td >
-        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="True"
-                      DropDownStyle="DropDownList" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" CssClass="CustomComboBoxStyle" Width="140px">
-        </cc1:ComboBox>
-    </td>--%>
-    <td style="float: right;padding-right: 10px" >
+    <td style="float: right; padding-right: 10px">
         Borrowed Vehicle
     </td>
     <td >
@@ -53,7 +48,7 @@
     <td>
         <asp:Label ID="lblDistrict" runat="server"/>
     </td>
-    <td style="float: right;padding: 10px">
+    <td style="float: right; padding: 10px">
         Base Location
     </td>
     <td>
@@ -73,12 +68,12 @@
                      onkeypress="return false" CssClass="search_3" onpaste="return false;">
         </asp:TextBox>
         <cc1:CalendarExtender ID="entDate" runat="server" Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="ImageButton1"
-                              TargetControlID="txtFuelEntryDate" >
+                              TargetControlID="txtFuelEntryDate">
         </cc1:CalendarExtender>
         <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif"
-                        style="vertical-align: top;float: right"/>
+                         style="float: right; vertical-align: top;"/>
     </td>
-    <td style="float: right;padding: 10px">
+    <td style="float: right; padding: 10px">
         Bill Number<span style="color: Red">*</span>
     </td>
     <td >
@@ -91,9 +86,9 @@
         Odometer(km)<span style="color: Red">*</span>
     </td>
     <td >
-        <asp:TextBox ID="txtOdometer" runat="server" CssClass="search_3" MaxLength="6" ></asp:TextBox>
+        <asp:TextBox ID="txtOdometer" runat="server" CssClass="search_3" MaxLength="6"></asp:TextBox>
     </td>
-    <td style="float: right;padding-right: 10px">
+    <td style="float: right; padding-right: 10px">
         Bunk Name<span style="color: Red">*</span>
     </td>
     <td >
@@ -121,7 +116,7 @@
                           OnSelectedIndexChanged="ddlPaymode_SelectedIndexChanged">
         </asp:DropDownList>
     </td>
-    <td style="float: right;padding-right: 10px">
+    <td style="float: right; padding-right: 10px">
         Quantity(Litres)<span style="color: Red">*</span>
     </td>
     <td>
@@ -138,7 +133,7 @@
                           AutoPostBack="True" OnSelectedIndexChanged="ddlPetroCardNumber_SelectedIndexChanged">
         </asp:DropDownList>
     </td>
-    <td style="float: right;padding: 10px">
+    <td style="float: right; padding: 10px">
         Unit Price(Rs)<span style="color: Red">*</span>
     </td>
     <td>
@@ -154,7 +149,7 @@
         <asp:DropDownList ID="ddlAgency" CssClass="search_3" runat="server" AutoCompleteMode="Append">
         </asp:DropDownList>
     </td>
-    <td style="float: right;padding-right: 10px">
+    <td style="float: right; padding-right: 10px">
         Amount(Rs)<span style="color: Red">*</span>
     </td>
     <td >
@@ -169,7 +164,7 @@
     <td >
         <asp:TextBox ID="txtLocation" runat="server" CssClass="search_3" MaxLength="20"></asp:TextBox>
     </td>
-    <td style="float: right;padding: 10px">
+    <td style="float: right; padding: 10px">
         Pilot ID<span style="color: Red">*</span>
     </td>
     <td>
@@ -184,7 +179,7 @@
     <td >
         <asp:TextBox ID="txtPilotName" CssClass="search_3" runat="server"></asp:TextBox>
     </td>
-    <td style="float: right;padding-right: 10px">
+    <td style="float: right; padding-right: 10px">
         Card Swiped
     </td>
     <td >
@@ -213,11 +208,11 @@
         <asp:TextBox ID="txtSegmentID" runat="server" CssClass="search_3" Visible="False"></asp:TextBox>
     </td>
     <td >
-        <asp:Button ID="Save" runat="server" CssClass="form-submit-button" OnClick="Save_Click" OnClientClick="if(!validationFuelEntry()) return false;"
+        <asp:Button ID="Save" runat="server" CssClass="form-submit-button" OnClick="Save_Click" OnClientClick="if (!validationFuelEntry()) return false;"
                     Text="Save"/>
     </td>
     <td >
-        <asp:Button ID="Reset" runat="server" OnClick="Reset_Click" Text="Reset"  CssClass="form-reset-button"/>
+        <asp:Button ID="Reset" runat="server" OnClick="Reset_Click" Text="Reset" CssClass="form-reset-button"/>
     </td>
     <td >
         <asp:TextBox ID="txtEdit" CssClass="search_3" runat="server" Visible="False"></asp:TextBox>
@@ -310,13 +305,13 @@
         var text3 = text1 * text2;
         document.getElementById("<%= txtAmount.ClientID %>").value = text3.toFixed(2);
     }
+
     function validationFuelEntry() {
         var vehicleNumber = $("#<%= ddlVehicleNumber.ClientID %> option:selected").text().toLowerCase();
-        switch (vehicleNumber)
-        {
+        switch (vehicleNumber) {
         case '--select--':
-            return alert("Please Select the VehicleNumber");                   
-        }       
+            return alert("Please Select the VehicleNumber");
+        }
         var fuelEntryDate = document.getElementById('<%= txtFuelEntryDate.ClientID %>');
 
         if (!RequiredValidation(fuelEntryDate, "Fuel Entry Date Cannot be Blank"))
@@ -357,7 +352,7 @@
             paymode.focus();
             return false;
         }
-       
+
         if (paymode.options[paymode.selectedIndex].text === "Card") {
             var agency = document.getElementById('<%= ddlAgency.ClientID %>');
 

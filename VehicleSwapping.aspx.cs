@@ -13,7 +13,7 @@ public partial class VehicleSwapping : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (IsPostBack) return;
         btnSubmit.Attributes.Add("onclick", "return validation()");
         GetDistrict();
@@ -80,7 +80,7 @@ public partial class VehicleSwapping : Page
         {
             _vasbll.DistrictId = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
             var ds = _vasbll.GetActiveVehicles();
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlSrcVehicle);
             Session["dsvehicle"] = ds;
         }
         catch (Exception ex)
@@ -103,7 +103,7 @@ public partial class VehicleSwapping : Page
             var dvdestvehicle = new DataView(ds.Tables[0], "VehicleID <>'" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
             var dtVehicle = dvdestvehicle.Table;
             dsVehicle.Tables.Add(dtVehicle);
-            _helper.FillDropDownHelperMethodWithDataSet(dsVehicle, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
+            _helper.FillDropDownHelperMethodWithDataSet(dsVehicle, "VehicleNumber", "VehicleID", ddlDestVehicle);
         }
         catch (Exception ex)
         {

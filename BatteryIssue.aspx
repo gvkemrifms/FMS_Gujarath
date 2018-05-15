@@ -1,8 +1,6 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="BatteryIssue.aspx.cs" Inherits="BatteryIssue" Language="C#" MasterPageFile="~/temp.master" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
         function validation() {
@@ -22,7 +20,6 @@
                     return false;
                 }
             }
-
             var now = new Date();
             if (Date.parse(dcDate.value) > Date.parse(now)) {
                 alert("DC Date should not be greater than Current Date");
@@ -46,20 +43,20 @@
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div id="div_BatteryIssue" runat="server">
+            <div runat="server">
                 <fieldset style="padding: 10px">
                     <legend>Battery Issue</legend>
-                    <div id="Div2" runat="server" align="center">
+                    <div runat="server" align="center">
                         Vehicle Number<span style="color: Red">*</span>
                         <ajaxToolkit:ComboBox AutoCompleteMode="Append" ID="ddlInventoryBatteryIssueVehicles" runat="server" AutoPostBack="True"
                                               OnSelectedIndexChanged="ddlInventoryBatteryIssueVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
                         </ajaxToolkit:ComboBox>
                     </div>
                     <br/>
-                    <div id="Div5" runat="server">
+                    <div runat="server">
                         Pending for Issue
                     </div>
-                    <div id="Div6" runat="server" align="center">
+                    <div runat="server" align="center">
                         <asp:GridView ID="grvBatteryPendingForIssue" runat="server" CellPadding="3" CellSpacing="2"
                                       EmptyDataText="Details are not available" AutoGenerateColumns="False" GridLines="None"
                                       CssClass="gridviewStyle" AllowPaging="True" DataKeyNames="FleetInventoryReqID"
@@ -91,7 +88,7 @@
                     <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtenderBatteryIssue" BehaviorID="mdlPopup"
                                                     runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
                     <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel">
-                        <asp:UpdatePanel ID="updPnlReqDetail" runat="server">
+                        <asp:UpdatePanel runat="server">
                             <ContentTemplate>
                                 <fieldset style="padding: 10px">
                                     <legend>Battery Issue Detail</legend>
@@ -165,7 +162,7 @@
                                         <SelectedRowStyle CssClass="selectedRowStyle"/>
                                         <HeaderStyle CssClass="headerStyle"/>
                                     </asp:GridView>
-                                    <div id="Div7" align="center" style="width: 95%; background-color: white">
+                                    <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                         Remarks
                                         <asp:TextBox ID="txtRemarks" runat="server" MaxLength="20" TextMode="MultiLine"
                                                      onKeyUp="CheckLength(this,50)" onChange="CheckLength(this,50)">
@@ -173,7 +170,7 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:Button ID="btnOk" runat="server" Text="Issue" Width="50px" OnClick="btnOk_Click"/>
                                         &nbsp;&nbsp;
-                                        <asp:Button ID="btnNo" runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
+                                        <asp:Button runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
                                     </div>
                                 </fieldset>
                             </ContentTemplate>
@@ -184,5 +181,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-
-

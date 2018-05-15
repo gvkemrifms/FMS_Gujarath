@@ -1,62 +1,63 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BatteryDetailsReportnew.aspx.cs" Inherits="BatteryDetailsReportnew" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 2,
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
             if (ddlDistrict === '--select--') {
                 return alert("Please select District");
-             
+
             }
             return true;
         }
 
     </script>
     <style>
-        .btnShowReport {
-            margin-left: 100px;
-        }
+        .btnShowReport { margin-left: 100px; }
     </style>
-    <table>
+    <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" style="font-size: 20px; color: brown" runat="server" Text="Battery&nbsp;Details&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Battery&nbsp;Details&nbsp;Report"></asp:Label>
             </td>
         </tr>
-    </table >
-    <table align="center" >
+    </table>
+    <br/>
+    <table align="center">
         <tr>
 
             <td>
-               Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red;margin-right: 1px">*</asp:Label>
+                Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red; margin-right: 1px">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
         </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td>
-                        <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" CssClass="form-submit-button"  OnClick="btnsubmit_Click" OnClientClick="if(!Validations())return false;"></asp:Button>
-                    </td>
+    </table>
+    <table align="center">
+        <tr>
+            <td>
+                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;"></asp:Button>
+            </td>
 
 
-                    <td>
-                        <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
+            <td>
+                <asp:Button runat="server" Text="ExportExcel" OnClick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
 
-                    </td>
-                </tr>
+            </td>
+        </tr>
     </table>
     <br/>
     <div align="center">
@@ -65,4 +66,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-

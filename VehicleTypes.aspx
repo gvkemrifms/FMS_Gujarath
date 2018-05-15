@@ -5,13 +5,13 @@
     <script language="javascript" type="text/javascript">
         function validation() {
             switch (document.getElementById("<%= txtVehicleType.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please EnterVehicle Type");
                 document.getElementById("<%= txtVehicleType.ClientID %>").focus();
                 return false;
             }
             switch (document.getElementById("<%= txtVehicleDescription.ClientID %>").value) {
-            case 0:
+            case '':
                 alert("Please Enter Vehicle Description");
                 document.getElementById("<%= txtVehicleDescription.ClientID %>").focus();
                 return false;
@@ -76,9 +76,9 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px;">
-                            <asp:GridView ID="grvVehicleTypes" runat="server" align="center" AllowPaging="True"
+                            <asp:GridView ID="grvVehicleTypes" runat="server" align="center" AllowPaging="True" BorderColor="Brown" BorderWidth="1px"
                                           PageSize="5" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" OnPageIndexChanging="grvVehicleTypes_PageIndexChanging"
-                                          GridLines="None" CssClass="gridviewStyle" OnRowEditing="grvVehicleTypes_RowEditing"
+                                          GridLines="Both" CssClass="gridviewStyle" OnRowEditing="grvVehicleTypes_RowEditing"
                                           Width="600px">
                                 <RowStyle CssClass="rowStyleGrid"/>
                                 <Columns>

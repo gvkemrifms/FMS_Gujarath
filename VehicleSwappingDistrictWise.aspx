@@ -47,11 +47,39 @@
 
     </script>
 
-    <asp:UpdatePanel ID="updtpnlVehSwapping" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlSourceDistrict.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,            
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlSrcVehicle.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlDestDistrict.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlDestVehicle.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+            </script>
             <fieldset style="padding: 10px">
-                <legend>District Vehicle Swapping</legend>
-                <table style="width: 600px;">
+                <legend style="color: brown" align="center">District Vehicle Swapping</legend>
+                <table style="width: 600px;" align="center">
                     <tr>
                         <td class="rowseparator"></td>
                     </tr>
@@ -62,7 +90,7 @@
                         <td class="columnseparator"></td>
                         <td>
                             <asp:DropDownList ID="ddlSourceDistrict" runat="server" AutoPostBack="true" Width="155px"
-                                              OnSelectedIndexChanged="ddlSourceDistrict_SelectedIndexChanged">
+                                              OnSelectedIndexChanged="ddlSourceDistrict_SelectedIndexChanged" style="border-right: 50px">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </asp:DropDownList>
                         </td>
@@ -87,10 +115,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlSrcVehicle" runat="server" AutoPostBack="true"
-                                          Width="155px" OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                            <asp:DropDownList runat="server" ID="ddlSrcVehicle" AutoPostBack="true" Width="155px"
+                                              OnSelectedIndexChanged="ddlSrcVehicle_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </cc1:ComboBox>
+                            </asp:DropDownList>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -98,10 +126,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlDestVehicle" runat="server" AutoPostBack="true"
-                                          Width="155px" OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged" DropDownStyle="DropDownList">
+                            <asp:DropDownList runat="server" ID="ddlDestVehicle" AutoPostBack="true" Width="155px"
+                                              OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </cc1:ComboBox>
+                            </asp:DropDownList>                          
                         </td>
                     </tr>
                     <tr>
@@ -162,14 +190,18 @@
                     </tr>
                     <tr>
                         <div style="top: 0px; width: 68px;">
-                        <img src="../images/savingimage.gif" style="display: none" id="loaderButton" alt=""/>
-                        <td colspan="7" align="center" style="">
-                            <asp:Panel ID="pnlButton" runat="server">
-                                <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click"/>
-                                &nbsp;&nbsp;&nbsp;
-                                <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click"/>
-                            </asp:Panel>
-                        </td>
+                            <caption>
+                                <img src="../images/savingimage.gif" style="display: none" id="loaderButton" alt=""/>
+                                <tr>
+                                    <td align="center" colspan="7" style="">
+                                        <asp:Panel ID="pnlButton" runat="server">
+                                            <asp:Button ID="btnSubmit" runat="server" CssClass="form-submit-button" OnClick="btnSubmit_Click" OnClientClick="return validation();" Text="Submit" />
+                                            &nbsp;&nbsp;&nbsp;
+                                            <asp:Button ID="btnReset" runat="server" CssClass="form-submit-button" OnClick="btnReset_Click" Text="Reset" />
+                                        </asp:Panel>
+                                    </td>
+                                </tr>
+                            </caption>
                     </tr>
                 </table>
             </fieldset>

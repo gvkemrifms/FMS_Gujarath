@@ -1,6 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictVehicleMapping.aspx.cs" Inherits="DistrictVehicleMapping" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-gvkemergencymanagement3&places=West+Bengal&libraries=places"></script>
     <script src="locationpicker.js"></script>
@@ -41,111 +39,118 @@
             font-weight: bold;
         }
     </style>
-    
 
 
-    <asp:UpdatePanel ID="updtpnlVehMapping" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <script type="text/javascript">
                 function pageLoad() {
                     $('#<%= ddlVehicleNumber.ClientID %>').select2({
-                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 2,
                         placeholder: "Select an option"
                     });
                     $('#<%= ddlDistrict.ClientID %>').select2({
-                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 2,
                         placeholder: "Select an option"
                     });
                     $('#<%= ddlMandal.ClientID %>').select2({
-                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 2,
                         placeholder: "Select an option"
                     });
                     $('#<%= ddlCity.ClientID %>').select2({
-                        disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 2,
                         placeholder: "Select an option"
-                    }); 
-                    $('#<%= ddlBaseLocation.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
+                    });
+                    $('#<%= ddlBaseLocation.ClientID %>')
+                        .chosen({ disable_search_threshold: 5, search_contains: true });
                     $('#<%= ddlVehType.ClientID %>').chosen({ disable_search_threshold: 5, search_contains: true });
-                } 
+                }
             </script>
-            <script type="text/javascript" >
+            <script type="text/javascript">
 
-                function validation()
-                {
+                function validation() {
 
-            var fldDistrict = document.getElementById('<%= ddlDistrict.ClientID %>');
-            var fldVehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
-            var fldMandals = document.getElementById('<%= ddlMandal.ClientID %>');
-            var fldCity = document.getElementById('<%= ddlCity.ClientID %>');
+                    var fldDistrict = document.getElementById('<%= ddlDistrict.ClientID %>');
+                    var fldVehicleNumber = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
+                    var fldMandals = document.getElementById('<%= ddlMandal.ClientID %>');
+                    var fldCity = document.getElementById('<%= ddlCity.ClientID %>');
                     var fldContactNumber = document.getElementById('<%= txtContactNumber.ClientID %>');
-                    var vehicleType = document.getElementById('<%=ddlVehType.ClientID %>');
-                    var txtLatitudes = document.getElementById('<%=txtLatitude.ClientID %>');
-                    var txtLongitudes=document.getElementById('<%=txtLongitude.ClientID %>');
-            var inputs = fldVehicleNumber.getElementsByTagName('input');
-            var i;
-            for (i = 0; i < inputs.length; i++) {
-                switch (inputs[i].type) {
-                case 'text':
-                    if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                        alert('Please select Vehicle Number');
+                    var vehicleType = document.getElementById('<%= ddlVehType.ClientID %>');
+                    var txtLatitudes = document.getElementById('<%= txtLatitude.ClientID %>');
+                    var txtLongitudes = document.getElementById('<%= txtLongitude.ClientID %>');
+                    var inputs = fldVehicleNumber.getElementsByTagName('input');
+                    var i;
+                    for (i = 0; i < inputs.length; i++) {
+                        switch (inputs[i].type) {
+                        case 'text':
+                            if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
+                                alert('Please select Vehicle Number');
+                                return false;
+                            }
+                            break;
+                        }
+                    }
+                    if (fldVehicleNumber.selectedIndex === 0) {
+                        alert("Please Select Vehicle");
+                        fldVehicleNumber.focus();
                         return false;
                     }
-                    break;
-                }
-            }
-            if (fldVehicleNumber.selectedIndex === 0) {
-                alert("Please Select Vehicle");
-                fldVehicleNumber.focus();
-                return false;
-            }
-            if (fldDistrict && fldDistrict.selectedIndex === 0) {
-                alert("Please Select District");
-                fldDistrict.focus();
-                return false;
-            }
-            switch (fldMandals.selectedIndex) {
-            case 0:
-                alert("Please select Mandal");
-                fldMandals.focus();
-                return false;
-            }
-            switch (fldCity.selectedIndex) {
-            case 0:
-                alert("Please select City");
-                fldCity.focus();
-                return false;
-            }
+                    if (fldDistrict && fldDistrict.selectedIndex === 0) {
+                        alert("Please Select District");
+                        fldDistrict.focus();
+                        return false;
+                    }
+                    switch (fldMandals.selectedIndex) {
+                    case 0:
+                        alert("Please select Mandal");
+                        fldMandals.focus();
+                        return false;
+                    }
+                    switch (fldCity.selectedIndex) {
+                    case 0:
+                        alert("Please select City");
+                        fldCity.focus();
+                        return false;
+                    }
 
-            if (!RequiredValidation(fldContactNumber, "Please select Contact Number"))
-                return false;
+                    if (!RequiredValidation(fldContactNumber, "Please select Contact Number"))
+                        return false;
                     if (vehicleType.selectedIndex === 0) {
                         alert("Please Select VehicleType");
                         return false;
-              }
-                        if (!RequiredValidation(txtLatitudes, "Please select Latitude"))
-                            return false;
-                        if (!RequiredValidation(txtLongitudes, "Please select Longitude"))
-                            return false;
+                    }
+                    if (!RequiredValidation(txtLatitudes, "Please select Latitude"))
+                        return false;
+                    if (!RequiredValidation(txtLongitudes, "Please select Longitude"))
+                        return false;
                     return true;
                 }
 
-                
-        function open() {
-            var modal = document.getElementById('myModal');
-            var span = document.getElementsByClassName("close")[0];
-            modal.style.display = "block";
-            span.onclick = function() {
-                modal.style.display = "none";
-            };
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            };
-        }
 
-    </script>
-            <div style="width: 50%; float: left">
+                function open() {
+                    var modal = document.getElementById('myModal');
+                    var span = document.getElementsByClassName("close")[0];
+                    modal.style.display = "block";
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    };
+                    window.onclick = function(event) {
+                        if (event.target === modal) {
+                            modal.style.display = "none";
+                        }
+                    };
+                }
+
+            </script>
+            <div style="float: left; width: 50%;">
 
                 <table align="center">
                     <tr>
@@ -167,7 +172,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        District<span class="labelErr" style="color: Red">*</span>
+                                        District<span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -185,7 +190,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Mandal<span class="labelErr" style="color: Red">*</span>
+                                        Mandal<span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -199,7 +204,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        City/ Village<span class="labelErr" style="color: Red">*</span>
+                                        City/ Village<span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -269,7 +274,7 @@
 
                                 <tr>
                                     <td>
-                                        Contact Number<span  style="color: Red">*</span>
+                                        Contact Number<span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -292,12 +297,12 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="lblLatitude" runat="server" Text="Latitude" Visible="false" ></asp:Label>
+                                        <asp:Label ID="lblLatitude" runat="server" Text="Latitude" Visible="false"></asp:Label>
                                         <asp:Label ID="lblMandatory1" runat="server" Text="*" ForeColor="Red" Visible="false"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtLatitude"  runat="server" Width="150px" Visible="false" CssClass="search_3" onblur="isDecimal(this);"
+                                        <asp:TextBox ID="txtLatitude" runat="server" Width="150px" Visible="false" CssClass="search_3" onblur="isDecimal(this);"
                                                      onkeydown="return numericOnly(this);">
                                         </asp:TextBox>
                                     </td>
@@ -310,7 +315,7 @@
                                         <asp:Label ID="lblLongitude" runat="server" Text="Longitude" Visible="false"></asp:Label>
                                         <asp:Label ID="lblMandatory2" runat="server" Text="*" ForeColor="Red" Visible="false"></asp:Label>
                                     </td>
-                                    <td class="columnseparator"></td> 
+                                    <td class="columnseparator"></td>
                                     <td>
                                         <asp:TextBox ID="txtLongitude" runat="server" CssClass="search_3" Width="150px" Visible="false" onblur="isDecimal(this);"
                                                      onkeydown="return numericOnly(this);">
@@ -325,11 +330,11 @@
                             <table align="center">
                                 <tr>
                                     <td align="center">
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="form-submit-button" />
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="form-submit-button"/>
                                     </td>
                                     <td class="columnseparator" style="width: 50px"></td>
                                     <td align="center">
-                                        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" CssClass="form-submit-button" />
+                                        <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click" CssClass="form-submit-button"/>
                                     </td>
                                 </tr>
                             </table>
@@ -342,7 +347,7 @@
                 </div>
             </div>
             <br/>
-            <div style="width: 50%; float: right">
+            <div style="float: right; width: 50%;">
                 <div>
                     <asp:Label ID="lblVeh" runat="server"></asp:Label>
                 </div>
@@ -354,7 +359,7 @@
 
                     <input type="text" name="address" id="address" style="width: 40%">
                     <input type="text" id="us2lat" value=""/><input type="text" id="us2lon" value=""/>
-                    <div id="us2" style="width: 100%; height: 100%;" class=""></div>
+                    <div id="us2" style="height: 100%; width: 100%;" class=""></div>
                 </div>
             </div>
 
@@ -362,4 +367,3 @@
 
     </asp:UpdatePanel>
 </asp:Content>
-

@@ -68,7 +68,7 @@ public partial class VehicleInsurance : Page
         {
             _vehicleInsurance.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
             var ds = _vehicleInsurance.GetVehicleNumber();
-            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNo);
+            if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNo);
         }
         catch (Exception ex)
         {

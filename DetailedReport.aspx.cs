@@ -17,7 +17,8 @@ public partial class DetailedReport : Page
     {
         try
         {
-            var sqlQuery = ConfigurationManager.AppSettings["Query"]; ;
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
+            ;
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -51,7 +52,7 @@ public partial class DetailedReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, txtfrmDate, txttodate, "@DistrictID",null, "@From", "@To", null, Grddtreport);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_SummaryDetailed1", null, null, ddldistrict, null, txtfrmDate, txttodate, "@DistrictID", null, "@From", "@To", null, Grddtreport);
         }
         catch (Exception ex)
         {

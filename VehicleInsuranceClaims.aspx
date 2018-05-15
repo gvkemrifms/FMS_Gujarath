@@ -10,7 +10,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Panel ID="pnlVehicleInsuranceClaims" runat="server">
+                        <asp:Panel runat="server">
 
                             <table>
                                 <tr>

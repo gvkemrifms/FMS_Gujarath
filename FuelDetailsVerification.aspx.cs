@@ -6,13 +6,13 @@ using GvkFMSAPP.BLL;
 
 public partial class FuelDetailsVerification : Page
 {
-    public IFuelManagement Objfuelver = new FuelManagement();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
+    public IFuelManagement Objfuelver = new FuelManagement();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());

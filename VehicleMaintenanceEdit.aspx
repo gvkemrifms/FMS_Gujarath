@@ -28,49 +28,59 @@
 </script>
 
 
-<asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
-<table width="100%">
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    }
+</script>
+<table align="center">
 <tr>
 <td>
 <fieldset style="padding: 10px">
-<legend>
-    Vehicle Maintenance Details<br/>
+<legend align="center" style="color: brown">
+    Vehicle Maintenance Details
 </legend>
-<table>
-    <tr>
-        <td style="width: 60px" class="rowseparator"></td>
-    </tr>
+<table align="center">
+
     <tr>
         <td>
             District
         </td>
-        <td></td>
         <td>
 
             <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
         </td>
-        <td style="width: 5px"></td>
-        <td>
-            Vehicle No
-        </td>
-        <td></td>
-        <td>
-            <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="135px" AutoPostBack="True"
-                              OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
-                <asp:ListItem Value="-1">--Select--</asp:ListItem>
-            </asp:DropDownList>
-            <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
-        </td>
-    </tr>
+<tr />
+        <tr>
+            <td>
+                Vehicle No
+            </td>
+
+            <td>
+                <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="135px" AutoPostBack="True"
+                                  OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
+                    <asp:ListItem Value="-1">--Select--</asp:ListItem>
+                </asp:DropDownList>
+                <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
+            </td>
+        </tr>
+    
     <tr>
         <td class="rowseparator"></td>
     </tr>
     <tr>
         <td nowrap="nowrap" visible="false"></td>
-        <td></td>
         <td>
             <asp:TextBox ID="txtMaintenanceType" runat="server" Width="135px" onkeypress="return false;" Visible="false"></asp:TextBox>
 
@@ -81,11 +91,11 @@
 </table>
 <br/>
 <fieldset style="padding: 10px 10px 10px 10px" id="fsMaintenance" runat="server">
-<legend>
+<legend align="center">
     <asp:CheckBox ID="chkAmount" runat="server" Text="No Maintenance Amount" OnCheckedChanged="chkAmount_CheckedChanged"
                   AutoPostBack="true"/>
 </legend>
-<table width="100%">
+<table align="center">
     <tr>
         <td>
             <table align="center">
@@ -111,8 +121,8 @@
 </table>
 <asp:Panel ID="pnlSPBillDetails" runat="server" Visible="false">
     <fieldset style="padding: 10px 10px 0px 10px">
-        <legend>Spare Parts </legend>
-        <table width="100%">
+        <legend align="center">Spare Parts </legend>
+        <table align="center">
             <tr>
                 <td>
                     <table align="center">
@@ -121,7 +131,7 @@
                                 <asp:GridView ID="grdvwSPBillDetails" runat="server" AutoGenerateColumns="false"
                                               BackColor="#DEBA84" BorderColor="#DEBA84" BorderWidth="1px"
                                               CellPadding="3" CellSpacing="2"
-                                              DataKeyNames="RowNumber" CssClass="gridviewStyle" GridLines="None"
+                                              DataKeyNames="RowNumber" CssClass="gridviewStyle" GridLines="Both"
                                               OnRowDataBound="grdvwSPBillDetails_RowDataBound">
                                     <RowStyle CssClass="rowStyleGrid" Width="100%"/>
                                     <Columns>
@@ -206,10 +216,10 @@
                                 <table width="100%" align="center">
                                     <tr>
                                         <td align="center" style="height: 26px">
-                                            <asp:Button ID="btnAddNewSPRow" runat="server" Text="Add Row" OnClick="btnAddNewSPRow_Click"/>
+                                            <asp:Button ID="btnAddNewSPRow" CssClass="form-submit-button" runat="server" Text="Add Row" OnClick="btnAddNewSPRow_Click"/>
                                         </td>
                                         <td style="height: 26px">
-                                            <asp:Button ID="btnSPReset" runat="server" Text="Reset" OnClick="btnSPReset_Click"/>
+                                            <asp:Button ID="btnSPReset" CssClass="form-reset-button" runat="server" Text="Reset" OnClick="btnSPReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -556,7 +566,7 @@
 
             <asp:GridView ID="gvVehicleMaintenanceDetails" runat="server" EmptyDataText="No Records Found"
                           AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
-                          CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="True"
+                          CellPadding="4" ForeColor="#333333" GridLines="Both" Width="630px" AllowPaging="True"
                           OnPageIndexChanging="gvVehicleMaintenanceDetails_PageIndexChanging" OnRowCommand="gvVehicleMaintenanceDetails_RowCommand"
                           EnableSortingAndPagingCallbacks="True">
                 <RowStyle CssClass="rowStyleGrid"/>

@@ -52,9 +52,7 @@
 
         if (Date.parse(registrationDate.value) < Date.parse(vehiclePdiDate.value)) {
             alert(
-                "Registration Date should be greater than Pre-Delivery Inspection Date.(Pre-Delivery Inspection Date-" +
-                vehiclePdiDate.value +
-                ")");
+                "Registration Date should be greater than Pre-Delivery Inspection Date.(Pre-Delivery Inspection Date-" +vehiclePdiDate.value +")");
             registrationDate.focus();
             return false;
         }
@@ -85,14 +83,24 @@
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    }
+  </script>
 
-<table class="table table-striped table-bordered table-hover">
-<tr>
-    <td class="rowseparator"></td>
-</tr>
-<tr>
-    <td>
-        <asp:Panel ID="pnlVehicleRegistration" runat="server">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+            <td class="rowseparator"></td>
+            </tr>
+            <tr>
+            <td>
+            <asp:Panel ID="pnlVehicleRegistration" runat="server">
             <table style="width: 100%">
                 <tr>
                     <td align="center" colspan="4"></td>
@@ -243,10 +251,10 @@
                         &nbsp;
                     </td>
                     <td align="center" style="width: 300px">
-                        <asp:Button ID="btSave" Text="Save" runat="server" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" Text="Save" runat="server" CssClass="form-submit-button" OnClick="btSave_Click"/>
                     </td>
                     <td align="left" style="width: 400px">
-                        <asp:Button ID="btReset" runat="server" OnClick="btReset_Click" Text="Reset"/>
+                        <asp:Button ID="btReset" runat="server" OnClick="btReset_Click" CssClass="form-submit-button" Text="Reset"/>
                     </td>
                     <td></td>
                 </tr>
@@ -279,7 +287,7 @@
 </tr>
 <tr>
     <td>
-        <table>
+        <table align="center">
             <tr align="center">
                 <td>
                     <asp:GridView ID="gvVehicleRegistration" runat="server" EmptyDataText="No Records Found"

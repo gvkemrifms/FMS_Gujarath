@@ -16,9 +16,8 @@ public partial class VehicleScheduleServiceRequest : Page
             switch (Request.QueryString["VehID"])
             {
                 case null:
-                    if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+                    if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
                     txtSchedulePlanDate.Attributes.Add("onkeypress", "return false");
-                    btnSubmit.Attributes.Add("onclick", "return validationForServiceReq()");
                     FillVehicles();
                     FillDropDownList();
                     break;

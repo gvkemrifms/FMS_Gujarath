@@ -3,16 +3,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });
             $('#<%= ddlvehicle.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             $('#<%= ddldistrict.ClientID %>').chosen();
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
@@ -47,37 +52,37 @@
         }
     </script>
     <br/>
-    <table>
+    <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblaccidentreport" Style="font-size: 20px; color: brown" runat="server" Text="Accident&nbsp;Report"></asp:Label>
+                <asp:Label Style="color: brown; font-size: 20px;" runat="server" Text="Accident&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
     <br/>
 
-    <table style="width: 100px; margin-left: 175px;">
+    <table align="center">
         <tr>
-          
+
             <td >
-             
-                    Select District <span style="color: Red;">*</span>
-              
+
+                Select District <span style="color: Red;">*</span>
+
             </td>
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px;display:inline-block;white-space:pre;margin:30px;padding-right: 150px;" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" Style="display: inline-block; margin: 30px; padding-right: 150px; white-space: pre; width: 150px;" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
             <td>
 
             </td>
-            </tr>
+        </tr>
         <tr>
             <td >
-            Select Vehicle <span style="color: Red;display:inline-block; width: 10px;">*</span>
+                Select Vehicle <span style="color: Red; display: inline-block; width: 10px;">*</span>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddlvehicle"  runat="server" Style="width: 150px;padding-right:50px;"></asp:DropDownList>
+                <asp:DropDownList ID="ddlvehicle" runat="server" Style="padding-right: 50px; width: 150px;"></asp:DropDownList>
             </td>
         </tr>
         <tr>
@@ -89,45 +94,36 @@
                 <asp:TextBox ID="txtfrmDate" placeholder="From Date" class="search_3" runat="server" onkeypress="return false" oncut="return false;" onpaste="return false;"></asp:TextBox>
             </td>
             <td>
-                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                To date <span style="color: Red;display:inline-block;">*</span>
+                To date <span style="color: Red; display: inline-block;">*</span>
             </td>
             <td>
-                <asp:TextBox ID="txttodate" placeholder="To Date"  class="search_3"  runat="server"  onkeypress="return false" oncut="return false;" onpaste="return false;"></asp:TextBox>
+                <asp:TextBox ID="txttodate" placeholder="To Date" class="search_3" runat="server" onkeypress="return false" oncut="return false;" onpaste="return false;"></asp:TextBox>
             </td>
             <td>
-                <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy"  TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
             </td>
         </tr>
 
         <tr>
             <td>
-                <asp:Button runat="server"  id="btnShowReport"  class="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" ClientIDMode="static" EnableViewState="True"  OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" class="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" ClientIDMode="static" EnableViewState="True" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
 
             <td>
                 <asp:Button runat="server" Text="ExportExcel" class="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
             </td>
             <td>
-                <asp:HiddenField ID="HiddenFileldVariable" runat="server"/>
+                <asp:HiddenField runat="server"/>
             </td>
         </tr>
 
     </table>
-    <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-        <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
+    <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px; margin-top: 20px" HorizontalAlign="Center">
+        <asp:GridView ID="Grddetails" runat="server" EmptyDataText="No Rows Selected" ShowHeaderWhenEmpty="True" BorderColor="brown" BorderWidth="1px"></asp:GridView>
     </asp:Panel>
 </asp:Content>
-
-
-
-
-
-
-
-
-

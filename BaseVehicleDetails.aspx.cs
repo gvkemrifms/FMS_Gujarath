@@ -7,14 +7,13 @@ using GvkFMSAPP.PL;
 public partial class BaseVehicleDetails : Page
 {
     private readonly GvkFMSAPP.BLL.BaseVehicleDetails _basevehdet = new GvkFMSAPP.BLL.BaseVehicleDetails();
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {        
+        {
             var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
             var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
@@ -110,7 +109,7 @@ public partial class BaseVehicleDetails : Page
                     txtTRNo.ReadOnly = true;
                     ViewState["VehNo"] = "Present";
                 }
-               
+
                 break;
         }
     }
@@ -293,154 +292,152 @@ public partial class BaseVehicleDetails : Page
     protected void btnSave_Click(object sender, EventArgs e)
     {
         if (_basevehdet != null)
-        {
             try
             {
-            _basevehdet.InvoiceNo = txtInvoiceNo.Text;
-            _basevehdet.VehicleID = int.Parse(ddlEngineNo.SelectedItem.Value);
-            _basevehdet.InvoiceDate = DateTime.Parse(txtInvoiceDate.Text);
-            _basevehdet.BasicPrice = float.Parse(txtBasicPrice.Text);
-            _basevehdet.HandlingCharges = float.Parse(txtHandlingCharges.Text);
-            _basevehdet.ExciseDuty = float.Parse(txtExciseDuty.Text);
-            _basevehdet.EC = float.Parse(txtEC.Text);
-            _basevehdet.VAT = float.Parse(txtVAT.Text);
-            _basevehdet.CessOnUAV = float.Parse(txtUAV.Text);
-            _basevehdet.SHEC = float.Parse(txtSHEC.Text);
-            _basevehdet.TotalValue = float.Parse(txtVehCost.Text);
-            _basevehdet.VehicleModel = ddlVehicleModel.SelectedItem.Value;
-            _basevehdet.KMPL = float.Parse(txtKmpl.Text);
-            _basevehdet.VehicleType = ddlVehicleType.SelectedItem.Value;
-            _basevehdet.VehicleEmissionType = txtVehicleEmissionType.Text;
-            _basevehdet.PurchaseDate = DateTime.Parse(txtPurchaseDate.Text);
-            _basevehdet.OwnerName = txtOwnerName.Text;
-            _basevehdet.ManufacturerName = ddlManufacturerName.SelectedItem.Value;
-            _basevehdet.VehicleCost = float.Parse(txtVehCost.Text);
-            _basevehdet.ManufacturingDate = DateTime.Parse(txtManufacturingDate.Text);
-            _basevehdet.EngineCapacity = txtEngineCapacity.Text;
-            _basevehdet.FuelType = ddlFuelType.SelectedItem.Value;
-            _basevehdet.District = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
-            _basevehdet.InsuranceType = Convert.ToInt32(ddlInsType.SelectedItem.Value);
-            _basevehdet.InsuranceAgency = Convert.ToInt32(ddlAgency.SelectedItem.Value);
-            _basevehdet.InsurancePolicyNo = txtInPolicyNo.Text;
-            _basevehdet.CurrentPolicyEndDate = DateTime.Now;
-            _basevehdet.InsuranceReceiptNo = txtInsuranceReceiptNo.Text;
-            _basevehdet.InsuranceFeesPaid = float.Parse(txtInsFee.Text);
-            _basevehdet.InsuranceFeesPaidDate = DateTime.Parse(txtInsuranceFeesPaidDate.Text);
-            _basevehdet.PolicyStartDate = DateTime.Parse(txtValiSDate.Text);
-            _basevehdet.PolicyValidityPeriod = ddlPolicyValidityPeriod.SelectedItem.Value;
-            _basevehdet.PolicyEndDate = DateTime.Parse(txtValEDate.Text);
-            _basevehdet.FL = txtFL.Text;
-            _basevehdet.FR = txtFR.Text;
-            _basevehdet.RL = txtRL.Text;
-            _basevehdet.RR = txtRR.Text;
-            _basevehdet.Stephny = txtSpareWheel.Text;
-            _basevehdet.TyreMake = ddlTyreMake.SelectedItem.Value;
-            _basevehdet.TyreModelSize = int.Parse(ddlModelSize.SelectedItem.Value);
-            _basevehdet.OdometerReading = long.Parse(txtOdometerReading.Text);
-            _basevehdet.TRNo = txtTRNo.Text;
-            _basevehdet.TRDate = DateTime.Parse(txtTRDate.Text);
-            _basevehdet.TRDistrict = ddlTRDistrict.SelectedItem.Text;
-            _basevehdet.VehicleRTACircle = txtVeRTACircle.Text;
-            _basevehdet.RoadTaxFee = float.Parse(txtRoadTaxFee.Text);
-            _basevehdet.SeatingCapacity = int.Parse(txtSittingCapacity.Text);
-            _basevehdet.InspectionDate = DateTime.Parse(txtInspectionDate.Text);
-            _basevehdet.Inspected = null;
-            _basevehdet.InspectedBy = txtInspectedBy.Text;
-            _basevehdet.Battery1 = txtBattery1.Text;
-            _basevehdet.Battery2 = txtBattery2.Text;
-            _basevehdet.BatteryMake = ddlBatteryMake.SelectedItem.Value;
-            _basevehdet.BatteryModelCapacity = int.Parse(ddlModelCapacity.SelectedItem.Value);
-            var vehOut = ViewState["VehNo"].ToString() == "Present" ? 0 : _basevehdet.ValidateVehicleNumber();
-            var tyreOut = _basevehdet.ValidateTyre();
-            var batteryOut = _basevehdet.ValidateBattery();
-            if (vehOut == 0 && tyreOut == 0 && batteryOut == 0)
-            {
-                var ret = _basevehdet.InsBaseVehicleDetails();
-                Show(ret > 0 ? "Record Inserted Successfully" : "Error");
-                ClearControls();
-                FillDifferentDropDowns("getEngineNumber");
-            }
-            else
-            {
-                if (vehOut > 0)
+                _basevehdet.InvoiceNo = txtInvoiceNo.Text;
+                _basevehdet.VehicleID = int.Parse(ddlEngineNo.SelectedItem.Value);
+                _basevehdet.InvoiceDate = DateTime.Parse(txtInvoiceDate.Text);
+                _basevehdet.BasicPrice = float.Parse(txtBasicPrice.Text);
+                _basevehdet.HandlingCharges = float.Parse(txtHandlingCharges.Text);
+                _basevehdet.ExciseDuty = float.Parse(txtExciseDuty.Text);
+                _basevehdet.EC = float.Parse(txtEC.Text);
+                _basevehdet.VAT = float.Parse(txtVAT.Text);
+                _basevehdet.CessOnUAV = float.Parse(txtUAV.Text);
+                _basevehdet.SHEC = float.Parse(txtSHEC.Text);
+                _basevehdet.TotalValue = float.Parse(txtVehCost.Text);
+                _basevehdet.VehicleModel = ddlVehicleModel.SelectedItem.Value;
+                _basevehdet.KMPL = float.Parse(txtKmpl.Text);
+                _basevehdet.VehicleType = ddlVehicleType.SelectedItem.Value;
+                _basevehdet.VehicleEmissionType = txtVehicleEmissionType.Text;
+                _basevehdet.PurchaseDate = DateTime.Parse(txtPurchaseDate.Text);
+                _basevehdet.OwnerName = txtOwnerName.Text;
+                _basevehdet.ManufacturerName = ddlManufacturerName.SelectedItem.Value;
+                _basevehdet.VehicleCost = float.Parse(txtVehCost.Text);
+                _basevehdet.ManufacturingDate = DateTime.Parse(txtManufacturingDate.Text);
+                _basevehdet.EngineCapacity = txtEngineCapacity.Text;
+                _basevehdet.FuelType = ddlFuelType.SelectedItem.Value;
+                _basevehdet.District = Convert.ToInt32(ddlDistrict.SelectedItem.Value);
+                _basevehdet.InsuranceType = Convert.ToInt32(ddlInsType.SelectedItem.Value);
+                _basevehdet.InsuranceAgency = Convert.ToInt32(ddlAgency.SelectedItem.Value);
+                _basevehdet.InsurancePolicyNo = txtInPolicyNo.Text;
+                _basevehdet.CurrentPolicyEndDate = DateTime.Now;
+                _basevehdet.InsuranceReceiptNo = txtInsuranceReceiptNo.Text;
+                _basevehdet.InsuranceFeesPaid = float.Parse(txtInsFee.Text);
+                _basevehdet.InsuranceFeesPaidDate = DateTime.Parse(txtInsuranceFeesPaidDate.Text);
+                _basevehdet.PolicyStartDate = DateTime.Parse(txtValiSDate.Text);
+                _basevehdet.PolicyValidityPeriod = ddlPolicyValidityPeriod.SelectedItem.Value;
+                _basevehdet.PolicyEndDate = DateTime.Parse(txtValEDate.Text);
+                _basevehdet.FL = txtFL.Text;
+                _basevehdet.FR = txtFR.Text;
+                _basevehdet.RL = txtRL.Text;
+                _basevehdet.RR = txtRR.Text;
+                _basevehdet.Stephny = txtSpareWheel.Text;
+                _basevehdet.TyreMake = ddlTyreMake.SelectedItem.Value;
+                _basevehdet.TyreModelSize = int.Parse(ddlModelSize.SelectedItem.Value);
+                _basevehdet.OdometerReading = long.Parse(txtOdometerReading.Text);
+                _basevehdet.TRNo = txtTRNo.Text;
+                _basevehdet.TRDate = DateTime.Parse(txtTRDate.Text);
+                _basevehdet.TRDistrict = ddlTRDistrict.SelectedItem.Text;
+                _basevehdet.VehicleRTACircle = txtVeRTACircle.Text;
+                _basevehdet.RoadTaxFee = float.Parse(txtRoadTaxFee.Text);
+                _basevehdet.SeatingCapacity = int.Parse(txtSittingCapacity.Text);
+                _basevehdet.InspectionDate = DateTime.Parse(txtInspectionDate.Text);
+                _basevehdet.Inspected = null;
+                _basevehdet.InspectedBy = txtInspectedBy.Text;
+                _basevehdet.Battery1 = txtBattery1.Text;
+                _basevehdet.Battery2 = txtBattery2.Text;
+                _basevehdet.BatteryMake = ddlBatteryMake.SelectedItem.Value;
+                _basevehdet.BatteryModelCapacity = int.Parse(ddlModelCapacity.SelectedItem.Value);
+                var vehOut = ViewState["VehNo"].ToString() == "Present" ? 0 : _basevehdet.ValidateVehicleNumber();
+                var tyreOut = _basevehdet.ValidateTyre();
+                var batteryOut = _basevehdet.ValidateBattery();
+                if (vehOut == 0 && tyreOut == 0 && batteryOut == 0)
                 {
-                    Show("T/R Number is already present");
-                    var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                    txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                    txtVehicleCost.Text = txtVehCost.Text;
+                    var ret = _basevehdet.InsBaseVehicleDetails();
+                    Show(ret > 0 ? "Record Inserted Successfully" : "Error");
+                    ClearControls();
+                    FillDifferentDropDowns("getEngineNumber");
                 }
+                else
+                {
+                    if (vehOut > 0)
+                    {
+                        Show("T/R Number is already present");
+                        var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                        txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                        txtVehicleCost.Text = txtVehCost.Text;
+                    }
 
-                if (tyreOut > 0)
-                    switch (tyreOut)
-                    {
-                        case 1:
+                    if (tyreOut > 0)
+                        switch (tyreOut)
                         {
-                            Show("FL Tyre is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
+                            case 1:
+                            {
+                                Show("FL Tyre is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
+                            case 2:
+                            {
+                                Show("FR Tyre is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
+                            case 3:
+                            {
+                                Show("RL Tyre is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
+                            case 4:
+                            {
+                                Show("RR Tyre is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
+                            default:
+                            {
+                                Show("Stephny Tyre is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
                         }
-                        case 2:
+                    if (batteryOut > 0)
+                        switch (batteryOut)
                         {
-                            Show("FR Tyre is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
+                            case 1:
+                            {
+                                Show("Battery1 is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
+                            default:
+                            {
+                                Show("Battery2 is already present");
+                                var validityPeriod = ViewState["ValidityPeriod"].ToString();
+                                txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
+                                txtVehicleCost.Text = txtVehCost.Text;
+                                break;
+                            }
                         }
-                        case 3:
-                        {
-                            Show("RL Tyre is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
-                        }
-                        case 4:
-                        {
-                            Show("RR Tyre is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
-                        }
-                        default:
-                        {
-                            Show("Stephny Tyre is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
-                        }
-                    }
-                if (batteryOut > 0)
-                    switch (batteryOut)
-                    {
-                        case 1:
-                        {
-                            Show("Battery1 is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
-                        }
-                        default:
-                        {
-                            Show("Battery2 is already present");
-                            var validityPeriod = ViewState["ValidityPeriod"].ToString();
-                            txtValEDate.Text = Convert.ToDateTime(txtValiSDate.Text).AddMonths(Convert.ToInt16(validityPeriod)).Subtract(new TimeSpan(1, 0, 0)).ToShortDateString();
-                            txtVehicleCost.Text = txtVehCost.Text;
-                            break;
-                        }
-                    }
-            }
+                }
             }
             catch (Exception ex)
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     protected void btnReset_Click(object sender, EventArgs e)

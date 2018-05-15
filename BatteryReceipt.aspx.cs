@@ -7,9 +7,9 @@ using GvkFMSAPP.PL;
 
 public partial class BatteryReceipt : Page
 {
-    public IInventory ObjFmsInvBatRecp = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
+    public IInventory ObjFmsInvBatRecp = new FMSInventory();
 
     protected void Page_Load(object sender, EventArgs e)
     {

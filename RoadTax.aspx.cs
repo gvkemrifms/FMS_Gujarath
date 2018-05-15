@@ -72,7 +72,7 @@ public partial class RoadTax : Page
     public void GetVehicleNumber()
     {
         var ds = _roadtax.GetVehicleNumber();
-        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+        if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlVehicleNumber);
     }
 
     protected void btSave_Click(object sender, EventArgs e)

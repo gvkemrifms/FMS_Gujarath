@@ -2,16 +2,17 @@
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using AjaxControlToolkit;
 using GvkFMSAPP.BLL;
+using GvkFMSAPP.BLL.StatutoryCompliance;
 using GvkFMSAPP.DLL;
+using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
 
 public partial class AttachDocuments : Page
 {
-    readonly Helper _helper = new Helper();
     private readonly AttachmentForVehiclesBLL _attachmentForVehicle = new AttachmentForVehiclesBLL();
-    private readonly GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance _vehicleInsurance = new GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance();
-    private readonly GvkFMSAPP.BLL.FMSGeneral _fmsGeneral = new GvkFMSAPP.BLL.FMSGeneral();
+    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
+    private readonly Helper _helper = new Helper();
+    private readonly VehicleInsurance _vehicleInsurance = new VehicleInsurance();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -29,7 +30,9 @@ public partial class AttachDocuments : Page
         {
             if (!Directory.Exists(Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text)) Directory.CreateDirectory(Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text);
             if (fileAttachmentPurpose.PostedFile == null)
+            {
                 Show("Please select a file to upload.");
+            }
             else
             {
                 var filename = Path.GetFileName(fileAttachmentPurpose.PostedFile.FileName);
@@ -37,7 +40,9 @@ public partial class AttachDocuments : Page
                 _attachmentForVehicle.VehicleID = int.Parse(ddlistVehicleNumber.SelectedItem.Value);
                 _attachmentForVehicle.AttachmentPurposeFile = filename;
                 if (_attachmentForVehicle.CheckAttachmentFileExistByVehicleId())
+                {
                     Show("File Already been Uploaded for the existing Vehicle .");
+                }
                 else
                 {
                     var saveLocation = Server.MapPath("Data") + "\\" + ddlistVehicleNumber.SelectedItem.Text + "\\" + filename.Split('.')[0] + "_" + DateTime.Now.ToString("ddMMyyhhmmss") + "." + filename.Split('.')[1];

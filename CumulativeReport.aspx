@@ -1,13 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="CumulativeReport.aspx.cs" Inherits="CumulativeReport" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div id="main">
-
         <div id="five" style="float: left; width: 5%">
             <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Export To Excel" Style="height: 33px; font-size: 12px; width: 150px;"></asp:Button>
+                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Export To Excel" Style="font-size: 12px; height: 33px; width: 150px;"></asp:Button>
             </div>
         </div>
 

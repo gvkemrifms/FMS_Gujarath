@@ -92,7 +92,7 @@ public partial class VehicleHistory : Page
 
     protected void FillVehicleFitnessRenewall()
     {
-        _vehicleFitnessRenewal.VehicleID = int.Parse(ddlVehicleList.SelectedItem.Value);
+        _vehicleFitnessRenewal.VehicleID = int.Parse(ddlVehicleList.SelectedValue);
         _vehicleFitnessRenewal.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = _vehicleFitnessRenewal.GetFitnessRenewalbyVehicleID();
         if (ds == null) throw new ArgumentNullException(nameof(ds));

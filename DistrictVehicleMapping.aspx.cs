@@ -4,12 +4,13 @@ using System.Data;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GvkFMSAPP.BLL.VAS_BLL;
 
 public partial class DistrictVehicleMapping : Page
 {
     private readonly GvkFMSAPP.BLL.Admin.DistrictVehicleMapping _distvehmapp = new GvkFMSAPP.BLL.Admin.DistrictVehicleMapping();
-    private readonly GvkFMSAPP.BLL.VAS_BLL.VASGeneral _vehallobj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vehallobj = new VASGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -19,7 +20,6 @@ public partial class DistrictVehicleMapping : Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "text", "abc()", true);
             btnSave.Attributes.Add("onclick", "return validation()");
             if (_distvehmapp != null)
-            {
                 try
                 {
                     _helper.FillDropDownHelperMethodWithDataSet(_distvehmapp.GetVehicleTypes(), "vehicle_type_name", "vehicle_type_id", ddlVehType); //Fill VehicleTypes
@@ -30,7 +30,6 @@ public partial class DistrictVehicleMapping : Page
                 {
                     _helper.ErrorsEntry(ex);
                 }
-            }
         }
     }
 
@@ -158,7 +157,9 @@ public partial class DistrictVehicleMapping : Page
         try
         {
             if (ddlVehType.SelectedIndex <= 0)
+            {
                 Show("Please Select vehicle type");
+            }
             else
             {
                 _vehallobj.OffRoadVehcileId = Convert.ToInt32(ddlVehicleNumber.SelectedItem.Value);
@@ -199,7 +200,7 @@ public partial class DistrictVehicleMapping : Page
                 _vehallobj.ContactNumber = txtContactNumber.Text;
                 _vehallobj.VehType = ddlVehType.SelectedItem.Value;
                 var clsGen = new ClsGeneral();
-                DataTable dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
+                var dtGetVehData = clsGen.getVehicleData(ddlVehicleNumber.SelectedItem.Text);
                 var insres = _vehallobj.InsNewVehAllocation_new();
                 switch (insres)
                 {

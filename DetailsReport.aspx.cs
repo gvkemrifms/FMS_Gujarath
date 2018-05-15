@@ -4,13 +4,13 @@ using System.Web.UI;
 
 public partial class DetailsReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {        
+        {
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
@@ -32,7 +32,9 @@ public partial class DetailsReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvehicle.Enabled = false;
+        }
         else
         {
             ddlvehicle.Enabled = true;
@@ -68,7 +70,6 @@ public partial class DetailsReport : Page
     {
         try
         {
-        
             _helper.FillDropDownHelperMethodWithSp("P_FMS_Report_VehicleDetails_FitnessReneweal", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", null, Grddetails);
         }
         catch (Exception ex)

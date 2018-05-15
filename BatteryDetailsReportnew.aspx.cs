@@ -3,7 +3,7 @@ using System.Web.UI;
 
 public partial class BatteryDetailsReportnew : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {

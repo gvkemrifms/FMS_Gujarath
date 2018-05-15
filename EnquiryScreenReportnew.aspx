@@ -1,18 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="EnquiryScreenReportnew.aspx.cs" Inherits="EnquiryScreenReportnew" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddlvehicle.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 2,
                 placeholder: "Select an option"
             });
         });
-        function Validations()  
-        {
+
+        function Validations() {
             var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
             if (ddlVehicle === '--select--') {
                 return alert("Please select Vehicle");
@@ -20,11 +20,11 @@
             return true;
         }
     </script>
-   
+
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblenquiryreport" style="font-size: 20px; color: brown" runat="server" Text="Enquiry&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Enquiry&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -33,16 +33,16 @@
         <tr>
 
             <td>
-                Select Vehicle<asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
+                Select Vehicle<asp:Label runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" id="btnShowReport" OnClick="btClick_ShowReport" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btClick_ShowReport" CssClass="form-submit-button" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
 
             <td>
@@ -51,14 +51,13 @@
             </td>
         </tr>
 
-</table>
-            <br />
+    </table>
+    <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="Grddetails" runat="server" BorderWidth="1px" BorderColor="brown"></asp:GridView>
         </asp:Panel>
     </div>
-         
-  
-</asp:Content>
 
+
+</asp:Content>

@@ -1,8 +1,7 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Fabricator.aspx.cs" Inherits="Fabricator" Language="C#" MasterPageFile="~/temp.master" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <script type="text/javascript">
-  
+
     function validationFabricator() {
         switch (document.getElementById("<%= txtFabricatorName.ClientID %>").value) {
         case '':
@@ -62,20 +61,21 @@
             document.getElementById("<%= txtFabricatorPanNo.ClientID %>").focus();
             return false;
         }
-        var pan=document.getElementById("<%= txtFabricatorPanNo.ClientID %>").value;
+        var pan = document.getElementById("<%= txtFabricatorPanNo.ClientID %>").value;
         if (isValidPAN(pan) === false) {
             return false;
         }
-    
+
         switch (document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value) {
         case '':
             alert("Please Enter Fabricator EmailId");
             document.getElementById("<%= txtFabricatorEmailId.ClientID %>").focus();
             return false;
         }
-       
-        var emailPat = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        var emailid = document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value;      
+
+        var emailPat =
+            /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        var emailid = document.getElementById("<%= txtFabricatorEmailId.ClientID %>").value;
         var matchArray = emailid.match(emailPat);
         if (matchArray == null) {
             alert("Your email address seems incorrect. Please try again.");
@@ -104,14 +104,18 @@
 <script type="text/javascript">
     function pageLoad() {
         $('#<%= ddlFabricatorState.ClientID %>').select2({
-            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
             placeholder: "Select an option"
         });
         $('#<%= ddlFabricatorDistrict.ClientID %>').select2({
-            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2, 
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
             placeholder: "Select an option"
         });
-    } 
+    }
 </script>
 
 <table id="table1" cellspacing="0" cellpadding="0" width="100%" align="center" border="0"
@@ -130,11 +134,11 @@
                             <table>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        Fabricator Name <span style="color: Red" class="labelErr">*</span>
+                                        Fabricator Name <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorName" runat="server" CssClass="search_3" Width="150px"  MaxLength="35"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorName" runat="server" CssClass="search_3" Width="150px" MaxLength="35"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -142,11 +146,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        Fabricator Type <span style="color: Red" class="labelErr">*</span>
+                                        Fabricator Type <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:DropDownList ID="ddlFabricatorType" CssClass="search_3" Width="150px" runat="server" >
+                                        <asp:DropDownList ID="ddlFabricatorType" CssClass="search_3" Width="150px" runat="server">
                                             <asp:ListItem Value="0">--Select--</asp:ListItem>
                                             <asp:ListItem Value="1">Body</asp:ListItem>
                                             <asp:ListItem Value="2">FRP</asp:ListItem>
@@ -158,12 +162,12 @@
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 140px; height: 25px;" align="left">
-                                        State <span style="color: Red" class="labelErr">*</span>
+                                    <td style="height: 25px; width: 140px;" align="left">
+                                        State <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlFabricatorState" runat="server" Width="150px"  AutoPostBack="True"
+                                        <asp:DropDownList ID="ddlFabricatorState" runat="server" Width="150px" AutoPostBack="True"
                                                           OnSelectedIndexChanged="ddlFabricatorState_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -177,7 +181,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" Width="150px" 
+                                        <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" Width="150px"
                                                           AutoPostBack="True" OnSelectedIndexChanged="ddlFabricatorDistrict_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </td>
@@ -188,11 +192,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        Address <span style="color: Red" class="labelErr">*</span>
+                                        Address <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine"  CssClass="search_3" Height="50px"
+                                        <asp:TextBox ID="txtFabricatorAddress" runat="server" TextMode="MultiLine" CssClass="search_3" Height="50px"
                                                      onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)">
                                         </asp:TextBox>
                                     </td>
@@ -202,11 +206,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        Contact Number <span style="color: Red" class="labelErr">*</span>
+                                        Contact Number <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" Width="150px"  CssClass="search_3"
+                                        <asp:TextBox ID="txtFabricatorContactNumber" runat="server" Width="150px" CssClass="search_3"
                                                      MaxLength="15">
                                         </asp:TextBox>
                                     </td>
@@ -221,7 +225,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorContactPerson" Width="150px" runat="server"  CssClass="search_3"
+                                        <asp:TextBox ID="txtFabricatorContactPerson" Width="150px" runat="server" CssClass="search_3"
                                                      MaxLength="35">
                                         </asp:TextBox>
                                     </td>
@@ -231,11 +235,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        PAN No <span style="color: Red" class="labelErr">*</span>
+                                        PAN No <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server" Width="150px"  CssClass="search_3"  MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorPanNo" runat="server" Width="150px" CssClass="search_3" MaxLength="10"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -243,11 +247,11 @@
                                 </tr>
                                 <tr>
                                     <td align="left" style="width: 140px">
-                                        E-mail ID <span class="labelErr" style="color: Red">*</span>
+                                        E-mail ID <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorEmailId"  CssClass="search_3" Width="150px" runat="server"  MaxLength="50"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorEmailId" CssClass="search_3" Width="150px" runat="server" MaxLength="50"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -255,11 +259,11 @@
                                 </tr>
                                 <tr>
                                     <td align="left" style="width: 140px">
-                                        TIN <span class="labelErr" style="color: Red">*</span> &nbsp;
+                                        TIN <span style="color: Red">*</span> &nbsp;
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorTin"  CssClass="search_3" Width="150px" runat="server"  MaxLength="11" onkeypress="return numeric_only(event);" ></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorTin" CssClass="search_3" Width="150px" runat="server" MaxLength="11" onkeypress="return numeric_only(event);"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -267,11 +271,11 @@
                                 </tr>
                                 <tr>
                                     <td align="left" style="width: 140px">
-                                        ERN <span class="labelErr" style="color: Red">*</span>
+                                        ERN <span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:TextBox ID="txtFabricatorErn" MaxLength="11"  CssClass="search_3" Width="150px" runat="server" name="floats"  ondrop = "return false;" onpaste = "return false;" onkeypress="return numeric_only(event);"></asp:TextBox>
+                                        <asp:TextBox ID="txtFabricatorErn" MaxLength="11" CssClass="search_3" Width="150px" runat="server" name="floats" ondrop="return false;" onpaste="return false;" onkeypress="return numeric_only(event);"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -299,7 +303,7 @@
 <tr>
     <td class="rowseparator"></td>
 </tr>
-<br />
+<br/>
 <tr>
     <td align="center">
         <fieldset style="padding: 10px">
@@ -368,5 +372,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-
-

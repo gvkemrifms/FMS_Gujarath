@@ -4,14 +4,14 @@ using System.Web.UI;
 
 public partial class BillsOutstandingSummaryReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-           
-            BindDistrictdropdown();       
+
+            BindDistrictdropdown();
     }
 
     private void BindDistrictdropdown()
@@ -39,7 +39,9 @@ public partial class BillsOutstandingSummaryReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvendor.Enabled = false;
+        }
         else
         {
             ddlvendor.Enabled = true;

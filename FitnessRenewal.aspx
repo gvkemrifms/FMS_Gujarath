@@ -3,13 +3,14 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <link href="css/FitnessRenewal.css" rel="stylesheet"/>
-<script  type="text/javascript">
+<script type="text/javascript">
     $('#<%= ddlVehicleNumber.ClientID %>').select2({
         disable_search_threshold: 5,
         search_contains: true,
         minimumResultsForSearch: 20,
         placeholder: "Select an option"
     });
+
     function validation() {
         var fitnessValidityStartDate = document.getElementById('<%= txtFitnessValidityStartDate.ClientID %>');
         var fitnessValidityPeriod = document.getElementById('<%= ddlFitnessValidityPeriod.ClientID %>');
@@ -75,7 +76,7 @@
 
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
-    <legend align="center" style="color:brown">Fitness Renewal</legend>
+<legend align="center" style="color: brown">Fitness Renewal</legend>
 <br/>
 <table>
 <tr>
@@ -313,4 +314,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

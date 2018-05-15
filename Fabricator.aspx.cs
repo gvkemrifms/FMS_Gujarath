@@ -7,8 +7,8 @@ using GvkFMSAPP.PL;
 
 public partial class Fabricator : Page
 {
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFmsFab = new FMSFleetMaster();
-    readonly Helper _helper = new Helper();
 
     #region Page Load
 
@@ -85,7 +85,6 @@ public partial class Fabricator : Page
     {
         var ds = ObjFmsFab.IFillStates();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlFabricatorState);
@@ -96,7 +95,6 @@ public partial class Fabricator : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     #endregion
@@ -107,7 +105,6 @@ public partial class Fabricator : Page
     {
         var ds = ObjFmsFab.IFillDistricts(stateId);
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFabricatorDistrict);
@@ -117,7 +114,6 @@ public partial class Fabricator : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     #endregion
@@ -198,7 +194,9 @@ public partial class Fabricator : Page
                                 }
                             }
                             else
+                            {
                                 Show("Fabricator Name already exists");
+                            }
                         }
 
                         break;
@@ -236,7 +234,9 @@ public partial class Fabricator : Page
                             }
                         }
                         else
+                        {
                             Show("Fabricator Name already exists");
+                        }
 
                         break;
                     }

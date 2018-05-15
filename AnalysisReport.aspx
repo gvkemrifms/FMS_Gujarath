@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="AnalysisReport.aspx.cs" Inherits="AnalysisReport" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -38,19 +37,17 @@
             var ordFromDate = new Date(fromDate);
             var ordToDate = new Date(toDate);
             var currentDate = new Date();
-            if (ordFromDate > currentDate) {
+            if (ordFromDate > currentDate)
                 return alert("From date should not be greater than today's date");
-            }
-            if (ordToDate < ordFromDate) {
+            if (ordToDate < ordFromDate)
                 alert("Please select valid date range");
-            }
             return true;
         }
     </script>
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblanalysisreport" style="font-size: 20px; color: brown" runat="server" Text="Analysis&nbsp;Report"></asp:Label>
+                <asp:Label style="font-size: 20px; color: brown" runat="server" Text="Analysis&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table >
@@ -68,7 +65,7 @@
             </tr>
         <tr>
             <td>
-                Select Vehicle <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
+                Select Vehicle <asp:Label runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -77,18 +74,18 @@
         </tr>
         <tr>
             <td>
-                From Date <asp:Label ID="lblfromdate" runat="server" Text="FromDate" style="color: red">*</asp:Label>
+                From Date <asp:Label runat="server" Text="FromDate" style="color: red">*</asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtfrmDate" runat="server" CssClass="search_3"></asp:TextBox>
             </td>        
             <td>
-                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
             </td>
         </tr>
         <tr>
             <td>
-                To Date <asp:Label ID="lbltodate" runat="server" Text="To date"  style="color: red">*</asp:Label>
+                To Date <asp:Label runat="server" Text="To date"  style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -101,10 +98,10 @@
 
         <tr>
             <td>
-                <asp:Button runat="server" id="btnShowReport" Text="ShowReport" class="form-submit-button" OnClientClick="if(!Validations()) return false;" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" class="form-submit-button" OnClientClick="if(!Validations()) return false;" OnClick="btnsubmit_Click"></asp:Button>
             </td>
             <td>
-                <asp:Button runat="server" id="btnExportExcel" Text="ExportExcel" class="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
+                <asp:Button runat="server" Text="ExportExcel" class="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
             </td>
         </tr>
     </table>

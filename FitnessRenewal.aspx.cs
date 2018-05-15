@@ -3,13 +3,14 @@ using System.Data;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GvkFMSAPP.BLL;
 using GvkFMSAPP.PL;
 
 public partial class FitnessRenewal : Page
 {
-    private readonly GvkFMSAPP.BLL.FMSGeneral _fmsGeneral = new GvkFMSAPP.BLL.FMSGeneral();
     private readonly GvkFMSAPP.BLL.StatutoryCompliance.FitnessRenewal _fitnessren = new GvkFMSAPP.BLL.StatutoryCompliance.FitnessRenewal();
-    readonly Helper _helper = new Helper();
+    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
+    private readonly Helper _helper = new Helper();
     private int _ret;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -73,7 +74,6 @@ public partial class FitnessRenewal : Page
             if (_fitnessren != null)
                 _fitnessren.FitnessRenewalID = int.Parse(ViewState["FitnessRenewalID"].ToString());
         if (_fitnessren != null)
-        {
             try
             {
                 _fitnessren.FRValidityStartDate = DateTime.Parse(txtFitnessValidityStartDate.Text);
@@ -106,7 +106,6 @@ public partial class FitnessRenewal : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
 
         ClearControls();
         GetVehicleNumber();

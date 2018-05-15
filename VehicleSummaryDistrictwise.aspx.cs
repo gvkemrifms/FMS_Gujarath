@@ -7,6 +7,7 @@ public partial class VehicleSummaryDistrictwise : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) BindDistrictdropdown();
     }
 
@@ -14,7 +15,7 @@ public partial class VehicleSummaryDistrictwise : Page
     {
         try
         {
-            var sqlQuery = "SELECT district_id ds_dsid,district_name ds_lname from [m_district]  where state_id = 24 order by district_name";
+            var sqlQuery = "SELECT district_id ds_dsid,district_name ds_lname from [m_district]  where state_id = 30 order by district_name";
             _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
         catch (Exception ex)

@@ -32,7 +32,9 @@ public partial class AccidentReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvehicle.Enabled = false;
+        }
         else
         {
             ddlvehicle.Enabled = true;

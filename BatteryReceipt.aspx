@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="BatteryReceipt.aspx.cs" Inherits="BatteryReceipt" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <script language="javascript" type="text/javascript">
@@ -68,18 +67,18 @@
 <ContentTemplate>
 <fieldset style="padding: 10px">
 <legend>Battery Receipt</legend>
-<div id="Div2" runat="server" align="center">
+<div runat="server" align="center">
     Vehicle Number<span style="color: Red">*</span>
     <ajaxToolkit:ComboBox AutoCompleteMode="Append" ID="ddlInventoryBatteryReceiptVehicles" runat="server" AutoPostBack="True" DropDownStyle="DropDownList"
                           OnSelectedIndexChanged="ddlInventoryBatteryReceiptVehicles_SelectedIndexChanged">
     </ajaxToolkit:ComboBox>
 </div>
 <br/>
-<div id="Div5" runat="server">
+<div runat="server">
     Battery Details
 </div>
 <br/>
-<div id="Div6" runat="server" align="center">
+<div runat="server" align="center">
     <table>
         <tr>
             <td class="rowseparator">
@@ -126,7 +125,7 @@
 <asp:Button ID="btnShowPopup" runat="server" Style="display: none"/>
 <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtenderBatteryReceipt" BehaviorID="mdlPopup"
                                 runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
-<asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="padding: 10px; display: none;">
+<asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="display: none; padding: 10px;">
     <fieldset>
         <legend>Battery Receipt Details</legend>
         <table class="style1" align="center">
@@ -285,7 +284,7 @@
                         <SelectedRowStyle CssClass="selectedRowStyle"/>
                         <HeaderStyle CssClass="headerStyle"/>
                     </asp:GridView>
-                    <div id="Div7" align="center" style="width: 95%; background-color: white">
+                    <div id="Div7" align="center" style="background-color: white; width: 95%;">
                     Remarks
                     <asp:TextBox ID="txtRemarks" runat="server" onKeyUp="CheckLength(this,50)"
                                  onChange="CheckLength(this,50)">
@@ -293,7 +292,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <asp:Button ID="btnOk" runat="server" Text="Issue" Width="50px" OnClick="btnOk_Click"/>
                     &nbsp;&nbsp;
-                    <asp:Button ID="btnNo" runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
+                    <asp:Button runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
                 </td>
             </tr>
             <tr>
@@ -306,5 +305,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-
-

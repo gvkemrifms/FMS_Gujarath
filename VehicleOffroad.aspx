@@ -6,6 +6,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="js/Validation.js"></script>
 <script type="text/javascript" language="javascript">
+    function pageLoad() {
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+        $('#<%=ddlreasons.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
+            placeholder: "Select an option"
+        });
+    }
     function addZero(i) {
         if (i < 10) {
             i = "0" + i;
@@ -141,18 +161,15 @@
     }
 </script>
 <fieldset style="padding: 10px">
-<legend>Vehicle OffRoad</legend>
-<table style="width: 640px;">
-    <tr>
-        <td colspan="7"></td>
-    </tr>
+<legend align="center" style="color: brown">Vehicle OffRoad</legend>
+<table align="center">
+   
     <tr>
         <td>
-            District<span class="labelErr" style="color: Red">*</span>
+            District<span  style="color: Red">*</span>
         </td>
-        <td class="columnseparator"></td>
-        <td colspan="5">
-            <asp:DropDownList ID="ddlDistrict" runat="server" Width="36%" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged"
+        <td >
+            <asp:DropDownList ID="ddlDistrict" runat="server" Width="150px" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged"
                               AutoPostBack="True">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
@@ -162,22 +179,22 @@
         <td class="rowseparator"></td>
     </tr>
     <tr>
-        <td style="height: 21px">
-            Vehicle Number<span class="labelErr" style="color: Red">*</span>
+        <td >
+            Vehicle Number<span  style="color: Red">*</span>
         </td>
-        <td class="columnseparator" style="height: 21px"></td>
-        <td style="height: 21px">
-            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="true"
-                          OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged" DropDownStyle="DropDownList">
+        <td >
+            <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="150px" OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged"
+                              AutoPostBack="True">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-            </cc1:ComboBox>
+            </asp:DropDownList>
+
         </td>
-        <td class="columnseparator" style="height: 21px"></td>
-        <td style="height: 21px">
+        <td class="columnseparator"></td>
+        <td >
             <asp:Label ID="lblSegment" runat="server" Text="Base Location" Visible="false"></asp:Label>
         </td>
-        <td class="columnseparator" style="height: 21px"></td>
-        <td style="height: 21px">
+        <td class="columnseparator" ></td>
+        <td >
             <asp:Label ID="lblSegmentName" runat="server" Text="" Visible="false"></asp:Label>
         </td>
     </tr>
@@ -186,21 +203,20 @@
     </tr>
     <tr>
         <td>
-            Reason <span class="labelErr" style="color: Red">*</span>
+            Reason <span  style="color: Red">*</span>
         </td>
-        <td class="columnseparator"></td>
         <td>
-            <asp:DropDownList ID="ddlreasons" Width="90%" runat="server" AutoPostBack="True"
+            <asp:DropDownList ID="ddlreasons" Width="150px" runat="server" AutoPostBack="True"
                               OnSelectedIndexChanged="ddlreasons_SelectedIndexChanged">
             </asp:DropDownList>
         </td>
-        <td class="columnseparator"></td>
-        <td>
-            Contact Number<span class="labelErr" style="color: Red">*</span>
+  </tr>
+    <tr>
+        <td >
+            Contact Number<span  style="color: Red">*</span>
         </td>
-        <td class="columnseparator"></td>
         <td>
-            <asp:TextBox ID="txtContactNumber" runat="server" onkeypress="return numeric_only(event)"
+            <asp:TextBox ID="txtContactNumber" CssClass="search_3" runat="server" onkeypress="return numeric_only(event)"
                          MaxLength="12">
             </asp:TextBox>
         </td>
@@ -211,58 +227,51 @@
     <div id="divAggre" runat="server">
         <tr>
             <td>
-                Aggregates<span class="labelErr" style="color: Red">*</span>
+                Aggregates<span  style="color: Red">*</span>
             </td>
-            <td class="columnseparator"></td>
             <td>
-                <asp:DropDownList ID="ddlAggregates" Width="90%" runat="server" AutoPostBack="True"
+                <asp:DropDownList ID="ddlAggregates" CssClass="search_3" Width="150px" runat="server" AutoPostBack="True"
                                   OnSelectedIndexChanged="ddlAggregates_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
-            <td class="columnseparator"></td>
+ </tr>
+        <tr>
             <td>
-                Categories<span class="labelErr" style="color: Red">*</span>
+                Categories<span style="color: Red">*</span>
             </td>
-            <td class="columnseparator"></td>
             <td>
-                <asp:DropDownList ID="ddlCategories" Width="90%" runat="server" AutoPostBack="True"
+                <asp:DropDownList ID="ddlCategories" CssClass="search_3" Width="150px" runat="server" AutoPostBack="True"
                                   OnSelectedIndexChanged="ddlCategories_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
-            <td class="columnseparator"></td>
         </tr>
         <tr>
             <td class="rowseparator"></td>
         </tr>
         <tr>
             <td>
-                Sub-Categories<span class="labelErr" style="color: Red">*</span>
+                Sub-Categories<span  style="color: Red">*</span>
             </td>
-            <td class="columnseparator"></td>
             <td>
-                <asp:DropDownList ID="ddlSubCategories" Width="90%" runat="server" OnSelectedIndexChanged="ddlSubCategories_SelectedIndexChanged"
+                <asp:DropDownList ID="ddlSubCategories" CssClass="search_3" Width="150px" runat="server" OnSelectedIndexChanged="ddlSubCategories_SelectedIndexChanged"
                                   AutoPostBack="True">
                 </asp:DropDownList>
             </td>
-            <td class="columnseparator"></td>
-            <td>
-                Estimated Cost<span class="labelErr" style="color: Red">*</span>
+</tr>
+        <tr>
+            <td style="margin-left:50px">
+                Estimated Cost<span  style="color: Red">*</span>
             </td>
-            <td class="columnseparator"></td>
+          
             <td>
-                <asp:TextBox ID="txtEstCost" runat="server" Width="90%" onkeypress="return isDecimalNumberKey(event);"/>
+                <asp:TextBox ID="txtEstCost" CssClass="search_3" runat="server" Width="150px" onkeypress="return isDecimalNumberKey(event);"/>
             </td>
         </tr>
         <tr>
             <td class="rowseparator"></td>
         </tr>
         <tr>
-            <td></td>
-            <td class="columnseparator"></td>
-            <td></td>
-            <td class="columnseparator"></td>
-            <td></td>
-            <td class="columnseparator"></td>
+
             <td>
                 <asp:Button runat="server" ID="btnAdd" Text="Add" OnClick="btnAdd_Click"/>
             </td>
@@ -270,9 +279,8 @@
         <tr>
             <td class="rowseparator"></td>
         </tr>
-        <tr>
-        </tr>
-        <table>
+        <br/>
+        <table align="center">
             <tr>
                 <td>
                     <asp:GridView ID="grdvwBreakdownDetails" runat="server" BackColor="#DEBA84" BorderColor="#DEBA84"
@@ -288,27 +296,37 @@
             </tr>
         </table>
     </div>
-</table>
-<table style="width: 646px">
 <tr>
     <td class="rowseparator"></td>
 </tr>
 <tr>
     <td>
-        Odometer<span class="labelErr" style="color: Red">*</span>
+        Odometer<span  style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
     <td>
-        <asp:TextBox ID="txtOdo" runat="server" onkeypress="return isNumberKey(event)" MaxLength="6"></asp:TextBox>
+        <asp:TextBox ID="txtOdo" CssClass="search_3" runat="server" onkeypress="return isNumberKey(event)" MaxLength="6"></asp:TextBox>
     </td>
-    <td class="columnseparator"></td>
+    </tr>
+<tr>
     <td>
-        Estimated Cost<span class="labelErr" style="color: Red">*</span>
+        Estimated Cost<span  style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
+
     <td>
-        <asp:TextBox ID="txtAllEstimatedCost" runat="server" onkeypress="return onlyNumbers();"
-                     Width="90%"/>
+        <asp:TextBox ID="txtAllEstimatedCost" CssClass="search_3" runat="server" onkeypress="return onlyNumbers();"
+                     Width="150px"/>
+    </td>
+</tr>
+
+<tr>
+    <td class="rowseparator"></td>
+</tr>
+<tr>
+    <td>
+        Comments<span  style="color: Red">*</span>
+    </td>
+    <td>
+        <asp:TextBox ID="txtComment" CssClass="search_3" runat="server" TextMode="MultiLine"></asp:TextBox>
     </td>
 </tr>
 <tr>
@@ -316,57 +334,46 @@
 </tr>
 <tr>
     <td>
-        Comments<span class="labelErr" style="color: Red">*</span>
+        Requested By (EME Name)<span  style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
-    <td colspan="5">
-        <asp:TextBox ID="txtComment" runat="server" TextMode="MultiLine"></asp:TextBox>
-    </td>
-</tr>
-<tr>
-    <td class="rowseparator"></td>
-</tr>
-<tr>
     <td>
-        Requested By (EME Name)<span class="labelErr" style="color: Red">*</span>
-    </td>
-    <td class="columnseparator"></td>
-    <td>
-        <asp:TextBox ID="txtReqBy" runat="server" onkeypress="return onlyAlphabets(event,this);"
-                     Width="90%">
+        <asp:TextBox ID="txtReqBy" CssClass="search_3" runat="server" onkeypress="return onlyAlphabets(event,this);"
+                     Width="150px">
         </asp:TextBox>
     </td>
-    <td class="columnseparator"></td>
-    <td>
-        EME ID<span class="labelErr" style="color: Red">*</span>
-    </td>
-    <td class="columnseparator"></td>
-    <td>
-        <asp:TextBox ID="txtEMEId" onkeypress="return numeric_only(event)" runat="server"></asp:TextBox>
-    </td>
 </tr>
+    <tr>
+        <td>
+            EME ID<span  style="color: Red">*</span>
+        </td>
+        <td>
+            <asp:TextBox ID="txtEMEId" CssClass="search_3" onkeypress="return numeric_only(event)" runat="server"></asp:TextBox>
+        </td>
+    </tr>
 <tr>
     <td class="rowseparator"></td>
 </tr>
 <tr>
     <td>
-        Pilot Name<span class="labelErr" style="color: Red">*</span>
+        Pilot Name<span  style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
     <td>
-        <asp:TextBox ID="txtPilotName" onkeypress="return onlyAlphabets(event,this);" runat="server"
-                     Width="90%">
+        <asp:TextBox ID="txtPilotName" CssClass="search_3" onkeypress="return onlyAlphabets(event,this);" runat="server"
+                     Width="150px">
         </asp:TextBox>
     </td>
-    <td></td>
-    <td>
-        Pilot ID<span class="labelErr" style="color: Red">*</span>
-    </td>
-    <td class="columnseparator"></td>
-    <td>
-        <asp:TextBox ID="txtPilotId" onkeypress="return numeric_only(event)" runat="server"></asp:TextBox>
-    </td>
-    <td class="columnseparator"></td>
+    </tr>
+    <tr>
+        <td>
+            Pilot ID<span  style="color: Red">*</span>
+        </td>
+
+        <td>
+            <asp:TextBox ID="txtPilotId" CssClass="search_3" onkeypress="return numeric_only(event)" runat="server"></asp:TextBox>
+        </td>
+    </tr>
+   
+
 </tr>
 <tr>
     <td class="rowseparator"></td>
@@ -375,23 +382,26 @@
     <td>
         OffTime <span style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
     <td nowrap="nowrap" colspan="6">
         <table style="width: 100%">
             <tr>
                 <td nowrap="nowrap" style="width: 20%">
-                    <asp:TextBox ID="txtOfftimeDate" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
-                    <asp:ImageButton ID="imgBtnUptimeDate" runat="server" Style="vertical-align: top"
+                    <asp:TextBox ID="txtOfftimeDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
+                    <asp:ImageButton ID="imgBtnUptimeDate" runat="server" Style="vertical-align: top;"
                                      alt="" src="images/Calendar.gif"/>
                     <cc1:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="txtOfftimeDate"
                                           PopupButtonID="imgBtnUptimeDate" Format="MM/dd/yyyy">
                     </cc1:CalendarExtender>
                 </td>
-                <td style="width: 80%">
-                    <asp:DropDownList ID="ddlOFFHour" runat="server" Width="55px">
+                <td class="columnseparator"></td>
+                <td class="columnseparator"></td>
+                <td >
+                    <asp:DropDownList ID="ddlOFFHour" CssClass="search_3" runat="server" Width="55px">
                         <asp:ListItem Value="-1">--hh--</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:DropDownList ID="ddlOFFMin" runat="server" Width="60px">
+                    </td>
+            <td>
+                    <asp:DropDownList ID="ddlOFFMin" CssClass="search_3" runat="server" Width="60px">
                         <asp:ListItem Value="-1">--mm--</asp:ListItem>
                     </asp:DropDownList>
                 </td>
@@ -406,23 +416,22 @@
     <td>
         Expected Date of Recovery <span style="color: Red">*</span>
     </td>
-    <td class="columnseparator"></td>
     <td nowrap="nowrap" colspan="6">
         <table style="width: 100%">
             <tr>
                 <td nowrap="nowrap" style="width: 20%">
-                    <asp:TextBox ID="txtExpDateOfRec" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
-                    <asp:ImageButton ID="imgbtnExpDateOfRec" runat="server" Style="vertical-align: top"
+                    <asp:TextBox ID="txtExpDateOfRec" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
+                    <asp:ImageButton ID="imgbtnExpDateOfRec" runat="server" Style="vertical-align: top;margin-left:10px"
                                      alt="" src="images/Calendar.gif"/>
                     <cc1:CalendarExtender ID="calExtndrExpDateOfRec" runat="server" TargetControlID="txtExpDateOfRec"
                                           PopupButtonID="imgbtnExpDateOfRec" Format="MM/dd/yyyy">
                     </cc1:CalendarExtender>
                 </td>
                 <td style="width: 80%">
-                    <asp:DropDownList ID="ddlExpDateOfRecHr" runat="server" Width="55px">
+                    <asp:DropDownList ID="ddlExpDateOfRecHr" CssClass="search_3" runat="server" Width="55px">
                         <asp:ListItem Value="-1">--hh--</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:DropDownList ID="ddlExpDateOfRecMin" runat="server" Width="60px">
+                    <asp:DropDownList ID="ddlExpDateOfRecMin" CssClass="search_3" runat="server" Width="60px">
                         <asp:ListItem Value="-1">--mm--</asp:ListItem>
                     </asp:DropDownList>
                 </td>
@@ -485,7 +494,7 @@
                                         <asp:Label ID="Label3" runat="server" Text="Vehicles"></asp:Label>
                                     </td>
                                     <td>
-                                        <asp:DropDownList ID="ddlothervehicle" runat="server" AutoPostBack="True" Width="200px"
+                                        <asp:DropDownList ID="ddlothervehicle" CssClass="search_3" runat="server" AutoPostBack="True" Width="200px"
                                                           OnSelectedIndexChanged="ddlothervehicle_SelectedIndexChanged">
                                             <asp:ListItem Value="-1">--Select--</asp:ListItem>
                                         </asp:DropDownList>
@@ -495,7 +504,7 @@
                                         <asp:Label ID="lblothercontactno" runat="server" Text="Contact Number"></asp:Label>
                                     </td>
                                     <td align="left">
-                                        <asp:TextBox ID="txtothercontactno" runat="server" Width="124px" onkeypress="return false;"></asp:TextBox>
+                                        <asp:TextBox ID="txtothercontactno" CssClass="search_3" runat="server" Width="124px" onkeypress="return false;"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -506,11 +515,11 @@
                                         <asp:Label ID="lblotherbaselocation" runat="server" Text="Base Location"></asp:Label>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtotherbaselocation" runat="server" Width="200px" onkeypress="return false;"></asp:TextBox>
+                                        <asp:TextBox ID="txtotherbaselocation" CssClass="search_3" runat="server" Width="200px" onkeypress="return false;"></asp:TextBox>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td align="left">
-                                        <asp:Label ID="lblOtherVehSegment" runat="server" Text="Segment" Visible="false"></asp:Label>
+                                        <asp:Label ID="lblOtherVehSegment"  runat="server" Text="Segment" Visible="false"></asp:Label>
                                     </td>
                                     <td align="left">
                                         <asp:Label ID="lblOtherVehSegmentName" runat="server" Text="" Visible="false"></asp:Label>
@@ -562,9 +571,9 @@
     <tr>
         <td align="center" colspan="7" style="">
             <asp:Panel ID="pnlButton" runat="server">
-                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit"/>
+                <asp:Button ID="btnSubmit" CssClass="form-submit-button" runat="server" OnClick="btnSubmit_Click" Text="Submit"/>
                 &nbsp;&nbsp;&nbsp;
-                <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click" Text="Reset"/>
+                <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" OnClick="btnReset_Click" Text="Reset"/>
             </asp:Panel>
         </td>
     </tr>

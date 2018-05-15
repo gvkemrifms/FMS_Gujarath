@@ -4,7 +4,7 @@ using System.Web.UI;
 
 public partial class AnalysisHourwiseReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,7 +20,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         try
         {
-            var sqlQuery = ConfigurationManager.AppSettings["Query"]; ;
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
             _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
         catch (Exception ex)
@@ -44,7 +44,9 @@ public partial class AnalysisHourwiseReport : Page
             }
         }
         else
+        {
             ddlvehicle.Enabled = false;
+        }
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)

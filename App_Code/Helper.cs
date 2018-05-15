@@ -17,9 +17,36 @@ public class Helper
         SqlConnection connection = null;
         try
         {
-            connection = new SqlConnection(cs);
+            connection = new SqlConnection(cs);        
             connection.Open();
             var dataAdapter = new SqlDataAdapter {SelectCommand = new SqlCommand(query, connection)};
+            dataAdapter.Fill(dtSyncData);
+            TraceService(query);
+            return dtSyncData;
+        }
+        catch (Exception ex)
+        {
+            TraceService("executeSelectStmt() " + ex + query);
+            return null;
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+    public DataTable ExecuteSelectStmt(string query, string parameterName1, int parameterValue1 )
+    {
+        var cs = ConfigurationManager.AppSettings["Str"];
+        var dtSyncData = new DataTable();
+        SqlConnection connection = null;
+        try
+        {
+            connection = new SqlConnection(cs);
+            connection.Open();
+           SqlCommand cmd=new SqlCommand(query,connection);
+            cmd.Parameters.AddWithValue(parameterName1, parameterValue1);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var dataAdapter = new SqlDataAdapter { SelectCommand = cmd };
             dataAdapter.Fill(dtSyncData);
             TraceService(query);
             return dtSyncData;
@@ -113,11 +140,12 @@ public class Helper
 
         else if (gridView != null)
         {
-            if (dropDownValue != null && dropDownValue.SelectedIndex>=0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
-            if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
-            if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue3.SelectedItem.Value);
-            if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
-            if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
+
+                if (dropDownValue != null && dropDownValue.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
+                if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
+                if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue3.SelectedItem.Value);
+                if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
+                if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
             if (txtBox != null) cmd.Parameters.AddWithValue(parameterValue3, txtBox.Text + " 00:00:00");
             if (txtBox1 != null) cmd.Parameters.AddWithValue(parameterValue4, txtBox1.Text + " 23:59:59");
             var da = new SqlDataAdapter(cmd);
@@ -153,7 +181,6 @@ public class Helper
 
         conn.Close();
     }
-
     private static void CommonMethod(string textFieldValue, string valueField, DropDownList dropDownValue, DataSet ds, SqlCommand cmd)
     {
         var da = new SqlDataAdapter(cmd);

@@ -8,9 +8,9 @@ using GvkFMSAPP.PL;
 
 public partial class FabricatedVehicleDetails : Page
 {
-    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
-    readonly Helper _helper = new Helper();
     private readonly GvkFMSAPP.BLL.FabricatedVehicleDetails _fabricatedvehicledet = new GvkFMSAPP.BLL.FabricatedVehicleDetails();
+    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
+    private readonly Helper _helper = new Helper();
     private int _ret;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -63,18 +63,16 @@ public partial class FabricatedVehicleDetails : Page
     public void GetTrNo()
     {
         if (_fabricatedvehicledet != null)
-        {
             try
             {
                 var ds = _fabricatedvehicledet.GetTRNo();
-                if (ds == null ) return;
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", null, ddlTRNo);
+                if (ds == null) return;
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "TRNo", "VehicleID", ddlTRNo);
             }
             catch (Exception ex)
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     public void GetFabricatorName()
@@ -111,7 +109,9 @@ public partial class FabricatedVehicleDetails : Page
             _fabricatedvehicledet.FVDInspectedDate = DateTime.Parse(txtInspectionDate.Text);
             var valfabvel = _fabricatedvehicledet.ValidateFabricatedVehicleDet();
             if (valfabvel.Tables[0].Rows.Count > 0)
+            {
                 Show("Data is already present for this vehicle");
+            }
             else
             {
                 switch (btSave.Text)
@@ -131,7 +131,9 @@ public partial class FabricatedVehicleDetails : Page
                 }
 
                 if (ViewState["FabricatedVehicleDetID"] == null)
+                {
                     Show("Record Inserted Successfully");
+                }
                 else
                 {
                     Show("Record Updated Successfully");

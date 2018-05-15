@@ -8,13 +8,13 @@ using GvkFMSAPP.BLL;
 
 public partial class FuelEntry : Page
 {
-    public IFuelManagement ObjFuelEntry = new FuelManagement();
+    private readonly FMSGeneral _fmsg = new FMSGeneral();
+    private readonly Helper _helper = new Helper();
+    private string _bunkname;
+    private bool _flag;
     private double _kmplInt;
     private double _mSkmplInt;
-    private bool _flag;
-    private string _bunkname;
-    private readonly FMSGeneral _fmsg = new FMSGeneral();
-    readonly Helper _helper = new Helper();
+    public IFuelManagement ObjFuelEntry = new FuelManagement();
 
     protected void Page_PreInit(object sender, EventArgs e)
     {
@@ -59,7 +59,6 @@ public partial class FuelEntry : Page
         if (Session["UserdistrictId"] != null) districtId = Convert.ToInt32(Session["UserdistrictId"].ToString());
         var ds = ObjFuelEntry.IFillVehiclesWithMappedCards(districtId);
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDistrict);
@@ -68,7 +67,6 @@ public partial class FuelEntry : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
 
         var itemToRemove = ddlDistrict.Items.FindByValue(ddlVehicleNumber.SelectedValue);
         if (itemToRemove != null) ddlDistrict.Items.Remove(itemToRemove);
@@ -105,7 +103,7 @@ public partial class FuelEntry : Page
         lblDistrict.Text = dsDistrict.Tables[0].Rows[0]["District"].ToString();
         lblLocation.Text = dsDistrict.Tables[0].Rows[0]["BaseLocation"].ToString();
         lblDistrict.ForeColor = Color.ForestGreen;
-        lblLocation.ForeColor=Color.ForestGreen;
+        lblLocation.ForeColor = Color.ForestGreen;
     }
 
     private void FillServiceStn()
@@ -255,7 +253,9 @@ public partial class FuelEntry : Page
                     break;
                 default:
                     if (dsOdo.Tables[0].Rows[0]["ODO"].ToString() == string.Empty)
+                    {
                         maxOdo.Value = "0";
+                    }
                     else
                     {
                         maxOdo.Value = dsOdo.Tables[0].Rows[0]["ODO"].ToString();
@@ -359,7 +359,7 @@ public partial class FuelEntry : Page
 
     private DataTable GetpreviousOdo(int vehicleId)
     {
-        string query = "select max(entrydate) maxentry from T_FMS_FuelEntryDetails where vehicleid = '" + vehicleId + "' and status = 1";
+        var query = "select max(entrydate) maxentry from T_FMS_FuelEntryDetails where vehicleid = '" + vehicleId + "' and status = 1";
         DataTable dtVehData = null;
         try
         {
@@ -587,7 +587,9 @@ public partial class FuelEntry : Page
                 ViewState["maxodometer"] = ds.Tables[0].Rows[0]["odo"].ToString();
             }
             else
+            {
                 ViewState["maxodometer"] = 0;
+            }
         }
         catch (Exception ex)
         {
@@ -680,7 +682,7 @@ public partial class FuelEntry : Page
                     ddlPaymode.ClearSelection();
                     ddlPaymode.Items.FindByValue(ds.Tables[0].Rows[0]["Paymode"].ToString()).Selected = true;
                     ddlVehicleNumber.ClearSelection();
-                   ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
+                    ddlVehicleNumber.Items.FindByValue(ds.Tables[0].Rows[0]["VehicleID"].ToString()).Selected = true;
                     ddlCardSwiped.ClearSelection();
                     ddlCardSwiped.Items.FindByValue(ds.Tables[0].Rows[0]["CardSwipedStatus"].ToString()).Selected = true;
                     ddlCardSwiped.Enabled = false;
@@ -719,8 +721,6 @@ public partial class FuelEntry : Page
                             default:
                             {
                                 var vid = Convert.ToInt32(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString());
-                                ddlDistrict.ClearSelection();
-                                ddlDistrict.Items.FindByValue(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()).Selected = true;
                                 ddlPetroCardNumber.ClearSelection();
                                 FillCardNumber(vid);
                                 ddlPetroCardNumber.Items.FindByValue(ds.Tables[0].Rows[0]["PetroCardNumber"].ToString()).Selected = true;
@@ -728,6 +728,8 @@ public partial class FuelEntry : Page
                                 ddlAgency.ClearSelection();
                                 FillFuelAgency(pid);
                                 ddlAgency.Items.FindByValue(ds.Tables[0].Rows[0]["AgencyID"].ToString()).Selected = true;
+                                ddlDistrict.ClearSelection();
+                                ddlDistrict.Items.FindByValue(ds.Tables[0].Rows[0]["BorrowedVehicleID"].ToString()).Selected = true;
                                 break;
                             }
                         }

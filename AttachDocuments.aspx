@@ -1,15 +1,12 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AttachDocuments.aspx.cs" Inherits="AttachDocuments" Language="C#" MasterPageFile="~/temp.master" %>
-
 <%@ Import Namespace="System.ComponentModel" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    
+
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <script type="text/javascript">
-                function pageLoad()
-                    {
+                function pageLoad() {
                     $('#<%= ddlistVehicleNumber.ClientID %>').select2({
                         disable_search_threshold: 5,
                         search_contains: true,
@@ -17,49 +14,51 @@
                         placeholder: "Select an option"
                     });
                 }
+
                 function ClearItems() {
-           
-                    $('#<%=ddlistVehicleNumber.ClientID%>').empty();
-                    $('#<%=ddlistAttachmentPurpose.ClientID%>').empty();
+
+                    $('#<%= ddlistVehicleNumber.ClientID %>').empty();
+                    $('#<%= ddlistAttachmentPurpose.ClientID %>').empty();
                     $('#<%= txtRemarks.ClientID %>').val('');
-                    $('#<%=ddlistVehicleNumber.ClientID%>').chosen();
+                    $('#<%= ddlistVehicleNumber.ClientID %>').chosen();
                 }
-                function Validations()
-                {
+
+                function Validations() {
                     var remarks = $('#<%= txtRemarks.ClientID %>').val();
                     var fileAttachments = $('#<%= fileAttachmentPurpose.ClientID %>').val();
                     var ddlVehicle = $('#<%= ddlistVehicleNumber.ClientID %> option:selected').text().toLowerCase();
-                    var attachmentPurpose = $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text().toLowerCase();
-                    if (ddlVehicle === '--select--') 
+                    var attachmentPurpose = $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text()
+                        .toLowerCase();
+                    if (ddlVehicle === '--select--')
                         return alert("Please select Vehicle");
-                    if (attachmentPurpose === 'select') 
-                        return alert("Please select Attachment Purpose");             
-                    if (fileAttachments === "") 
+                    if (attachmentPurpose === 'select')
+                        return alert("Please select Attachment Purpose");
+                    if (fileAttachments === "")
                         return alert("File Attachment is Mandatory");
-                    if (remarks === "") 
+                    if (remarks === "")
                         return alert('Remarks is Mandatory');
                     return true;
                 }
             </script>
-            <table align="center" >
+            <table align="center">
                 <tr>
                     <td colspan="3">
-                        <asp:Label ID="lblanalysisreport" style="font-size: 20px; color: brown" runat="server" Text="Attach&nbsp;Documents"></asp:Label>
+                        <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Attach&nbsp;Documents"></asp:Label>
                     </td>
                 </tr>
-                </table>
-                <br />
+            </table>
+            <br/>
             <table align="center">
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td class="tdlabel">
-                        Vehicle Number<font color="red">*</font>
+                        Vehicle Number<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:DropDownList ID="ddlistVehicleNumber" Width="150px"  runat="server">
+                        <asp:DropDownList ID="ddlistVehicleNumber" Width="150px" runat="server">
                         </asp:DropDownList>
                     </td>
                 </tr>
@@ -68,7 +67,7 @@
                 </tr>
                 <tr>
                     <td class="tdlabel">
-                        Attachment Purpose<font color="red">*</font>
+                        Attachment Purpose<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
@@ -83,7 +82,7 @@
                 </tr>
                 <tr>
                     <td class="tdlabel">
-                        Remarks<font color="red">*</font>
+                        Remarks<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
@@ -94,8 +93,8 @@
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td class="tdlabel" style="margin-top: -50px;position: relative;bottom: 30px;">
-                        Attachment<font color="red">*</font>
+                    <td class="tdlabel" style="bottom: 30px; margin-top: -50px; position: relative;">
+                        Attachment<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
@@ -103,28 +102,28 @@
 
                         <asp:FileUpload ID="fileAttachmentPurpose" runat="server" ForeColor="red"/>
                         <asp:Button ID="btnAttachFiles" runat="server" Text="Attach Files" class="form-submit-button" Enabled="true"
-                                    OnClick="btnAttachFiles_Click"  OnClientClick="if(!Validations()) return false;" />
-                        <asp:Button ID="btnUpload" runat="server" Text="Upload" Visible="False"  OnClick="btnUpload_Click"/>
-                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="True" class="form-submit-button"  OnClientClick="ClearItems()"/>
+                                    OnClick="btnAttachFiles_Click" OnClientClick="if (!Validations()) return false;"/>
+                        <asp:Button runat="server" Text="Upload" Visible="False" OnClick="btnUpload_Click"/>
+                        <asp:Button runat="server" Text="Cancel" Visible="True" class="form-submit-button" OnClientClick="ClearItems()"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td colspan="3" align="center">
+                    <td colspan="3">
 
-                        <asp:Button ID="btnHideViewAttachFiles" runat="server" Text="Hide/View Attached Files"
+                        <asp:Button runat="server" Text="Hide/View Attached Files"
                                     Visible="False"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
-               
-                </table>
-            <br />
-            <br />
+
+            </table>
+            <br/>
+            <br/>
             <table align="center">
                 <tr>
                     <td colspan="3">
@@ -185,4 +184,3 @@
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
-

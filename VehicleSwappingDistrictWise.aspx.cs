@@ -90,7 +90,7 @@ public partial class VehicleSwappingDistrictWise : Page
                     _vasbll.DistrictId = Convert.ToInt32(ddlSourceDistrict.SelectedItem.Value);
                     var ds = _vasbll.GetActiveVehicles();
                     ddlSrcVehicle.DataSource = ds;
-                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlSrcVehicle);
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlSrcVehicle);
                     Session["dsvehicle"] = ds;
                     //Destination District based on Source district
                     var dsDestDist = (DataSet) ViewState["Districts"];
@@ -123,7 +123,7 @@ public partial class VehicleSwappingDistrictWise : Page
                     _vasbll.DistrictId = Convert.ToInt32(ddlDestDistrict.SelectedItem.Value);
                     var ds = _vasbll.GetActiveVehicles();
                     ddlDestVehicle.DataSource = ds;
-                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlDestVehicle);
+                    _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDestVehicle);
                     Session["dsvehicle"] = ds;
                     break;
             }

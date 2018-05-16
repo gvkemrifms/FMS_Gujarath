@@ -2,13 +2,13 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BaseVehicleDetails = GvkFMSAPP.BLL.BaseVehicleDetails;
+using GvkFMSAPP.BLL;
 
 public partial class TemporaryVehicleDetails : Page
 {
-    private readonly GvkFMSAPP.BLL.Prior_MaintenanceStage.TemporaryVehicleDetails _tempvehdet = new GvkFMSAPP.BLL.Prior_MaintenanceStage.TemporaryVehicleDetails();
     private readonly BaseVehicleDetails _basevehdet = new BaseVehicleDetails();
     private readonly Helper _helper = new Helper();
+    private readonly GvkFMSAPP.BLL.Prior_MaintenanceStage.TemporaryVehicleDetails _tempvehdet = new GvkFMSAPP.BLL.Prior_MaintenanceStage.TemporaryVehicleDetails();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -57,7 +57,6 @@ public partial class TemporaryVehicleDetails : Page
     {
         var ds = _tempvehdet.GetTyreMake();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Tyre_Id", ddlTyreMakeFL);
@@ -70,14 +69,12 @@ public partial class TemporaryVehicleDetails : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     public void GetTyreModelSize()
     {
         var ds = _tempvehdet.GetTyreModelSize();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelSize", "Tyre_Id", ddlModelSizeFL);
@@ -90,14 +87,12 @@ public partial class TemporaryVehicleDetails : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     public void GetBatteryMake()
     {
         var ds = _tempvehdet.GetBatteryMake();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "Make", "Battery_Id", ddlBatteryMakeBattery1);
@@ -107,7 +102,6 @@ public partial class TemporaryVehicleDetails : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     public void GetAgency()
@@ -192,7 +186,6 @@ public partial class TemporaryVehicleDetails : Page
     {
         var ds = _tempvehdet.GetBatteryModelCapacity();
         if (ds != null)
-        {
             try
             {
                 _helper.FillDropDownHelperMethodWithDataSet(ds, "ModelCapacity", "Battery_Id", ddlModelCapacityBattery1);
@@ -202,7 +195,6 @@ public partial class TemporaryVehicleDetails : Page
             {
                 _helper.ErrorsEntry(ex);
             }
-        }
     }
 
     protected void Wizard1_FinishButtonClick(object sender, WizardNavigationEventArgs e)

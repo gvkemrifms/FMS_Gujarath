@@ -182,7 +182,7 @@
                                     <td>
                                         <asp:TextBox ID="txtHandOverDate" runat="server" onkeypress="return false;"></asp:TextBox>
                                         <asp:ImageButton ID="imgBtnHandOverDate" runat="server" ImageUrl="images/Calendar.gif"/>
-                                        <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" PopupButtonID="imgBtnHandOverDate"
+                                        <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" PopupButtonID="imgBtnHandOverDate"
                                                               TargetControlID="txtHandOverDate">
                                         </cc1:CalendarExtender>
                                     </td>

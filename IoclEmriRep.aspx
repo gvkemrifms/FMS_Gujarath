@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="IoclEmriRep.aspx.cs" Inherits="IoclEmriRep" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <script>
@@ -91,53 +90,53 @@
                 placeholder: "Select an option"
             });
         }
-       function ValidatePage()
-        {
+
+        function ValidatePage() {
             var ddlVehicle = $('#<%= ddlvehicleNo.ClientID %> option:selected').text().toLowerCase();
             if (ddlVehicle === '--select--') {
-               return alert("Please select Vehicle");
+                return alert("Please select Vehicle");
 
             }
             var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
             if (txtFirstDate === "") {
                 return alert('From Date is Mandatory');
-             
+
             }
-            if (txtToDate === "") {         
+            if (txtToDate === "") {
                 return alert("End Date is Mandatory");
             }
             var fromDate = (txtFirstDate).replace(/\D/g, '/');
             var toDate = (txtToDate).replace(/\D/g, '/');
-            var ordFromDate = new Date(fromDate); var ordToDate = new Date(toDate);
+            var ordFromDate = new Date(fromDate);
+            var ordToDate = new Date(toDate);
             var currentDate = new Date();
             if (ordFromDate > currentDate) {
-               return alert("From date should not be greater than today's date");
+                return alert("From date should not be greater than today's date");
             }
             if (ordToDate < ordFromDate) {
-               return alert("Please select valid date range");
+                return alert("Please select valid date range");
             }
             return true;
         }
-                
-         
-  
+
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-   
+
     <br/>
     <table align="center" style="margin-top: 10px">
         <tr>
             <td>
                 Vehicle Number <span style="color: red">*</span>
             </td>
-               <td>
-                   <asp:DropDownList ID="ddlvehicleNo" runat="server" class="form-control"></asp:DropDownList>
-               </td>
+            <td>
+                <asp:DropDownList ID="ddlvehicleNo" runat="server" class="form-control"></asp:DropDownList>
+            </td>
         </tr>
         <tr>
-            
+
             <td>
                 From Date <span style="color: red">*</span>
             </td>
@@ -164,7 +163,7 @@
                     }
                 </style>
             </td>
-           
+
         </tr>
         <tr>
 
@@ -175,24 +174,24 @@
                 <asp:TextBox ID="txttodate" Style="width: 170px;" CssClass="search_3" runat="server" placeholder="" MaxLength="20"
                              class="form-control">
                 </asp:TextBox>
-                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
+                <cc1:CalendarExtender runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
                 </cc1:CalendarExtender>
             </td>
-            
+
         </tr>
         <tr>
             <td>
-                <asp:Button ID="btnShow" CssClass="form-submit-button" runat="server" class="btn btn-primary"
-                            Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" OnClientClick="if(!ValidatePage()) {return false;}">
+                <asp:Button CssClass="form-submit-button" runat="server" class="btn btn-primary"
+                            Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" OnClientClick="if (!ValidatePage()) { return false; }">
                 </asp:Button>
             </td>
             <td>
                 <asp:Button ID="btntoExcel" runat="server" CssClass="form-reset-button" OnClick="btntoExcel_Click" Text="Excel" Style="font-size: 12px; height: 33px; width: 50px;"></asp:Button>
             </td>
         </tr>
-        
+
     </table>
-<br />
+    <br/>
     <asp:Panel ID="Panel4" runat="server" Style="background-color: #F7F7F7; margin-left: 2px;">
         <div align="center">
             <div style="margin-left: 0%; margin-right: auto;">
@@ -209,9 +208,9 @@
                         </td>
                     </tr>
                 </table>
-                <asp:GridView style="overflow-y: Scroll; overflow-x: auto; height: 200px; width:1000px;text-align: center;" runat="server" ID="grdRepData"  AutoGenerateColumns="true" CssClass="table table-bordered" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
+                <asp:GridView style="height: 200px; overflow-x: auto; overflow-y: Scroll; text-align: center; width: 1000px;" runat="server" ID="grdRepData" AutoGenerateColumns="true" CssClass="table table-bordered" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
                     <HeaderStyle BackColor="#6D91BF" ForeColor="white" Wrap="true" Font-Bold="true" HorizontalAlign="center"
-                                 Font-Size="15px" Height="50px" />
+                                 Font-Size="15px" Height="50px"/>
                     <Columns>
                         <asp:TemplateField ItemStyle-Width="50px" HeaderText="Sno">
                             <ItemTemplate>

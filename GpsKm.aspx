@@ -7,30 +7,30 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
         function Validations() {
-            var vehicleNumber = $('#<%=txtVehicleNumber.ClientID%>').val();
+            var vehicleNumber = $('#<%= txtVehicleNumber.ClientID %>').val();
             if (vehicleNumber === "")
                 return alert("Please enter Vehicle Number");
-            var limit = $('#<%=txtLimit.ClientID%>').val();
+            var limit = $('#<%= txtLimit.ClientID %>').val();
             if (limit === "")
                 return alert("Please enter Limit");
-            var petrocardNumber = $('#<%=txtCardNumber.ClientID%>').val();
+            var petrocardNumber = $('#<%= txtCardNumber.ClientID %>').val();
             if (petrocardNumber === "")
                 return alert("Please enter PetroCard Number");
             return true;
         }
     </script>
-    <div  id="main" class="row">
+    <div id="main" class="row">
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel">
                     <header class="panel-heading">
-                        Vehicle List
+                        <legend style="color:brown" align="center">Vehicle List</legend>
                     </header>
-                    <div  class="row" runat="server" id="dvSearch" visible="false">
+                    <div class="row" runat="server" id="dvSearch" visible="false">
                         <table align="center">
                             <tr>
                                 <td>
-                                    Vehicle Number<span style="color: red" style="float:left">*</span>
+                                    Vehicle Number<span style="color: red" style="float: left">*</span>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtVehicleNumber" CssClass="search_3" runat="server" ReadOnly="True" class="form-control" onkeypress="return OnlyAlphaNumeric(event)"
@@ -53,7 +53,7 @@
                                 <td>
                                     <asp:TextBox ID="txtCardNumber" CssClass="search_3" runat="server" class="form-control" onkeypress="return numeric_only(event)"></asp:TextBox>
                                 </td>
-                                
+
                             </tr>
                             <tr>
                                 <td>
@@ -62,13 +62,13 @@
                                 <td>
                                     <asp:CheckBox runat="server" ID="chkpush"/>
                                 </td>
-                               
+
                             </tr>
-                       <tr>
-                                    <td>
-                                        <asp:Button runat="server" Text="Update and Submit" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;" ID="btnsubmit" Width="150px" />
-                                    </td>
-                             
+                            <tr>
+                                <td>
+                                    <asp:Button runat="server" Text="Update and Submit" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if (!Validations()) return false;" ID="btnsubmit" Width="150px"/>
+                                </td>
+
                             </tr>
                         </table>
                     </div>
@@ -79,8 +79,8 @@
 
 
         <div id="five" style="float: left; width: 5%">
-            <div class="row" style="margin-top: -10px;margin-left: 15px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click"  Text="Export to Excel" CssClass="form-submit-button" Style="height: 33px;margin-top:-15px;  font-size: 12px; width: 150px;"></asp:Button>
+            <div class="row" style="margin-left: 15px; margin-top: -10px;">
+                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Export to Excel" CssClass="form-submit-button" Style="font-size: 12px; height: 33px; margin-top: -15px; width: 150px;"></asp:Button>
             </div>
         </div>
 
@@ -99,4 +99,3 @@
         </asp:GridView>
     </div>
 </asp:Content>
-

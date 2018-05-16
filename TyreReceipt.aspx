@@ -41,7 +41,7 @@
 
     </script>
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <fieldset style="padding: 10px">
                 <legend>Tyre Receipt</legend>
@@ -90,7 +90,7 @@
                 <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtenderTyreReceipt" BehaviorID="mdlPopup"
                                                 runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
                 <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="padding: 10px">
-                    <asp:UpdatePanel ID="updPnlReqDetail" runat="server">
+                    <asp:UpdatePanel  runat="server">
                         <ContentTemplate>
                             <fieldset>
                                 <legend>Tyre Receipt Details</legend>
@@ -163,7 +163,7 @@
                                         <td class="columnseparator"></td>
                                         <td align="left">
                                             <asp:TextBox ID="txtTyreRecDate" runat="server" onkeypress="return false" MaxLength="20" oncut="return false;" onpaste="return false;" oncopy="return false;"></asp:TextBox>
-                                            <ajaxToolkit:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="txtTyreRecDate"
+                                            <ajaxToolkit:CalendarExtender  runat="server" TargetControlID="txtTyreRecDate"
                                                                           Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
                                             </ajaxToolkit:CalendarExtender>
                                             <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
@@ -201,7 +201,7 @@
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <asp:Button ID="btnOk" runat="server" Text="Receipt" Width="50px" OnClick="btnOk_Click"/>
                                                 &nbsp;&nbsp;
-                                                <asp:Button ID="btnNo" runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
+                                                <asp:Button  runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
                                             </div>
                                         </td>
                                     </tr>

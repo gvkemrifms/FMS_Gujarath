@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
-using Microsoft.Office.Interop.Excel;
 using Label = System.Web.UI.WebControls.Label;
 using Page = System.Web.UI.Page;
 
@@ -13,7 +12,7 @@ public partial class NonOffroadApprovalPage : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             BindGridview();

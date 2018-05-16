@@ -9,8 +9,8 @@ using GvkFMSAPP.PL;
 public partial class PreDeliveryInspection : Page
 {
     private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
-    private readonly GvkFMSAPP.BLL.PreDeliveryInspection _predelinsp = new GvkFMSAPP.BLL.PreDeliveryInspection();
     private readonly Helper _helper = new Helper();
+    private readonly GvkFMSAPP.BLL.PreDeliveryInspection _predelinsp = new GvkFMSAPP.BLL.PreDeliveryInspection();
     private int _ret;
 
     protected void Page_Load(object sender, EventArgs e)

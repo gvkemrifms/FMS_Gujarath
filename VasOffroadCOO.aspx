@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:UpdatePanel ID="Updtepanelvehoffroad" runat="server">
+    <asp:UpdatePanel  runat="server">
         <ContentTemplate>
             <div>
                 <asp:GridView ID="gvVasOffroad" runat="server" EmptyDataText="No Records Found"
@@ -75,7 +75,7 @@
             </div>
             <div style="width: 300px; padding: 5px; display: block" id="dvReason">
                 <div style="border-bottom: none; background-color: Maroon">
-                    <asp:Label ID="Label1" runat="server" Text="Reason for Rejection" Font-Bold="True"
+                    <asp:Label  runat="server" Text="Reason for Rejection" Font-Bold="True"
                                Font-Size="Small" ForeColor="#FFFFCC"/>
                 </div>
                 <div style="background-color: White">
@@ -91,7 +91,7 @@
                         </div>
                         <div style="width: 60%; float: right">
                             <div style="width: 50%; float: left">
-                                <asp:Button runat="server" ID="btnReason" CssClass="form-submit-button" Text="Submit"
+                                <asp:Button runat="server"  CssClass="form-submit-button" Text="Submit"
                                             OnClick="btnReason_Click" OnClientClick="return Validation();"/>
                             </div>
                             <div style="width: 50%; float: right">

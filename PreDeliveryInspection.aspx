@@ -147,7 +147,7 @@
                         </asp:TextBox>
                         <asp:ImageButton ID="imgBtnCalendarReceivedDate" runat="server" Style="vertical-align: top"
                                          alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtReceivedDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtReceivedDate"
+                        <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" TargetControlID="txtReceivedDate"
                                               PopupButtonID="imgBtnCalendarReceivedDate" Format="yyyy/MM/dd">
                         </cc1:CalendarExtender>
                     </td>
@@ -185,7 +185,7 @@
                         </asp:TextBox>
                         <asp:ImageButton ID="imbtnPDIDate" runat="server" Style="vertical-align: top"
                                          alt="" src="images/Calendar.gif"/>
-                        <cc1:CalendarExtender ID="calExtPDIDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtPDIDate"
+                        <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" TargetControlID="txtPDIDate"
                                               PopupButtonID="imbtnPDIDate" Format="MM/dd/yyyy">
                         </cc1:CalendarExtender>
                     </td>
@@ -241,7 +241,7 @@
 </tr>
 <tr>
     <td>
-        <br />
+        <br/>
         <table align="center">
             <tr align="center">
                 <td>

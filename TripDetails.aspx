@@ -2,11 +2,11 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:UpdatePanel ID="up1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <div class="center">
                 <fieldset style="padding: 10px">
-                    <legend align="center" style="color:brown">Trip Details Entry</legend>
+                    <legend align="center" style="color: brown">Trip Details Entry</legend>
                     <br/>
                     <table align="center">
                         <tr>
@@ -17,7 +17,7 @@
                         <tr>
 
                             <td style="width: 93px">
-                                Trip Date<span style="color:red">*</span>
+                                Trip Date<span style="color: red">*</span>
                             </td>
                             <td style="width: 229px">
                                 <asp:TextBox ID="txtTripDate" runat="server"
@@ -25,10 +25,10 @@
                                 </asp:TextBox>
                                 <cc1:CalendarExtender ID="CalendarExtender1" runat="server"
                                                       TargetControlID="txtTripDate" PopupButtonID="ImageButton1">
-                                </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1"  runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
+                                </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
                             </td>
                             <td style="width: 127px">
-                                Vehicle<span style="color:red">*</span>
+                                Vehicle<span style="color: red">*</span>
                             </td>
                             <td>
                                 <cc1:ComboBox AutoCompleteMode="Append" ID="ddlAmbulanceID" runat="server"
@@ -54,7 +54,7 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                Trip Type<span style="color:red">*</span>
+                                Trip Type<span style="color: red">*</span>
                             </td>
                             <td style="width: 229px">
                                 <asp:DropDownList ID="ddlTripType" CssClass="search_3" runat="server">
@@ -62,7 +62,7 @@
                                 </asp:DropDownList>
                             </td>
                             <td>
-                                Destination<span style="color:red">*</span>
+                                Destination<span style="color: red">*</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtDestinationLocation" CssClass="search_3" runat="server"
@@ -87,7 +87,7 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                Start Time<span style="color:red">*</span>
+                                Start Time<span style="color: red">*</span>
                             </td>
                             <td style="width: 229px">
                                 <asp:DropDownList ID="ddlHours" CssClass="search_3" runat="server" AutoPostBack="true">
@@ -98,7 +98,7 @@
                                 </asp:DropDownList>
                             </td>
                             <td>
-                                Start Odo<span style="color:red">*</span>
+                                Start Odo<span style="color: red">*</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtStartOdo" CssClass="search_3" runat="server" MaxLength="6" onkeypress=" return numeric_only(this)"></asp:TextBox>
@@ -121,7 +121,7 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                End Time<span style="color:red">*</span>
+                                End Time<span style="color: red">*</span>
                             </td>
                             <td style="width: 229px">
                                 <asp:DropDownList ID="ddlHours1" CssClass="search_3" runat="server" AutoPostBack="true">
@@ -133,7 +133,7 @@
 
                             </td>
                             <td>
-                                End Odo<span style="color:red">*</span>
+                                End Odo<span style="color: red">*</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEndOdo" CssClass="search_3" runat="server" MaxLength="6" onkeypress="return numeric_only(this)"></asp:TextBox>
@@ -156,7 +156,7 @@
                         </tr>
                         <tr>
                             <td style="width: 93px">
-                                &nbsp;Remarks<span style="color:red">*</span>
+                                &nbsp;Remarks<span style="color: red">*</span>
                             </td>
                             <td colspan="3">
                                 <asp:TextBox ID="txtRemarks" CssClass="search_3" runat="server" TextMode="MultiLine"
@@ -179,7 +179,7 @@
                             <td colspan="4" align="center">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="form-submit-button" OnClick="btnSubmit_Click" OnClientClick="return validationFuelEntry();"/>
-                                <asp:Button ID="btnReset"  CssClass="form-reset-button" runat="server" Text="Reset"
+                                <asp:Button ID="btnReset" CssClass="form-reset-button" runat="server" Text="Reset"
                                             onclick="btnReset_Click"/>
                                 <asp:LinkButton ID="lbtnViewHistory" runat="server"
                                                 Text="View History" onclick="lbtnViewHistory_Click" Visible="False">
@@ -325,4 +325,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

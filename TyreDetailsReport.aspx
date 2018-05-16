@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="TyreDetailsReport.aspx.cs" Inherits="TyreDetailsReport" %>
 
-<%@ Reference Page="~/AccidentReport.aspx" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -16,7 +14,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" Style="font-size: 20px; color: brown" runat="server" Text="Tyre Details Report"></asp:Label>
+                <asp:Label  Style="font-size: 20px; color: brown" runat="server" Text="Tyre Details Report"></asp:Label>
             </td>
         </tr>
     </table>

@@ -7,9 +7,9 @@ using GvkFMSAPP.PL;
 
 public partial class SparePartsReceipt : Page
 {
-    public IInventory ObjInventory = new FMSInventory();
-    readonly GvkFMSAPP.BLL.FMSGeneral _fmsg = new GvkFMSAPP.BLL.FMSGeneral();
+    private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    public IInventory ObjInventory = new FMSInventory();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,9 +20,9 @@ public partial class SparePartsReceipt : Page
             btReceive.Attributes.Add("onclick", "return validation()");
             txtInvoiceNo.Attributes.Add("onkeypress", "javascript:return isNumberKey(this,event)");
             txtReceiptRemarks.Attributes.Add("onkeypress", "javascript:return remark(this,event)");
-            DataSet dsPerms = (DataSet) Session["PermissionsDS"];
+            var dsPerms = (DataSet) Session["PermissionsDS"];
             dsPerms.Tables[0].DefaultView.RowFilter = "Url='" + Page.Request.Url.Segments[Page.Request.Url.Segments.Length - 1] + "'";
-            PagePermissions p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
+            var p = new PagePermissions(dsPerms, dsPerms.Tables[0].DefaultView[0]["Url"].ToString(), dsPerms.Tables[0].DefaultView[0]["Title"].ToString());
             gvIssueDetails.Visible = false;
             if (p.View)
             {
@@ -43,7 +43,7 @@ public partial class SparePartsReceipt : Page
         try
         {
             _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-            DataSet ds = _fmsg.GetVehicleNumber();
+            var ds = _fmsg.GetVehicleNumber();
             if (ds != null) _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", null, ddlVehicles);
         }
         catch (Exception ex)
@@ -54,7 +54,6 @@ public partial class SparePartsReceipt : Page
 
     protected void ddlVehicles_SelectedIndexChanged(object sender, EventArgs e)
     {
-    
         switch (ddlVehicles.SelectedIndex)
         {
             case 0:
@@ -67,7 +66,7 @@ public partial class SparePartsReceipt : Page
     }
 
     private void FillGridIssueDetails(int vehicleId, int fleetInventoryItemId)
-{
+    {
         var ds = ObjInventory.GetInventoryIssueDetailsForVehicle1(vehicleId, fleetInventoryItemId);
         if (ds == null) throw new ArgumentNullException(nameof(ds));
         gvIssueDetails.DataSource = ds;
@@ -83,10 +82,10 @@ public partial class SparePartsReceipt : Page
 
     protected void btnViewDetails_Click(object sender, EventArgs e)
     {
-        LinkButton btnViewDetails = sender as LinkButton;
+        var btnViewDetails = sender as LinkButton;
         if (btnViewDetails != null)
         {
-            int rowIndex = Convert.ToInt32(btnViewDetails.Attributes["RowIndex"]);
+            var rowIndex = Convert.ToInt32(btnViewDetails.Attributes["RowIndex"]);
             txtVehicleNo.Text = gvIssueDetails.Rows[rowIndex].Cells[0].Text;
             txtDistrict.Text = gvIssueDetails.Rows[rowIndex].Cells[1].Text;
         }
@@ -96,8 +95,8 @@ public partial class SparePartsReceipt : Page
     {
         foreach (GridViewRow item in gvReceiptDetails.Rows)
         {
-            int receivedQuantity = Convert.ToInt32(((TextBox) item.FindControl("txtReceivedQty")).Text);
-            int detId = Convert.ToInt32(((Label) item.FindControl("LbDetID")).Text);
+            var receivedQuantity = Convert.ToInt32(((TextBox) item.FindControl("txtReceivedQty")).Text);
+            var detId = Convert.ToInt32(((Label) item.FindControl("LbDetID")).Text);
             InsertReceiptDetails(Convert.ToInt32(txtInvReqID.Text), receivedQuantity, Convert.ToInt32(txtInvoiceNo.Text), Convert.ToDateTime(txtInvoiceDate.Text), Convert.ToDateTime(txtReceiptDate.Text), Convert.ToString(txtReceiptRemarks.Text), detId);
         }
 
@@ -110,12 +109,12 @@ public partial class SparePartsReceipt : Page
         var res = ObjInventory.InsInventoryReceiptDet(issueId, receivedQuantity, invoiceNumber, invoiceDate, receiptDate, remarks, detId);
         if (res > 0)
         {
-            string strFmsScript = "Spare Parts Received";
+            var strFmsScript = "Spare Parts Received";
             Show(strFmsScript);
         }
         else
         {
-            string strFmsScript = "Failure";
+            var strFmsScript = "Failure";
             Show(strFmsScript);
         }
     }
@@ -126,7 +125,7 @@ public partial class SparePartsReceipt : Page
         {
             case DataControlRowType.DataRow:
                 ((TextBox) e.Row.FindControl("txtReceivedQty")).Attributes.Add("onblur", "javascript:ValidateIssueQty('" + ((TextBox) e.Row.FindControl("txtReceivedQty")).ClientID + "','" + e.Row.Cells[2].Text + "')");
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "dsad", "var ReceivedQuantity = '" + ((TextBox) e.Row.FindControl("txtReceivedQty")).ClientID + "'", true);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "dsad", "var ReceivedQuantity = '" + ((TextBox) e.Row.FindControl("txtReceivedQty")).ClientID + "'", true);
                 break;
         }
     }
@@ -152,7 +151,7 @@ public partial class SparePartsReceipt : Page
     protected void gvIssueDetails_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         txtInvReqID.Text = e.CommandArgument.ToString();
-        int id = Convert.ToInt32(e.CommandArgument.ToString());
+        var id = Convert.ToInt32(e.CommandArgument.ToString());
         var ds = ObjInventory.GetGridReceiptDetails(id);
         txtVehicleID.Text = ds.Tables[1].Rows[0][1].ToString();
         txtDCNumber.Text = ds.Tables[0].Rows[0][0].ToString();

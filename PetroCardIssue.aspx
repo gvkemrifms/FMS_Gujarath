@@ -102,10 +102,10 @@
 
 
 </script>
-<asp:UpdatePanel ID="UpdPanel1" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
   
-                    <legend align="center">Petro Card Issue</legend>
+                    <legend align="center" style="color: brown">Petro Card Issue</legend>
     <br/>
                     <table align="center">
                         <tr>
@@ -157,7 +157,7 @@
                                 <asp:TextBox ID="txtValidityEndDate" runat="server" CssClass="search_3" oncut="return false;" onpaste="return false;"
                                              oncopy="return false;" onkeypress="return false">
                                 </asp:TextBox>
-                                <cc1:CalendarExtender ID="calValEndDate" runat="server" TargetControlID="txtValidityEndDate"
+                                <cc1:CalendarExtender runat="server" TargetControlID="txtValidityEndDate"
                                                       Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="imgBtnCalendarInvoiceDate">
                                 </cc1:CalendarExtender>
                             </td>
@@ -186,7 +186,7 @@
                                 <asp:TextBox ID="txtIssuedDate" CssClass="search_3" runat="server" MaxLength="15" onkeypress="return false"
                                              oncut="return false;" onpaste="return false;" oncopy="return false;">
                                 </asp:TextBox>
-                                <cc1:CalendarExtender ID="calIssuedDate" runat="server" TargetControlID="txtIssuedDate"
+                                <cc1:CalendarExtender runat="server" TargetControlID="txtIssuedDate"
                                                       Format="MM/dd/yyyy" CssClass="cal_Theme1" PopupButtonID="ImageButton1">
                                 </cc1:CalendarExtender>
                             </td>

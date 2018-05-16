@@ -4,13 +4,13 @@ using System.Web.UI;
 
 public partial class FuelVarienceReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
-            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             ddlvehicle.Enabled = false;
             ddlbunk.Enabled = false;
             BindDistrictdropdown();
@@ -88,7 +88,7 @@ public partial class FuelVarienceReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_FuelVariance", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@districtID", "@VehicleID", "@From", "@To","@Bunk", Grddetails,ddlbunk);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_FuelVariance", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@districtID", "@VehicleID", "@From", "@To", "@Bunk", Grddetails, ddlbunk);
         }
         catch (Exception ex)
         {
@@ -110,8 +110,7 @@ public partial class FuelVarienceReport : Page
         }
         catch (Exception ex)
         {
-           _helper.ErrorsEntry(ex);
+            _helper.ErrorsEntry(ex);
         }
-            
     }
 }

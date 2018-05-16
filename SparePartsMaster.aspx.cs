@@ -8,9 +8,9 @@ using GvkFMSAPP.PL;
 
 public partial class SparePartsMaster : Page
 {
-    private readonly IFleetMaster _objFleetMaster = new FMSFleetMaster();
-    private readonly VASGeneral _obj = new VASGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _obj = new VASGeneral();
+    private readonly IFleetMaster _objFleetMaster = new FMSFleetMaster();
 
     protected void Page_Load(object sender, EventArgs e)
     {

@@ -189,7 +189,7 @@
                         &nbsp;
                     </td>
                     <td align="center">
-                        <asp:LinkButton ID="lbtnViewHistory" runat="server" Visible="False">View History</asp:LinkButton>
+                        <asp:LinkButton runat="server" Visible="False">View History</asp:LinkButton>
                     </td>
                 </tr>
                 <tr>

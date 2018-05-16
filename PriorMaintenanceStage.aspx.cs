@@ -9,7 +9,7 @@ public partial class PriorMaintenanceStage : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null)
-            Response.Redirect("Error.aspx");
+            Response.Redirect("Login.aspx");
         div1.InnerHtml = CreateChart1();
     }
 

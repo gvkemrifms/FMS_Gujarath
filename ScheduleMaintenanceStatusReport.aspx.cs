@@ -4,7 +4,7 @@ using System.Web.UI;
 
 public partial class ScheduleMaintenanceStatusReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,15 +25,16 @@ public partial class ScheduleMaintenanceStatusReport : Page
         }
         catch (Exception ex)
         {
-           _helper.ErrorsEntry(ex);
+            _helper.ErrorsEntry(ex);
         }
-
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvehicle.Enabled = false;
+        }
         else
         {
             ddlvehicle.Enabled = true;

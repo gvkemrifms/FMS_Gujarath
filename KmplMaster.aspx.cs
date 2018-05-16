@@ -3,18 +3,16 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using GvkFMSAPP.BLL.VAS_BLL;
 
 public partial class KmplMaster : Page
 {
     readonly Helper _helper = new Helper();
     private DataSet _dataset = new DataSet();
     private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
-    private VASGeneral _obj = new VASGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             BindData();

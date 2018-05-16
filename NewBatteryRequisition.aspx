@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <asp:Label ID="lbVehicles" runat="server" Text="Vehicles"></asp:Label>
+                        <asp:Label runat="server" Text="Vehicles"></asp:Label>
                         <span style="color: Red">*</span>
                         <ajaxToolkit:ComboBox AutoCompleteMode="Append" ID="ddlInventoryVehicles" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlInventoryVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
                         </ajaxToolkit:ComboBox>
@@ -82,9 +82,9 @@
                     <td align="center">
                         <asp:Button ID="btnNewBatteryReqSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btnNewBatteryReqSave_Click" OnClientClick="if (!validationInventoryBatteryVehicleType())return false;"/>
                         &nbsp;&nbsp;
-                        <asp:Button ID="btnNewBatteryReqReset" runat="server" CssClass="form-submit-button"  Text="Reset" OnClick="btnNewBatteryReqReset_Click"/>
+                        <asp:Button runat="server" CssClass="form-submit-button"  Text="Reset" OnClick="btnNewBatteryReqReset_Click"/>
                         &nbsp;&nbsp;
-                        <asp:Button ID="btnNewBatteryReqViewHistory" runat="server" CssClass="form-submit-button" Text="View History" OnClick="btnNewBatteryReqViewHistory_Click" OnClientClick="if(!validationInventoryBatteryVehicleType()) return false;"/>
+                        <asp:Button runat="server" CssClass="form-submit-button" Text="View History" OnClick="btnNewBatteryReqViewHistory_Click" OnClientClick="if(!validationInventoryBatteryVehicleType()) return false;"/>
                     </td>
                 </tr>
             </table>
@@ -171,14 +171,14 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="lblVehicleNo" runat="server" Text="Vehicle Number"></asp:Label>
+                                        <asp:Label runat="server" Text="Vehicle Number"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
                                         <asp:TextBox ID="txtVehicleNumberPopUp" runat="server" ReadOnly="True"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <asp:Label ID="Label1" runat="server" Text="Request ID"></asp:Label>
+                                        <asp:Label runat="server" Text="Request ID"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -199,14 +199,12 @@
                             <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                 <br/>
                                 <asp:Button ID="btnOk" runat="server" Text="Approve" OnClick="btnOk_Click" Width="50px"/>
-                                <ajaxToolkit:ConfirmButtonExtender
-                                    ID="ConfirmButtonExtender1" runat="server" TargetControlID="btnOk" ConfirmText="Are you sure you want to APPROVE">
+                                <ajaxToolkit:ConfirmButtonExtender runat="server" TargetControlID="btnOk" ConfirmText="Are you sure you want to APPROVE">
                                 </ajaxToolkit:ConfirmButtonExtender>
                                 <asp:Button ID="btnNo" runat="server" Text="Reject" OnClick="btnNo_Click" Width="50px"/>
-                                <ajaxToolkit:ConfirmButtonExtender
-                                    ID="ConfirmButtonExtender2" runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
+                                <ajaxToolkit:ConfirmButtonExtender runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
                                 </ajaxToolkit:ConfirmButtonExtender>
-                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"
+                                <asp:Button runat="server" Text="Cancel" OnClick="btnCancel_Click"
                                             Width="50px"/>
                             </div>
                         </fieldset>

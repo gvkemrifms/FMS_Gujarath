@@ -1,11 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceWorksServiceGroup.aspx.cs" Inherits="MaintenanceWorksServiceGroup" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script  type="text/javascript">
+    <script type="text/javascript">
         function validationMaintenanceWorksServiceGroup() {
             switch (document.getElementById("<%= txtServiceGroupName.ClientID %>").value) {
             case "":
-                
+
                 document.getElementById("<%= txtServiceGroupName.ClientID %>").focus();
                 return alert("Please Enter Service Group Name");
             }
@@ -29,12 +28,12 @@
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table align="center">             
+            <table align="center">
                 <tr>
                     <td>
-                        <fieldset">
-                            <legend  style="color: brown">Maintenance Works-Service Group</legend>
-                            <br />
+                        <fieldset>
+                            <legend style="color: brown">Maintenance Works-Service Group</legend>
+                            <br/>
                             <asp:Panel ID="pnlmaintenanceworksServiceGrp" runat="server">
                                 <table align="center">
                                     <tr>
@@ -53,20 +52,20 @@
                                             Manufacturer Name <span style="color: Red">*</span> &nbsp;
                                         </td>
                                         <td >
-                                            <asp:DropDownList ID="ddlManufacturerName" Cssclass="search_3" runat="server"  Width="150px">
+                                            <asp:DropDownList ID="ddlManufacturerName" Cssclass="search_3" runat="server" Width="150px">
                                             </asp:DropDownList>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="rowseparator"></td>
                                     </tr>
-                                    <br />
+                                    <br/>
                                     <tr>
                                         <td >
                                             <asp:Button ID="btnSaveMaintenanceWorksServiceGroup" runat="server" Text="Save"
-                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click" Cssclass="form-submit-button" OnClientClick="if(!validationMaintenanceWorksServiceGroup()) return false;"/>
+                                                        OnClick="btnSaveMaintenanceWorksServiceGroup_Click" Cssclass="form-submit-button" OnClientClick="if (!validationMaintenanceWorksServiceGroup()) return false;"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btnResetMaintenanceWorksServiceGroup" Cssclass="form-submit-button" runat="server" Text="Reset"
+                                            <asp:Button Cssclass="form-submit-button" runat="server" Text="Reset"
                                                         OnClick="btnResetMaintenanceWorksServiceGroup_Click"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <asp:Button ID="btnCancelMaintenanceWorksServiceGroup" Cssclass="form-submit-button" runat="server" Text="Cancel"
@@ -81,13 +80,13 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
-                <br />
-                <br />
+                <br/>
+                <br/>
                 <tr>
                     <td>
                         <fieldset >
-                            <asp:GridView style="margin-top:20px" ID="grvMaintenanceWorksServiceGroupDetails"   runat="server" AllowPaging="True"
-                                          PageSize="5" AutoGenerateColumns="False"  CellPadding="3"  CellSpacing="2"   GridLines="None"
+                            <asp:GridView style="margin-top: 20px" ID="grvMaintenanceWorksServiceGroupDetails" runat="server" AllowPaging="True"
+                                          PageSize="5" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" GridLines="Both" BorderColor="brown" BorderWidth="1px"
                                           CssClass="gridviewStyle" OnPageIndexChanging="grvMaintenanceWorksServiceGroupDetails_PageIndexChanging"
                                           OnRowEditing="grvMaintenanceWorksServiceGroupDetails_RowEditing">
                                 <RowStyle CssClass="rowStyleGrid"/>

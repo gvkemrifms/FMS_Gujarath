@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:UpdatePanel ID="updtpnlServiceStation" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <table align="center" width="100%">
                 <tr>

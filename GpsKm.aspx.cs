@@ -1,16 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 public partial class GpsKm : Page
 {
-    private readonly string _connectionString = ConfigurationManager.AppSettings["Str"];
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -111,6 +110,8 @@ public partial class GpsKm : Page
             var l = 0;
             if (chkpush.Checked) l = 1;
             var i = _helper.ExecuteInsertStatement("update t_expfuelDump set petrocardnum = '" + txtCardNumber.Text + "',expprice='" + txtLimit.Text + "', canpush = '" + l + "' where vehiclenumber = '" + txtVehicleNumber.Text + "' ");
+            if (i > 0)
+                Show("Record Updated Successfully");
             _helper.TraceService(txtVehicleNumber.Text + "~~~~~~" + i + "~~~~~~" + txtLimit.Text);
             PushDatatoIoc();
             Clear();
@@ -139,7 +140,11 @@ public partial class GpsKm : Page
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
-            using (var stream = request.GetRequestStream()) stream.Write(data, 0, data.Length);
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
             var response = (HttpWebResponse) request.GetResponse();
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             dynamic jObj = JsonConvert.DeserializeObject(responseString);
@@ -168,6 +173,14 @@ public partial class GpsKm : Page
         }
     }
 
+    private void Clear()
+    {
+        txtVehicleNumber.Text = txtLimit.Text = txtCardNumber.Text = "";
+        chkpush.Checked = false;
+        BindData();
+        dvSearch.Visible = false;
+    }
+
     public class WebClient : System.Net.WebClient
     {
         public int Timeout { get; set; }
@@ -183,13 +196,5 @@ public partial class GpsKm : Page
 
             return lWebRequest;
         }
-    }
-
-    private void Clear()
-    {
-        txtVehicleNumber.Text = txtLimit.Text = txtCardNumber.Text = "";
-        chkpush.Checked = false;
-        BindData();
-        dvSearch.Visible = false;
     }
 }

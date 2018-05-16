@@ -91,8 +91,8 @@
                 <tr>
                     <td align="center">
                         <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" OnClick="btSave_Click" Text="Submit"/>
-                        <asp:Button ID="btCancel" runat="server"  CssClass="form-submit-button" Text="Cancel" OnClick="btCancel_Click"/>
-                        <asp:Button ID="btnTyreReqHistory"  CssClass="form-submit-button" runat="server" Text="View History" OnClick="btnTyreReqHistory_Click" OnClientClick="return validationInventoryBatteryVehicleType();"/>
+                        <asp:Button  runat="server"  CssClass="form-submit-button" Text="Cancel" OnClick="btCancel_Click"/>
+                        <asp:Button   CssClass="form-submit-button" runat="server" Text="View History" OnClick="btnTyreReqHistory_Click" OnClientClick="return validationInventoryBatteryVehicleType();"/>
                     </td>
                 </tr>
             </table>
@@ -177,7 +177,7 @@
                             
                             <table style="margin-left:480px;margin-top:180px">
                                     <td>
-                                        <asp:Label ID="lbVehicleNo" runat="server" Text="VehicleNo"></asp:Label>
+                                        <asp:Label  runat="server" Text="VehicleNo"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -185,7 +185,7 @@
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
-                                        <asp:Label ID="lbInventoryReqID" runat="server" Text="InvReqID"></asp:Label>
+                                        <asp:Label  runat="server" Text="InvReqID"></asp:Label>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>
@@ -214,13 +214,13 @@
                                     <td colspan="7" align="center">
                                         <asp:Button ID="btnOk" runat="server" Text="Approve" OnClick="btnOk_Click"/>
                                         <ajaxToolKit:ConfirmButtonExtender
-                                            ID="ConfirmButtonExtender1" runat="server" TargetControlID="btnOk" ConfirmText="Are you sure you want to APPROVE">
+                                             runat="server" TargetControlID="btnOk" ConfirmText="Are you sure you want to APPROVE">
                                         </ajaxToolKit:ConfirmButtonExtender>
                                         <asp:Button ID="btnNo" runat="server" Text="Reject" OnClick="btnNo_Click"/>
                                         <ajaxToolKit:ConfirmButtonExtender
-                                            ID="ConfirmButtonExtender2" runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
+                                             runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
                                         </ajaxToolKit:ConfirmButtonExtender>
-                                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
+                                        <asp:Button  runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
                                     </td>
                                     >
                                 </tr>

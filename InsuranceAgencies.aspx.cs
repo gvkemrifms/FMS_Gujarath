@@ -91,7 +91,9 @@ public partial class InsuranceAgencies : Page
                     InsuranceAgencyDetailsReset();
                 }
                 else
+                {
                     Show("This insurance Agency  already exists");
+                }
 
                 break;
         }

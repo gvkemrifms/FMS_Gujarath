@@ -10,7 +10,7 @@ public partial class FuelEntryDetailsReport : Page
     {
         if (!IsPostBack)
         {
-            if(Session["User_Name"]==null)Response.Redirect("Login.aspx");
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             BindDistrictdropdown();
         }
     }

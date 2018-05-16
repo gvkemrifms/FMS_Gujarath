@@ -4,7 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <link href="css/newStyles.css" rel="stylesheet"/>
-<script  type="text/javascript">
+<script type="text/javascript">
     var now = new Date();
     var inspectedDate;
     var purchaseDate;
@@ -442,11 +442,11 @@
     }
 
 </script>
-<asp:UpdatePanel ID="up1" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
 <asp:Panel ID="pnlTemporaryVehicleDetails" runat="server">
 
-<asp:HiddenField ID="hdnStepNo" runat="server"/>
+<asp:HiddenField runat="server"/>
 &nbsp;&nbsp;&nbsp;
 <asp:Wizard ID="tempVehDetWizard" runat="server" Height="224px" Width="664px" ActiveStepIndex="0"
             OnFinishButtonClick="Wizard1_FinishButtonClick" DisplaySideBar="False">
@@ -546,7 +546,7 @@
                 <asp:TextBox ID="txtInspectedDate" CssClass="text1" runat="server" Width="100px" oncut="return false;"
                              onpaste="return false;" onkeypress="return false">
                 </asp:TextBox>
-                <cc1:CalendarExtender ID="calExtInspectedDate" runat="server" TargetControlID="txtInspectedDate"
+                <cc1:CalendarExtender runat="server" TargetControlID="txtInspectedDate"
                                       PopupButtonID="imgBtnCalendarInspectedDate" Format="MM/dd/yyyy">
                 </cc1:CalendarExtender>
             </td>
@@ -689,7 +689,7 @@
         </asp:TextBox>
         <asp:ImageButton ID="imgBtnPurchaseDate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtPurchaseDate" runat="server" TargetControlID="txtPurchaseDate"
+        <cc1:CalendarExtender runat="server" TargetControlID="txtPurchaseDate"
                               PopupButtonID="imgBtnPurchaseDate" Format="MM/dd/yyyy" Enabled="True">
         </cc1:CalendarExtender>
     </td>
@@ -769,7 +769,7 @@
         </asp:TextBox>
         <asp:ImageButton ID="imgBtnManufacturingDate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtManufacturingDate" runat="server" TargetControlID="txtManufacturingDate"
+        <cc1:CalendarExtender runat="server" TargetControlID="txtManufacturingDate"
                               PopupButtonID="imgBtnManufacturingDate" Format="MM/dd/yyyy" Enabled="True">
         </cc1:CalendarExtender>
     </td>
@@ -821,7 +821,7 @@
 </tr>
 </table>
 </asp:WizardStep>
-<asp:WizardStep ID="WizardStep3" runat="server" Title="Insurance Information ">
+<asp:WizardStep runat="server" Title="Insurance Information ">
 <table style="width: 100%">
 <tr>
     <td colspan="4" style="text-align: center">
@@ -920,7 +920,7 @@
         </asp:TextBox>
         <asp:ImageButton ID="imgBtnCurrentPolicyEndDate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtCurrentPolicyEndDate" runat="server" TargetControlID="txtCurrentPolicyEndDate"
+        <cc1:CalendarExtender runat="server" TargetControlID="txtCurrentPolicyEndDate"
                               PopupButtonID="imgBtnCurrentPolicyEndDate" Format="MM/dd/yyyy" Enabled="True">
         </cc1:CalendarExtender>
     </td>
@@ -963,7 +963,7 @@
         </asp:TextBox>
         <asp:ImageButton ID="imgBtnInsuranceFeesPaidDate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtInsuranceFeesPaidDate" runat="server" TargetControlID="txtInsuranceFeesPaidDate"
+        <cc1:CalendarExtender runat="server" TargetControlID="txtInsuranceFeesPaidDate"
                               PopupButtonID="imgBtnInsuranceFeesPaidDate" Format="MM/dd/yyyy" Enabled="True">
         </cc1:CalendarExtender>
     </td>
@@ -1008,7 +1008,7 @@
         </asp:TextBox>
         <asp:ImageButton ID="imgBtnValiSdate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtValiSDate" runat="server" TargetControlID="txtValiSDate"
+        <cc1:CalendarExtender runat="server" TargetControlID="txtValiSDate"
                               PopupButtonID="imgBtnValiSDate" Format="MM/dd/yyyy" Enabled="True">
         </cc1:CalendarExtender>
     </td>
@@ -1067,7 +1067,7 @@
 </tr>
 </table>
 </asp:WizardStep>
-<asp:WizardStep ID="WizardStep6" runat="server" Title="Tyre Information ">
+<asp:WizardStep runat="server" Title="Tyre Information ">
     <table style="width: 100%">
         <tr>
             <td colspan="6" style="text-align: center">
@@ -1264,7 +1264,7 @@
         </tr>
     </table>
 </asp:WizardStep>
-<asp:WizardStep ID="WizardStep7" runat="server" Title="Battery Information ">
+<asp:WizardStep runat="server" Title="Battery Information ">
     <table style="width: 100%">
         <tr>
             <td colspan="6" style="text-align: center">
@@ -1370,4 +1370,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

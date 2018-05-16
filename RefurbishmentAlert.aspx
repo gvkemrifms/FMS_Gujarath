@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="RefurbishmentAlert.aspx.cs" Inherits="RefurbishmentAlert" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:UpdatePanel ID="updtpnlRefAlert" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <table>
                 <tr>
@@ -62,7 +62,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" CssClass="form-submit-button" runat="server" Text="Send Mail" OnClick="btnSendMail_Click"/>
+                                        <asp:Button CssClass="form-submit-button" runat="server" Text="Send Mail" OnClick="btnSendMail_Click"/>
                                     </td>
                                 </tr>
                                 <tr>

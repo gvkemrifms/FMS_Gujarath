@@ -16,7 +16,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" style="color: brown; font-size: 20px;" runat="server" Text="Registration&nbsp;Monthwise&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Registration&nbsp;Monthwise&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -24,16 +24,16 @@
         <tr>
 
             <td>
-                Select District<asp:Label ID="lbldistrict"  runat="server" Text="" style="color: red">*</asp:Label>
+                Select District<asp:Label ID="lbldistrict" runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" CssClass="search_3" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                <asp:Button runat="server" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" CssClass="form-reset-button" Text="ExportExcel" OnClick="btntoExcel_Click"></asp:Button>

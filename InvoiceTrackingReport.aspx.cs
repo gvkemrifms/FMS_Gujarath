@@ -3,7 +3,7 @@ using System.Web.UI;
 
 public partial class InvoiceTrackingReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -30,13 +30,15 @@ public partial class InvoiceTrackingReport : Page
     protected void ddlvehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlvehicle.SelectedIndex <= 0)
+        {
             ddlbillno.Enabled = false;
+        }
         else
         {
             ddlbillno.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno","", ddlvehicle, ddlbillno, null, null, "@vehNo",null,null,null,null,null,null,null,null,1);
+                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "", ddlvehicle, ddlbillno, null, null, "@vehNo", null, null, null, null, null, null, null, null, 1);
             }
             catch (Exception ex)
             {

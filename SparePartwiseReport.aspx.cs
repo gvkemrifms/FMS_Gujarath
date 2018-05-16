@@ -73,7 +73,7 @@ public partial class SparePartwiseReport : Page
             ddlvendor.Enabled = true;
             try
             {
-                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor,null, null, "@DistrictID");
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, null, null, "@DistrictID");
             }
             catch (Exception ex)
             {

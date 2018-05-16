@@ -21,7 +21,7 @@
                                 <tr>
                                     <td>
                                         <asp:GridView ID="grdWheelAlignment" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                                      ForeColor="#333333" GridLines="None" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
+                                                      ForeColor="#333333" GridLines="Both" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
                                                       CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdWheelAlignment_PageIndexChanging">
                                             <RowStyle CssClass="rowStyleGrid"/>
                                             <Columns>
@@ -51,7 +51,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" valign="middle">
-                                        <asp:Button ID="btnSendMail" runat="server" Text="Send Mail" OnClick="btnSendMail_Click" CssClass="form-submit-button"/>
+                                        <asp:Button runat="server" Text="Send Mail" OnClick="btnSendMail_Click" CssClass="form-submit-button"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -66,4 +66,3 @@
         </tr>
     </table>
 </asp:Content>
-

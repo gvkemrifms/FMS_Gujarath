@@ -238,7 +238,7 @@
         </asp:TextBox>
     </td>
     <td align="left">
-        <cc1:CalendarExtender ID="calExtClaimFormSubmissionDate" runat="server" Enabled="True"
+        <cc1:CalendarExtender runat="server" Enabled="True"
                               Format="MM/dd/yyyy" PopupButtonID="imgBtnCalendarClaimFormSubmissionDate" TargetControlID="txtClaimFormSubmissionDate">
         </cc1:CalendarExtender>
         <asp:ImageButton ID="imgBtnCalendarClaimFormSubmissionDate" runat="server" alt=""
@@ -278,7 +278,7 @@
         </asp:TextBox>
     </td>
     <td align="left">
-        <cc1:CalendarExtender ID="calExtBillSubmissionDate" runat="server" Enabled="True"
+        <cc1:CalendarExtender runat="server" Enabled="True"
                               Format="MM/dd/yyyy" PopupButtonID="imgBtnCalendarBillSubmissionDate" TargetControlID="txtBillSubmissionDate">
         </cc1:CalendarExtender>
         <asp:ImageButton ID="imgBtnCalendarBillSubmissionDate" runat="server" alt="" src="images/Calendar.gif"
@@ -327,7 +327,7 @@
     <td align="left">
         <asp:ImageButton ID="imgBtnCalendarPaymentReceivedDate" runat="server" alt="" src="images/Calendar.gif"
                          Style="vertical-align: top"/>
-        <cc1:CalendarExtender ID="calExtPaymentReceivedDate" runat="server" Enabled="True"
+        <cc1:CalendarExtender runat="server" Enabled="True"
                               Format="MM/dd/yyyy" PopupButtonID="imgBtnCalendarPaymentReceivedDate" TargetControlID="txtPaymentReceivedDate">
         </cc1:CalendarExtender>
     </td>

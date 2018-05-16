@@ -67,7 +67,7 @@
             <!-- END Login Title -->
 
             <!-- Login Form -->
-            <form id="formlogin" runat="server" class="form-horizontal">
+            <form runat="server" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-xs-12">
                         
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-xs-4 text-right">
                        
-           <asp:Button ID="btnFmsLoginSubmit" runat="server" CssClass="btn btn-effect-ripple btn-sm btn-primary" Text="Login" OnClick="btnFmsLoginSubmit_Click" />
+           <asp:Button runat="server" CssClass="btn btn-effect-ripple btn-sm btn-primary" Text="Login" OnClick="btnFmsLoginSubmit_Click" />
 
                     </div>
                 </div>

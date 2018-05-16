@@ -17,7 +17,7 @@
              return true;
          }
      </script>
-    <legend align="center" style="color: brown">OutstandingSummary&nbsp;Report</legend>
+    <legend align="center" style="color: brown">Outstanding Summary&nbsp;Report</legend>
    
 <br/>
     <table align="center" >

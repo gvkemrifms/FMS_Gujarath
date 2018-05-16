@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
-using ServiceReference2;
-using System.Data.SqlClient;
 using GvkFMSAPP.DLL;
+using ServiceReference2;
+using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
 
 public partial class PetroCardIssue : Page
 {
-    private readonly IFuelManagement _objFuelMan = new FuelManagement();
-    private readonly GvkFMSAPP.BLL.FMSGeneral _fmsg = new GvkFMSAPP.BLL.FMSGeneral();
+    private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly IFuelManagement _objFuelMan = new FuelManagement();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -332,45 +333,46 @@ public partial class PetroCardIssue : Page
         }
     }
 
-    public  int InsertPetroCardIssueDetails(int DistrictID, string PetroCardNum, int AgencyID, int CardTypeID, DateTime ValidityEndDate, int IssuedToFE, DateTime PetroCardIssuedDate, int Status, int CreatedBy, DateTime CreatedDate, int UpdatedBy, DateTime UpdatedDate, int VehicleID, int UserDistrictID)
+    public int InsertPetroCardIssueDetails(int DistrictID, string PetroCardNum, int AgencyID, int CardTypeID, DateTime ValidityEndDate, int IssuedToFE, DateTime PetroCardIssuedDate, int Status, int CreatedBy, DateTime CreatedDate, int UpdatedBy, DateTime UpdatedDate, int VehicleID, int UserDistrictID)
     {
-        int num = 0;
+        var num = 0;
         try
         {
-            SqlCommand cmd = new SqlCommand();
+            var cmd = new SqlCommand();
             cmd.Parameters.Add("@DistrictID", SqlDbType.Int);
-            cmd.Parameters["@DistrictID"].Value = (object)DistrictID;
+            cmd.Parameters["@DistrictID"].Value = DistrictID;
             cmd.Parameters.AddWithValue("@PetroCardNum", PetroCardNum);
             cmd.Parameters.Add("@AgencyID", SqlDbType.Int);
-            cmd.Parameters["@AgencyID"].Value = (object)AgencyID;
+            cmd.Parameters["@AgencyID"].Value = AgencyID;
             cmd.Parameters.Add("@CardTypeID", SqlDbType.Int);
-            cmd.Parameters["@CardTypeID"].Value = (object)CardTypeID;
+            cmd.Parameters["@CardTypeID"].Value = CardTypeID;
             cmd.Parameters.Add("@ValidityEndDate", SqlDbType.DateTime);
-            cmd.Parameters["@ValidityEndDate"].Value = (object)ValidityEndDate;
+            cmd.Parameters["@ValidityEndDate"].Value = ValidityEndDate;
             cmd.Parameters.Add("@IssuedToFE", SqlDbType.Int);
-            cmd.Parameters["@IssuedToFE"].Value = (object)IssuedToFE;
+            cmd.Parameters["@IssuedToFE"].Value = IssuedToFE;
             cmd.Parameters.Add("@PetroCardIssuedDate", SqlDbType.DateTime);
-            cmd.Parameters["@PetroCardIssuedDate"].Value = (object)PetroCardIssuedDate;
+            cmd.Parameters["@PetroCardIssuedDate"].Value = PetroCardIssuedDate;
             cmd.Parameters.Add("@Status", SqlDbType.Bit);
-            cmd.Parameters["@Status"].Value = (object)0;
+            cmd.Parameters["@Status"].Value = 0;
             cmd.Parameters.Add("@CreatedBy", SqlDbType.Int);
-            cmd.Parameters["@CreatedBy"].Value = (object)CreatedBy;
+            cmd.Parameters["@CreatedBy"].Value = CreatedBy;
             cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime);
-            cmd.Parameters["@CreatedDate"].Value = (object)CreatedDate;
+            cmd.Parameters["@CreatedDate"].Value = CreatedDate;
             cmd.Parameters.Add("@UpdatedBy", SqlDbType.Int);
-            cmd.Parameters["@UpdatedBy"].Value = (object)UpdatedBy;
+            cmd.Parameters["@UpdatedBy"].Value = UpdatedBy;
             cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime);
-            cmd.Parameters["@UpdatedDate"].Value = (object)UpdatedDate;
+            cmd.Parameters["@UpdatedDate"].Value = UpdatedDate;
             cmd.Parameters.Add("@VehicleID", SqlDbType.Int);
-            cmd.Parameters["@VehicleID"].Value = (object)VehicleID;
+            cmd.Parameters["@VehicleID"].Value = VehicleID;
             cmd.Parameters.Add("@UserDistrictID", SqlDbType.Int);
-            cmd.Parameters["@UserDistrictID"].Value = (object)UserDistrictID;
+            cmd.Parameters["@UserDistrictID"].Value = UserDistrictID;
             num = SQLHelper.ExecuteNonQuery(cmd, CommandType.StoredProcedure, "[P_InsPetroCardIssueDetails]");
         }
         catch (Exception ex)
         {
             ErrorHandler.ErrorsEntry(ex.GetBaseException().ToString(), "class: FuelManagement ;Method: btSave_Click-InsPetroCardIssueDetails", 0L);
         }
+
         return num;
     }
 }

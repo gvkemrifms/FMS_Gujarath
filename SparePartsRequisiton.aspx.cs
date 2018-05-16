@@ -11,13 +11,13 @@ using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
 
 public partial class SparePartsRequisiton : Page
 {
-    public IInventory ObjInventory = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    public IInventory ObjInventory = new FMSInventory();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             RequisitionHistory.Visible = false;
@@ -243,7 +243,9 @@ public partial class SparePartsRequisiton : Page
             }
 
             if (quantitySatus)
+            {
                 Show("Quantity cannnot be 0");
+            }
             else
             {
                 var updResult = ObjInventory.InsInventoryRequestion(dtSpareParts);

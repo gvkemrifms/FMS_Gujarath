@@ -48,7 +48,7 @@
             return true;
         }
     </script>
-    <asp:UpdatePanel ID="updtpnlApprPage" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <table width="100%">
                 <tr>
@@ -69,14 +69,14 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtApprovalDate" runat="server" CssClass="search_3" style="margin-right: 10px"/>
-                                    <cc1:CalendarExtender ID="calExtApprovalDate" runat="server" TargetControlID="txtApprovalDate" CssClass="cal_Theme1"
+                                    <cc1:CalendarExtender runat="server" TargetControlID="txtApprovalDate" CssClass="cal_Theme1"
                                                           PopupButtonID="imgBtnCalendarApprovalDate" Format="MM/dd/yyyy">
                                     </cc1:CalendarExtender>
                                 </td>
                                 <td class="columnseparator">
                                 </td>
                                 <td>
-                                    <asp:LinkButton runat="server" ID="lnkChangeDate" Text="Change Date"
+                                    <asp:LinkButton runat="server" Text="Change Date"
                                                     onclick="lnkChangeDate_Click"/>
                                 </td>
                             </tr>
@@ -179,7 +179,7 @@
             </table>
             <div style="display: block; padding: 5px; width: 300px;" id="dvReason">
                 <div style="background-color: Maroon; border-bottom: none;">
-                    <asp:Label ID="Label1" runat="server" Text="Reason for Rejection" Font-Bold="True"
+                    <asp:Label runat="server" Text="Reason for Rejection" Font-Bold="True"
                                Font-Size="Small" ForeColor="#FFFFCC"/>
                 </div>
                 <div style="background-color: White">
@@ -205,7 +205,7 @@
                         </div >
 
                         <div style="display: none">
-                            <asp:Button runat="server" ID="btnDoWork" onclick="btnDoWork_Click" Text="TEMP"/>
+                            <asp:Button runat="server" onclick="btnDoWork_Click" Text="TEMP"/>
                             <asp:Button runat="server" ID="btnPopUp"/>
                         </div>
 

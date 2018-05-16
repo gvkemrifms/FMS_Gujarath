@@ -4,26 +4,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>
-         function pageLoad() {
-        $('#<%= ddldistrict.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 20,            
-            placeholder: "Select an option"
-        });
-        $('#<%= ddlvehicle.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 20,
-            placeholder: "Select an option"
-        });
-    }
+        function pageLoad() {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlvehicle.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+        }
     </script>
-      
+
     <table align="center">
         <tr>
             <td>
-              <asp:Label ID="lblScheduleMaintenanceStatusReport" Style="font-size: 20px; color: brown" runat="server" Text=" Schedule Maintenance Status Report"></asp:Label>
+                <asp:Label Style="color: brown; font-size: 20px;" runat="server" Text=" Schedule Maintenance Status Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -32,16 +32,16 @@
         <tr>
 
             <td>
-               Select District <asp:Label ID="lbldistrict" runat="server" Text="Select District" style="color:red">*</asp:Label>
+                Select District <asp:Label ID="lbldistrict" runat="server" Text="Select District" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                Select Vehicle<asp:Label ID="lblvehicle" runat="server" Text="" style="color:red">*</asp:Label>
+                Select Vehicle<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -49,7 +49,7 @@
             </td>
 
         </tr>
- 
+
         <tr>
             <td>
                 <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click"></asp:Button>
@@ -63,11 +63,10 @@
         </tr>
 
     </table>
-    <br />
+    <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="Grddetails" runat="server" GridLines="Both" BorderColor="Brown" BorderWidth="1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>
-

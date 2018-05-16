@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script  type="text/javascript">
+    <script type="text/javascript">
         function isMandatory(evt) {
             var id = document.getElementById('<%= ddlVehicleNumber.ClientID %>');
             var inputs = id.getElementsByTagName('input');
@@ -159,7 +159,7 @@
                                         <asp:TextBox ID="txtIssDate" CssClass="search_3" runat="server" oncut="return false;" onpaste="return false;"
                                                      oncopy="return false;" onkeypress="return false" MaxLength="15">
                                         </asp:TextBox>
-                                        <cc1:CalendarExtender ID="IssDate" runat="server" TargetControlID="txtIssDate" Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
+                                        <cc1:CalendarExtender runat="server" TargetControlID="txtIssDate" Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
                                         </cc1:CalendarExtender><asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
                                     </td>
                                     <td wrap="nowrap" style="width: 51px">
@@ -228,7 +228,7 @@
                                                     OnClick="Save_Click"/>&nbsp;
                                     </td>
                                     <td align="left" style="height: 19px; width: 99px;">
-                                        &nbsp;<asp:Button ID="Reset" CssClass="form-submit-button"  runat="server" style="margin-top: -10px"  Text="Reset" OnClick="Reset_Click"/>
+                                        &nbsp;<asp:Button ID="Reset" CssClass="form-submit-button" runat="server" style="margin-top: -10px" Text="Reset" OnClick="Reset_Click"/>
                                     </td>
                                 </tr>
                             </table>

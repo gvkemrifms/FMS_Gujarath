@@ -7,11 +7,11 @@ public partial class HandOvertoOperations : Page
 {
     private readonly GvkFMSAPP.BLL.HandOvertoOperations _handovertooperation = new GvkFMSAPP.BLL.HandOvertoOperations();
 
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             var dsPerms = (DataSet) Session["PermissionsDS"];

@@ -23,11 +23,11 @@
             return true;
         }
     </script>
-   
+
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblmedicaleuipmentreport" style="font-size: 20px; color: brown" runat="server" Text="Medical&nbsp;Equipment&nbsp;DetailsReport"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Medical&nbsp;Equipment&nbsp;DetailsReport"></asp:Label>
             </td>
         </tr>
     </table>
@@ -42,10 +42,10 @@
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
@@ -56,11 +56,7 @@
     <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grdtyre" runat="server" style="border-color: brown;border-width: 1px"></asp:GridView>
+            <asp:GridView ID="Grdtyre" runat="server" style="border-color: brown; border-width: 1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>
-
-
-
-

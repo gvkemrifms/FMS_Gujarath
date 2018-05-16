@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.PL;
-using System.Configuration;
 
 public partial class SparePartIssue : Page
 {
-    public IInventory ObjInventory = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
     public int fleetInventoryCategoryId = Convert.ToInt32(ConfigurationManager.AppSettings["fICategoryId"]);
+    public IInventory ObjInventory = new FMSInventory();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
@@ -69,9 +70,8 @@ public partial class SparePartIssue : Page
         }
     }
 
-    private void FillGridApprovedRequisitions( int vehicleId)
+    private void FillGridApprovedRequisitions(int vehicleId)
     {
-       
         var ds = ObjInventory.GetApprovedInventoryRequisitions(fleetInventoryCategoryId, vehicleId);
         gvApprovedRequisition.DataSource = ds;
         gvApprovedRequisition.DataBind();

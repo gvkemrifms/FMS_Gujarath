@@ -7,14 +7,14 @@ using GvkFMSAPP.PL;
 
 public partial class MaintenanceWorksServiceGroup : Page
 {
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFmsMaintenanceWorksServiceGroup = new FMSFleetMaster();
-    readonly Helper _helper = new Helper();
 
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             btnCancelMaintenanceWorksServiceGroup.Visible = false;
@@ -132,7 +132,9 @@ public partial class MaintenanceWorksServiceGroup : Page
                         }
                     }
                     else
+                    {
                         Show("Service Group Name for selected Manufacturer already exists");
+                    }
 
                     break;
                 }
@@ -158,7 +160,9 @@ public partial class MaintenanceWorksServiceGroup : Page
                         }
                     }
                     else
+                    {
                         Show("Service Group Name already exists");
+                    }
 
                     break;
                 }

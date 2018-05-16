@@ -166,209 +166,207 @@
 </tr>
 <tr>
 <td align="center">
-<asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="padding: 10px; display: none;">
+<asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="display: none; padding: 10px;">
 <fieldset style="padding: 10px;">
-<legend>Receipt Details </legend>
-<table>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbVehicleID" runat="server" Text="VehicleID"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtVehicleID" runat="server" ReadOnly="true"></asp:TextBox>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbVehicleNo" runat="server" Text="VehicleNo"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtVehicleNo" runat="server" ReadOnly="true"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbDistrict" runat="server" Text="District"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtDistrict" runat="server" ReadOnly="true"></asp:TextBox>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbInventoryReqID" runat="server" Text="InvIssID"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtInvReqID" runat="server" ReadOnly="true"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbDCnumber" runat="server" Text="DC No"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtDCNumber" runat="server" ReadOnly="true" MaxLength="10"></asp:TextBox>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbDcDate" runat="server" Text="DC Date"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtDCDate" runat="server" ReadOnly="true" oncut="return false;"
-                         onpaste="return false;" oncopy="return false;">
-            </asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbCourierName" runat="server" Text="CourierName"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtCourierName" runat="server" ReadOnly="true" MaxLength="20"></asp:TextBox>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbRemarks" runat="server" Text="HO Remarks"></asp:Label>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtRemarks" runat="server" ReadOnly="true" MaxLength="20"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbReceptdate" runat="server" Text="ReceiptDate"></asp:Label>
-            <span
-                style="color: Red">
-                *
-            </span>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtReceiptDate" runat="server" onkeypress="return false" MaxLength="15"
-                         oncut="return false;" onpaste="return false;" oncopy="return false;">
-            </asp:TextBox>
-            <ajaxToolKit:CalendarExtender
-                ID="ccl2" runat="server" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy"
-                PopupButtonID="ImageButton1">
-            </ajaxToolKit:CalendarExtender>
-            <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif"
-                             Style="vertical-align: top"/>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbReceiptRemarks" runat="server" Text="Remarks"></asp:Label>
-            <span
-                style="color: Red">
-                *
-            </span>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtReceiptRemarks" runat="server" MaxLength="50" TextMode="MultiLine"
-                         onKeyUp="CheckLength(this,50)" onChange="CheckLength(this,50)">
-            </asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td>
-            <asp:Label ID="lbInvoiceNo" runat="server" Text="InvoiceNo"></asp:Label>
-            <span style="color: Red">
-                *
-            </span>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtInvoiceNo" runat="server" MaxLength="5"></asp:TextBox>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:Label ID="lbInvoiceDate" runat="server" Text="InvoiceDate"></asp:Label>
-            <span
-                style="color: Red">
-                *
-            </span>
-        </td>
-        <td class="columnseparator"></td>
-        <td>
-            <asp:TextBox ID="txtInvoiceDate" runat="server" MaxLength="15" onkeypress="return false"
-                         oncut="return false;" onpaste="return false;" oncopy="return false;">
-            </asp:TextBox>
-            <ajaxToolKit:CalendarExtender
-                ID="ccl3" runat="server" TargetControlID="txtInvoiceDate" Format="MM/dd/yyyy"
-                PopupButtonID="ImageButton2">
-            </ajaxToolKit:CalendarExtender>
-            <asp:ImageButton ID="ImageButton2" runat="server" alt="" src="images/Calendar.gif"
-                             Style="vertical-align: top"/>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td align="center" colspan="7">
-            <asp:GridView ID="gvReceiptDetails" runat="server" BackColor="#DEBA84" BorderColor="#DEBA84"
-                          BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2" AutoGenerateColumns="false"
-                          OnRowDataBound="gvReceiptDetails_RowDataBound">
-                <RowStyle CssClass="rowStyleGrid"/>
-                <FooterStyle CssClass="footerStylegrid"/>
-                <Columns>
-                    <asp:BoundField HeaderText="SparePartName" DataField="SparePart_Name"/>
-                    <asp:BoundField HeaderText="RequestedQty" DataField="RequestedQty"/>
-                    <asp:BoundField HeaderText="IssuedQty" DataField="IssuedQty"/>
-                    <asp:TemplateField HeaderText="ReceivedQty">
-                        <ItemTemplate>
-                            <asp:TextBox ID="txtReceivedQty" runat="server" onkeypress="return isNumberKey(event);"
-                                         MaxLength="4">
-                            </asp:TextBox>
-                            <asp:Label ID="LbDetID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SparePartIssueDetID") %>'
-                                       Visible="false">
-                            </asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-                <PagerStyle CssClass="pagerStylegrid"/>
-                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                <HeaderStyle CssClass="headerStyle"/>
-            </asp:GridView>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-    <tr>
-        <td align="center" colspan="7">
-            <asp:Button ID="btReceive" runat="server" Text="Received" OnClick="btReceive_Click"/>
-            <asp:Button ID="btCancel" runat="server" Text="Cancel" OnClick="btCancel_Click"/>
-        </td>
-    </tr>
-    <tr>
-        <td class="rowseparator"></td>
-    </tr>
-</table>
+    <legend>Receipt Details </legend>
+    <table>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="VehicleID"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtVehicleID" runat="server" ReadOnly="true"></asp:TextBox>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label runat="server" Text="VehicleNo"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtVehicleNo" runat="server" ReadOnly="true"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="District"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtDistrict" runat="server" ReadOnly="true"></asp:TextBox>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label runat="server" Text="InvIssID"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtInvReqID" runat="server" ReadOnly="true"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="DC No"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtDCNumber" runat="server" ReadOnly="true" MaxLength="10"></asp:TextBox>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label runat="server" Text="DC Date"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtDCDate" runat="server" ReadOnly="true" oncut="return false;"
+                             onpaste="return false;" oncopy="return false;">
+                </asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="CourierName"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtCourierName" runat="server" ReadOnly="true" MaxLength="20"></asp:TextBox>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label runat="server" Text="HO Remarks"></asp:Label>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtRemarks" runat="server" ReadOnly="true" MaxLength="20"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="ReceiptDate"></asp:Label>
+                <span
+                    style="color: Red">
+                    *
+                </span>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtReceiptDate" runat="server" onkeypress="return false" MaxLength="15"
+                             oncut="return false;" onpaste="return false;" oncopy="return false;">
+                </asp:TextBox>
+                <ajaxToolKit:CalendarExtender runat="server" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy"
+                                              PopupButtonID="ImageButton1">
+                </ajaxToolKit:CalendarExtender>
+                <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif"
+                                 Style="vertical-align: top"/>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label runat="server" Text="Remarks"></asp:Label>
+                <span
+                    style="color: Red">
+                    *
+                </span>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtReceiptRemarks" runat="server" MaxLength="50" TextMode="MultiLine"
+                             onKeyUp="CheckLength(this,50)" onChange="CheckLength(this,50)">
+                </asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" Text="InvoiceNo"></asp:Label>
+                <span style="color: Red">
+                    *
+                </span>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtInvoiceNo" runat="server" MaxLength="5"></asp:TextBox>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:Label ID="lbInvoiceDate" runat="server" Text="InvoiceDate"></asp:Label>
+                <span
+                    style="color: Red">
+                    *
+                </span>
+            </td>
+            <td class="columnseparator"></td>
+            <td>
+                <asp:TextBox ID="txtInvoiceDate" runat="server" MaxLength="15" onkeypress="return false"
+                             oncut="return false;" onpaste="return false;" oncopy="return false;">
+                </asp:TextBox>
+                <ajaxToolKit:CalendarExtender runat="server" TargetControlID="txtInvoiceDate" Format="MM/dd/yyyy"
+                                              PopupButtonID="ImageButton2">
+                </ajaxToolKit:CalendarExtender>
+                <asp:ImageButton ID="ImageButton2" runat="server" alt="" src="images/Calendar.gif"
+                                 Style="vertical-align: top"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="7">
+                <asp:GridView ID="gvReceiptDetails" runat="server" BackColor="#DEBA84" BorderColor="#DEBA84"
+                              BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2" AutoGenerateColumns="false"
+                              OnRowDataBound="gvReceiptDetails_RowDataBound">
+                    <RowStyle CssClass="rowStyleGrid"/>
+                    <FooterStyle CssClass="footerStylegrid"/>
+                    <Columns>
+                        <asp:BoundField HeaderText="SparePartName" DataField="SparePart_Name"/>
+                        <asp:BoundField HeaderText="RequestedQty" DataField="RequestedQty"/>
+                        <asp:BoundField HeaderText="IssuedQty" DataField="IssuedQty"/>
+                        <asp:TemplateField HeaderText="ReceivedQty">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtReceivedQty" runat="server" onkeypress="return isNumberKey(event);"
+                                             MaxLength="4">
+                                </asp:TextBox>
+                                <asp:Label ID="LbDetID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SparePartIssueDetID") %>'
+                                           Visible="false">
+                                </asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <PagerStyle CssClass="pagerStylegrid"/>
+                    <SelectedRowStyle CssClass="selectedRowStyle"/>
+                    <HeaderStyle CssClass="headerStyle"/>
+                </asp:GridView>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="7">
+                <asp:Button ID="btReceive" runat="server" Text="Received" OnClick="btReceive_Click"/>
+                <asp:Button runat="server" Text="Cancel" OnClick="btCancel_Click"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+    </table>
 </fieldset>
 </asp:Panel>
 </td>
@@ -378,4 +376,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

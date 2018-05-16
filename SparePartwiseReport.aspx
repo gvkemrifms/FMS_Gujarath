@@ -5,34 +5,39 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-   
+
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });
             $('#<%= ddlvehicle.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-            if (ddlDistrict === '--select--') 
+            if (ddlDistrict === '--select--')
                 return alert("Please select District");
             var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
-            if (ddlVehicle === '--select--') 
+            if (ddlVehicle === '--select--')
                 return alert("Please select Vehicle");
             var ddlVendor = $('#<%= ddlvendor.ClientID %> option:selected').text().toLowerCase();
             if (ddlVendor === '--select--')
                 return alert("Please select Vendor");
             var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
-            if (txtFirstDate === "") 
-                return alert('From Date is Mandatory');          
-            if (txtToDate === "") 
-                return alert("End Date is Mandatory");            
+            if (txtFirstDate === "")
+                return alert('From Date is Mandatory');
+            if (txtToDate === "")
+                return alert("End Date is Mandatory");
             var fromDate = (txtFirstDate).replace(/\D/g, '/');
             var toDate = (txtToDate).replace(/\D/g, '/');
             var ordFromDate = new Date(fromDate);
@@ -47,31 +52,31 @@
             return true;
         }
     </script>
-    <br />
-    <legend align="center" style="color:brown">Spare Parts Wise Report</legend>
+    <br/>
+    <legend align="center" style="color: brown">Spare Parts Wise Report</legend>
     <table align="center">
         <tr>
 
             <td>
-               Select District <asp:Label ID="lbldistrict" runat="server" Text="" style="color:red">*</asp:Label>
+                Select District <asp:Label ID="lbldistrict" runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                Select Vehicle<asp:Label ID="lblvehicle" runat="server" Text="" style="color:red" >*</asp:Label>
+                Select Vehicle<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddlvehicle" runat="server" Style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddlvehicle_SelectedIndexChanged"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-               Spare Vendor Name <asp:Label ID="lblvendor" runat="server" Text="" style="color:red">*</asp:Label>
+                Spare Vendor Name <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
             <td>
                 <asp:DropDownList ID="ddlvendor" CssClass="search_3" runat="server" Style="width: 150px"></asp:DropDownList>
@@ -79,22 +84,22 @@
         </tr>
         <tr>
             <td>
-               From Date <asp:Label ID="lblfromdate" runat="server" Text="" style="color:red">*</asp:Label>
+                From Date <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtfrmDate" CssClass="search_3" runat="server"></asp:TextBox>
             </td>
             <td>
 
-                <cc1:CalendarExtender ID="CalendarExtender2"  runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
 
 
             </td>
-            </tr>
+        </tr>
         <tr>
 
             <td>
-                To date<asp:Label ID="lbltodate" runat="server" Text="" style="color:red">*</asp:Label>
+                To date<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -106,11 +111,11 @@
 
 
             </td>
-            </tr>
+        </tr>
         <tr>
 
             <td>
-                <asp:Button runat="server" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" CssClass="form-submit-button" Text="ShowReport" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
 
             <td>
@@ -121,7 +126,7 @@
         </tr>
 
     </table>
-    <br />
+    <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="Grddetails" EmptyDataText="Records Not Available" BorderWidth="1px" BorderColor="brown" runat="server" ShowHeaderWhenEmpty="true"></asp:GridView>

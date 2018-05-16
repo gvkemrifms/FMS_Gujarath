@@ -6,12 +6,12 @@ using GvkFMSAPP.BLL;
 
 public partial class ScheduleServiceMaster : Page
 {
-    private readonly VAS _obj = new VAS();
     private readonly Helper _helper = new Helper();
+    private readonly VAS _obj = new VAS();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             BindGrid();

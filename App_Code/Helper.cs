@@ -85,9 +85,9 @@ public class Helper
 
     public int ExecuteInsertStatement(string insertStmt)
     {
-        using (var conn = new MySqlConnection(ConfigurationManager.AppSettings["Str"]))
+        using (var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]))
         {
-            using (var comm = new MySqlCommand())
+            using (var comm = new SqlCommand())
             {
                 var i = 0;
                 comm.Connection = conn;
@@ -99,7 +99,7 @@ public class Helper
                     TraceService(insertStmt);
                     return i;
                 }
-                catch (MySqlException ex)
+                catch (SqlException ex)
                 {
                     TraceService(" executeInsertStatement " + ex + insertStmt);
                     return i;
@@ -210,8 +210,9 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null, DropDownList dropdownId1 = null,RadioButtonList radiolist=null)
+    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null, DropDownList dropdownId1 = null,RadioButtonList radiolist=null,string filter=null)
     {
+       
         if (dropdownId == null && dropdownId1 == null)
         {
             if (combo != null)
@@ -234,8 +235,11 @@ public class Helper
             dropdownId.DataValueField = valueField;
             dropdownId.DataBind();
             dropdownId.Items.Insert(0, new ListItem("--Select--", "0"));
-            dropdownId.Items[0].Value = "0";
-            dropdownId.SelectedIndex = 0;
+            if (filter == null)
+            {
+                dropdownId.Items[0].Value = "0";
+                dropdownId.SelectedIndex = 0;
+            }
         }
         else
         {

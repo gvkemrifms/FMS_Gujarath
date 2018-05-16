@@ -214,7 +214,7 @@ public partial class FuelEntry : Page
                 ddlPetroCardNumber.SelectedIndex = -1;
                 break;
             default:
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber);
+                _helper.FillDropDownHelperMethodWithDataSet(ds, "PetroCardNum", "PetroCardIssueID", ddlPetroCardNumber, null, null, null, "1");
                 ddlPaymode.Enabled = true;
                 break;
         }
@@ -231,7 +231,7 @@ public partial class FuelEntry : Page
         if (ds == null) throw new ArgumentNullException(nameof(ds));
         try
         {
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "AgencyName", "AgencyID", ddlAgency, null, null, null, "1");
             ddlAgency.Enabled = true;
         }
         catch (Exception ex)
@@ -742,10 +742,10 @@ public partial class FuelEntry : Page
                         ObjFuelEntry.IFillAgencyWoDistrictID();
                     }
 
+                    ddlVehicleNumber.Enabled = false;
                     ddlAgency.Enabled = false;
                     ddlPaymode.Enabled = false;
                     ddlPetroCardNumber.Enabled = false;
-                    ddlVehicleNumber.Enabled = false;
                     ddlDistrict.Enabled = false;
                     break;
                 }

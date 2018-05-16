@@ -45,7 +45,7 @@
             return true;
         }
     </script>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <div>
                 <fieldset style="padding: 10px">
@@ -200,7 +200,7 @@
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <asp:Button ID="btnOk" runat="server" Text="Issue" Width="50px" OnClick="btnOk_Click"/>
                                                     &nbsp;&nbsp;
-                                                    <asp:Button ID="btnNo" runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
+                                                    <asp:Button runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
                                                 </div>
                                             </td>
                                         </tr>

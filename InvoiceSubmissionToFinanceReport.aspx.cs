@@ -4,7 +4,7 @@ using System.Web.UI;
 
 public partial class InvoiceSubmissionToFinanceReport : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -45,7 +45,9 @@ public partial class InvoiceSubmissionToFinanceReport : Page
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex <= 0)
+        {
             ddlvendor.Enabled = false;
+        }
         else
         {
             ddlvendor.Enabled = true;

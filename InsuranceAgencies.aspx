@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script  type="text/javascript">
+    <script type="text/javascript">
 
         function validationInsuranceDetails() {
             switch (document.getElementById("<%= txtInsuranceAgency.ClientID %>").value) {
@@ -52,13 +52,13 @@
                     <td style="height: 200px">
                         <fieldset style="padding: 10px;">
                             <legend align="center">Insurance Agency</legend>
-                            <table id="table2" class="bordergreen" width="91%" align="center">
+                            <table id="table2" width="91%" align="center">
                                 <tr>
                                     <td>
-                                        <table class="logtable" align="center">
+                                        <table align="center">
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Insurance Agency <span style="color: Red" class="labelErr">*</span>
+                                                    Insurance Agency <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator">
                                                 </td>
@@ -74,7 +74,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Address <span style="color: Red" class="labelErr">*</span>
+                                                    Address <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator">
                                                 </td>
@@ -90,7 +90,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Contact Person <span style="color: Red" class="labelErr">*</span>
+                                                    Contact Person <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator">
                                                 </td>
@@ -104,7 +104,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Contact No <span style="color: Red" class="labelErr">*</span>
+                                                    Contact No <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator">
                                                 </td>
@@ -120,13 +120,13 @@
                                                 <td colspan="3" style="height: 41px">
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <asp:Button ID="btnInsuranceUpdate" Width="55px" runat="server" CssClass="form-submit-button"
-                                                                Text="Insert"  OnClientClick="return validationInsuranceDetails();" OnClick="btnInsuranceUpdate_Click">
+                                                                Text="Insert" OnClientClick="return validationInsuranceDetails();" OnClick="btnInsuranceUpdate_Click">
                                                     </asp:Button>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <asp:Button ID="btnInsuranceReset" Width="55px" runat="server"
-                                                                CssClass="form-submit-button"   Text="Reset" CausesValidation="false" OnClick="btnInsuranceReset_Click">
+                                                                CssClass="form-submit-button" Text="Reset" CausesValidation="false" OnClick="btnInsuranceReset_Click">
                                                     </asp:Button>
-                                                    <input type="hidden" id="hidBatText" runat="server"/>
+                                                    <input type="hidden" runat="server"/>
                                                 </td>
                                             </tr>
                                         </table>

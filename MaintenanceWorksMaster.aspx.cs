@@ -4,18 +4,19 @@ using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
+using GvkFMSAPP.DLL;
 using GvkFMSAPP.PL;
 
 public partial class MaintenanceWorksMaster : Page
 {
+    private readonly Helper _helper = new Helper();
     public IFleetMaster ObjFmsMaintenanceWorksMaster = new FMSFleetMaster();
-    readonly Helper _helper = new Helper();
 
     #region Page Load
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             FillServiceGroupNames();
@@ -150,7 +151,7 @@ public partial class MaintenanceWorksMaster : Page
                     }
                     else
                     {
-                        subserviceName =txtCategories.Text;
+                        subserviceName = txtCategories.Text;
                         flag = 0;
                     }
 
@@ -230,6 +231,7 @@ public partial class MaintenanceWorksMaster : Page
             GetSubService(subservice);
         }
         else
+        {
             try
             {
                 _helper.FillDropDownHelperMethodWithSp("P_GetCategories", "Categories", "Category_Id", ddlServiceGroupName, ddlMaintenanceManufacturerName, null, null, "@Aggre", "@VehicleManufacturer", null, null, null, null, ddlSSName);
@@ -238,6 +240,7 @@ public partial class MaintenanceWorksMaster : Page
             {
                 _helper.ErrorsEntry(ex);
             }
+        }
     }
 
     #endregion
@@ -247,7 +250,7 @@ public partial class MaintenanceWorksMaster : Page
         var cmd = new SqlCommand();
         cmd.Parameters.Add("@serviceGroupName", SqlDbType.NVarChar);
         cmd.Parameters["@serviceGroupName"].Value = Convert.ToString(subservice);
-        var ds = GvkFMSAPP.DLL.SQLHelper.ExecuteAdapter(cmd, CommandType.StoredProcedure, "[dbo].[P_Get_ManufacturerName_SelectedIndex]");
+        var ds = SQLHelper.ExecuteAdapter(cmd, CommandType.StoredProcedure, "[dbo].[P_Get_ManufacturerName_SelectedIndex]");
         if (ds == null) throw new ArgumentNullException(nameof(ds));
         try
         {

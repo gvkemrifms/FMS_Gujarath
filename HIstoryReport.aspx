@@ -40,7 +40,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblcardtypereport" style="color: brown; font-size: 20px;" runat="server" Text="History&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="History&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -58,7 +58,7 @@
             </tr>
         <tr>
             <td>
-            Select Vehicle <asp:Label ID="lblvehicle" runat="server" Text="" style="color: red">*</asp:Label>
+            Select Vehicle <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -68,7 +68,7 @@
         </tr>
             <tr>
                 <td>
-                    Month Of Registration<asp:Label ID="lblmonth" runat="server" Text="" style="color: red">*</asp:Label>
+                    Month Of Registration<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
                 </td>
                 <td>
                     <asp:DropDownList ID="ddlmonth" runat="server" style="width: 150px" AutoPostBack="true" CssClass="search_3">
@@ -97,7 +97,7 @@
           <tr>
                        
             <td>
-                Year Of Registration<asp:Label ID="lblyear" runat="server" Text="" style="color: red">*</asp:Label>
+                Year Of Registration<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -126,7 +126,7 @@
               </tr>
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" ID="btnShowReport" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
             </td>
 
             <td>

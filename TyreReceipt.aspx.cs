@@ -7,9 +7,9 @@ using GvkFMSAPP.PL;
 
 public partial class TyreReceipt : Page
 {
-    public IInventory ObjTyreRecp = new FMSInventory();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    public IInventory ObjTyreRecp = new FMSInventory();
 
     protected void Page_Load(object sender, EventArgs e)
     {

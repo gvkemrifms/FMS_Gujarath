@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <script type="text/javascript">
-        
+
         function pageLoad() {
             $('#<%= ddldistrict.ClientID %>').select2({
                 disable_search_threshold: 5,
@@ -21,6 +21,7 @@
                 placeholder: "Select an option"
             });
         }
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
             if (ddlDistrict === '--select--') {
@@ -55,7 +56,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label ID="lblmaintanancedetailsreport" Style="color: brown; font-size: 20px;" runat="server" Text="Details&nbsp;Report"></asp:Label>
+                <asp:Label Style="color: brown; font-size: 20px;" runat="server" Text="Maintenance Details Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -64,40 +65,40 @@
         <tr>
 
             <td>
-                Select&nbsp;District  <asp:Label ID="lbldistrict" runat="server" Text="" style="color: red">*</asp:Label>
+                Select&nbsp;District <asp:Label ID="lbldistrict" runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 100px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
+                <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
-</tr>
+        </tr>
         <tr>
             <td>
-                Select&nbsp;Vehicle<asp:Label ID="lblvehicle" runat="server" Text="" style="color: red">*</asp:Label>
+                Select&nbsp;Vehicle<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:DropDownList ID="ddlvehicle" runat="server" Style="width: 100px"></asp:DropDownList>
+                <asp:DropDownList ID="ddlvehicle" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
         </tr>
 
         <tr>
             <td>
-                From Date<asp:Label ID="lblfromdate" runat="server" Text="" style="color: red" >*</asp:Label>
+                From Date<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="txtfrmDate" CssClass="search_3" runat="server"></asp:TextBox>
             </td>
             <td>
 
-                <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
+                <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
 
 
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                To date <asp:Label ID="lbltodate" runat="server" Text="To date" style="color: red">*</asp:Label>
+                To date <asp:Label runat="server" Text="To date" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -107,21 +108,21 @@
                 <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
             </td>
         </tr>
-            
-           <tr>
-               <td>
-                   <asp:Button runat="server" Text="ShowReport" id="btnShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if(!Validations()) return false;"></asp:Button>
-               </td>
 
-               <td>
-                   <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
-               </td>
-           </tr>
+        <tr>
+            <td>
+                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" OnClientClick="if (!Validations()) return false;"></asp:Button>
+            </td>
+
+            <td>
+                <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
+            </td>
+        </tr>
     </table>
     <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grddetails" BorderWidth="1px" BorderColor="brown" runat="server" CssClass="gridview"></asp:GridView>
+            <asp:GridView ID="Grddetails" BorderWidth="1px" BorderColor="brown" GridLines="Both" EmptyDataText="No Data toDisplay" ShowHeaderWhenEmpty="True" runat="server" CssClass="gridview"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

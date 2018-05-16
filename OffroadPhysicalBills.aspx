@@ -4,7 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
 <script type="text/javascript">
     function dateselect(ev) {
@@ -103,7 +103,7 @@
         </td>
         <td>
             <asp:TextBox runat="server" ID="txtReceiptDate" CssClass="search_3" Width="150px" onkeypress="false;"/>
-            <cc1:CalendarExtender ID="calExtMaintenanceDate" runat="server" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy"
+            <cc1:CalendarExtender runat="server" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy"
                                   OnClientDateSelectionChanged="dateselect">
             </cc1:CalendarExtender>
         </td>

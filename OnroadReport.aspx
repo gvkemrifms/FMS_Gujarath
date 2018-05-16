@@ -3,16 +3,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <legend align="center" style="color: brown">OnRoad Report</legend>
-    <br />
+    <br/>
     <table align="center">
         <tr>
             <td>
-                 <asp:Button ID="btnShow" runat="server" CssClass="form-submit-button" class="btn btn-primary"
-                                Text="Show"  OnClick="btnShow_Click">
-                 </asp:Button>
+                <asp:Button runat="server" CssClass="form-submit-button" class="btn btn-primary"
+                            Text="Show" OnClick="btnShow_Click">
+                </asp:Button>
             </td>
             <td>
-                 <asp:Button ID="btntoExcel" runat="server" CssClass="form-submit-button" OnClick="btntoExcel_Click" style="margin-left: 20px" Text="Excel"></asp:Button>
+                <asp:Button ID="btntoExcel" runat="server" CssClass="form-submit-button" OnClick="btntoExcel_Click" style="margin-left: 20px" Text="Excel"></asp:Button>
             </td>
         </tr>
     </table>

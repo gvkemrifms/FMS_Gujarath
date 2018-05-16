@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="FuelReport.aspx.cs" Inherits="FuelReport" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<%@ Reference Page="~/AccidentReport.aspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script src="js/jquery-1.10.2.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
@@ -39,7 +37,7 @@
         <div id="mains" style="width: 100%;">
             <div id="first" style="float: left; width: 22%">
                 <div class="row" style="margin-top: 20px">
-                    <div class="col-sm-13" style="">
+                    <div style="">
                         <label for="textfield" class="control-label col-sm-4" style="float: left; width: 23%;" id="PVlSuppCode9">
                             From&nbsp;Date
                         </label>
@@ -74,15 +72,15 @@
         </div>
         <div id="two" style="float: left; width: 20%">
             <div class="row" style="margin-top: 20px">
-                <div class="col-sm-13" style="">
-                    <label for="textfield" class="control-label col-sm-4" style="float: left; width: 20%;" id="PVlSuppCode1">
+                <div style="">
+                    <label class="control-label col-sm-4" style="float: left; width: 20%;" id="PVlSuppCode1">
                         To&nbsp;Date
                     </label>
                     <div class="col-sm-6" style="width: 218px;" id="PVtSuppCode1">
                         <asp:TextBox ID="txttodate" style="width: 170px;" CssClass="search_3" runat="server" placeholder="" MaxLength="20"
                                      class="form-control">
                         </asp:TextBox>
-                        <cc1:CalendarExtender ID="CalendarExtender2" runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
+                        <cc1:CalendarExtender runat="server" Format="yyyy-MM-dd" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1">
                         </cc1:CalendarExtender>
                     </div>
                 </div>
@@ -92,7 +90,7 @@
         <div id="four" style="float: left; width: 6%">
             <div class="row" style="margin-top: 30px">
                 <div class="col-sm-12" style="">
-                    <asp:Button ID="btnShow" runat="server" class="btn btn-primary"
+                    <asp:Button runat="server" class="btn btn-primary"
                                 Text="Show" Style="height: 33px; width: 55px; border-radius: 3px;" OnClick="btnShow_Click" CssClass="form-submit-button">
                     </asp:Button>
                 </div>

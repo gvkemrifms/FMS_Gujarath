@@ -6,8 +6,8 @@ using GvkFMSAPP.BLL;
 
 public partial class VehicleDecommission : Page
 {
-    private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
     private readonly FMSGeneral _fmsgenobj = new FMSGeneral();
+    private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
     private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)

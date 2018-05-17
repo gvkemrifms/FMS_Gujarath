@@ -14,8 +14,8 @@ using BaseVehicleDetails = GvkFMSAPP.BLL.BaseVehicleDetails;
 public partial class VehicleAllocation : Page
 {
     private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
-    private readonly VASGeneral _vehallobj = new VASGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vehallobj = new VASGeneral();
 
     protected void Page_PreInit(object sender, EventArgs e)
     {
@@ -24,7 +24,9 @@ public partial class VehicleAllocation : Page
             if (Session["Role_Id"].ToString() == "120") MasterPageFile = "~/MasterERO.master";
         }
         else
+        {
             Response.Redirect("Login.aspx");
+        }
     }
 
     protected void Page_Load(object sender, EventArgs e)

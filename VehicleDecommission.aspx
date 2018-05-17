@@ -56,7 +56,7 @@
             return true;
         }
     </script>
-    <asp:UpdatePanel ID="updtpnlVehDecomm" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
 
             <fieldset style="padding: 10px">
@@ -65,7 +65,7 @@
                             <table align="center">
                                 <tr>
                                     <td>
-                                        District<span class="labelErr" style="color: Red">*</span>
+                                        District<span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
@@ -75,7 +75,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Vehicle Number<span class="labelErr" style="color: Red">*</span>
+                                    <td>Vehicle Number<span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="true"
@@ -86,7 +86,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Decommission Reason<span class="labelErr" style="color: Red">*</span>
+                                    <td>Decommission Reason<span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         <asp:TextBox ID="txtDecommReason" CssClass="search_3" runat="server" Width="150px"></asp:TextBox>
@@ -99,13 +99,13 @@
                                         <asp:TextBox ID="txtDecommDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
                                         <asp:ImageButton ID="imgbtnDecommDate" runat="server" Style="vertical-align: top"
                                             alt="" src="images/Calendar.gif" />
-                                        <cc1:CalendarExtender ID="calExtndrDecommDate" CssClass="cal_Theme1" runat="server" TargetControlID="txtDecommDate"
+                                        <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" TargetControlID="txtDecommDate"
                                             PopupButtonID="imgbtnDecommDate" Format="MM/dd/yyyy">
                                         </cc1:CalendarExtender>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Decommission Remark<span class="labelErr" style="color: Red">*</span>
+                                    <td>Decommission Remark<span style="color: Red">*</span>
                                     </td>
                                     <td>
                                         <asp:TextBox ID="txtDecommRemark" CssClass="search_3" runat="server" TextMode="MultiLine"></asp:TextBox>

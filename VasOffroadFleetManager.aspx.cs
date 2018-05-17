@@ -5,12 +5,12 @@ using GvkFMSAPP.BLL.VAS_BLL;
 
 public partial class VasOffroadFleetManager : Page
 {
-    private readonly VASGeneral _obj = new VASGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _obj = new VASGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) BindGridView();
     }
 
@@ -106,7 +106,9 @@ public partial class VasOffroadFleetManager : Page
             txtrejectReason.Text = "";
         }
         else
+        {
             Show("Rejection Declined");
+        }
     }
 
     protected void btnDoWork_Click(object sender, EventArgs e)

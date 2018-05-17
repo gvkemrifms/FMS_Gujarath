@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleAgeingReport.aspx.cs" Inherits="VehicleAgeingReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:UpdatePanel ID="updtpnlVehicleAgeingReport" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <legend align="center" style="color:brown"> Vehicle Ageing Report</legend>
             <table align="center">            
@@ -15,7 +15,7 @@
                         </td>                      
                    <tr>
  <td>
-                        <asp:Button ID="btnExportToExcel" CssClass="form-submit-button" runat="server" Text="Export To Excel" Width="142px"
+                        <asp:Button CssClass="form-submit-button" runat="server" Text="Export To Excel" Width="142px"
                                     OnClick="btnExportToExcel_Click"/>
                     </td>
                    </tr>

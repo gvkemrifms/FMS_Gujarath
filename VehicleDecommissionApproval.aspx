@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script  type="text/javascript">
+<script type="text/javascript">
     function validation(obj, id) {
         var txtVehicleNumber = obj.id.replace(id, "txtVehicleNumber");
         var txtApproveRejectedRemarks = obj.id.replace(id, "txtApproveRejectedRemarks");
@@ -51,20 +51,20 @@
 
 <tr>
     <td>
-       <legend style="color:brown" align="center">Vehicle Decommission Approval</legend>
+        <legend style="color: brown" align="center">Vehicle Decommission Approval</legend>
     </td>
 </tr>
 <tr>
     <td class="rowseparator"></td>
 </tr>
-    <tr>
+<tr>
     <td>
         <asp:Panel ID="pnlVehicleDecommissionApproval" runat="server">
             <fieldset style="padding: 10px">
                 <table align="center">
                     <tr>
                         <td >
-                            Vehicle Number<span style="color:red">*</span>
+                            Vehicle Number<span style="color: red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -83,19 +83,19 @@
                             <table>
                                 <tr>
                                     <td nowrap="nowrap">
-                                        <asp:TextBox ID="txtOffRoadDate" CssClass="search_3" runat="server"  onkeypress="return false;"></asp:TextBox>
+                                        <asp:TextBox ID="txtOffRoadDate" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                                         <cc1:CalendarExtender ID="CalendarExtender1" runat="server" PopupButtonID="imgOffRoadDate"
                                                               TargetControlID="txtOffRoadDate">
                                         </cc1:CalendarExtender>
                                         <asp:ImageButton ID="imgOffRoadDate" runat="server" ImageUrl="images/Calendar.gif"/>
                                     </td>
                                     <td>
-                                        <asp:DropDownList ID="ddlistTimeHour" CssClass="search_3" runat="server" Visible="false">
+                                        <asp:DropDownList CssClass="search_3" runat="server" Visible="false">
                                             <asp:ListItem Selected="True" Text="--hh--" Value="--hh--"></asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
                                     <td>
-                                        <asp:DropDownList ID="ddlistTimeMinute" CssClass="search_3" runat="server" Visible="false">
+                                        <asp:DropDownList CssClass="search_3" runat="server" Visible="false">
                                             <asp:ListItem Selected="True" Text="--mm--" Value="--hh--"></asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
@@ -114,7 +114,7 @@
                         <td>
                             <asp:TextBox ID="txtDateOfRegistration" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateOfRegistration" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender2" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfRegistration"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfRegistration"
                                                   TargetControlID="txtDateOfRegistration" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -130,7 +130,7 @@
                         <td>
                             <asp:TextBox ID="txtDateOfLaunching" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateOfLaunching" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender4" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfLaunching"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfLaunching"
                                                   TargetControlID="txtDateOfLaunching" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -146,7 +146,7 @@
                         <td>
                             <asp:TextBox ID="txtDateofPurchase" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateofPurchase" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender3" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateofPurchase"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateofPurchase"
                                                   TargetControlID="txtDateofPurchase" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -162,7 +162,7 @@
                         <td>
                             <asp:TextBox ID="txtSurveyDate" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnSurveyDate" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender5" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnSurveyDate"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnSurveyDate"
                                                   TargetControlID="txtSurveyDate" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -200,7 +200,7 @@
                     </tr>
                     <tr>
                         <td class="tdlabel">
-                            Approved/Rejected Remarks <span style="color:red">*</span>
+                            Approved/Rejected Remarks <span style="color: red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -214,13 +214,13 @@
                     </tr>
                     <tr>
                         <td class="tdlabel">
-                            Decommission Date <span style="color:red">*</span>
+                            Decommission Date <span style="color: red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
                             <asp:TextBox ID="txtDecommisionDate" CssClass="search_3" runat="server" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDecommisionDate" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender6" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDecommisionDate"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDecommisionDate"
                                                   TargetControlID="txtDecommisionDate" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -242,7 +242,7 @@
         </asp:Panel>
     </td>
 </tr>
-    <br />
+<br/>
 <tr>
     <td>
         <asp:GridView ID="grdVehicleDecompositionApproval" runat="server" AutoGenerateColumns="False"

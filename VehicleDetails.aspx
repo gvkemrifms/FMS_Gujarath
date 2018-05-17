@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="../JavaValidations/RequiredFieldValidations.js" type="text/javascript"></script>
-    <script  type="text/javascript">
+    <script type="text/javascript">
         function validation() {
             var engineNo = document.getElementById('<%= txtEngineNumber.ClientID %>');
             var chassisNo = document.getElementById('<%= txtChassisNumber.ClientID %>');
@@ -26,12 +26,12 @@
 
         }
     </script>
-    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <asp:Panel ID="pnlNewVehicleDetails" runat="server">
-                <legend align="center" style="color:brown">Vehicle Details</legend>
-                <br />
-                <table align="center">                    
+                <legend align="center" style="color: brown">Vehicle Details</legend>
+                <br/>
+                <table align="center">
                     <tr>
                         <td >
                             Engine Number<span style="color: Red">*</span>
@@ -57,18 +57,18 @@
                         </td>
 
                     </tr>
-                
+
                     <tr>
 
                         <td >
                             <asp:Button ID="btnSave" CssClass="form-submit-button" runat="server" Text="Save" OnClick="btnSave_Click" Width="60px"/>
                         </td>
                         <td >
-                            <asp:Button ID="btnCancel" CssClass="form-reset-button" runat="server" Text="Cancel" OnClick="btnCancel_Click"
+                            <asp:Button CssClass="form-reset-button" runat="server" Text="Cancel" OnClick="btnCancel_Click"
                                         Height="26px" Width="67px"/>
                         </td>
-                    </tr>              
                     </tr>
+                </tr>
                 </table>
             </asp:Panel>
         </ContentTemplate>

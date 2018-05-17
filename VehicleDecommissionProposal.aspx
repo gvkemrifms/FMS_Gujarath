@@ -1,10 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleDecommissionProposal.aspx.cs" Inherits="VehicleDecommissionProposal" %>
-
 <%@ Import Namespace="System.ComponentModel" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script  type="text/javascript">
+<script type="text/javascript">
     function validation(obj, id) {
         var now = new Date();
         var txtVehicleNumber = obj.id.replace(id, "txtVehicleNumber");
@@ -120,17 +119,17 @@
 
 
 </script>
-<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
-    <legend align="center" style="color:brown">Vehicle Decommission Proposal</legend>
-    <br />
+<legend align="center" style="color: brown">Vehicle Decommission Proposal</legend>
+<br/>
 <table align="center">
 <tr>
     <td class="rowseparator"></td>
 </tr>
 <tr>
     <td>
-        <asp:Panel ID="pnlgrdViewVehicleDecommisionProposal" style="margin-top:-40px" runat="server">
+        <asp:Panel ID="pnlgrdViewVehicleDecommisionProposal" style="margin-top: -40px" runat="server">
             <fieldset style="padding: 10px;">
                 <asp:GridView ID="grdViewVehicleDecommisionProposal" runat="server" AutoGenerateColumns="False"
                               OnRowCommand="grdViewVehicleDecommisionProposal_RowCommand"
@@ -225,7 +224,7 @@
                         <td>
                             <asp:TextBox ID="txtDateOfRegistration" CssClass="search_3" runat="server" Width="200" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateOfRegistration" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender2" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfRegistration" 
+                            <cc1:CalendarExtender ID="CalendarExtender2" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfRegistration"
                                                   TargetControlID="txtDateOfRegistration" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -241,7 +240,7 @@
                         <td>
                             <asp:TextBox ID="txtDateOfPurchase" CssClass="search_3" runat="server" Width="200" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateOfPurchase" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender3" runat="server" CssClass="cal_Theme1" PopupButtonID="imgBtnDateOfPurchase"
+                            <cc1:CalendarExtender runat="server" CssClass="cal_Theme1" PopupButtonID="imgBtnDateOfPurchase"
                                                   TargetControlID="txtDateOfPurchase" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -257,7 +256,7 @@
                         <td>
                             <asp:TextBox ID="txtDateOfLaunching" CssClass="search_3" runat="server" Width="200" onkeypress="return false;"></asp:TextBox>
                             <asp:ImageButton ID="imgBtnDateOfLaunching" runat="server" ImageUrl="images/Calendar.gif"/>
-                            <cc1:CalendarExtender ID="CalendarExtender4" CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfLaunching"
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" PopupButtonID="imgBtnDateOfLaunching"
                                                   TargetControlID="txtDateOfLaunching" Format="MM/dd/yyyy">
                             </cc1:CalendarExtender>
                         </td>
@@ -329,10 +328,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:TextBox ID="txtTotalMaintenanceExpenses" Width="200"  CssClass="search_3" runat="server"
+                            <asp:TextBox ID="txtTotalMaintenanceExpenses" Width="200" CssClass="search_3" runat="server"
                                          onkeypress="return numericOnly(this)" MaxLength="6">
                             </asp:TextBox>
-                            <asp:LinkButton ID="lnkBtnTotalMaintenanceExpenses" runat="server" Visible="false">
+                            <asp:LinkButton runat="server" Visible="false">
                                 View
                                 History
                             </asp:LinkButton>
@@ -347,10 +346,10 @@
                         </td>
                         <td class="columnseparator"></td>
                         <td>
-                            <asp:TextBox ID="txtNumberofAccidents"  CssClass="search_3" Width="200" runat="server"
+                            <asp:TextBox ID="txtNumberofAccidents" CssClass="search_3" Width="200" runat="server"
                                          onkeypress="return numeric_only(event);" MaxLength="5">
                             </asp:TextBox>
-                            <asp:LinkButton ID="lnkBtnNumberofAccidents" runat="server" Visible="false">
+                            <asp:LinkButton runat="server" Visible="false">
                                 View History
                             </asp:LinkButton>
                         </td>
@@ -375,7 +374,7 @@
 <tr>
     <td class="rowseparator"></td>
 </tr>
-    <br />
+<br/>
 <tr>
     <td>
         <asp:GridView ID="grdViewVehicleDecomissionApproval" runat="server" AutoGenerateColumns="False"
@@ -447,4 +446,3 @@
 </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>
-

@@ -78,6 +78,12 @@ public partial class VehicleAccidentDetails : Page
     {
         try
         {
+            if (rdBtnIsInsuranceClaimed.SelectedValue == "")
+            {
+
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>alert(\"Please select your option for radio button list.\");</script>", false);
+                return;
+            }
             if (txtAccidentDateTime.Text == "") txtAccidentDateTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             if (txtInitiatedTime.Text == "") txtInitiatedTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             if (txtAgeofVehicle.Text == "") txtAgeofVehicle.Text = "0";

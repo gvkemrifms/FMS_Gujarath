@@ -2,14 +2,11 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
-using Label = System.Web.UI.WebControls.Label;
-using Page = System.Web.UI.Page;
-using TextBox = System.Web.UI.WebControls.TextBox;
 
 public partial class VasOffroadCoo : Page
 {
-    private readonly VASGeneral _obj = new VASGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _obj = new VASGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,11 +22,10 @@ public partial class VasOffroadCoo : Page
             gvVasOffroad.DataSource = ds.Tables[0];
             gvVasOffroad.DataBind();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _helper.ErrorsEntry(ex);
         }
-       
     }
 
     protected void gvVasOffroad_PageIndexChanging(object sender, GridViewPageEventArgs e)

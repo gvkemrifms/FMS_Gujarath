@@ -136,7 +136,7 @@
         return i;
     }
     </script>
-    <asp:UpdatePanel ID="updtpnlVehAllocation" runat="server">
+    <asp:UpdatePanel  runat="server">
         <ContentTemplate>
           
                 <script type="text/javascript">
@@ -161,7 +161,7 @@
                         <td colspan="7"></td>
                     </tr>
                     <tr>
-                        <td>District<span class="labelErr" style="color: Red">*</span>
+                        <td>District<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
@@ -195,7 +195,7 @@
                             <asp:TextBox ID="txtReasonforDown" CssClass="search_3" runat="server" TextMode="MultiLine" onkeypress="return false;"></asp:TextBox>
                         </td>
                         <td class="columnseparator"></td>
-                        <td>DownTime<span class="labelErr" style="color: Red">*</span>
+                        <td>DownTime<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="2">
@@ -206,7 +206,7 @@
                         <td colspan="7"></td>
                     </tr>
                     <tr>
-                        <td>Odometer<span class="labelErr" style="color: Red">*</span>
+                        <td>Odometer<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="2">
@@ -214,7 +214,7 @@
                                 Width="90%">
                             </asp:TextBox>
                         </td>
-                        <td>Previous ODO<span class="labelErr" style="color: Red">*</span>
+                        <td>Previous ODO<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td>
@@ -225,7 +225,7 @@
                         <td colspan="7"></td>
                     </tr>
                     <tr>
-                        <td>Requested By<span class="labelErr" style="color: Red">*</span>
+                        <td>Requested By<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
@@ -236,7 +236,7 @@
                         <td class="rowseparator"></td>
                     </tr>
                     <tr>
-                        <td>Expected Date of Recovery<span class="labelErr" style="color: Red">*</span>
+                        <td>Expected Date of Recovery<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">
@@ -257,7 +257,7 @@
                                        
                                         <asp:TextBox ID="txtUptimeDate" CssClass="search_3" runat="server" Width="150px" onkeypress="return false;"></asp:TextBox>
                                         
-                                        <cc1:CalendarExtender ID="CalendarExtender3" runat="server" CssClass="cal_Theme1" TargetControlID="txtUptimeDate"
+                                        <cc1:CalendarExtender runat="server" CssClass="cal_Theme1" TargetControlID="txtUptimeDate"
                                             PopupButtonID="imgBtnUptimeDate" Format="dd/MM/yyyy">
                                         </cc1:CalendarExtender>
                                          <asp:ImageButton ID="imgBtnUptimeDate" runat="server" Style="vertical-align: top;"
@@ -284,7 +284,7 @@
                     </tr>
 
                     <tr>
-                        <td>Contact Number<span class="labelErr" style="color: Red">*</span>
+                        <td>Contact Number<span style="color: Red">*</span>
                         </td>
                         <td class="columnseparator"></td>
                         <td colspan="5">

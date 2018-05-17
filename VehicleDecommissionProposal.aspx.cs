@@ -9,8 +9,8 @@ using GvkFMSAPP.PL;
 
 public partial class VehicleDecommissionProposal : Page
 {
-    private readonly VehicleDecommissionProposalBLL _vehicleProposalBol = new VehicleDecommissionProposalBLL();
     private readonly VehicleDecommissionApprovalBLL _vehicleApprovalBol = new VehicleDecommissionApprovalBLL();
+    private readonly VehicleDecommissionProposalBLL _vehicleProposalBol = new VehicleDecommissionProposalBLL();
 
     protected void Page_Load(object sender, EventArgs e)
     {

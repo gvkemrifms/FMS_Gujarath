@@ -7,13 +7,13 @@ using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
 
 public partial class VehicleAccidentInvestigationDetails : Page
 {
-    private VehicleAccidentDetailsBLL _vehicleAccidentDetail;
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    private VehicleAccidentDetailsBLL _vehicleAccidentDetail;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             GetVehicleNumber();

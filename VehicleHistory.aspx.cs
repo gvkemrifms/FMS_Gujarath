@@ -8,14 +8,14 @@ using GvkFMSAPP.BLL.StatutoryCompliance;
 
 public partial class VehicleHistory : Page
 {
+    private readonly DistrictVehicleMapping _distvehmapp = new DistrictVehicleMapping();
+    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
+    private readonly Helper _helper = new Helper();
     private readonly RoadTax _roadtax = new RoadTax();
+    private readonly FitnessRenewal _vehicleFitnessRenewal = new FitnessRenewal();
     private readonly VehicleInsurance _vehicleInsurance = new VehicleInsurance();
     private readonly PollutionUnderControl _vehiclePuc = new PollutionUnderControl();
-    private readonly FitnessRenewal _vehicleFitnessRenewal = new FitnessRenewal();
-    private readonly DistrictVehicleMapping _distvehmapp = new DistrictVehicleMapping();
     public IFuelManagement ObjFuelEntry = new FuelManagement();
-    private readonly Helper _helper = new Helper();
-    private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {

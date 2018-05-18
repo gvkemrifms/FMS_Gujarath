@@ -3,8 +3,11 @@ using System.Web.UI;
 
 public partial class BillProcessingManagementReport : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             BindDistrictdropdown();
@@ -16,74 +19,60 @@ public partial class BillProcessingManagementReport : Page
     {
         try
         {
-            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+            var sqlQuery = "select district_id,district_name from m_district  where state_id= 30";
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
+
     public void Withoutdist()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
-
+            _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
-
 
     public void Loaddata()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
-
+            _helper.FillDropDownHelperMethodWithSp("P_Report_BillProcessingManagement", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-
         if (ddldistrict != null && ddldistrict.SelectedValue == "0")
-        {
             Withoutdist();
-
-        }
         else
-        {
             Loaddata();
-
-
-        }
-
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-
 }

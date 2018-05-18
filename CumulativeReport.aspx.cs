@@ -1,47 +1,42 @@
 ﻿using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
 
 public partial class CumulativeReport : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {
-            btnShow_Click();
+            ShowReport();
+    }
 
+    protected void ShowReport()
+    {
+        try
+        {
+            _helper.FillDropDownHelperMethodWithSp("CumulativeReportOnRO", null, null, null, null, null, null, null, null, null, null, null, GridView1);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
         }
     }
-    protected void btnShow_Click()
-    {
 
-        var c = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-        var dataAdapter = new SqlDataAdapter("CumulativeReportOnRO", c);
-
-        var commandBuilder = new SqlCommandBuilder(dataAdapter);
-        var ds = new DataSet();
-        dataAdapter.Fill(ds);
-        GridView1.DataSource = ds.Tables[0];
-        GridView1.DataBind();
-
-
-    }
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
-        Response.ClearContent();
-        Response.AddHeader("content-disposition", "attachment; filename=CumulativeReport.xls");
-        Response.ContentType = "application/excel";
-        System.IO.StringWriter sw = new System.IO.StringWriter();
-        HtmlTextWriter htw = new HtmlTextWriter(sw);
-        GridView1.RenderControl(htw);
-        Response.Write(sw.ToString());
-        Response.End();
+        try
+        {
+            _helper.LoadExcelSpreadSheet(this, null, "CumulativeReport.xls", GridView1);
+        }
+        catch (Exception ex)
+        {
+            _helper.ErrorsEntry(ex);
+        }
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 }

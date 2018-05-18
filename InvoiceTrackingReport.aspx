@@ -3,47 +3,75 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <table>
-    <tr>
-        <td>
-       <asp:Label ID="lblInvoiceTrackingReport" style="font-size:20px;color:brown" runat="server" Text="InvoiceTracking&nbsp;Report"></asp:Label> 
-        </td>
-    </tr>
-    </table>
-    
-          <table style="width:70px;margin-left:125px;">
-    <tr>
-        
-        <td>
-           <asp:Label ID="lblvehicle" runat="server" Text="Select&nbsp;Vehicle"></asp:Label>              
-        </td>
-        
-        <td>
-            <asp:DropDownList ID="ddlvehicle" runat="server" style="width:100px" AutoPostBack="true" OnSelectedIndexChanged="ddlvehicle_SelectedIndexChanged"></asp:DropDownList>
-        </td>
+    <script type="text/javascript">
+        function pageLoad() {
+            $('#<%= ddlvehicle.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+        }
 
-         <td>
-            <asp:Label ID="lblbillno" runat="server" Text="Select&nbsp;billnumber"></asp:Label>              
-        </td>
-        
-        <td>
-            <asp:DropDownList ID="ddlbillno" runat="server" style="width:100px"></asp:DropDownList>
-        </td>
-    <td>
-            <asp:Button runat="server" Text="ShowReport"></asp:Button>
-        </td>
-       
-        <td>   
-              <asp:Button runat="server" Text="ExportExcel"></asp:Button> 
-         </td>
-   
-        </table>
-     <div>
+        function Validations() {
+            var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
+            if (ddlVehicle === '--select--') {
+                return alert("Please select Vehicle");
+            }
+
+            var ddlBillNo = $('#<%= ddlbillno.ClientID %> option:selected').text().toLowerCase();
+            if (ddlBillNo === '--select--') {
+                return alert("Please select Bill");
+            }
+            return true;
+        }
+    </script>
+    <table align="center">
+        <tr>
+            <td>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="InvoiceTracking&nbsp;Report"></asp:Label>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <table align="center">
+        <tr>
+
+            <td>
+                Select Vehicle <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
+            </td>
+
+            <td>
+                <asp:DropDownList ID="ddlvehicle" runat="server" style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddlvehicle_SelectedIndexChanged"></asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Select Bill Number <asp:Label runat="server" Text="Select&nbsp;billnumber" style="color: red">*</asp:Label>
+            </td>
+
+            <td>
+                <asp:DropDownList ID="ddlbillno" runat="server" CssClass="search_3" style="width: 150px"></asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClientClick="if (!Validations()) return false;"></asp:Button>
+            </td>
+
+            <td>
+                <asp:Button runat="server" CssClass="form-reset-button" Text="ExportExcel"></asp:Button>
+            </td>
+        </tr>
+
+
+    </table>
+    <br/>
+    <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grddetails" runat="server"></asp:GridView>
+            <asp:GridView ID="Grddetails" runat="server" BorderWidth="1px" BorderColor="brown"></asp:GridView>
         </asp:Panel>
     </div>
 
-    
-</asp:Content>
 
+</asp:Content>

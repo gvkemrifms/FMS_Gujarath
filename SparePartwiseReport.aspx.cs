@@ -1,113 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class SparePartwiseReport : System.Web.UI.Page
+public partial class SparePartwiseReport : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlvehicle.Enabled = false;
             ddlvendor.Enabled = false;
             BindDistrictdropdown();
-            
-
         }
     }
+
     private void BindDistrictdropdown()
     {
         try
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString()))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("select district_id,district_name from m_district  where state_id= 24 and is_active = 1", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                da.Fill(ds);
-                ddldistrict.DataSource = ds.Tables[0];
-                ddldistrict.DataTextField = "district_name";
-                ddldistrict.DataValueField = "district_id";
-                ddldistrict.DataBind();
-                ddldistrict.Items.Insert(0, new ListItem("--Select--", "0"));
-                con.Close();
-            }
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-
+            _helper.ErrorsEntry(ex);
         }
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=VehicleSummaryDistrictwise.xls");
-            Response.ContentType = "application/excel";
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            Panel2.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
+
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddldistrict.SelectedIndex > 0)
         {
             ddlvehicle.Enabled = true;
-
-
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "P_GetVehicleNumber";
-
-
-                //ImageButton1.Enabled = true;
-                cmd.Parameters.AddWithValue("@districtID", ddldistrict.SelectedItem.Value);
-                //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-                // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-                adp.Fill(ds);
-                ddlvehicle.DataSource = ds.Tables[0];
-                ddlvehicle.DataTextField = "VehicleNumber";
-                ddlvehicle.DataValueField = "VehicleID";
-                ddlvehicle.DataBind();
-                ddlvehicle.Items.Insert(0, new ListItem("--Select--", "0"));
-                conn.Close();
-
-
-
+                _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@districtID");
             }
             catch (Exception ex)
             {
-
+                _helper.ErrorsEntry(ex);
             }
         }
         else
@@ -115,45 +65,19 @@ public partial class SparePartwiseReport : System.Web.UI.Page
             ddlvehicle.Enabled = false;
         }
     }
+
     protected void ddlvehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         if (ddldistrict.SelectedIndex > 0)
         {
             ddlvendor.Enabled = true;
-
-
             try
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "P_Get_Agency";
-
-
-                //ImageButton1.Enabled = true;
-                cmd.Parameters.AddWithValue("@DistrictID", ddldistrict.SelectedItem.Value);
-                //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-                // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-                adp.Fill(ds);
-                ddlvendor.DataSource = ds.Tables[0];
-                ddlvendor.DataTextField = "AgencyName";
-                ddlvendor.DataValueField = "AgencyID";
-                ddlvendor.DataBind();
-                ddlvendor.Items.Insert(0, new ListItem("--Select--", "0"));
-                conn.Close();
-
-
-
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Agency", "AgencyName", "AgencyID", ddldistrict, ddlvendor, null, null, "@DistrictID");
             }
             catch (Exception ex)
             {
-
+                _helper.ErrorsEntry(ex);
             }
         }
         else
@@ -161,48 +85,21 @@ public partial class SparePartwiseReport : System.Web.UI.Page
             ddlvendor.Enabled = false;
         }
     }
-   
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        loaddata();
+        Loaddata();
     }
-    public void loaddata()
+
+    public void Loaddata()
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_Reports_SparePartsWise";
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            cmd.Parameters.AddWithValue("@DistrictID", ddldistrict.SelectedItem.Value);
-             cmd.Parameters.AddWithValue("@VehicleID", ddlvehicle.SelectedItem.Value);
-            cmd.Parameters.AddWithValue("@SpareVenName", ddlvendor.SelectedItem.Value);
-             cmd.Parameters.AddWithValue("@From", txtfrmDate.Text + " 00:00:00");
-             cmd.Parameters.AddWithValue("@To", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                Grddetails.DataSource = dt;
-                Grddetails.DataBind();
-            }
-            else
-            {
-                Grddetails.DataSource = null;
-                Grddetails.DataBind();
-            }
-
+            _helper.FillDropDownHelperMethodWithSp("P_Reports_SparePartsWise", null, null, ddldistrict, ddlvehicle, txtfrmDate, txttodate, "@DistrictID", "@VehicleID", "@From", "@To", "@SpareVenName", Grddetails, null, null, ddlvendor);
         }
         catch (Exception ex)
         {
-
+            _helper.ErrorsEntry(ex);
         }
     }
 }

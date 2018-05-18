@@ -1,114 +1,77 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Others.AttachDocuments, App_Web_fbb3hqmh" %>
-
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="AttachDocuments.aspx.cs" Inherits="AttachDocuments" Language="C#" MasterPageFile="~/temp.master" %>
+<%@ Import Namespace="System.ComponentModel" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script language="javascript" type="text/javascript">
 
-        function enableButton() {
-            document.getElementById('<%= btnAttachFiles.ClientID %>').disabled = false;
-    }
-    function validation(obj, Id) {
-
-        var id = obj.id.replace(Id, "ddlistVehicleNumber");
-        var ddlistAttachmentPurpose = obj.id.replace(Id, "ddlistAttachmentPurpose");
-        var txtRemarks = obj.id.replace(Id, "txtRemarks");
-        //var fileAttachmentPurpose = obj.id.replace(Id, <% %>);
-
-
-
-            var AttachmentPurpose = document.getElementById(ddlistAttachmentPurpose);
-            var Remarks = document.getElementById(txtRemarks);
-            var fileAttachment = document.getElementById('<%= fileAttachmentPurpose.ClientID %>');
-
-
-            if (id.selectedIndex == 0) {
-                alert("Please select the attachment Purpose");
-                id.focus();
-                return false;
-            }
-
-
-            if (AttachmentPurpose.selectedIndex == 0) {
-                alert("Please select the attachment Purpose");
-                AttachmentPurpose.focus();
-                return false;
-            }
-
-            if (trim(Remarks.value) == '') {
-                alert("Remarks Cannot be Blank");
-                Remarks.focus();
-                return false;
-            }
-
-            if (fileAttachment.value == '') {
-                alert("Upload a File");
-                fileAttachment.focus();
-                return false;
-            }
-
-            return true;
-        }
-
-        function trim(value) {
-            value = value.replace(/^\s+/, '');
-            value = value.replace(/\s+$/, '');
-            return value;
-
-        }
-
-        function remark(e) {
-            var keycode;
-            if (window.event) keycode = window.event.keyCode;
-            else if (event) keycode = event.keyCode;
-            else if (e) keycode = e.which;
-            else return true; if ((keycode != 34) && (keycode != 39)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-            return true;
-        }
-
-    </script>
-
-    <%--<asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>--%>
-  <%--  <div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7; border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table cellpadding="2" cellspacing="2" width="100%">
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlistVehicleNumber.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+
+                function ClearItems() {
+
+                    $('#<%= ddlistVehicleNumber.ClientID %>').empty();
+                    $('#<%= ddlistAttachmentPurpose.ClientID %>').empty();
+                    $('#<%= txtRemarks.ClientID %>').val('');
+                    $('#<%= ddlistVehicleNumber.ClientID %>').chosen();
+                }
+
+                function Validations() {
+                    var remarks = $('#<%= txtRemarks.ClientID %>').val();
+                    var fileAttachments = $('#<%= fileAttachmentPurpose.ClientID %>').val();
+                    var ddlVehicle = $('#<%= ddlistVehicleNumber.ClientID %> option:selected').text().toLowerCase();
+                    var attachmentPurpose = $('#<%= ddlistAttachmentPurpose.ClientID %> option:selected').text()
+                        .toLowerCase();
+                    if (ddlVehicle === '--select--')
+                        return alert("Please select Vehicle");
+                    if (attachmentPurpose === 'select')
+                        return alert("Please select Attachment Purpose");
+                    if (fileAttachments === "")
+                        return alert("File Attachment is Mandatory");
+                    if (remarks === "")
+                        return alert('Remarks is Mandatory');
+                    return true;
+                }
+            </script>
+            <table align="center">
                 <tr>
                     <td colspan="3">
-                        <asp:Label ID="lblMessage" runat="server"></asp:Label>
+                        <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Attach&nbsp;Documents"></asp:Label>
                     </td>
                 </tr>
+            </table>
+            <br/>
+            <table align="center">
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td class="tdlabel">Vehicle Number<font color="red">*</font>
+                    <td class="tdlabel">
+                        Vehicle Number<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:DropDownList ID="ddlistVehicleNumber" runat="server">
+                        <asp:DropDownList ID="ddlistVehicleNumber" Width="150px" runat="server">
                         </asp:DropDownList>
-
-
                     </td>
                 </tr>
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td class="tdlabel">Attachment Purpose<font color="red">*</font>
+                    <td class="tdlabel">
+                        Attachment Purpose<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:DropDownList ID="ddlistAttachmentPurpose" runat="server">
+                        <asp:DropDownList ID="ddlistAttachmentPurpose" CssClass="search_3" runat="server">
                             <asp:ListItem>SELECT</asp:ListItem>
                             <asp:ListItem Value="General">General</asp:ListItem>
                         </asp:DropDownList>
@@ -118,38 +81,30 @@
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td class="tdlabel">Remarks<font color="red">*</font>
+                    <td class="tdlabel">
+                        Remarks<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:TextBox ID="txtRemarks" runat="server" TextMode="MultiLine" onkeypress="return remark(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtRemarks" runat="server" TextMode="MultiLine" onkeypress="return remark(event);" CssClass="txtbox" Height="100px"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
-                    <td class="tdlabel">Attachment<font color="red">*</font>
+                    <td class="tdlabel" style="bottom: 30px; margin-top: -50px; position: relative;">
+                        Attachment<span style="color: red">*</span>
                     </td>
                     <td class="columnseparator"></td>
                     <td>
-                        <asp:AsyncFileUpload ID="fileAttachmentPurpose" runat="server" CompleteBackColor="White"
-                            UploaderStyle="Modern" OnClientUploadComplete="enableButton" />
-                        <%-- <input type="file" id="fileAttachmentPurpose" runat="server" />--%>
-                        <asp:Button ID="btnUpload" runat="server" Text="Upload" Visible="False"
-                            OnClick="btnUpload_Click" />
-                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
-                <tr>
-                    <td colspan="3" align="center">
-                        <asp:Button ID="btnAttachFiles" runat="server" Text="Attach Files" Enabled="false"
-                            OnClick="btnAttachFiles_Click" />
-                        <asp:Button ID="btnHideViewAttachFiles" runat="server" Text="Hide/View Attached Files"
-                            Visible="false" />
+                        <br/>
+
+                        <asp:FileUpload ID="fileAttachmentPurpose" runat="server" ForeColor="red"/>
+                        <asp:Button ID="btnAttachFiles" runat="server" Text="Attach Files" class="form-submit-button" Enabled="true"
+                                    OnClick="btnAttachFiles_Click" OnClientClick="if (!Validations()) return false;"/>
+                        <asp:Button runat="server" Text="Upload" Visible="False" OnClick="btnUpload_Click"/>
+                        <asp:Button runat="server" Text="Cancel" Visible="True" class="form-submit-button" OnClientClick="ClearItems()"/>
                     </td>
                 </tr>
                 <tr>
@@ -157,30 +112,45 @@
                 </tr>
                 <tr>
                     <td colspan="3">
+
+                        <asp:Button runat="server" Text="Hide/View Attached Files"
+                                    Visible="False"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rowseparator"></td>
+                </tr>
+
+            </table>
+            <br/>
+            <br/>
+            <table align="center">
+                <tr>
+                    <td colspan="3">
                         <asp:GridView ID="grdVehicleAttachment" runat="server" AutoGenerateColumns="False"
-                            Width="80%" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px"
-                            CellPadding="3" CellSpacing="2" ForeColor="#333333" GridLines="None" AllowPaging="True"
-                            OnPageIndexChanging="grdVehicleAttachment_PageIndexChanging">
-                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                      Width="80%" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px"
+                                      CellPadding="3" CellSpacing="2" ForeColor="#333333" GridLines="None" AllowPaging="True"
+                                      OnPageIndexChanging="grdVehicleAttachment_PageIndexChanging">
+                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333"/>
                             <Columns>
                                 <asp:TemplateField HeaderText="File Name">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblFileName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"AttachmentPurposeFile") %>'></asp:Label>
+                                        <asp:Label ID="lblFileName" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "AttachmentPurposeFile") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Remarks">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblRemarks" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"Remarks") %>'></asp:Label>
+                                        <asp:Label ID="lblRemarks" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Remarks") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Attachment Purpose">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblAttachmentPurpose" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"AttachmentPurpose") %>'></asp:Label>
+                                        <asp:Label ID="lblAttachmentPurpose" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "AttachmentPurpose") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UploadDate">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblUploadDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"CreatedDate","{0:dd-MM-yyyy}") %>'></asp:Label>
+                                        <asp:Label ID="lblUploadDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "CreatedDate", "{0:dd-MM-yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UploadBy">
@@ -190,16 +160,17 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Delete" Visible="false">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="lnkBtnDelete" runat="server" Text="Delete" CommandArgument='<%DataBinder.Eval(Container.Dataitem,"")%>'
-                                            CommandName="vehicleAccidentDelete"></asp:LinkButton>
+                                        <asp:LinkButton ID="lnkBtnDelete" runat="server" Text="Delete" CommandArgument='<% DataBinder.Eval(Container.Dataitem, "") %>'
+                                                        CommandName="vehicleAccidentDelete">
+                                        </asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
-                            <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510" />
-                            <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center" />
-                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White" />
+                            <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510"/>
+                            <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510"/>
+                            <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center"/>
+                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White"/>
+                            <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White"/>
                         </asp:GridView>
                     </td>
                 </tr>
@@ -209,8 +180,7 @@
             </table>
         </ContentTemplate>
         <Triggers>
-            <asp:PostBackTrigger ControlID="btnAttachFiles" />
+            <asp:PostBackTrigger ControlID="btnAttachFiles"/>
         </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
-

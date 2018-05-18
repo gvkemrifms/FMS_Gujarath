@@ -1,123 +1,83 @@
 ﻿using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
 
-public partial class HIstoryReport : Page
+public partial class HistoryReport : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
-
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlvehicle.Enabled = false;
             BindDistrictdropdown();
         }
     }
+
     private void BindDistrictdropdown()
     {
         try
         {
-            string sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
-
+            var sqlQuery = "select ds_dsid,ds_lname from M_FMS_Districts";
+            _helper.FillDropDownHelperMethod(sqlQuery, "ds_lname", "ds_dsid", ddldistrict);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
 
     protected void ddldistrict_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldistrict.SelectedIndex > 0)
-        {
-            ddlvehicle.Enabled = true;
-
-
-            try
-            {
-                AccidentReport.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
-
-
-
-            }
-            catch
-            {
-                //
-            }
-        }
-        else
+        if (ddldistrict.SelectedIndex <= 0)
         {
             ddlvehicle.Enabled = false;
         }
-
-
+        else
+        {
+            ddlvehicle.Enabled = true;
+            try
+            {
+                _helper.FillDropDownHelperMethodWithSp("P_Get_Vehicles", "VehicleNumber", "VehicleID", ddldistrict, ddlvehicle, null, null, "@DistrictID");
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+        }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         Loaddata();
     }
+
     public void Loaddata()
     {
         try
         {
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
-            var ds = new DataSet();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand
-            {
-                Connection = conn,
-                CommandType = CommandType.StoredProcedure,
-                CommandText = "[P_Report_VehicleHistoryReport]"
-            };
-            var adp = new SqlDataAdapter(cmd);
-            
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            cmd.Parameters.AddWithValue("@district_id", ddldistrict.SelectedItem.Value);
-            cmd.Parameters.AddWithValue("@VehID", ddlvehicle.SelectedItem.Value);
-            cmd.Parameters.AddWithValue("@Month", ddlmonth.Text);
-            cmd.Parameters.AddWithValue("@Year", ddlyear.Text);
-            adp.Fill(ds);
-            var dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                Grddetails.DataSource = dt;
-                Grddetails.DataBind();
-            }
-            else
-            {
-                Grddetails.DataSource = null;
-                Grddetails.DataBind();
-            }
-
+            _helper.FillDropDownHelperMethodWithSp("P_Report_VehicleHistoryReport", null, null, ddldistrict, ddlvehicle, null, null, "@district_id", "@VehID", null, "@Year", "@Month", Grddetails, ddlmonth, ddlyear);
         }
-        catch
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 }

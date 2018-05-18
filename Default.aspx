@@ -1,19 +1,6 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL._Default, App_Web_fbb3hqmh" %>
-
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <%--<table cellspacing="0" cellpadding="0" width="100%" align="center">
-        <tr>
-            <td>
-                <div id="div1" runat="server">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="margin: 10px 10px 10px 10px; background-image: url(images/Ambulance1.jpg);
-                background-repeat: no-repeat; width: 675px; height: 324px">
-            </td>
-        </tr>
-    </table>--%>
+
     <div class="right_col" role="main">
 
         <!-- top tiles -->
@@ -49,7 +36,6 @@
                 <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i>From last Week</span>
             </div>
         </div>
-        <!-- /top tiles -->
 
         <div class="col-sm-6 col-lg-3">
             <a href="javascript:void(0)" class="widget">
@@ -58,17 +44,12 @@
                         <i class="gi gi-cardio text-light-op"></i>
                     </div>
                     <h2 class="widget-heading h3">
-                        <strong><span data-toggle="counter" data-to="28350"></span></strong>
+                        <strong>
+                            <span data-toggle="counter" data-to="28350"></span>
+                        </strong>
                     </h2>
-            <%--        <span class="text-muted">SALES</span>--%>
                 </div>
             </a>
         </div>
-
-
-
-
-
     </div>
 </asp:Content>
-

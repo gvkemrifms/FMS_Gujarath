@@ -1,322 +1,244 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.NonOffRoadPhysicalBills, App_Web_fbb3hqmh" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="NonOffRoadPhysicalBills.aspx.cs" Inherits="NonOffRoadPhysicalBills" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script type="text/javascript">
-        function validation() {
 
-            var fld_District = document.getElementById('<%= ddlDistricts.ClientID %>');
-        var fld_DocketNo = document.getElementById('<%=txtDocketNo.ClientID %>');
-        var fld_Vehicleno = document.getElementById('<%= ddlVehicleno.ClientID %>');
-        var fld_BillNo = document.getElementById('<%=ddlBillNo.ClientID %>');
-        var fld_ReceiptDate = document.getElementById('<%=txtReceiptDate.ClientID %>');
-        var fld_CourierName = document.getElementById('<%=txtCourierName.ClientID %>');
-
-        var now = new Date();
-
-
-
-        if (fld_District)
-            if (fld_District.selectedIndex == 0) {
-                alert("Please Select District");
-                fld_District.focus();
-                return false;
-            }
-        if (fld_Vehicleno)
-            if (fld_Vehicleno.selectedIndex == 0) {
-                alert("Please select Vehicle");
-                fld_Vehicleno.focus();
-                return false;
-            }
-        if (fld_BillNo)
-            if (fld_BillNo.selectedIndex == 0) {
-                alert("Please select Bill");
-                fld_BillNo.focus();
-                return false;
-            }
-        if (!RequiredValidation(fld_ReceiptDate, "Receipt Date cannot be left blank"))
-            return false;
-
-        if (!RequiredValidation(fld_CourierName, "Courier Name cannot be left blank"))
-            return false;
-
-        if (!RequiredValidation(fld_DocketNo, "Docket Number cannot be left blank"))
-            return false;
-        if (Date.parse(fld_ReceiptDate.value) > Date.parse(now)) {
-            alert("Receipts Date should not be greater than Current Date");
-            fld_ReceiptDate.focus();
-            return false;
-        }
-        function RequiredValidation(ctrl, msg) {
-            if (trim(ctrl.value) == '') {
-                alert(msg);
-                ctrl.focus();
-                return false;
-            }
-            else
-                return true;
-        }
-    }
-    function alphanumeric_only(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true; if ((keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return true;
-    }
-    function numeric_only(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true;
-        if (keycode >= 48 && keycode <= 57) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return true;
-    }
-
-    function alpha_only(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return true;
-    }
-
-    function alpha_only_withspace(e) {
-        var keycode;
-        if (window.event) keycode = window.event.keyCode;
-        else if (event) keycode = event.keyCode;
-        else if (e) keycode = e.which;
-        else return true; if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122) || (keycode == 32)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return true;
-    }
-    function trim(value) {
-        value = value.replace(/^\s+/, '');
-        value = value.replace(/\s+$/, '');
-        return value;
-
-    }
-
-
-    function isDecimalNumberKey(event) {
-        var charCode = (event.which) ? event.which : event.keyCode
-        if (charCode == 190 || charCode == 46) {
-            var txtBox = document.getElementById(event.srcElement.id);
-            if (txtBox.value.indexOf('.') == -1)
-                return true;
-            else
-                return false;
-        }
-        else if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        else
-            return true;
-    }
-
-
-    </script>
-
-    <asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
-            <table width="100%">
+            <script>
+                function pageLoad() {
+                    $('#<%= ddlDistricts.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                    $('#<%= ddlVehicleno.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
+                }
+
+                function validation() {
+                    var fldDistrict = document.getElementById('<%= ddlDistricts.ClientID %>');
+                    var fldDocketNo = document.getElementById('<%= txtDocketNo.ClientID %>');
+                    var fldVehicleno = document.getElementById('<%= ddlVehicleno.ClientID %>');
+                    var fldBillNo = document.getElementById('<%= ddlBillNo.ClientID %>');
+                    var fldReceiptDate = document.getElementById('<%= txtReceiptDate.ClientID %>');
+                    var fldCourierName = document.getElementById('<%= txtCourierName.ClientID %>');
+                    var txtToDate = $('#<%= txtReceiptDate.ClientID %>').val();
+                    var toDate = (txtToDate).replace(/\D/g, '/');
+                    var ordToDate = new Date(toDate);
+                    var currentDate = new Date();
+                    if (fldDistrict)
+                        if (fldDistrict.selectedIndex === 0) {
+                            alert("Please Select District");
+                            fldDistrict.focus();
+                            return false;
+                        }
+                    if (fldVehicleno)
+                        if (fldVehicleno.selectedIndex === 0) {
+                            alert("Please select Vehicle");
+                            fldVehicleno.focus();
+                            return false;
+                        }
+                    if (fldBillNo)
+                        if (fldBillNo.selectedIndex === 0) {
+                            alert("Please select Bill");
+                            fldBillNo.focus();
+                            return false;
+                        }
+                    if (fldReceiptDate.value === "") {
+                        alert("Receipts Date is manadatory");
+                        return false;
+                    }
+                    if (fldCourierName.value === "") {
+                        alert("Courier Name is manadatory");
+                        return false;
+                    }
+                    if (fldDocketNo.value === "") {
+                        alert("Docket No is manadatory");
+                        return false;
+                    }
+
+                    if (ordToDate > currentDate) {
+                        return alert("Receipts Date should not be greater than Current Date");
+                    }
+
+                    return true;
+                }
+
+            </script>
+
+            <legend align="center">
+                Non Off Road Physical Bills<br/>
+            </legend>
+            <br/>
+            <table align="center">
+
                 <tr>
                     <td>
-                        <fieldset style="padding: 10px">
-                            <legend>Non Off Road Physical Bills<br />
-                            </legend>
-                            <table>
-                                <tr>
-                                    <td style="width: 85px" class="rowseparator"></td>
-                                </tr>
-                                <tr>
-                                    <td>District
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:DropDownList ID="ddlDistricts" Height="16px" Width="120px" runat="server" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged"
-                                            AutoPostBack="true">
-                                        </asp:DropDownList>
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>Vehicle No
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:DropDownList ID="ddlVehicleno" Height="16px" Width="120px" runat="server" OnSelectedIndexChanged="ddlVehicleno_SelectedIndexChanged1"
-                                            AutoPostBack="true">
-                                        </asp:DropDownList>
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>Bill No
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:DropDownList runat="server" ID="ddlBillNo" Width="122px"
-                                            AutoPostBack="True" OnSelectedIndexChanged="ddlBillNo_SelectedIndexChanged" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 85px" class="rowseparator"></td>
-                                </tr>
-                                <tr>
-                                    <td>Bill Amount
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:TextBox ID="txtBillAmount" runat="server" />
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>BreakDown ID
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:Label
-                                            ID="lblBrkdwn" runat="server" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 85px" class="rowseparator"></td>
-                                </tr>
-                                <tr>
-                                    <td>Receipt Date
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:TextBox runat="server" ID="txtReceiptDate" Width="114px" />
-                                        <cc1:CalendarExtender ID="calExtMaintenanceDate" runat="server" TargetControlID="txtReceiptDate"
-                                            PopupButtonID="imgBtnCalendarMaintenanceDate" Format="MM/dd/yyyy">
-                                        </cc1:CalendarExtender>
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>Courier Name
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:TextBox runat="server" ID="txtCourierName" onkeypress="return alpha_only_withspace(event);" />
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>Docket No
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td>
-                                        <asp:TextBox runat="server" ID="txtDocketNo" onkeypress="return numeric_only(event);" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="rowseparator"></td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" OnClientClick="return validation()" />
-                                        <asp:Button runat="server" ID="btnUpdate" Visible="false" Text="Update" OnClick="btnUpdate_Click"
-                                            OnClientClick="return validation()" />
-                                        <asp:Button runat="server" ID="btnReset" Text="Reset" OnClick="btnReset_Click" />
-                                        <asp:HiddenField ID="HiddenField1" runat="server" />
+                        District<span style="color: red">*</span>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlDistricts" Height="16px" Width="150px" runat="server" OnSelectedIndexChanged="ddlDistricts_SelectedIndexChanged"
+                                          AutoPostBack="true">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Vehicle No<span style="color: red">*</span>
+                    </td>
 
-                                    </td>
-                                </tr>
-                            </table>
-                            <div>
-                                <div style="width: 200px; float: left">
-                                </div>
-                                <div style="float: left">
-                                    <asp:GridView ID="gvVehiclePhysicalBillDetails" runat="server" EmptyDataText="No Records Found"
-                                        AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle" CellSpacing="2"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="True"
-                                        EnableSortingAndPagingCallbacks="True" OnPageIndexChanging="gvVehiclePhysicalBillDetails_PageIndexChanging"
-                                        OnRowCommand="gvVehiclePhysicalBillDetails_RowCommand">
-                                        <RowStyle CssClass="rowStyleGrid" />
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="District">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblDistrict" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"District") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="VehicleNo">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblVehicle_No" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"Vechicleno") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="BreakDown ID">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblBrkDwnID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ID") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Bill No">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblBillNo" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"BillNo") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Bill Amount">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblBillAmount" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"Amount") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="ReceiptDate">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblReceiptDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"ReceiptDate") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Courier Name">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblCourier_Name" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"Courier_Name") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Docket No">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblDocketNo" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"DocketNo") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Rejection Reason">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblRejReason" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"Reject") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Edit">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="VehMainEdit" CommandArgument=' <%# Container.DataItemIndex %>'
-                                                        Text="Edit"></asp:LinkButton>
-                                                    <%--CommandArgument='<%#DataBinder.Eval(Container.DataItem,"BillNo") %>'--%>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                        <FooterStyle CssClass="footerStylegrid" />
-                                        <PagerStyle CssClass="pagerStylegrid" />
-                                        <SelectedRowStyle CssClass="selectedRowStyle" />
-                                        <HeaderStyle CssClass="headerStyle" />
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                        </fieldset>
+                    <td>
+                        <asp:DropDownList ID="ddlVehicleno" Height="16px" Width="150px" runat="server" OnSelectedIndexChanged="ddlVehicleno_SelectedIndexChanged1"
+                                          AutoPostBack="true">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Bill No<span style="color: red">*</span>
+                    </td>
+                    <td>
+                        <asp:DropDownList runat="server" CssClass="search_3" ID="ddlBillNo" Width="150px"
+                                          AutoPostBack="True" OnSelectedIndexChanged="ddlBillNo_SelectedIndexChanged"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Bill Amount
+                    </td>
+
+                    <td>
+                        <asp:TextBox ID="txtBillAmount" ReadOnly="True" CssClass="search_3" width="150px" runat="server"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        BreakDown ID
+                    </td>
+                    <td>
+                        <asp:Label
+                            ID="lblBrkdwn" style="color: brown" runat="server"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Receipt Date<span style="color: red">*</span>
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtReceiptDate" Width="150px" CssClass="search_3" onkeypress="return false" oncut="return false;" onpaste="return false;"/>
+                        <cc1:CalendarExtender runat="server" CssClass="cal_Theme1" TargetControlID="txtReceiptDate" Format="MM/dd/yyyy" enabled="true">
+                        </cc1:CalendarExtender>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Courier Name<span style="color: red">*</span>
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtCourierName" CssClass="search_3" onkeypress="return alpha_only_withspace(event);"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Docket No<span style="color: red">*</span>
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" CssClass="search_3" ID="txtDocketNo" onkeypress="return numeric_only(event);"/>
                     </td>
                 </tr>
             </table>
+            <table align="center">
+                <tr>
+                    <td>
+                        <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" CssClass="form-submit-button" OnClientClick="if (!validation()) return false;"/>
+                        <asp:Button runat="server" ID="btnUpdate" CssClass="form-submit-button" Visible="false" Text="Update" OnClick="btnUpdate_Click"
+                                    OnClientClick="return validation()"/>
+                        <asp:Button runat="server" ID="btnReset" Text="Reset" CssClass="form-reset-button" OnClick="btnReset_Click"/>
+                        <asp:HiddenField ID="HiddenField1" runat="server"/>
+
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <div align="center">
+                <div style="float: left; width: 200px;">
+                </div>
+                <div align="center">
+                    <asp:GridView ID="gvVehiclePhysicalBillDetails" runat="server" EmptyDataText="No Records Found"
+                                  AllowSorting="True" AutoGenerateColumns="False" CssClass="gridview" CellSpacing="2"
+                                  CellPadding="4" ForeColor="#333333" GridLines="Both" Width="630px" AllowPaging="True"
+                                  EnableSortingAndPagingCallbacks="True" OnPageIndexChanging="gvVehiclePhysicalBillDetails_PageIndexChanging"
+                                  OnRowCommand="gvVehiclePhysicalBillDetails_RowCommand">
+                        <Columns>
+                            <asp:TemplateField HeaderText="District">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDistrict" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "District") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="VehicleNo">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblVehicle_No" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Vechicleno") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="BreakDown ID">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblBrkDwnID" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ID") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Bill No">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblBillNo" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "BillNo") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Bill Amount">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblBillAmount" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Amount") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ReceiptDate">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblReceiptDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ReceiptDate") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Courier Name">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblCourier_Name" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Courier_Name") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Docket No">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblDocketNo" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DocketNo") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Rejection Reason">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblRejReason" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Reject") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Edit">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="VehMainEdit" CommandArgument=" <%# Container.DataItemIndex %>"
+                                                    Text="Edit">
+                                    </asp:LinkButton>
+
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                        <FooterStyle CssClass="footerStylegrid"/>
+                        <PagerStyle CssClass="pagerStylegrid"/>
+                        <SelectedRowStyle CssClass="selectedRowStyle"/>
+                        <HeaderStyle CssClass="headerStyle"/>
+                    </asp:GridView>
+                </div>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

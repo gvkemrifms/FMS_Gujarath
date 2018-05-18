@@ -1,309 +1,217 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GvkFMSAPP.BLL;
 
-namespace GvkFMSAPP.PL
+public partial class ServiceStation : Page
 {
-    public partial class ServiceStation : System.Web.UI.Page
+    private readonly FMSGeneral _fmsg = new FMSGeneral();
+    private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
+    private readonly Helper _helper = new Helper();
+    private DataSet _ds = new DataSet();
+
+    protected void Page_Load(object sender, EventArgs e)
     {
-        DataSet ds = new DataSet();
-        GvkFMSAPP.BLL.BaseVehicleDetails fmsobj1 = null;
-        GvkFMSAPP.BLL.BaseVehicleDetails fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
-        GvkFMSAPP.BLL.VAS_BLL.VASGeneral obj = new GvkFMSAPP.BLL.VAS_BLL.VASGeneral();
-        GvkFMSAPP.BLL.FMSGeneral fmsg = new GvkFMSAPP.BLL.FMSGeneral();
-
-        protected void Page_Load(object sender, EventArgs e)
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
+        if (!IsPostBack)
         {
-            if (Session["User_Name"] == null)
-            {
-                Response.Redirect("Error.aspx");
-            }
-            if (!IsPostBack)
-            {
-                if (Session["UserdistrictId"] != null)
-                {
-                    fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
-                }
-
-                bindgrid();
-                FillVehicles();
-                bindData();
-                btnUpdate.Visible = false;
-                txtServiceSrationName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
-            }
+            if (Session["UserdistrictId"] != null) _fmsg.UserDistrictId = Convert.ToInt32(Session["UserdistrictId"].ToString());
+            Bindgrid();
+            FillVehicles();
+            BindData();
+            btnUpdate.Visible = false;
+            txtServiceSrationName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
         }
+    }
 
-        private void FillVehicles()
+    private void FillVehicles()
+    {
+        try
         {
-            int districtID = -1;
-
-            if (Session["UserdistrictId"] != null)
-            {
-                districtID = Convert.ToInt32(Session["UserdistrictId"].ToString());
-            }
-            ds = null;
-            ds = fmsg.GetVehicleNumber();
-            //ds = objFuelEntry.IFillVehicles(districtID);
-            ddlVehicleNumber.DataSource = ds.Tables[0];
-            ddlVehicleNumber.DataValueField = "VehicleID";
-            ddlVehicleNumber.DataTextField = "VehicleNumber";
-            ddlVehicleNumber.DataBind();
-            ddlVehicleNumber.Items.Insert(0, new ListItem("--Select--", "0"));
-            ViewState["dsVehicles"] = ds;
-
+            _ds = null;
+            _ds = _fmsg.GetVehicleNumber();
+            _helper.FillDropDownHelperMethodWithDataSet(_ds, "VehicleNumber", "VehicleID", null, ddlVehicleNumber);
+            ViewState["dsVehicles"] = _ds;
         }
-        public void bindData()
+        catch (Exception ex)
         {
-            //DataSet dsDistricts = new DataSet();
-            ds = null;
-            ds = fmsobj.GetDistricts_new();
-            ddlDistricts.DataSource = ds.Tables[0];
-            ddlDistricts.DataTextField = "district_name";
-            ddlDistricts.DataValueField = "district_id";
-            ddlDistricts.DataBind();
-            ddlDistricts.Items.Insert(0, new ListItem("--Select--", "0"));
-            ViewState["dsDistricts"] = ds;
+            _helper.ErrorsEntry(ex);
         }
-        private void SetInitialRowSP()
+    }
+
+    public void BindData()
+    {
+        try
         {
-            DataTable dt = new DataTable();
-            DataRow dr = null;
-
-            //Define the Columns
-            dt.Columns.Add(new DataColumn("RowNumber", typeof(string)));
-            dt.Columns.Add(new DataColumn("ColSpVendorName", typeof(string)));
-
-
-            dr = dt.NewRow();
-
-            dt.Rows.Add(dr);
-
-            //Store the DataTable in ViewState
-            ViewState["CurrentTable"] = dt;
-            //Bind the DataTable to the Grid
-            gvServiceStationDetails.DataSource = dt;
-            gvServiceStationDetails.DataBind();
-
-
+            _ds = null;
+            _ds = _fmsobj.GetDistricts_new();
+            _helper.FillDropDownHelperMethodWithDataSet(_ds, "district_name", "district_id", ddlDistricts);
+            ViewState["dsDistricts"] = _ds;
         }
-
-        public void bindgrid()
+        catch (Exception ex)
         {
-            DataSet ds = fmsobj.GetGridServiceNames();
+            _helper.ErrorsEntry(ex);
+        }
+    }
+
+    public void Bindgrid()
+    {
+        var ds = _fmsobj.GetGridServiceNames();
+        if (ds != null)
+        {
             gvServiceStationDetails.DataSource = ds.Tables[0];
             gvServiceStationDetails.DataBind();
-            ViewState["dsGrid"] = ds;
-            //Session["griddataset"] = ds.Tables[0];
         }
 
+        ViewState["dsGrid"] = ds;
+    }
 
-
-        protected void btnSave_Click(object sender, EventArgs e)
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        _fmsobj.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
+        _fmsobj.ServiceName = txtServiceSrationName.Text;
+        _fmsobj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
+        var output = _fmsobj.InsertServiceName();
+        if (output <= 0)
         {
-            fmsobj.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
-            fmsobj.ServiceName = txtServiceSrationName.Text;
-            fmsobj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
-
-
-            // DataSet ds1 = fmsobj.CheckServiceName();
-
-            int Output = fmsobj.InsertServiceName();
-            if (Output > 0)
-            {
-                Show("Inserted Succesfully");
-                ClearAll();
-                bindgrid();
-            }
-            else
-            {
-                Show("Not Inserted");
-            }
-
-
-            //if (Convert.ToInt16(ds1.Tables[0].Rows[0][0].ToString()) != 0)
-            //{
-            //    Show("Records Inserted Successfully");
-            //    ClearAll();
-            //}
-            //else
-            //{
-            //    Show("Error");
-            //}
-
+            Show("Not Inserted");
         }
-
-        private void ClearAll()
+        else
         {
-            txtServiceSrationName.Text = "";
-            ddlDistricts.SelectedIndex = 0;
-            ddlVehicleNumber.SelectedIndex = 0;
+            Show("Inserted Succesfully");
+            ClearAll();
+            Bindgrid();
         }
-        public void Show(string message)
+    }
+
+    private void ClearAll()
+    {
+        txtServiceSrationName.Text = "";
+        ddlDistricts.SelectedIndex = 0;
+        ddlVehicleNumber.SelectedIndex = 0;
+    }
+
+    public void Show(string message)
+    {
+        ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('" + message + "');", true);
+    }
+
+    protected void gvServiceStationDetails_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == null) return;
+        switch (e.CommandName)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('" + message + "');", true);
-        }
-
-
-
-        protected void gvServiceStationDetails_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-            if (e.CommandName == "MainEdit")
+            case "MainEdit":
             {
                 btnSave.Visible = false;
                 btnUpdate.Visible = true;
                 //int index = Convert.ToInt32(e.CommandArgument.ToString());
-                GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
-                int index = gvr.RowIndex;
-                txtServiceSrationName.Text = ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblServiceStation")))).Text;
-                DataSet dsDist = (DataSet)ViewState["dsDistricts"];
-                DataView dvDistrict = dsDist.Tables[0].DefaultView;
-                dvDistrict.RowFilter = "ds_lname='" + ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblDistricts")))).Text + "'";
+                var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
+                var index = gvr.RowIndex;
+                txtServiceSrationName.Text = ((Label) gvServiceStationDetails.Rows[index].FindControl("lblServiceStation")).Text;
+                var dsDist = (DataSet) ViewState["dsDistricts"];
+                var dvDistrict = dsDist.Tables[0].DefaultView;
+                dvDistrict.RowFilter = "ds_lname='" + ((Label) gvServiceStationDetails.Rows[index].FindControl("lblDistricts")).Text + "'";
                 ddlDistricts.SelectedValue = Convert.ToString(dvDistrict.ToTable().Rows[0]["ds_dsid"]);
-                DataSet dsVeh = (DataSet)ViewState["dsVehicles"];
-                DataView dvVehicles = dsVeh.Tables[0].DefaultView;
-                dvVehicles.RowFilter = "VehicleNumber='" + ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblVehNum")))).Text + "'";
+                var dsVeh = (DataSet) ViewState["dsVehicles"];
+                var dvVehicles = dsVeh.Tables[0].DefaultView;
+                dvVehicles.RowFilter = "VehicleNumber='" + ((Label) gvServiceStationDetails.Rows[index].FindControl("lblVehNum")).Text + "'";
                 ddlVehicleNumber.SelectedValue = Convert.ToString(dvVehicles.ToTable().Rows[0]["VehicleID"]);
-                DataSet ds = (DataSet)ViewState["dsGrid"];
-                DataView dv = new DataView(ds.Tables[0]);
-                dv.RowFilter = "ServiceStation_Name='" + txtServiceSrationName.Text + "' and ds_lname='" + ddlDistricts.SelectedItem.Text + "' and VehicleNumber='" + ddlVehicleNumber.SelectedItem.Text + "'";
-                DataTable dt = dv.ToTable();
+                var ds1 = (DataSet) ViewState["dsGrid"];
+                var dv = new DataView(ds1.Tables[0]) {RowFilter = "ServiceStation_Name='" + txtServiceSrationName.Text + "' and ds_lname='" + ddlDistricts.SelectedItem.Text + "' and VehicleNumber='" + ddlVehicleNumber.SelectedItem.Text + "'"};
+                var dt = dv.ToTable();
                 Session["Id"] = Convert.ToString(dt.Rows[0]["Id"]);
+                break;
             }
-
-            else if (e.CommandName == "MainDelete")
+            case "MainDelete":
             {
-
-                DataSet ds = (DataSet)ViewState["dsGrid"];
-                DataView dv = new DataView(ds.Tables[0]);
-                //int index = Convert.ToInt32(e.CommandArgument.ToString());
-                GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
-                int index = gvr.RowIndex;
-                txtServiceSrationName.Text = ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblServiceStation")))).Text;
-                DataSet dsDist = (DataSet)ViewState["dsDistricts"];
-                DataView dvDistrict = dsDist.Tables[0].DefaultView;
-                dvDistrict.RowFilter = "ds_lname='" + ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblDistricts")))).Text + "'";
+                var ds2 = (DataSet) ViewState["dsGrid"];
+                var dv = new DataView(ds2.Tables[0]);
+                var gvr = (GridViewRow) ((LinkButton) e.CommandSource).NamingContainer;
+                var index = gvr.RowIndex;
+                txtServiceSrationName.Text = ((Label) gvServiceStationDetails.Rows[index].FindControl("lblServiceStation")).Text;
+                var dsDist = (DataSet) ViewState["dsDistricts"];
+                var dvDistrict = dsDist.Tables[0].DefaultView;
+                dvDistrict.RowFilter = "ds_lname='" + ((Label) gvServiceStationDetails.Rows[index].FindControl("lblDistricts")).Text + "'";
                 ddlDistricts.SelectedValue = Convert.ToString(dvDistrict.ToTable().Rows[0]["ds_dsid"]);
-                DataSet dsVeh = (DataSet)ViewState["dsVehicles"];
-                DataView dvVehicles = dsVeh.Tables[0].DefaultView;
-                dvVehicles.RowFilter = "VehicleNumber='" + ((Label)((gvServiceStationDetails.Rows[index].FindControl("lblVehNum")))).Text + "'";
+                var dsVeh = (DataSet) ViewState["dsVehicles"];
+                var dvVehicles = dsVeh.Tables[0].DefaultView;
+                dvVehicles.RowFilter = "VehicleNumber='" + ((Label) gvServiceStationDetails.Rows[index].FindControl("lblVehNum")).Text + "'";
                 ddlVehicleNumber.SelectedValue = Convert.ToString(dvVehicles.ToTable().Rows[0]["VehicleID"]);
                 dv.RowFilter = "ServiceStation_Name='" + txtServiceSrationName.Text + "' and ds_lname='" + ddlDistricts.SelectedItem.Text + "' and VehicleNumber='" + ddlVehicleNumber.SelectedItem.Text + "'";
-                DataTable dt = dv.ToTable();
+                var dt = dv.ToTable();
                 Session["Id"] = Convert.ToString(dt.Rows[0]["Id"]);
-                fmsobj.GridId = Convert.ToInt16(Session["Id"]);
-                int delres = fmsobj.DeleteServiceName();
-                if (delres != 0)
-                    Show("Record Deleted Successfully!!");
-                else
-                    Show("Error!!");
+                _fmsobj.GridId = Convert.ToInt16(Session["Id"]);
+                var delres = _fmsobj.DeleteServiceName();
+                Show(delres != 0 ? "Record Deleted Successfully!!" : "Error!!");
                 ClearAll();
-                bindgrid();
-
+                Bindgrid();
+                break;
             }
-
         }
+    }
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
+    protected void btnUpdate_Click(object sender, EventArgs e)
+    {
+        var id = Session["Id"] == null ? 0 : Convert.ToInt16(Session["Id"]);
+        _fmsobj.ServiceName = txtServiceSrationName.Text;
+        _fmsobj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
+        _fmsobj.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
+        _fmsobj.GridId = id;
+        var ds1 = _fmsobj.CheckServiceName();
+        var isExists = false;
+        if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0 && Convert.ToString(ds1.Tables[0].Rows[0]["Vehicle_ID"]) == ddlVehicleNumber.SelectedValue)
         {
-            int id;
-            if (Session["Id"] != null)
-            {
-                id = Convert.ToInt16(Session["Id"]);
-            }
-            else
-            {
-                id = 0;
-            }
-            fmsobj.ServiceName = txtServiceSrationName.Text;
-            fmsobj.DistrictId = Convert.ToInt16(ddlDistricts.SelectedValue);
-            fmsobj.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
-
-            fmsobj.GridId = id;
-            DataSet ds1 = fmsobj.CheckServiceName();
-            bool isExists = false;
-            if (ds1 != null)
-            {
-                if (ds1.Tables.Count > 0)
-                {
-                    if (ds1.Tables[0].Rows.Count > 0)
-                    {
-
-                        if ((Convert.ToString(ds1.Tables[0].Rows[0]["Vehicle_ID"]) == ddlVehicleNumber.SelectedValue))
-                        // if (ds1.Tables[0].Select("ServiceStation_Name='" + txtServiceSrationName.Text +  "District_Id=" + ddlDistricts.SelectedValue + "'").Length > 0)
-                        {
-                            Show("Service Station already exists for Selected Vehicle");
-                            isExists = true;
-                            // ClearAll();
-                        }
-                    }
-                }
-            }
-            if (!isExists)
-            {
-                int Output = fmsobj.UpdServiceName();
-                if (Output > 0)
-                {
-                    Show("Updated Succesfully");
-                    ClearAll();
-                    bindgrid();
-                    btnUpdate.Visible = false;
-                    btnSave.Visible = true;
-                }
-                else
-                {
-                    Show("Not Inserted");
-                }
-            }
+            Show("Service Station already exists for Selected Vehicle");
+            isExists = true;
+            // ClearAll();
         }
 
-        protected void ddlVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
+        if (isExists) return;
+        var output = _fmsobj.UpdServiceName();
+        if (output <= 0)
         {
-            FillDistrict();
-            FillBunks();
+            Show("Not Inserted");
         }
-
-        private void FillDistrict()
+        else
         {
-            fmsg.vehicle = (ddlVehicleNumber.SelectedItem.ToString());
-            DataSet dsDistrict = fmsg.GetDistrictLoc();
-            bindData();
-            if (dsDistrict.Tables[0].Rows.Count > 0)
-            {
-                ddlDistricts.Items.FindByText(dsDistrict.Tables[0].Rows[0]["District"].ToString()).Selected = true;
-            }
-            else
-            {
-                ddlDistricts.Enabled = true;
-            }
-
-
-
+            Show("Updated Succesfully");
+            ClearAll();
+            Bindgrid();
+            btnUpdate.Visible = false;
+            btnSave.Visible = true;
         }
+    }
 
-        private void FillBunks()
-        {
-            fmsg.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
-            DataSet dsServiceNames = fmsg.GetBunkNames();
-            if (dsServiceNames.Tables[0].Rows.Count > 0)
-            {
-                txtServiceSrationName.Text = dsServiceNames.Tables[0].Rows[0]["ServiceStnName"].ToString();
-            }
-            else
-            {
-                txtServiceSrationName.Text = "";
-            }
-        }
+    protected void ddlVehicleNumber_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        FillDistrict();
+        FillBunks();
+    }
 
-        protected void gvServiceStationDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvServiceStationDetails.PageIndex = e.NewPageIndex;
-            bindgrid();
+    private void FillDistrict()
+    {
+        _fmsg.vehicle = ddlVehicleNumber.SelectedItem.ToString();
+        var dsDistrict = _fmsg.GetDistrictLoc();
+        if (dsDistrict == null) throw new ArgumentNullException(nameof(dsDistrict));
+        BindData();
+        if (dsDistrict.Tables[0].Rows.Count >= 0)
+            ddlDistricts.Enabled = true;
+        else
+            ddlDistricts.Items.FindByText(dsDistrict.Tables[0].Rows[0]["District"].ToString()).Selected = true;
+    }
 
-        }
+    private void FillBunks()
+    {
+        _fmsg.VehicleId = Convert.ToInt16(ddlVehicleNumber.SelectedValue);
+        var dsServiceNames = _fmsg.GetBunkNames();
+        txtServiceSrationName.Text = dsServiceNames.Tables[0].Rows.Count > 0 ? dsServiceNames.Tables[0].Rows[0]["ServiceStnName"].ToString() : "";
+    }
+
+    protected void gvServiceStationDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gvServiceStationDetails.PageIndex = e.NewPageIndex;
+        Bindgrid();
     }
 }

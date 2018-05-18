@@ -1,32 +1,36 @@
-﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" inherits="GvkFMSAPP.PL.Admin.DistrictUserMapping, App_Web_fbb3hqmh" %>
-
+﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="DistrictUserMapping.aspx.cs" Inherits="DistrictUserMapping" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <script language="javascript" type="text/javascript">
-function validation()
-{
-var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
-           
-             if (UserList.selectedIndex == 0) 
-             {
-                alert("Please select User Name");
-                UserList.focus();
-                return false;
-             }
-        
-}
-    </script>
 
-    <%--<div style="height: 150px; margin: 0 0px 15px 0px; padding: 5px; background-color: #f7f7f7;
-        border: 1px #E2BBA0 solid;">
-        <img src="images/b1.jpg" alt="banner" width="653" height="150" />
-    </div>--%>
+    <script type="text/javascript">
+
+        function validation() {
+            var userList = document.getElementById('<%= ddlUserList.ClientID %>');
+
+            switch (userList.selectedIndex) {
+            case 0:
+                return alert("Please select User Name");
+
+            }
+            return true;
+        }
+    </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $('#<%= ddlUserList.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 2,
+                        placeholder: "Select an option"
+                    });
+                }
+            </script>
             <fieldset style="padding: 10px">
                 <legend>District User Mapping</legend>
                 <table style="width: 100%">
                     <tr>
-                        <td valign="top" align="center">
+                        <td align="top" align="center">
                             <table>
                                 <tr>
                                     <td align="center">
@@ -40,21 +44,19 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
                             <table>
                                 <tr>
                                     <td valign="top" nowrap="nowrap">
-                                        &nbsp;<asp:Label ID="LblUser" runat="server" Text="UserName: "></asp:Label>
+                                        &nbsp;<asp:Label runat="server" Text="UserName: "></asp:Label>
                                     </td>
                                     <td valign="top">
-                                        <asp:DropDownList ID="ddlUserList" runat="server" OnSelectedIndexChanged="ddlUserList_SelectedIndexChanged"
-                                            AutoPostBack="True">
+                                        <asp:DropDownList ID="ddlUserList" runat="server" Width="150px" OnSelectedIndexChanged="ddlUserList_SelectedIndexChanged" AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
                                     <td style="width: 5%">
                                     </td>
-                                    <td valign="top" nowrap="nowrap">
+                                    <td nowrap="nowrap" valign="top">
                                         <asp:Label ID="lblDistrict" runat="server" Text="District Name: "></asp:Label>
                                     </td>
                                     <td valign="top" align="left">
-                                        <%-- <asp:CheckBoxList ID="chkDistrictList" runat="server">
-                                        </asp:CheckBoxList>--%><asp:RadioButtonList ID="chkDistrictList" runat="server">
+                                        <asp:RadioButtonList ID="chkDistrictList" width="250px" runat="server">
                                         </asp:RadioButtonList>
                                     </td>
                                 </tr>
@@ -63,8 +65,8 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
                     </tr>
                     <tr>
                         <td align="center" valign="top">
-                            <asp:Button ID="btnMapping" runat="server" Text="Save" OnClick="btnMapping_Click" />
-                            <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
+                            <asp:Button runat="server" Text="Save" CssClass="form-submit-button" OnClick="btnMapping_Click" OnClientClick="if (!validation()) return false;"/>
+                            <asp:Button runat="server" Text="Cancel" CssClass="form-reset-button" OnClick="btnCancel_Click"/>
                         </td>
                     </tr>
                 </table>
@@ -72,4 +74,3 @@ var UserList=document.getElementById('<%= ddlUserList.ClientID %>');
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="Logout, App_Web_1vs54cas" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="Logout.aspx.cs" Inherits="Logout" Language="C#" %>
 
 <!DOCTYPE html>
 

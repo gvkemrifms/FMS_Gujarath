@@ -1,89 +1,84 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.UI;
+
 public partial class AgeingReportnew : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
             BindDistrictdropdown();
             Withoutdist();
         }
     }
+
     private void BindDistrictdropdown()
     {
         try
         {
-
-            string sqlQuery = "select district_id,district_name from m_district  where state_id= 24 and is_active = 1";
-            AccidentReport.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
+            var sqlQuery = ConfigurationManager.AppSettings["Query"];
+            _helper.FillDropDownHelperMethod(sqlQuery, "district_name", "district_id", ddldistrict);
         }
-
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
+
     public void Withoutdist()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, null,null,null,null,null,null,null,null,null,Grdtyre);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, null, null, null, null, null, null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
-
 
     public void Loaddata()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, ddldistrict,null,null,null,"@DistrictID",null,null,null,null,Grdtyre);
-           
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_VehicleAgeingReport", null, null, ddldistrict, null, null, null, "@DistrictID", null, null, null, null, Grdtyre);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored
+            _helper.ErrorsEntry(ex);
         }
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-
-        if (ddldistrict.SelectedValue == "0")
+        switch (ddldistrict.SelectedValue)
         {
-            Withoutdist();
-
+            case "0":
+                Withoutdist();
+                break;
+            default:
+                Loaddata();
+                break;
         }
-        else
-        {
-            Loaddata();
-
-
-        }
-
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-           AccidentReport report=new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
-           
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
 
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
-
 }

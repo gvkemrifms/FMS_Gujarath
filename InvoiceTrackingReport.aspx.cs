@@ -1,138 +1,82 @@
 ﻿using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class InvoiceTrackingReport : Page
 {
+    private readonly Helper _helper = new Helper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             ddlbillno.Enabled = false;
             Bindvehiclesdropdown();
-            // withoutdist();
         }
     }
+
     private void Bindvehiclesdropdown()
     {
         try
         {
-            AccidentReport.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", null, ddlvehicle);
- 
+            _helper.FillDropDownHelperMethodWithSp("P_GetVehicleNumber", "VehicleNumber", "VehicleID", ddlvehicle);
         }
-        catch 
+        catch (Exception ex)
         {
-//
+            _helper.ErrorsEntry(ex);
         }
     }
+
     protected void ddlvehicle_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlvehicle.SelectedIndex > 0)
-        {
-            ddlbillno.Enabled = true;
-
-
-            try
-            {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
-                conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "P_GetBillNo";
-
-
-                //ImageButton1.Enabled = true;
-                 cmd.Parameters.AddWithValue("@vehNo", ddlvehicle.SelectedItem.Value);
-                //cmd.Parameters.AddWithValue("@fromtime", txtfromdate.Text + " 00:00:00");
-                // cmd.Parameters.AddWithValue("@totime", txttodate.Text + " 23:59:59");
-                adp.Fill(ds);
-                ddlbillno.DataSource = ds.Tables[0];
-                ddlbillno.DataTextField = "Billno";
-                //ddlbillno.DataValueField = "VehicleID";
-                ddlbillno.DataBind();
-                ddlbillno.Items.Insert(0, new ListItem("--Select--", "0"));
-                conn.Close();
-
-
-
-            }
-            catch
-            { 
-                //
-
-            }
-        }
-        else
+        if (ddlvehicle.SelectedIndex <= 0)
         {
             ddlbillno.Enabled = false;
         }
+        else
+        {
+            ddlbillno.Enabled = true;
+            try
+            {
+                _helper.FillDropDownHelperMethodWithSp("P_GetBillNo", "Billno", "", ddlvehicle, ddlbillno, null, null, "@vehNo", null, null, null, null, null, null, null, null, 1);
+            }
+            catch (Exception ex)
+            {
+                _helper.ErrorsEntry(ex);
+            }
+        }
     }
+
     protected void btntoExcel_Click(object sender, EventArgs e)
     {
         try
         {
-            var report = new AccidentReport();
-            report.LoadExcelSpreadSheet(Panel2);
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
         }
         catch (Exception ex)
         {
-            // Response.Write(ex.Message.ToString());
+            _helper.ErrorsEntry(ex);
         }
-
     }
+
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         Loaddata();
     }
+
     public void Loaddata()
     {
         try
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["Str"].ToString());
-            DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            SqlDataAdapter adp = new SqlDataAdapter(cmd);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "P_Reports_VenwiseInvoiceTracking";
-            conn.Close();
-            //ImageButton1.Enabled = true;
-            cmd.Parameters.AddWithValue("@VehicleNo", ddlvehicle.SelectedItem.Value);
-            cmd.Parameters.AddWithValue("@BillNo", ddlbillno.SelectedItem.Value);
-            //cmd.Parameters.AddWithValue("@From", txtfrmDate.Text + " 00:00:00");
-            //cmd.Parameters.AddWithValue("@To", txttodate.Text + " 23:59:59");
-            adp.Fill(ds);
-            dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                Grddetails.DataSource = dt;
-                Grddetails.DataBind();
-            }
-            else
-            {
-                Grddetails.DataSource = null;
-                Grddetails.DataBind();
-            }
-
+            _helper.FillDropDownHelperMethodWithSp("P_Reports_VenwiseInvoiceTracking", "", "", ddlvehicle, ddlbillno, null, null, "@VehicleNo", "@BillNo", null, null, null, Grddetails);
         }
-        catch 
+        catch (Exception ex)
         {
-            //
+            _helper.ErrorsEntry(ex);
         }
     }
+
     public override void VerifyRenderingInServerForm(Control control)
     {
-        /*Tell the compiler that the control is rendered
-         * explicitly by overriding the VerifyRenderingInServerForm event.*/
     }
 }

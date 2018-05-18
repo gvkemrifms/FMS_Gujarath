@@ -6,7 +6,6 @@
     <style>
         .WrapStyle TD { word-break: break-all; }
     </style>
-    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function Validation() {

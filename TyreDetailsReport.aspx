@@ -4,9 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-         $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });
         });
@@ -14,11 +16,11 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label  Style="font-size: 20px; color: brown" runat="server" Text="Tyre Details Report"></asp:Label>
+                <asp:Label Style="color: brown; font-size: 20px;" runat="server" Text="Tyre Details Report"></asp:Label>
             </td>
         </tr>
     </table>
-    <br />
+    <br/>
     <table align="center">
         <tr>
 
@@ -29,7 +31,7 @@
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
                 <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click"></asp:Button>
@@ -40,11 +42,10 @@
             </td>
         </tr>
     </table>
-    <br />
+    <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
             <asp:GridView ID="Grdtyre" runat="server" BorderColor="Brown" BorderWidth="1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>
-

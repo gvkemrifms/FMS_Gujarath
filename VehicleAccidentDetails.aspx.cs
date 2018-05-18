@@ -5,13 +5,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.PL;
-using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
 
 public partial class VehicleAccidentDetails : Page
 {
-    private readonly VehicleAccidentDetailsBLL _vehicleAccidentDetail = new VehicleAccidentDetailsBLL();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VehicleAccidentDetailsBLL _vehicleAccidentDetail = new VehicleAccidentDetailsBLL();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -80,10 +79,10 @@ public partial class VehicleAccidentDetails : Page
         {
             if (rdBtnIsInsuranceClaimed.SelectedValue == "")
             {
-
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>alert(\"Please select your option for radio button list.\");</script>", false);
+                ScriptManager.RegisterStartupScript(Page, GetType(), "tmp", "<script type='text/javascript'>alert(\"Please select your option for radio button list.\");</script>", false);
                 return;
             }
+
             if (txtAccidentDateTime.Text == "") txtAccidentDateTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             if (txtInitiatedTime.Text == "") txtInitiatedTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             if (txtAgeofVehicle.Text == "") txtAgeofVehicle.Text = "0";
@@ -124,7 +123,9 @@ public partial class VehicleAccidentDetails : Page
                 ClearControls();
             }
             else
+            {
                 Show("Error");
+            }
         }
         catch (Exception ex)
         {

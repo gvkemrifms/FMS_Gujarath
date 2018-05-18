@@ -5,13 +5,13 @@
 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
 <ContentTemplate>
 <fieldset style="padding: 10px; width: 650px;">
-<legend align="center"style="color:brown">Vehicle History</legend>
+<legend align="center"style="color: brown">Vehicle History</legend>
 <table align="center">
 <tr>
     <td class="rowseparator" colspan="3">
     </td>
 </tr>
-<br />
+<br/>
 <tr>
     <td style="width: 100px">
         <asp:Label ID="lblVehicleSelect" runat="server" Text="Select a Vehicle"></asp:Label>
@@ -33,7 +33,7 @@
     <td class="rowseparator" colspan="3">
     </td>
 </tr>
-<br />
+<br/>
 <tr>
     <td colspan="3">
         <asp:Panel ID="Panel_Detail" runat="server" Visible="false" Width="100%">

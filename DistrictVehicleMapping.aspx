@@ -3,7 +3,6 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-gvkemergencymanagement3&places=West+Bengal&libraries=places"></script>
     <script src="locationpicker.js"></script>
     <title>:: GVK EMRI ::</title>
-
     <style>
         .pac-container:after { content: none !important; }
 

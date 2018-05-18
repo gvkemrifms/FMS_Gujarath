@@ -4,12 +4,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 2,
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
             if (ddlDistrict === '--select--') {
@@ -21,7 +24,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label style="font-size: 20px; color: brown" runat="server" Text="DetailedWithVehicleModel&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="DetailedWithVehicleModel&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -30,16 +33,16 @@
         <tr>
 
             <td>
-               Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
+                Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click"  ClientIDMode="static" EnableViewState="True" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" CssClass="form-submit-button" OnClick="btnsubmit_Click" ClientIDMode="static" EnableViewState="True" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" Text="ExportExcel" onclick="btntoExcel_Click" CssClass="form-reset-button"></asp:Button>
@@ -55,5 +58,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-
-

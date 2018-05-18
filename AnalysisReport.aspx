@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
                 disable_search_threshold: 5,
                 search_contains: true,
@@ -19,19 +19,20 @@
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-            if (ddlDistrict === '--select--') 
+            if (ddlDistrict === '--select--')
                 return alert("Please select District");
             var ddlVehicle = $('#<%= ddlvehicle.ClientID %> option:selected').text().toLowerCase();
-            if (ddlVehicle === '--select--') 
+            if (ddlVehicle === '--select--')
                 return alert("Please select Vehicle");
             var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
-            if (txtFirstDate === "") 
+            if (txtFirstDate === "")
                 return alert('From Date is Mandatory');
-            if (txtToDate === "") 
-                return  alert("End Date is Mandatory");
+            if (txtToDate === "")
+                return alert("End Date is Mandatory");
             var fromDate = (txtFirstDate).replace(/\D/g, '/');
             var toDate = (txtToDate).replace(/\D/g, '/');
             var ordFromDate = new Date(fromDate);
@@ -47,7 +48,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label style="font-size: 20px; color: brown" runat="server" Text="Analysis&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Analysis&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table >
@@ -56,13 +57,13 @@
     <table align="center">
         <tr>
             <td>
-              Select District  <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
+                Select District <asp:Label ID="lbldistrict" runat="server" Text="Select&nbsp;District" style="color: red">*</asp:Label>
             </td>
 
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
                 Select Vehicle <asp:Label runat="server" Text="Select&nbsp;Vehicle" style="color: red">*</asp:Label>
@@ -78,14 +79,14 @@
             </td>
             <td>
                 <asp:TextBox ID="txtfrmDate" runat="server" CssClass="search_3"></asp:TextBox>
-            </td>        
+            </td>
             <td>
                 <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy" TargetControlID="txtfrmDate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
             </td>
         </tr>
         <tr>
             <td>
-                To Date <asp:Label runat="server" Text="To date"  style="color: red">*</asp:Label>
+                To Date <asp:Label runat="server" Text="To date" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -98,7 +99,7 @@
 
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" class="form-submit-button" OnClientClick="if(!Validations()) return false;" OnClick="btnsubmit_Click"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" class="form-submit-button" OnClientClick="if (!Validations()) return false;" OnClick="btnsubmit_Click"></asp:Button>
             </td>
             <td>
                 <asp:Button runat="server" Text="ExportExcel" class="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
@@ -114,6 +115,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-
-
-

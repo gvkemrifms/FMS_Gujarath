@@ -8,9 +8,9 @@ using GvkFMSAPP.PL;
 
 public partial class PollutionUnderControl : Page
 {
-    private readonly GvkFMSAPP.BLL.StatutoryCompliance.PollutionUnderControl _puc = new GvkFMSAPP.BLL.StatutoryCompliance.PollutionUnderControl();
     private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly GvkFMSAPP.BLL.StatutoryCompliance.PollutionUnderControl _puc = new GvkFMSAPP.BLL.StatutoryCompliance.PollutionUnderControl();
 
     protected void Page_Load(object sender, EventArgs e)
     {

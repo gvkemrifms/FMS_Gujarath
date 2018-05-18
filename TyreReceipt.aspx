@@ -90,7 +90,7 @@
                 <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtenderTyreReceipt" BehaviorID="mdlPopup"
                                                 runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
                 <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="padding: 10px">
-                    <asp:UpdatePanel  runat="server">
+                    <asp:UpdatePanel runat="server">
                         <ContentTemplate>
                             <fieldset>
                                 <legend>Tyre Receipt Details</legend>
@@ -163,7 +163,7 @@
                                         <td class="columnseparator"></td>
                                         <td align="left">
                                             <asp:TextBox ID="txtTyreRecDate" runat="server" onkeypress="return false" MaxLength="20" oncut="return false;" onpaste="return false;" oncopy="return false;"></asp:TextBox>
-                                            <ajaxToolkit:CalendarExtender  runat="server" TargetControlID="txtTyreRecDate"
+                                            <ajaxToolkit:CalendarExtender runat="server" TargetControlID="txtTyreRecDate"
                                                                           Format="MM/dd/yyyy" PopupButtonID="ImageButton1">
                                             </ajaxToolkit:CalendarExtender>
                                             <asp:ImageButton ID="ImageButton1" runat="server" alt="" src="images/Calendar.gif" Style="vertical-align: top"/>
@@ -193,7 +193,7 @@
                                                 <SelectedRowStyle CssClass="selectedRowStyle"/>
                                                 <HeaderStyle CssClass="headerStyle"/>
                                             </asp:GridView>
-                                            <div id="Div7" align="center" style="width: 95%; background-color: white">
+                                            <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                                 Remarks
                                                 <asp:TextBox ID="txtRemarks" runat="server" onkeypress="return OnlyAlphaNumeric(event)"
                                                              MaxLength="20" TextMode="MultiLine" onKeyUp="CheckLength(this,50)" onChange="CheckLength(this,)">
@@ -201,7 +201,7 @@
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <asp:Button ID="btnOk" runat="server" Text="Receipt" Width="50px" OnClick="btnOk_Click"/>
                                                 &nbsp;&nbsp;
-                                                <asp:Button  runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
+                                                <asp:Button runat="server" Text="Cancel" Width="50px" OnClick="btnNo_Click"/>
                                             </div>
                                         </td>
                                     </tr>
@@ -214,4 +214,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

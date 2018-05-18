@@ -3,9 +3,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:UpdatePanel  runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
-            <legend align="center" style="color:brown">Offroad Fleet Manager</legend>
+            <legend align="center" style="color: brown">Offroad Fleet Manager</legend>
             <br/>
             <div align="center">
                 <asp:GridView ID="gvVasOffroad" runat="server" EmptyDataText="No Records Found"
@@ -60,7 +60,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Approve">
                             <ItemTemplate>
-                                <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve"  CssClass="form-submit-button" CommandArgument=" <%# Container.DataItemIndex %>"
+                                <asp:LinkButton ID="lnkApprove" runat="server" CommandName="Approve" CssClass="form-submit-button" CommandArgument=" <%# Container.DataItemIndex %>"
                                                 Text="Approve">
                                 </asp:LinkButton>
 
@@ -82,28 +82,28 @@
                     <HeaderStyle CssClass="headerStyle"/>
                 </asp:GridView>
             </div>
-            <div style="width: 300px; padding: 5px; display: block" id="dvReason">
-                <div style="border-bottom: none; background-color: Maroon">
-                    <asp:Label  runat="server" Text="Reason for Rejection" Font-Bold="True"
+            <div style="display: block; padding: 5px; width: 300px;" id="dvReason">
+                <div style="background-color: Maroon; border-bottom: none;">
+                    <asp:Label runat="server" Text="Reason for Rejection" Font-Bold="True"
                                Font-Size="Small" ForeColor="#FFFFCC"/>
                 </div>
                 <div style="background-color: White">
                     <div style="width: 100%">
-                        <div style="width: 20%; float: left">
+                        <div style="float: left; width: 20%;">
                         </div>
                         <div style="float: right; width: 80%">
                             <asp:TextBox runat="server" ID="txtrejectReason" TextMode="MultiLine"/>
                         </div>
                     </div>
                     <div style="width: 100%">
-                        <div style="width: 40%; float: left">
+                        <div style="float: left; width: 40%;">
                         </div>
-                        <div style="width: 60%; float: right">
-                            <div style="width: 50%; float: left">
+                        <div style="float: right; width: 60%;">
+                            <div style="float: left; width: 50%;">
                                 <asp:Button runat="server" Text="Submit"
                                             OnClick="btnReason_Click1" OnClientClick="return Validation();"/>
                             </div>
-                            <div style="width: 50%; float: right">
+                            <div style="float: right; width: 50%;">
                                 <asp:Button runat="server" ID="btnCancel" OnClientClick="PressButton2()" Text="Close"/>
                             </div>
                         </div>
@@ -147,5 +147,3 @@
         }
     </script>
 </asp:Content>
-
-

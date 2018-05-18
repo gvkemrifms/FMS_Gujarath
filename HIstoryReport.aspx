@@ -2,22 +2,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<script type="text/javascript">
-    $(function() {
-        $('#<%= ddldistrict.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 20,
-            placeholder: "Select an option"
+    <script type="text/javascript">
+        $(function() {
+            $('#<%= ddldistrict.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
+            $('#<%= ddlvehicle.ClientID %>').select2({
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 20,
+                placeholder: "Select an option"
+            });
         });
-        $('#<%= ddlvehicle.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 20,
-            placeholder: "Select an option"
-        });
-    }); 
-   function Validations() {
+
+        function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
             if (ddlDistrict === '--select--') {
                 return alert("Please select District");
@@ -36,7 +37,7 @@
             }
             return true;
         }
-</script>
+    </script>
     <table align="center">
         <tr>
             <td>
@@ -55,10 +56,10 @@
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" style="width: 150px" AutoPostBack="true" OnSelectedIndexChanged="ddldistrict_SelectedIndexChanged"></asp:DropDownList>
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
-            Select Vehicle <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
+                Select Vehicle <asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
 
             <td>
@@ -66,36 +67,36 @@
             </td>
 
         </tr>
-            <tr>
-                <td>
-                    Month Of Registration<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
-                </td>
-                <td>
-                    <asp:DropDownList ID="ddlmonth" runat="server" style="width: 150px" AutoPostBack="true" CssClass="search_3">
-                        <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
-                        <asp:ListItem Text="January" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="February" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="March" Value="3"></asp:ListItem>
-                        <asp:ListItem Text="April" Value="4"></asp:ListItem>
-                        <asp:ListItem Text="May" Value="5"></asp:ListItem>
-                        <asp:ListItem Text="June" Value="6"></asp:ListItem>
-                        <asp:ListItem Text="July" Value="7"></asp:ListItem>
-                        <asp:ListItem Text="August" Value="8"></asp:ListItem>
-                        <asp:ListItem Text="September" Value="9"></asp:ListItem>
-                        <asp:ListItem Text="October" Value="10"></asp:ListItem>
-                        <asp:ListItem Text="November" Value="11"></asp:ListItem>
-                        <asp:ListItem Text="December" Value="12"></asp:ListItem>
-                    </asp:DropDownList>
+        <tr>
+            <td>
+                Month Of Registration<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="ddlmonth" runat="server" style="width: 150px" AutoPostBack="true" CssClass="search_3">
+                    <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
+                    <asp:ListItem Text="January" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="February" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="March" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="April" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="May" Value="5"></asp:ListItem>
+                    <asp:ListItem Text="June" Value="6"></asp:ListItem>
+                    <asp:ListItem Text="July" Value="7"></asp:ListItem>
+                    <asp:ListItem Text="August" Value="8"></asp:ListItem>
+                    <asp:ListItem Text="September" Value="9"></asp:ListItem>
+                    <asp:ListItem Text="October" Value="10"></asp:ListItem>
+                    <asp:ListItem Text="November" Value="11"></asp:ListItem>
+                    <asp:ListItem Text="December" Value="12"></asp:ListItem>
+                </asp:DropDownList>
 
-                </td>
-           
-            </tr>
-            
+            </td>
+
+        </tr>
+
         <tr>
 
         </tr>
-          <tr>
-                       
+        <tr>
+
             <td>
                 Year Of Registration<asp:Label runat="server" Text="" style="color: red">*</asp:Label>
             </td>
@@ -123,10 +124,10 @@
 
                 </asp:DropDownList>
             </td>
-              </tr>
+        </tr>
         <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btnsubmit_Click" CssClass="form-submit-button" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </td>
 
             <td>

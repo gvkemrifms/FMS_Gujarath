@@ -2,21 +2,20 @@
 using System.Configuration;
 using System.Web.UI;
 using GvkFMSAPP.BLL;
-using Exception = System.Exception;
 
 public partial class VehicleAgeingReport : Page
 {
-    private readonly VehicleRegistration _vehreg = new VehicleRegistration();
     private readonly Helper _helper = new Helper();
+    private readonly VehicleRegistration _vehreg = new VehicleRegistration();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        {          
-               GetDistricts();
-                CheckUser();
-                GetVehicleAgeingReport();          
+        {
+            GetDistricts();
+            CheckUser();
+            GetVehicleAgeingReport();
         }
     }
 
@@ -28,11 +27,10 @@ public partial class VehicleAgeingReport : Page
             var vehicleageingreport = reportpath + "FMSReport_VehicleAging&rs%3aCommand=Render&rc:Parameters=false&rc:Toolbar=false&districtid=" + _vehreg.DistrictId;
             iframe_VehicleAgeingReport.Attributes.Add("src", vehicleageingreport);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _helper.ErrorsEntry(ex);
         }
-        
     }
 
     public void GetDistricts()

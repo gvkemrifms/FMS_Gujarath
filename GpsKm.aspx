@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="GpsKm.aspx.cs" Inherits="GpsKm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -24,7 +23,7 @@
             <div class="col-xs-12">
                 <div class="panel">
                     <header class="panel-heading">
-                        <legend style="color:brown" align="center">Vehicle List</legend>
+                        <legend style="color: brown" align="center">Vehicle List</legend>
                     </header>
                     <div class="row" runat="server" id="dvSearch" visible="false">
                         <table align="center">

@@ -1,9 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleSwapping.aspx.cs" Inherits="VehicleSwapping" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script type="text/javascript" language="javascript">
 
         function validation() {
@@ -50,7 +47,7 @@
                     $('#<%= ddlDistrict.ClientID %>').select2({
                         disable_search_threshold: 5,
                         search_contains: true,
-                        minimumResultsForSearch: 20,            
+                        minimumResultsForSearch: 20,
                         placeholder: "Select an option"
                     });
                     $('#<%= ddlSrcVehicle.ClientID %>').select2({
@@ -65,7 +62,7 @@
                         minimumResultsForSearch: 20,
                         placeholder: "Select an option"
                     });
-                   
+
                 }
             </script>
             <fieldset style="padding: 10px">
@@ -180,7 +177,7 @@
                                     <asp:Button ID="btnSubmit" runat="server" CssClass="form-submit-button" OnClick="btnSubmit_Click"
                                                 Text="Submit"/>
                                     &nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnReset" runat="server"  CssClass="form-reset-button" OnClick="btnReset_Click"
+                                    <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" OnClick="btnReset_Click"
                                                 Text="Reset"/>
                                 </asp:Panel>
                             </td>

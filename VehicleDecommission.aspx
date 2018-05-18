@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script  type="text/javascript">
+    <script type="text/javascript">
         function validation() {
 
             var district = document.getElementById('<%= ddlDistrict.ClientID %>');
@@ -23,12 +23,12 @@
                 var i;
                 for (i = 0; i < inputs.length; i++) {
                     switch (inputs[i].type) {
-                        case 'text':
-                            if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
-                                alert('Select the Vehicle');
-                                return false;
-                            }
-                            break;
+                    case 'text':
+                        if (inputs[i].value !== "" && inputs[i].value != null && inputs[i].value === "--Select--") {
+                            alert('Select the Vehicle');
+                            return false;
+                        }
+                        break;
                     }
                 }
             }
@@ -60,134 +60,138 @@
         <ContentTemplate>
 
             <fieldset style="padding: 10px">
-                <legend align="center" style="color:brown">Vehicle Decommission</legend>
-<br />
+                <legend align="center" style="color: brown">Vehicle Decommission</legend>
+                <br/>
+                <table align="center">
+                    <tr>
+                        <td>
+                            District<span style="color: Red">*</span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                                <asp:ListItem Value="-1">--Select--</asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:TextBox ID="txtDistrict" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Vehicle Number<span style="color: Red">*</span>
+                        </td>
+                        <td>
+                            <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="true"
+                                          DropDownStyle="DropDownList">
+                                <asp:ListItem Value="-1">--Select--</asp:ListItem>
+                            </cc1:ComboBox>
+                            <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Decommission Reason<span style="color: Red">*</span>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtDecommReason" CssClass="search_3" runat="server" Width="150px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Decommission Date<span style="color: Red">*</span>
+                        </td>
+                        <td >
+                            <asp:TextBox ID="txtDecommDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
+                            <asp:ImageButton ID="imgbtnDecommDate" runat="server" Style="vertical-align: top"
+                                             alt="" src="images/Calendar.gif"/>
+                            <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" TargetControlID="txtDecommDate"
+                                                  PopupButtonID="imgbtnDecommDate" Format="MM/dd/yyyy">
+                            </cc1:CalendarExtender>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Decommission Remark<span style="color: Red">*</span>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtDecommRemark" CssClass="search_3" runat="server" TextMode="MultiLine"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
                             <table align="center">
                                 <tr>
-                                    <td>
-                                        District<span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        <asp:DropDownList ID="ddlDistrict" CssClass="search_3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
-                                            <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                                        </asp:DropDownList>
-                                        <asp:TextBox ID="txtDistrict" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Vehicle Number<span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        <cc1:ComboBox AutoCompleteMode="Append" ID="ddlVehicleNumber" runat="server" AutoPostBack="true"
-                                            DropDownStyle="DropDownList">
-                                            <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                                        </cc1:ComboBox>
-                                        <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Decommission Reason<span style="color: Red">*</span>
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="txtDecommReason" CssClass="search_3" runat="server" Width="150px"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Decommission Date<span style="color: Red">*</span>
-                                    </td>
                                     <td >
-                                        <asp:TextBox ID="txtDecommDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false"></asp:TextBox>
-                                        <asp:ImageButton ID="imgbtnDecommDate" runat="server" Style="vertical-align: top"
-                                            alt="" src="images/Calendar.gif" />
-                                        <cc1:CalendarExtender CssClass="cal_Theme1" runat="server" TargetControlID="txtDecommDate"
-                                            PopupButtonID="imgbtnDecommDate" Format="MM/dd/yyyy">
-                                        </cc1:CalendarExtender>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Decommission Remark<span style="color: Red">*</span>
+                                        <asp:Button ID="btnSubmit" CssClass="form-submit-button" runat="server" Text="Submit" OnClick="btnSubmit_Click"/>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtDecommRemark" CssClass="search_3" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnReset_Click"/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <table align="center">
-                                            <tr>
-                                                <td >
-                                                    <asp:Button ID="btnSubmit" CssClass="form-submit-button" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
-                                                </td>
-                                                <td>
-                                                    <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnReset_Click" />
-                                                </td>
-                                        
-                                            </tr>
-                                        </table>
-                                    </td>
+
                                 </tr>
                             </table>
                         </td>
                     </tr>
                 </table>
-                <br />
-                <br />
-                <table align="center">
-                    <tr align="center">
-                        <td>
-                            <asp:GridView ID="grdvwDecommVehicles" runat="server" AutoGenerateColumns="False"
-                                CellPadding="4" ForeColor="#333333" BorderWidth="1px" BorderColor="Brown" GridLines="Both" Width="630px" AllowPaging="True"
-                                EmptyDataText="No Records Found" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdvwDecommVehicles_PageIndexChanging"
-                                OnRowCommand="grdvwDecommVehicles_RowCommand">
-                                <RowStyle CssClass="rowStyleGrid" />
-                                <Columns>
-                                    <asp:TemplateField HeaderText="District">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDistrict" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "District") %>'>
-                                            </asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Vehicle Number">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblVehicleNumber" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>'>
-                                            </asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Decommission Reason">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDecommReason" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DecommReason") %>'>
-                                            </asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Decommission Date">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDecommDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DecommDate") %>'>
-                                            </asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Edit">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkEdit" CssClass="form-submit-button" runat="server" CommandName="DecommVehEdit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
-                                                Text="Edit">
-                                            </asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Revert">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkRevert" CssClass="form-submit-button" runat="server" CommandName="DecommVehRevert" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
-                                                Text="Revert">
-                                            </asp:LinkButton>
-                                            <cc1:ConfirmButtonExtender ID="confrmbtnextndrRevert" runat="server" TargetControlID="lnkRevert"
-                                                ConfirmText="Are you sure? Want to Revert?">
-                                            </cc1:ConfirmButtonExtender>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <FooterStyle CssClass="footerStylegrid" />
-                                <PagerStyle CssClass="pagerStylegrid" />
-                                <SelectedRowStyle CssClass="selectedRowStyle" />
-                                <HeaderStyle CssClass="headerStyle" />
-                            </asp:GridView>
+            </td>
+            </tr>
+            </table>
+            <br/>
+            <br/>
+            <table align="center">
+            <tr align="center">
+            <td>
+            <asp:GridView ID="grdvwDecommVehicles" runat="server" AutoGenerateColumns="False"
+                          CellPadding="4" ForeColor="#333333" BorderWidth="1px" BorderColor="Brown" GridLines="Both" Width="630px" AllowPaging="True"
+                          EmptyDataText="No Records Found" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdvwDecommVehicles_PageIndexChanging"
+                          OnRowCommand="grdvwDecommVehicles_RowCommand">
+                <RowStyle CssClass="rowStyleGrid"/>
+                <Columns>
+                    <asp:TemplateField HeaderText="District">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDistrict" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "District") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Vehicle Number">
+                        <ItemTemplate>
+                            <asp:Label ID="lblVehicleNumber" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Decommission Reason">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDecommReason" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DecommReason") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Decommission Date">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDecommDate" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "DecommDate") %>'>
+                            </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Edit">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lnkEdit" CssClass="form-submit-button" runat="server" CommandName="DecommVehEdit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
+                                            Text="Edit">
+                            </asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Revert">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lnkRevert" CssClass="form-submit-button" runat="server" CommandName="DecommVehRevert" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "VehicleDecommId") %>'
+                                            Text="Revert">
+                            </asp:LinkButton>
+                            <cc1:ConfirmButtonExtender ID="confrmbtnextndrRevert" runat="server" TargetControlID="lnkRevert"
+                                                       ConfirmText="Are you sure? Want to Revert?">
+                            </cc1:ConfirmButtonExtender>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                <FooterStyle CssClass="footerStylegrid"/>
+                <PagerStyle CssClass="pagerStylegrid"/>
+                <SelectedRowStyle CssClass="selectedRowStyle"/>
+                <HeaderStyle CssClass="headerStyle"/>
+            </asp:GridView>
             </fieldset>
         </ContentTemplate>
     </asp:UpdatePanel>

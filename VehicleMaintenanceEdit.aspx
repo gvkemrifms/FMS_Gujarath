@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
 
     function validation() {
@@ -33,11 +32,15 @@
 <script type="text/javascript">
     function pageLoad() {
         $('#<%= ddlDistrict.ClientID %>').select2({
-            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
             placeholder: "Select an option"
         });
         $('#<%= ddlVehicleNumber.ClientID %>').select2({
-            disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 20,
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 20,
             placeholder: "Select an option"
         });
     }
@@ -52,30 +55,30 @@
 <table align="center">
 
     <tr>
-        <td>
-            District
-        </td>
-        <td>
+    <td>
+        District
+    </td>
+    <td>
 
-            <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+            <asp:ListItem Value="-1">--Select--</asp:ListItem>
+        </asp:DropDownList>
+    </td>
+    <tr/>
+    <tr>
+        <td>
+            Vehicle No
+        </td>
+
+        <td>
+            <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="135px" AutoPostBack="True"
+                              OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
+            <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
         </td>
-<tr />
-        <tr>
-            <td>
-                Vehicle No
-            </td>
+    </tr>
 
-            <td>
-                <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="135px" AutoPostBack="True"
-                                  OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
-                    <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                </asp:DropDownList>
-                <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
-            </td>
-        </tr>
-    
     <tr>
         <td class="rowseparator"></td>
     </tr>

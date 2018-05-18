@@ -6,19 +6,11 @@ using System.Web.UI;
 using GvkFMSAPP.BLL;
 using GvkFMSAPP.PL;
 
-public enum ValidityPeriod
-{
-    Monthly = 1,
-    Quarterly = 3,
-    HalfYearly = 6,
-    Anually = 12
-}
-
 public partial class VehicleInsurance : Page
 {
     private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
-    private readonly GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance _vehicleInsurance = new GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance();
     private readonly Helper _helper = new Helper();
+    private readonly GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance _vehicleInsurance = new GvkFMSAPP.BLL.StatutoryCompliance.VehicleInsurance();
 
     protected void Page_Load(object sender, EventArgs e)
     {

@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script src="../JavaValidations/RequiredFieldValidations.js" type="text/javascript"></script>
 <script language="javascript" type="text/javascript">
     function validation() {
@@ -52,7 +51,9 @@
 
         if (Date.parse(registrationDate.value) < Date.parse(vehiclePdiDate.value)) {
             alert(
-                "Registration Date should be greater than Pre-Delivery Inspection Date.(Pre-Delivery Inspection Date-" +vehiclePdiDate.value +")");
+                "Registration Date should be greater than Pre-Delivery Inspection Date.(Pre-Delivery Inspection Date-" +
+                vehiclePdiDate.value +
+                ")");
             registrationDate.focus();
             return false;
         }
@@ -92,15 +93,15 @@
             placeholder: "Select an option"
         });
     }
-  </script>
+</script>
 
-        <table class="table table-striped table-bordered table-hover">
-            <tr>
-            <td class="rowseparator"></td>
-            </tr>
-            <tr>
-            <td>
-            <asp:Panel ID="pnlVehicleRegistration" runat="server">
+<table class="table table-striped table-bordered table-hover">
+<tr>
+    <td class="rowseparator"></td>
+</tr>
+<tr>
+    <td>
+        <asp:Panel ID="pnlVehicleRegistration" runat="server">
             <table style="width: 100%">
                 <tr>
                     <td align="center" colspan="4"></td>

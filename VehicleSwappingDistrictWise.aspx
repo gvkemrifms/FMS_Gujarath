@@ -1,8 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleSwappingDistrictWise.aspx.cs" Inherits="VehicleSwappingDistrictWise" %>
-
-<%@ Register TagPrefix="cc1" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
 
         function validation() {
@@ -54,7 +51,7 @@
                     $('#<%= ddlSourceDistrict.ClientID %>').select2({
                         disable_search_threshold: 5,
                         search_contains: true,
-                        minimumResultsForSearch: 20,            
+                        minimumResultsForSearch: 20,
                         placeholder: "Select an option"
                     });
                     $('#<%= ddlSrcVehicle.ClientID %>').select2({
@@ -129,7 +126,7 @@
                             <asp:DropDownList runat="server" ID="ddlDestVehicle" AutoPostBack="true" Width="155px"
                                               OnSelectedIndexChanged="ddlDestVehicle_SelectedIndexChanged">
                                 <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                            </asp:DropDownList>                          
+                            </asp:DropDownList>
                         </td>
                     </tr>
                     <tr>
@@ -190,18 +187,18 @@
                     </tr>
                     <tr>
                         <div style="top: 0px; width: 68px;">
-                            <caption>
-                                <img src="../images/savingimage.gif" style="display: none" id="loaderButton" alt=""/>
-                                <tr>
-                                    <td align="center" colspan="7" style="">
-                                        <asp:Panel ID="pnlButton" runat="server">
-                                            <asp:Button ID="btnSubmit" runat="server" CssClass="form-submit-button" OnClick="btnSubmit_Click" OnClientClick="return validation();" Text="Submit" />
-                                            &nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="btnReset" runat="server" CssClass="form-submit-button" OnClick="btnReset_Click" Text="Reset" />
-                                        </asp:Panel>
-                                    </td>
-                                </tr>
-                            </caption>
+                        <caption>
+                            <img src="../images/savingimage.gif" style="display: none" id="loaderButton" alt=""/>
+                            <tr>
+                                <td align="center" colspan="7" style="">
+                                    <asp:Panel ID="pnlButton" runat="server">
+                                        <asp:Button ID="btnSubmit" runat="server" CssClass="form-submit-button" OnClick="btnSubmit_Click" OnClientClick="return validation();" Text="Submit"/>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <asp:Button ID="btnReset" runat="server" CssClass="form-submit-button" OnClick="btnReset_Click" Text="Reset"/>
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+                        </caption>
                     </tr>
                 </table>
             </fieldset>

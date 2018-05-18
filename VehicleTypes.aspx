@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleTypes.aspx.cs" Inherits="VehicleTypes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <script language="javascript" type="text/javascript">
         function validation() {
             switch (document.getElementById("<%= txtVehicleType.ClientID %>").value) {
@@ -19,7 +18,7 @@
             return true;
         }
     </script>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <table>
                 <tr>

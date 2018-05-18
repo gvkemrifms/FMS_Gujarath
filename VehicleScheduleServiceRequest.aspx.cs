@@ -6,9 +6,9 @@ using GvkFMSAPP.BLL.VehicleMaintenance;
 
 public partial class VehicleScheduleServiceRequest : Page
 {
-    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
     private readonly FMSGeneral _fmsg = new FMSGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -101,7 +101,9 @@ public partial class VehicleScheduleServiceRequest : Page
                     FillScheduleServiceRequestGrid(vehicleId);
                 }
                 else
+                {
                     Show("Please select scheduled plan date greater than vehicle registration date ");
+                }
 
                 break;
             case "Update":
@@ -142,11 +144,15 @@ public partial class VehicleScheduleServiceRequest : Page
     {
         var ds = _vehMain.IBind_ServiceRequestDetails(vehicleId);
         if (ds == null)
+        {
             pnlDisplayDetails.Visible = false;
+        }
         else
         {
             if (ds.Tables[0].Rows.Count <= 0)
+            {
                 pnlDisplayDetails.Visible = false;
+            }
             else
             {
                 pnlDisplayDetails.Visible = true;

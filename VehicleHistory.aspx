@@ -1,47 +1,61 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleHistory.aspx.cs" Inherits="VehicleHistory" %>
-
+﻿<%@ page title="" language="C#" masterpagefile="~/temp.master" autoeventwireup="true" CodeFile="VehicleHistory.aspx.cs" Inherits="VehicleHistory" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
 <ContentTemplate>
 <fieldset style="padding: 10px; width: 650px;">
-<legend align="center"style="color: brown">Vehicle History</legend>
+<legend align="center"style="color:brown">Vehicle History</legend>
 <table align="center">
 <tr>
-    <td align="center">
-        Select Vehicle<span style="color: red">*</span>
+    <td class="rowseparator" colspan="3">
     </td>
-    <td >
+</tr>
+<br />
+<tr>
+    <td style="width: 100px">
+        <asp:Label ID="lblVehicleSelect" runat="server" Text="Select a Vehicle"></asp:Label>
+    </td>
+    <td class="columnseparator">
+    </td>
+    <td style="width: 400px" align="left">
         <asp:DropDownList ID="ddlVehicleList" runat="server" OnSelectedIndexChanged="ddlVehicleList_SelectedIndexChanged"
                           AutoPostBack="True">
         </asp:DropDownList>
-        <asp:DropShadowExtender runat="server" Enabled="True" TargetControlID="ddlVehicleList">
+        <asp:DropShadowExtender ID="DropShadowExtender1" runat="server" Enabled="True" TargetControlID="ddlVehicleList">
         </asp:DropShadowExtender>
-        <asp:DropDownExtender runat="server" DynamicServicePath="" Enabled="True" TargetControlID="ddlVehicleList">
+        <asp:DropDownExtender ID="UpdatePanel1_DropDownExtender" runat="server" DynamicServicePath=""
+                              Enabled="True" TargetControlID="ddlVehicleList">
         </asp:DropDownExtender>
     </td>
 </tr>
 <tr>
+    <td class="rowseparator" colspan="3">
+    </td>
+</tr>
+<br />
+<tr>
     <td colspan="3">
-        <asp:Panel ID="Panel_Detail" runat="server" Visible="false" Width="100%" HorizontalAlign="Center">
-            <table width="600px" style="border-width: 1px; margin-top: 50px;">
+        <asp:Panel ID="Panel_Detail" runat="server" Visible="false" Width="100%">
+            <table align="center">
                 <tr>
                     <td>
                         District
                     </td>
+                    <td class="rowseparator">
+                    </td>
                     <td>
                         <asp:Label ID="lblDistrict" runat="server"></asp:Label>
                     </td>
-                </tr>
-                <tr>
-
+                    <td class="rowseparator">
+                    </td>
                     <td>
                         Petrol Card
                     </td>
-                    <td class="rowseparator"></td>
+                    <td class="rowseparator">
+                    </td>
                     <td>
-                        <asp:Label runat="server"></asp:Label>
+                        <asp:Label ID="lblPetroCard" runat="server"></asp:Label>
                     </td>
                 </tr>
             </table>
@@ -49,32 +63,33 @@
     </td>
 </tr>
 <tr>
-    <td class="rowseparator" colspan="3"></td>
+    <td class="rowseparator" colspan="3">
+    </td>
 </tr>
 <tr>
 <td colspan="3">
-<asp:Panel ID="panel_vehicleDetail" runat="server" Visible="false" Width="100%" HorizontalAlign="Center" style="margin-top: 40px">
-<asp:Accordion runat="server" Width="650px" HeaderCssClass="accordionHeader"
+<asp:Panel ID="panel_vehicleDetail" runat="server" Visible="false" Width="100%">
+<asp:Accordion ID="Accordion1" runat="server" Width="650px" HeaderCssClass="accordionHeader"
                ContentCssClass="accordionContent" AutoSize="Fill" FadeTransitions="true" TransitionDuration="50"
                Height="300px">
 <Panes>
-<asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red">
+<asp:AccordionPane ID="AccordionPane1" runat="server" BorderColor="Red" ForeColor="Red">
 <Header>
-    <b>Statutory Compliance</b>
+    Statutory Compliance
 </Header>
 <Content>
-<asp:Accordion runat="server" Width="650px" HeaderCssClass="accordionHeader"
+<asp:Accordion ID="Accordion2" runat="server" Width="650px" HeaderCssClass="accordionHeader"
                ContentCssClass="accordionContent" AutoSize="None" FadeTransitions="true" TransitionDuration="50"
                Height="300px">
 <Panes>
-<asp:AccordionPane runat="server" Height="300px">
+<asp:AccordionPane ID="AccordionPane4" runat="server" Height="300px">
     <Header>
         Vehicle Insurance
     </Header>
     <Content>
-        <asp:GridView ID="gvVehicleInsurance" runat="server" Width="1000px" AutoGenerateColumns="False"
+        <asp:GridView ID="gvVehicleInsurance" runat="server" Width="630px" AutoGenerateColumns="False"
                       AllowPaging="True" CellPadding="4" ForeColor="#333333" EmptyDataText="No Records Found"
-                      GridLines="Both" CssClass="gridviewStyle" CellSpacing="2">
+                      GridLines="None" CssClass="gridviewStyle" CellSpacing="2">
             <RowStyle CssClass="rowStyleGrid"/>
             <Columns>
                 <asp:TemplateField HeaderText="Vehicle Number">
@@ -139,19 +154,20 @@
         </asp:GridView>
     </Content>
 </asp:AccordionPane>
-<asp:AccordionPane runat="server" Height="300px">
+<asp:AccordionPane ID="AccordionPane5" runat="server" Height="300px">
     <Header>
         Road Tax
     </Header>
     <Content>
         <table cellpadding="2" cellspacing="2" width="600px">
             <tr>
-                <td class="rowseparator"></td>
+                <td class="rowseparator">
+                </td>
             </tr>
             <tr>
                 <td>
                     <asp:GridView ID="gvRoadTax" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                  Width="630px" ForeColor="#333333" GridLines="Both" AllowPaging="True" EmptyDataText="No Records Found"
+                                  Width="630px" ForeColor="#333333" GridLines="None" AllowPaging="True" EmptyDataText="No Records Found"
                                   CssClass="gridviewStyle" CellSpacing="2">
                         <RowStyle CssClass="rowStyleGrid"/>
                         <Columns>
@@ -194,18 +210,19 @@
                 </td>
             </tr>
             <tr>
-                <td class="rowseparator"></td>
+                <td class="rowseparator">
+                </td>
             </tr>
         </table>
     </Content>
 </asp:AccordionPane>
-<asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red">
+<asp:AccordionPane ID="AccordionPane6" runat="server" BorderColor="Red" ForeColor="Red">
     <Header>
         Pollution Under Control
     </Header>
     <Content>
         <asp:GridView ID="gvPollutionUnderControl" runat="server" AutoGenerateColumns="False"
-                      CellPadding="4" Width="630px" ForeColor="#333333" GridLines="Both" EmptyDataText="No Records Found"
+                      CellPadding="4" Width="630px" ForeColor="#333333" GridLines="None" EmptyDataText="No Records Found"
                       AllowPaging="True" CssClass="gridviewStyle" CellSpacing="2">
             <RowStyle CssClass="rowStyleGrid"/>
             <Columns>
@@ -254,13 +271,13 @@
         </asp:GridView>
     </Content>
 </asp:AccordionPane>
-<asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red">
+<asp:AccordionPane ID="AccordionPane7" runat="server" BorderColor="Red" ForeColor="Red">
     <Header>
         Fitness Renewal
     </Header>
     <Content>
         <asp:GridView ID="gvFitnessRenewal" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                      ForeColor="#333333" GridLines="Both" Width="630px" OnRowDataBound="gvFitnessRenewal_RowDataBound"
+                      ForeColor="#333333" GridLines="None" Width="630px" OnRowDataBound="gvFitnessRenewal_RowDataBound"
                       AllowPaging="True" EmptyDataText="No Records Found" CssClass="gridviewStyle"
                       CellSpacing="2" OnPageIndexChanging="gvFitnessRenewal_PageIndexChanging">
             <RowStyle CssClass="rowStyleGrid"/>
@@ -320,23 +337,23 @@
 </asp:Accordion>
 </Content>
 </asp:AccordionPane>
-<asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red"
+<asp:AccordionPane ID="AccordionPane3" runat="server" BorderColor="Red" ForeColor="Red"
                    Height="300px">
     <Header>
         Fuel Management
     </Header>
     <Content>
-        <asp:Accordion runat="server" Width="650px" HeaderCssClass="accordionHeader"
+        <asp:Accordion ID="Accordion4" runat="server" Width="650px" HeaderCssClass="accordionHeader"
                        ContentCssClass="accordionContent" AutoSize="None" FadeTransitions="true" TransitionDuration="50">
             <Panes>
-                <asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red">
+                <asp:AccordionPane ID="AccordionPane12" runat="server" BorderColor="Red" ForeColor="Red">
                     <Header>
                         Petrol Card details
                     </Header>
                     <Content>
                         <asp:GridView ID="grdPetroCard" runat="server" Width="630px" AutoGenerateColumns="False"
                                       AllowPaging="True" CellPadding="4" ForeColor="#333333" EmptyDataText="No Records Found"
-                                      GridLines="Both" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdPetroCard_PageIndexChanging">
+                                      GridLines="None" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdPetroCard_PageIndexChanging">
                             <RowStyle CssClass="rowStyleGrid"/>
                             <Columns>
                                 <asp:TemplateField HeaderText="PetroCard Number">
@@ -359,7 +376,7 @@
                         </asp:GridView>
                     </Content>
                 </asp:AccordionPane>
-                <asp:AccordionPane runat="server" BorderColor="Red" ForeColor="Red">
+                <asp:AccordionPane ID="AccordionPane13" runat="server" BorderColor="Red" ForeColor="Red">
                     <Header>
                         Fuel Entry Detail
                     </Header>
@@ -426,10 +443,10 @@
 </fieldset>
 </ContentTemplate>
 </asp:UpdatePanel>
-<asp:UpdateProgress runat="server" AssociatedUpdatePanelID="UpdatePanel1"
+<asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1"
                     DynamicLayout="true">
     <ProgressTemplate>
-        <img src="~/images/ajax-loader.gif" alt=""/>
+        <img src="../images/ajax-loader.gif" alt=""/>
     </ProgressTemplate>
 </asp:UpdateProgress>
 </asp:Content>

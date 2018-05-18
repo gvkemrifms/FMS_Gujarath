@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
 
     function validation() {
@@ -107,10 +106,10 @@
 <tr>
 <td>
 <fieldset style="padding: 10px">
-<legend>
+<legend align="center" style="color: brown">
     Vehicle Maintenance Details<br/>
 </legend>
-<table>
+<table align="center">
     <tr>
         <td style="width: 60px" class="rowseparator"></td>
     </tr>
@@ -193,7 +192,7 @@
         </td>
         <td></td>
         <td>
-            <asp:TextBox ID="txtUpOdo" runat="server" Width="135px" onkeypress="return isDecimalNumberKey(event);"
+            <asp:TextBox ID="txtUpOdo" runat="server" Width="135px" onkeypress="return numericOnly(this);"
                          onmousedown="DisableRightClick(event);" onkeydown="return DisableCtrlKey(event)">
             </asp:TextBox>
         </td>
@@ -632,7 +631,7 @@
 <asp:Panel ID="pnlBillSummaryDetails" runat="server" Visible="false">
     <fieldset style="padding: 10px 10px 0px 10px">
         <legend>Bill Details Summary</legend>
-        <table width="100%">
+        <table align="center">
             <tr>
                 <td>
                     <table align="center">

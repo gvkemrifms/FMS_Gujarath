@@ -60,7 +60,9 @@ public partial class VehicleTypes : Page
                 var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
                 if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "'").Length > 0)
+                {
                     Show("Vehicle Type already exists");
+                }
                 else
                 {
                     var vehicleType = txtVehicleType.Text;
@@ -85,7 +87,9 @@ public partial class VehicleTypes : Page
                 var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
                 if (ds == null) throw new ArgumentNullException(nameof(ds));
                 if (ds.Tables[0].Select("Vehicle_Type='" + txtVehicleType.Text + "' And VehicleType_Id<>'" + hidVehicleType.Value + "'").Length > 0)
+                {
                     Show("Vehicle Type already exists");
+                }
                 else
                 {
                     int vehicleId = Convert.ToInt16(hidVehicleType.Value);
@@ -115,7 +119,9 @@ public partial class VehicleTypes : Page
     {
         var ds = ObjFmsVehicleType.IFillGrid_VehicleTypes();
         if (ds == null)
+        {
             Show("No record found");
+        }
         else
         {
             if (ds.Tables[0].Rows.Count <= 0) return;

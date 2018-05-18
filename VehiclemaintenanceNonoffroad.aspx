@@ -46,40 +46,39 @@
                     });
                 }
             </script>
-            
+
             <fieldset style="padding: 10px">
-                <legend align="center" style="color:brown">Vehicle Non OffRoad</legend>
+                <legend align="center" style="color: brown">Vehicle Non OffRoad</legend>
                 <table align="center">
                     <tr>
                         <td >
-                            Vehicle Number<span  style="color: Red">*</span>
+                            Vehicle Number<span style="color: Red">*</span>
                         </td>
-                  <td>
-                      <asp:DropDownList ID="ddlVehicles" runat="server"  AutoPostBack="true" Width="150px"  OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
-                          <asp:ListItem Value="-1">--Select--</asp:ListItem>
-                      </asp:DropDownList>
-                  </td>
-                               
+                        <td>
+                            <asp:DropDownList ID="ddlVehicles" runat="server" AutoPostBack="true" Width="150px" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
+                                <asp:ListItem Value="-1">--Select--</asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
+
                     </tr>
-                        <tr>
-                            <td>
-                                District<span  style="color: Red">*</span>
-                            </td>
-                            <td >
-                                <asp:TextBox runat="server" ID="txtDistrict" Width="150px" Enabled="False"/>
-                            </td>
-                            </tr>
                     <tr>
                         <td>
-                            Location<span  style="color: Red">*</span>
+                            District<span style="color: Red">*</span>
+                        </td>
+                        <td >
+                            <asp:TextBox runat="server" ID="txtDistrict" Width="150px" Enabled="False"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Location<span style="color: Red">*</span>
                         </td>
                         <td>
                             <asp:TextBox runat="server" ID="txtLocation" Enabled="False"/>
                         </td>
                     </tr>
-                         
-               
-         
+
+
                 </table>
                 <asp:Panel runat="server" style="margin-top: 50px">
                     <fieldset style="padding: 0px 0px 0px 0px">

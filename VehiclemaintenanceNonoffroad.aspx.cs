@@ -122,7 +122,7 @@ public partial class VehiclemaintenanceNonoffroad : Page
                 txtDistrict.Text = "";
                 txtLocation.Text = "";
                 ddlVehicles.SelectedIndex = 0;
-                ddlVendorName.Text = "";
+                ddlVendorName.SelectedIndex = 0;
                 ddlMaintenanceType.SelectedIndex = 0;
                 txtMaintenanceDate.Text = "";
                 txtBillNo.Text = "";

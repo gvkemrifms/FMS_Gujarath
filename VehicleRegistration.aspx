@@ -97,6 +97,7 @@
 
 <table class="table table-striped table-bordered table-hover">
 <tr>
+    <legend align="center" style="color: brown">Vehicle Registration</legend>
     <td class="rowseparator"></td>
 </tr>
 <tr>

@@ -90,6 +90,7 @@
 
 <table class="table table-striped table-bordered table-hover">
 <tr>
+    <legend align="center" style="color: brown">Pre Delivary Inspection</legend>
     <td class="rowseparator"></td>
 </tr>
 <tr>

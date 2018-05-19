@@ -6,6 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="css/site.css" rel="stylesheet" />
     <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script src="js/js/chosen.jquery.min.js"></script>
     <link href="css/chosen.min.css" rel="stylesheet" />
@@ -30,16 +31,19 @@
     <%--<link href="css/New/font-awesome.min.css" rel="stylesheet" />--%>
     <!-- Custom Theme Style -->
     <link href="css/custom.css" rel="stylesheet" />
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+
+        <asp:ContentPlaceHolder ID="head" runat="server">
+          
+        </asp:ContentPlaceHolder>
+  
 </head>
 <body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
+    <div class="container body" >
+        <div class="main_container" >
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="Dashboard.aspx" class="site_title"><i class="fa fa-ambulance"></i><span>Fleet Management..!</span></a>
+                        <a href="default.aspx" class="site_title"><i class="fa fa-ambulance"></i><span>Fleet Management..!</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -465,7 +469,7 @@
                 <form id="form1" runat="server">
                     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePartialRendering="true">
                     </asp:ToolkitScriptManager>
-                    <div>
+                    <div class="content">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                         </asp:ContentPlaceHolder>
                     </div>

@@ -15,6 +15,38 @@
                 vehiclenoddl.focus();
                 return false;
             }
+            var maintenanceType = document.getElementById('<%= ddlMaintenanceType.ClientID %>');
+            if (maintenanceType && maintenanceType.selectedIndex === 0) {
+                alert("Please select Maintenance Type");
+                maintenanceType.focus();
+                return false;
+            }
+            var vendorName = document.getElementById('<%= ddlVendorName.ClientID %>');
+            if (vendorName && vendorName.selectedIndex === 0) {
+                alert("Please select Vandor Name");
+                vendorName.focus();
+                return false;
+            }
+            var txtmaintenanceDate = $('#<%= txtMaintenanceDate.ClientID %>').val();
+            if (txtmaintenanceDate === "") {
+                return alert('Maintenance Date is Mandatory');
+            }
+            var txtbillDate = $('#<%= txtBillDate.ClientID %>').val();
+            if (txtbillDate === "") {
+                return alert('Bill Date is Mandatory');
+            }
+            var txtbillNumber = $('#<%= txtBillNo.ClientID %>').val();
+            if (txtbillNumber === "") {
+                return alert('Bill Number is Mandatory');
+            }
+            var txtbillAmount = $('#<%= txtBillAmount.ClientID %>').val();
+            if (txtbillAmount === "") {
+                return alert('Bill Amount is Mandatory');
+            }
+            var txtquantity = $('#<%= txtQuant.ClientID %>').val();
+            if (txtquantity === "") {
+                return alert('Item Quantity is mandatory');
+            }     
             return true;
         }
 
@@ -55,14 +87,13 @@
                         </td>
                         <td>
                             <asp:DropDownList ID="ddlVehicles" runat="server" AutoPostBack="true" Width="150px" OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged">
-                                <asp:ListItem Value="-1">--Select--</asp:ListItem>
                             </asp:DropDownList>
                         </td>
 
                     </tr>
                     <tr>
                         <td>
-                            District<span style="color: Red">*</span>
+                            District
                         </td>
                         <td >
                             <asp:TextBox runat="server" ID="txtDistrict" Width="150px" Enabled="False"/>
@@ -70,7 +101,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Location<span style="color: Red">*</span>
+                            Location
                         </td>
                         <td>
                             <asp:TextBox runat="server" ID="txtLocation" Enabled="False"/>
@@ -79,69 +110,69 @@
 
 
                 </table>
-                <asp:Panel runat="server" style="margin-top: 50px">
+                <asp:Panel runat="server" style="margin-top: 50px" HorizontalAlign="Center">
                     <fieldset style="padding: 0px 0px 0px 0px">
-                        <legend align="center">Maintenance Details </legend>
+                        <legend align="center" style="color: brown">Maintenance Details </legend>
 
                         <table align="center">
                             <tr>
                                 <td>
-                                    <asp:Label Text="Maintenance Type" runat="server"></asp:Label>
+                                    Maintenance Type <span style="color: Red">*</span>
                                 </td>
                                 <td>
-                                    <asp:DropDownList ID="ddlMaintenanceType" runat="server">
+                                    <asp:DropDownList ID="ddlMaintenanceType" runat="server" Width="180px">
                                     </asp:DropDownList>
                                 </td>
                             </tr>
                             <tr>
 
                                 <td>
-                                    <asp:Label Text="Maintenance Date" runat="server"></asp:Label>
+                                   Maintenance Date<span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtMaintenanceDate" runat="server"
                                                  onkeypress="return false">
                                     </asp:TextBox>
-                                    <cc1:CalendarExtender runat="server" Format="dd/MM/yyyy"
+                                    <cc1:CalendarExtender runat="server" Format="MM/dd/yyyy"
                                                           PopupButtonID="imgBtnQuotationDate" TargetControlID="txtMaintenanceDate">
                                     </cc1:CalendarExtender>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label Text="Vendor Name" runat="server"></asp:Label>
+                                    Vendor Name <span style="color: Red">*</span>
                                 </td>
 
                                 <td>
-                                    <asp:DropDownList ID="ddlVendorName" runat="server"/>
+                                    <asp:DropDownList ID="ddlVendorName" runat="server" Width="180px"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label Text="Bill Number" runat="server"></asp:Label>
+                                    Bill Number<span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillNo" runat="server" MaxLength="10"
-                                                 onkeypress="return numeric(event)">
+                                                 onkeypress="return numeric_only(event)">
                                     </asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label Text="Bill Date" runat="server"></asp:Label>
+                                  Bill Date <span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtBillDate" runat="server"
                                                  onkeypress="return false">
                                     </asp:TextBox>
-                                    <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="dd/MM/yyyy"
+                                    <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy"
                                                           PopupButtonID="imgBtnQuotationDate" TargetControlID="txtBillDate">
                                     </cc1:CalendarExtender>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label Text="Part Code" runat="server"></asp:Label>
+                                   Part Code
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtPartCode" runat="server" MaxLength="10"
@@ -161,28 +192,28 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label Text="Item Quantity" runat="server"></asp:Label>
+                                   Item Quantity<span style="color: Red">*</span>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtQuant" runat="server" MaxLength="5"
-                                                 onkeypress="return numeric(event)">
+                                                 onkeypress="return numeric_only(event)">
                                     </asp:TextBox>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>
-                                    <asp:Label Text="Bill Amount" runat="server"></asp:Label>
+                                   Bill Amount<span style="color: Red">*</span>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtBillAmount" runat="server" MaxLength="12" onkeypress="return isDecimalNumberKey(event);"></asp:TextBox>
+                                    <asp:TextBox ID="txtBillAmount" runat="server" MaxLength="12" onkeypress="return numericOnly(this);"></asp:TextBox>
                                 </td>
 
                             </tr>
                             <tr>
                                 <td>
                                     <asp:Button runat="server" CssClass="form-submit-button" Text="Save" Width="52px"
-                                                OnClick="btnSave_Click" OnClientClick="return Validation()"/>
+                                                OnClick="btnSave_Click" OnClientClick="if(!Validation()) return false;"/>
                                 </td>
                                 <td>
                                     <asp:Button runat="server" CssClass="form-reset-button" Text="Reset"

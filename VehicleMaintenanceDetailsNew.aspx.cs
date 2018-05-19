@@ -1540,7 +1540,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             var ddlSpareVendorName = e.Row.FindControl("ddlSpareVendorName") as DropDownList;
             var ddlSpareItemDesc = e.Row.FindControl("ddlSpareItemDesc") as DropDownList;
             var ds = _vehMain.IFillVendorsMaintenance();
-            var vehicleNumber = ddlVehicleNumber.SelectedItem.ToString();
+            var vehicleNumber = ddlVehicleNumber.SelectedValue;
             var ds2 = _vehMain.GetSpareParts(vehicleNumber);
             if (ds != null)
             {

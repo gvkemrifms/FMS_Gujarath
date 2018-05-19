@@ -143,8 +143,9 @@
         });
     }
 </script>
-<table>
+<table align="center">
 <tr>
+    <legend align="center" style="color: brown">Fabricated Vehicle Details</legend>
     <td class="rowseparator"></td>
 </tr>
 <tr>
@@ -331,7 +332,7 @@
 </tr>
 <tr>
     <td>
-        <table>
+        <table align="center">
             <tr align="center">
                 <td>
                     <asp:GridView ID="gvFabricatedVehicleDetails" runat="server" EmptyDataText="No Records Found"

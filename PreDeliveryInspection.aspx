@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
     function validation() {
         var vehicleReceived = document.getElementById('<%= ddlVehicleReceived.ClientID %>');
@@ -91,6 +90,7 @@
 
 <table class="table table-striped table-bordered table-hover">
 <tr>
+    <legend align="center" style="color: brown">Pre Delivary Inspection</legend>
     <td class="rowseparator"></td>
 </tr>
 <tr>

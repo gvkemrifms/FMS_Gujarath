@@ -3,13 +3,13 @@ using System.Web.UI;
 
 public partial class VehicleSummaryAll : Page
 {
-    readonly Helper _helper = new Helper();
+    private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-        BindGridData();
+            BindGridData();
     }
 
     private void BindGridData()
@@ -32,8 +32,8 @@ public partial class VehicleSummaryAll : Page
     {
         try
         {
-            if(GrdtotalData.Rows.Count>0)
-            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryAll.xls");
+            if (GrdtotalData.Rows.Count > 0)
+                _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryAll.xls");
         }
         catch (Exception ex)
         {
@@ -41,4 +41,3 @@ public partial class VehicleSummaryAll : Page
         }
     }
 }
-   

@@ -10,9 +10,9 @@ using BaseVehicleDetails = GvkFMSAPP.BLL.BaseVehicleDetails;
 public partial class VehicleRegistration : Page
 {
     private readonly FMSGeneral _fmsGeneral = new FMSGeneral();
-    private readonly GvkFMSAPP.BLL.VehicleRegistration _vehreg = new GvkFMSAPP.BLL.VehicleRegistration();
     private readonly BaseVehicleDetails _getDistrict = new BaseVehicleDetails();
     private readonly Helper _helper = new Helper();
+    private readonly GvkFMSAPP.BLL.VehicleRegistration _vehreg = new GvkFMSAPP.BLL.VehicleRegistration();
     private int _ret;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -115,7 +115,9 @@ public partial class VehicleRegistration : Page
                             GetTrNo();
                         }
                         else
+                        {
                             Show("Error");
+                        }
 
                         break;
                     default:

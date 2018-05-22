@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
@@ -14,12 +13,12 @@ using MySql.Data.MySqlClient;
 
 public partial class VehicleOffroad : Page
 {
-    private readonly GvkFMSAPP.BLL.BaseVehicleDetails _fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
-    private readonly VASGeneral _vehallobj = new VASGeneral();
-    public IInventory ObjInventory = new FMSInventory();
     private readonly FMSGeneral _fmsgeneral = new FMSGeneral();
+    private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
+    private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vehallobj = new VASGeneral();
     private DataTable _dtBreakdown = new DataTable();
-    readonly Helper _helper = new Helper();
+    public IInventory ObjInventory = new FMSInventory();
 
     protected void Page_PreInit(object sender, EventArgs e)
     {
@@ -465,8 +464,8 @@ public partial class VehicleOffroad : Page
                 {
                     foreach (DataRow dr in ds.Tables[0].Rows) txtContactNumber.Text = dr["vi_VehicleContact"].ToString();
                     foreach (DataRow dr in ds.Tables[1].Rows) txtOdo.Text = dr["Odometer"].ToString();
-                    
                 }
+
                 break;
         }
 
@@ -571,7 +570,9 @@ public partial class VehicleOffroad : Page
         var ds = _vehallobj.GetMandals();
         if (ds == null) throw new ArgumentNullException(nameof(ds));
         if (ds.Tables[0].Rows.Count <= 0)
+        {
             grdvothervehicle.Visible = false;
+        }
         else
         {
             pnlothervehicle.Visible = true;

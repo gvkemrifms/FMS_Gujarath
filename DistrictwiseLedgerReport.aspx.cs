@@ -10,7 +10,6 @@ public partial class DistrictwiseLedgerReport : Page
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
-
             BindDistrictdropdown();
     }
 

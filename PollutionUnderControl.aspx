@@ -180,7 +180,7 @@
                         &nbsp;
                     </td>
                     <td align="center" style="width: 226px">
-                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button"  Text="Save" OnClick="btSave_Click"/>
+                        <asp:Button ID="btSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btSave_Click"/>
                     </td>
                     <td align="left">
                         <asp:Button ID="btReset" CssClass="form-submit-button" runat="server" Text="Reset" OnClick="btReset_Click"/>

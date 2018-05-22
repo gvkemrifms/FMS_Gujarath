@@ -26,13 +26,13 @@
 
         <tr style="margin-top: 70px">
             <td>
-                <asp:Label ID="lbldistrict" runat="server" Text="Select District" ></asp:Label>
+                <asp:Label ID="lbldistrict" runat="server" Text="Select District"></asp:Label>
 
             </td>
             <td>
                 <asp:DropDownList ID="ddldistrict" runat="server" Style="width: 150px"></asp:DropDownList>
             </td>
-</tr>
+        </tr>
         <tr>
             <td>
                 <asp:Button runat="server" Text="ShowReport" ID="btnsubmit" CssClass="form-submit-button" OnClick="btnsubmit_Click"></asp:Button>
@@ -46,15 +46,20 @@
         </tr>
 
     </table>
+    <br/>
+
     <div align="center" style="margin-top: 20px">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
+            <h4 align="left" style="color: brown">Inactive Vehicles</h4>
             <asp:GridView ID="GridInactive" EmptyDataText="No rows to display" ShowHeaderWhenEmpty="True" BorderWidth="1px" BorderColor="brown" runat="server"></asp:GridView>
         </asp:Panel>
     </div>
+    <br/>
+
     <div align="center">
         <asp:Panel ID="Panel1" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="GridView1" EmptyDataText="No rows to display" ShowHeaderWhenEmpty="True"   runat="server"></asp:GridView>
-            <asp:GridView ID="GridActive" EmptyDataText="No rows to display" ShowHeaderWhenEmpty="True"   runat="server"></asp:GridView>
+            <h4 align="left" style="color: brown">Active Vehicles</h4>
+            <asp:GridView ID="GridActive" EmptyDataText="No rows to display" ShowHeaderWhenEmpty="True" runat="server"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

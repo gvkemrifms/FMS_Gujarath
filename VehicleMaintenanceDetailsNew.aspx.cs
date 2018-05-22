@@ -10,14 +10,18 @@ using GvkFMSAPP.BLL.VehicleMaintenance;
 
 public partial class VehicleMaintenanceDetailsNew : Page
 {
-    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
-    private readonly VAS _fmsVas = new VAS();
     private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
-    private readonly VASGeneral _vehallobj = new VASGeneral();
+    private readonly VAS _fmsVas = new VAS();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vehallobj = new VASGeneral();
+    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
     private DataSet _dslabourAggregates;
     private DataSet _dsLabourCategories;
     private DataSet _dsLabourSubCategories;
+
+    private bool _isedit;
+
+    public bool Checkboxcount { get; private set; }
 
     protected void Page_PreInit(object sender, EventArgs e)
     {
@@ -54,7 +58,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
         var hour = Convert.ToInt32(timenow[1].Split(':')[0]);
         var minute = Convert.ToInt32(timenow[1].Split(':')[1]);
         if (timenow[2] != "PM")
+        {
             ddlUpHour.Items.FindByValue(timenow[1].Split(':')[0]).Selected = hour < 10;
+        }
         else
         {
             if (hour == 12) hour = 0;
@@ -227,7 +233,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                     _fmsVas.VehicleNumber = ddlVehicleNumber.SelectedItem.Text;
                     var insres = _fmsVas.InsertOffRoadVehcileMaintenance();
                     if (Convert.ToString(insres.Tables[0].Rows[0]["Result"].ToString()) != string.Empty)
+                    {
                         Show(Convert.ToString(insres.Tables[0].Rows[0]["Result"]));
+                    }
                     else
                     {
                         Show("Records Inserted Successfully");
@@ -243,7 +251,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                     _fmsVas.OffRoadId = Convert.ToInt32(ViewState["OffRoadId"]);
                     var insres = _fmsVas.UpdateOffRoadVehcileMaintenance();
                     if (Convert.ToString(insres.Tables[0].Rows[0]["Result"].ToString()) != string.Empty)
+                    {
                         Show(Convert.ToString(insres.Tables[0].Rows[0]["Result"]));
+                    }
                     else
                     {
                         Show("Records Updated Successfully");
@@ -512,12 +522,12 @@ public partial class VehicleMaintenanceDetailsNew : Page
             ////AddRowToGridSummary();
         }
         else
+        {
             Response.Write("ViewState is null");
+        }
 
         SetPreviousDataSp();
     }
-
-    private bool _isedit;
 
     private void DisplaySpBillDetails()
     {
@@ -700,7 +710,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
             ////AddRowToGridSummary();
         }
         else
+        {
             Response.Write("ViewState is null");
+        }
 
         SetPreviousDataLubri();
     }
@@ -1010,7 +1022,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
             }
         }
         else
+        {
             Response.Write("ViewState is null");
+        }
 
         SetPreviousDataLabour();
     }
@@ -1237,8 +1251,6 @@ public partial class VehicleMaintenanceDetailsNew : Page
         }
     }
 
-    public bool Checkboxcount { get; private set; }
-
     protected void chkbxlistBillType_SelectedIndexChanged(object sender, EventArgs e)
     {
         _isedit = false;
@@ -1261,7 +1273,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
             //SetInitialRowSP();
         }
         else
+        {
             SetInitialRowSp();
+        }
 
         if (chkbxlistBillType.Items[1].Selected)
             pnlLubricantBillDetails.Visible = true;
@@ -1282,7 +1296,10 @@ public partial class VehicleMaintenanceDetailsNew : Page
 
             SetInitialRowLabour();
         }
-        else if (chkbxlistBillType.Items[2].Selected && !pnlLabourBillDetails.Visible) pnlLabourBillDetails.Visible = true;
+        else if (chkbxlistBillType.Items[2].Selected && !pnlLabourBillDetails.Visible)
+        {
+            pnlLabourBillDetails.Visible = true;
+        }
 
         if (chkbxlistBillType.Items[0].Selected || chkbxlistBillType.Items[1].Selected || chkbxlistBillType.Items[2].Selected) pnlBillDetailsSummaryBtn.Visible = true;
         txtTotalBillAmt.Text = "";
@@ -1523,7 +1540,7 @@ public partial class VehicleMaintenanceDetailsNew : Page
             var ddlSpareVendorName = e.Row.FindControl("ddlSpareVendorName") as DropDownList;
             var ddlSpareItemDesc = e.Row.FindControl("ddlSpareItemDesc") as DropDownList;
             var ds = _vehMain.IFillVendorsMaintenance();
-            var vehicleNumber = ddlVehicleNumber.SelectedItem.ToString();
+            var vehicleNumber = ddlVehicleNumber.SelectedValue;
             var ds2 = _vehMain.GetSpareParts(vehicleNumber);
             if (ds != null)
             {
@@ -1648,7 +1665,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                         ((DropDownList) e.Row.FindControl("ddlLabourVendorName")).SelectedValue = selectedId;
                     }
                     else
+                    {
                         return;
+                    }
                 }
 
                 _dslabourAggregates = new DataSet();
@@ -1664,7 +1683,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                         ((ComboBox) e.Row.FindControl("ddlLabourAggregates")).SelectedValue = selectedId1;
                     }
                     else
+                    {
                         return;
+                    }
                 }
 
                 _dsLabourCategories = new DataSet();
@@ -1680,7 +1701,9 @@ public partial class VehicleMaintenanceDetailsNew : Page
                         ((ComboBox) e.Row.FindControl("ddlLabourCategories")).SelectedValue = selectedId2;
                     }
                     else
+                    {
                         return;
+                    }
                 }
 
                 _dsLabourSubCategories = new DataSet();

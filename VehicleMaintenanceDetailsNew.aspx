@@ -3,7 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script src="js/Validation.js"></script>
 <script language="javascript" type="text/javascript">
 
     function validation() {
@@ -101,39 +100,54 @@
     }
 
 </script>
-<asp:UpdatePanel ID="updtpnlVehMaintDet" runat="server">
+<asp:UpdatePanel runat="server">
 <ContentTemplate>
-<table width="100%">
+<script type="text/javascript">
+    function pageLoad() {
+        $('#<%= ddlDistrict.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
+            placeholder: "Select an option"
+        });
+        $('#<%= ddlVehicleNumber.ClientID %>').select2({
+            disable_search_threshold: 5,
+            search_contains: true,
+            minimumResultsForSearch: 2,
+            placeholder: "Select an option"
+        });
+    }
+</script>
+
+<table align="center">
 <tr>
 <td>
 <fieldset style="padding: 10px">
-<legend>
+<legend align="center" style="color: brown">
     Vehicle Maintenance Details<br/>
 </legend>
-<table>
+<table align="center">
     <tr>
-        <td style="width: 60px" class="rowseparator"></td>
+        <td style="width: 80px" class="rowseparator"></td>
     </tr>
     <tr>
         <td>
-            District
+            District<span style="color: red">*</span>
         </td>
         <td></td>
         <td>
 
             <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
-                <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
         </td>
         <td style="width: 5px"></td>
         <td>
-            Vehicle No
+            Vehicle No<span style="color: red">*</span>
         </td>
         <td></td>
         <td>
             <asp:DropDownList ID="ddlVehicleNumber" runat="server" Width="135px" AutoPostBack="True"
                               OnSelectedIndexChanged="ddlVehicleNumber_SelectedIndexChanged">
-                <asp:ListItem Value="-1">--Select--</asp:ListItem>
             </asp:DropDownList>
             <asp:TextBox ID="txtVehicleNumber" runat="server" Visible="false" onkeypress="return false;"></asp:TextBox>
         </td>
@@ -147,7 +161,7 @@
         </td>
         <td></td>
         <td>
-            <asp:TextBox ID="txtMaintenanceType" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
+            <asp:TextBox ID="txtMaintenanceType" CssClass="search_3" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
         </td>
         <td></td>
         <td>
@@ -155,10 +169,10 @@
         </td>
         <td></td>
         <td nowrap="nowrap">
-            <asp:TextBox ID="txtMaintenanceDate" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
+            <asp:TextBox ID="txtMaintenanceDate" CssClass="search_3" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
             <asp:ImageButton ID="imgBtnCalendarMaintenanceDate" runat="server" Style="vertical-align: top"
                              alt="" src="images/Calendar.gif"/>
-            <cc1:CalendarExtender ID="calExtMaintenanceDate" runat="server" TargetControlID="txtMaintenanceDate"
+            <cc1:CalendarExtender runat="server" TargetControlID="txtMaintenanceDate"
                                   PopupButtonID="imgBtnCalendarMaintenanceDate" Format="dd/MM/yyyy">
             </cc1:CalendarExtender>
         </td>
@@ -173,7 +187,7 @@
         </td>
         <td></td>
         <td>
-            <asp:TextBox ID="txtDownOdo" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
+            <asp:TextBox ID="txtDownOdo" CssClass="search_3" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
         </td>
         <td></td>
         <td>
@@ -181,7 +195,7 @@
         </td>
         <td></td>
         <td>
-            <asp:TextBox ID="txtDownTime" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
+            <asp:TextBox ID="txtDownTime" CssClass="search_3" runat="server" Width="135px" onkeypress="return false;"></asp:TextBox>
         </td>
     </tr>
     <tr>
@@ -193,7 +207,7 @@
         </td>
         <td></td>
         <td>
-            <asp:TextBox ID="txtUpOdo" runat="server" Width="135px" onkeypress="return isDecimalNumberKey(event);"
+            <asp:TextBox ID="txtUpOdo" CssClass="search_3" runat="server" Width="135px" onkeypress="return numericOnly(this);"
                          onmousedown="DisableRightClick(event);" onkeydown="return DisableCtrlKey(event)">
             </asp:TextBox>
         </td>
@@ -203,8 +217,8 @@
         </td>
         <td></td>
         <td nowrap="nowrap">
-            <asp:TextBox ID="txtUptime" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
-            <cc1:CalendarExtender ID="txtUptime_CalendarExtender" runat="server" Enabled="True"
+            <asp:TextBox ID="txtUptime" CssClass="search_3" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
+            <cc1:CalendarExtender runat="server" Enabled="True"
                                   TargetControlID="txtUptime" PopupButtonID="ImageButtonUptime" Format="dd/MM/yyyy">
             </cc1:CalendarExtender>
             <asp:ImageButton ID="ImageButtonUptime" runat="server" Style="vertical-align: top"
@@ -212,10 +226,10 @@
         </td>
         <td></td>
         <td nowrap="nowrap">
-            <asp:DropDownList ID="ddlUpHour" runat="server" Width="55px">
+            <asp:DropDownList ID="ddlUpHour" CssClass="search_3" runat="server" Width="55px">
                 <asp:ListItem Value="-1">--hh--</asp:ListItem>
             </asp:DropDownList>
-            <asp:DropDownList ID="ddlUpMin" runat="server" Width="60px">
+            <asp:DropDownList ID="ddlUpMin" CssClass="search_3" runat="server" Width="80px">
                 <asp:ListItem Value="-1">--mm--</asp:ListItem>
             </asp:DropDownList>
         </td>
@@ -246,7 +260,7 @@
     <asp:CheckBox ID="chkAmount" runat="server" Text="No Maintenance Amount" OnCheckedChanged="chkAmount_CheckedChanged"
                   AutoPostBack="true"/>
 </legend>
-<table width="100%">
+<table align="center">
     <tr>
         <td>
             <table align="center">
@@ -273,15 +287,15 @@
 <asp:Panel ID="pnlSPBillDetails" runat="server" Visible="false">
     <fieldset style="padding: 10px 10px 0px 10px">
         <legend>Spare Parts </legend>
-        <table width="100%">
+        <table align="center">
             <tr>
                 <td>
                     <table align="center">
                         <tr>
                             <td>
                                 <asp:GridView ID="grdvwSPBillDetails" runat="server" AutoGenerateColumns="false"
-                                              BackColor="#DEBA84" BorderColor="#DEBA84" BorderWidth="1px" CellPadding="3" CellSpacing="2"
-                                              DataKeyNames="RowNumber" CssClass="gridviewStyle" GridLines="None" OnRowDataBound="grdvwSPBillDetails_RowDataBound">
+                                              BackColor="#DEBA84" BorderColor="brown" BorderWidth="1px" CellPadding="3" CellSpacing="2"
+                                              DataKeyNames="RowNumber" CssClass="gridview" GridLines="Both" OnRowDataBound="grdvwSPBillDetails_RowDataBound">
                                     <RowStyle CssClass="rowStyleGrid" Width="100%"/>
                                     <Columns>
                                         <asp:BoundField DataField="RowNumber" HeaderText="S.No" ItemStyle-HorizontalAlign="Center"/>
@@ -292,19 +306,19 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Vendor Name">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlSpareVendorName" runat="server" Width="60px"/>
+                                                <asp:DropDownList ID="ddlSpareVendorName" CssClass="search_3" runat="server" Width="80px"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill No.">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSpareBillNo" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColSpBillno") %>'
+                                                <asp:TextBox ID="txtSpareBillNo" CssClass="search_3" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColSpBillno") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Date">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSpareBillDate" runat="server" Width="60px" Wrap="true" onpaste="return false"
+                                                <asp:TextBox ID="txtSpareBillDate" CssClass="search_3" runat="server" Width="80px" Wrap="true" onpaste="return false"
                                                              Text='<%# Eval("ColSpBillDate") %>' oncopy="return false" oncut="return false"
                                                              onkeypress="return false">
                                                 </asp:TextBox>
@@ -315,34 +329,34 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="EMRI Part Code">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSpareEMRIpc" runat="server" Width="70px" MaxLength="10" Text='<%# Eval("ColSpEMRIPartCode") %>'
+                                                <asp:TextBox ID="txtSpareEMRIpc" CssClass="search_3" runat="server" Width="70px" MaxLength="10" Text='<%# Eval("ColSpEMRIPartCode") %>'
                                                              onkeypress="return alphanumeric_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Part Code">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSparePartCode" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColSpPartCode") %>'
+                                                <asp:TextBox ID="txtSparePartCode" CssClass="search_3" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColSpPartCode") %>'
                                                              onkeypress="return alphanumeric_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Item Descrip">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlSpareItemDesc" runat="server" Width="60px" AutoPostBack="true"
+                                                <asp:DropDownList ID="ddlSpareItemDesc" CssClass="search_3" runat="server" Width="80px" AutoPostBack="true"
                                                                   OnSelectedIndexChanged="ddlSpareItemDesc_SelectedIndexChanged"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Quantity">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSpareQuant" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColSpQuantity") %>'
+                                                <asp:TextBox ID="txtSpareQuant" CssClass="search_3" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColSpQuantity") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Amount">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtSpareBillAmount" runat="server" Width="60px" MaxLength="6" onkeypress="return isDecimalNumberKey(event);"
+                                                <asp:TextBox ID="txtSpareBillAmount" CssClass="search_3" runat="server" Width="80px" MaxLength="6" onkeypress="return isDecimalNumberKey(event);"
                                                              Text='<%# Eval("Column3") %>'>
                                                 </asp:TextBox>
                                             </ItemTemplate>
@@ -363,10 +377,10 @@
                                 <table width="100%" align="center">
                                     <tr>
                                         <td align="center" style="height: 26px">
-                                            <asp:Button ID="btnAddNewSPRow" runat="server" Text="Add Row" OnClick="btnAddNewSPRow_Click"/>
+                                            <asp:Button runat="server" CssClass="form-submit-button" Text="Add Row" OnClick="btnAddNewSPRow_Click"/>
                                         </td>
                                         <td style="height: 26px">
-                                            <asp:Button ID="btnSPReset" runat="server" Text="Reset" OnClick="btnSPReset_Click"/>
+                                            <asp:Button runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnSPReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -383,15 +397,15 @@
 <asp:Panel ID="pnlLubricantBillDetails" runat="server" Visible="false">
     <fieldset style="padding: 10px 10px 0px 10px">
         <legend>Lubricant</legend>
-        <table width="100%">
+        <table align="center">
             <tr>
                 <td>
                     <table align="center">
                         <tr>
                             <td>
                                 <asp:GridView ID="grdvwLubricantBillDetails" runat="server" AutoGenerateColumns="false"
-                                              BackColor="#DEBA84" BorderColor="#DEBA84" BorderWidth="1px" CellPadding="3" CellSpacing="2"
-                                              DataKeyNames="RowNumberLubri" CssClass="gridviewStyle" GridLines="None" OnRowDataBound="grdvwLubricantBillDetails_RowDataBound">
+                                              BackColor="#DEBA84" BorderColor="brown" BorderWidth="1px" CellPadding="3" CellSpacing="2"
+                                              DataKeyNames="RowNumberLubri" CssClass="gridviewStyle" GridLines="Both" OnRowDataBound="grdvwLubricantBillDetails_RowDataBound">
                                     <RowStyle CssClass="rowStyleGrid" Width="100%"/>
                                     <Columns>
                                         <asp:BoundField DataField="RowNumberLubri" HeaderText="S.No" ItemStyle-HorizontalAlign="Center"/>
@@ -402,19 +416,19 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Vendor Name">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlLubricantVendorName" runat="server" Width="60px"/>
+                                                <asp:DropDownList CssClass="center" ID="ddlLubricantVendorName" runat="server" Width="80px"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Number">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantBillNo" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColLubriBillNo") %>'
+                                                <asp:TextBox ID="txtLubricantBillNo" CssClass="search_3" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColLubriBillNo") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Date">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantBillDate" runat="server" Width="60px" Wrap="true" onpaste="return false"
+                                                <asp:TextBox ID="txtLubricantBillDate" CssClass="search_3" runat="server" Width="80px" Wrap="true" onpaste="return false"
                                                              Text='<%# Eval("ColLubriBillDate") %>' oncopy="return false" oncut="return false"
                                                              onkeypress="return false">
                                                 </asp:TextBox>
@@ -425,35 +439,35 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="EMRI Part Code">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantEMRIpc" runat="server" Width="70px" MaxLength="10" Text='<%# Eval("ColLubriEMRIPartCode") %>'
+                                                <asp:TextBox ID="txtLubricantEMRIpc" CssClass="search_3" runat="server" Width="70px" MaxLength="10" Text='<%# Eval("ColLubriEMRIPartCode") %>'
                                                              onkeypress="return alphanumeric_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Part Code">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantPartCode" runat="server" Width="60px" MaxLength="10"
+                                                <asp:TextBox ID="txtLubricantPartCode" CssClass="search_3" runat="server" Width="80px" MaxLength="10"
                                                              Text='<%# Eval("ColLubriPartCode") %>' onkeypress="return alphanumeric_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Item Descp.">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantItemDesc" runat="server" Width="60px" MaxLength="10"
+                                                <asp:TextBox ID="txtLubricantItemDesc" runat="server" Width="80px" MaxLength="10"
                                                              Text='<%# Eval("ColLubriItemDescription") %>' onkeypress="return alpha_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Quantity">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantQuant" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColLabQuantity") %>'
+                                                <asp:TextBox ID="txtLubricantQuant" CssClass="search_3" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColLabQuantity") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Amount">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLubricantBillAmount" runat="server" Width="60px" MaxLength="6"
+                                                <asp:TextBox ID="txtLubricantBillAmount" CssClass="" runat="server" Width="80px" MaxLength="6"
                                                              Text='<%# Eval("ColLubriBillAmount") %>' onkeypress="return isDecimalNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
@@ -474,10 +488,10 @@
                                 <table width="100%" align="center">
                                     <tr>
                                         <td align="center" style="height: 26px">
-                                            <asp:Button ID="btnAddNewLubriRow" runat="server" Text="Add Row" OnClick="btnAddNewLubriRow_Click"/>
+                                            <asp:Button runat="server" CssClass="form-submit-button" Text="Add Row" OnClick="btnAddNewLubriRow_Click"/>
                                         </td>
                                         <td style="height: 26px">
-                                            <asp:Button ID="btnLubriReset" runat="server" Text="Reset" OnClick="btnLubriReset_Click"/>
+                                            <asp:Button runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnLubriReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -502,7 +516,7 @@
                             <td>
                                 <asp:GridView ID="grdvwLabourBillDetails" runat="server" AutoGenerateColumns="false"
                                               BackColor="#DEBA84" BorderColor="#DEBA84" BorderWidth="1px" CellPadding="3" CellSpacing="2"
-                                              DataKeyNames="RowNumberLabour" CssClass="gridviewStyle" GridLines="None" OnRowDataBound="grdvwLabourBillDetails_RowDataBound">
+                                              DataKeyNames="RowNumberLabour" CssClass="gridviewStyle" GridLines="Both" OnRowDataBound="grdvwLabourBillDetails_RowDataBound">
                                     <RowStyle CssClass="rowStyleGrid" Width="100%"/>
                                     <Columns>
                                         <asp:BoundField DataField="RowNumberLabour" HeaderText="S.No" ItemStyle-HorizontalAlign="Center"/>
@@ -513,19 +527,19 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Vendor Name">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlLabourVendorName" runat="server" Width="60px"/>
+                                                <asp:DropDownList ID="ddlLabourVendorName" runat="server" Width="80px"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Number">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLabourBillNo" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColLabBillNo") %>'
+                                                <asp:TextBox ID="txtLabourBillNo" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColLabBillNo") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Date">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLabourBillDate" runat="server" Width="60px" Wrap="true" onpaste="return false"
+                                                <asp:TextBox ID="txtLabourBillDate" runat="server" Width="80px" Wrap="true" onpaste="return false"
                                                              Text='<%# Eval("ColLabBillDate") %>' oncopy="return false" oncut="return false"
                                                              onkeypress="return false">
                                                 </asp:TextBox>
@@ -537,7 +551,7 @@
                                         <asp:TemplateField HeaderText="Aggre">
                                             <ItemTemplate>
                                                 <cc1:ComboBox AutoCompleteMode="Append" ID="ddlLabourAggregates" runat="server" AutoPostBack="true"
-                                                              Width="60px" DropDownStyle="DropDownList">
+                                                              Width="80px" DropDownStyle="DropDownList">
                                                 </cc1:ComboBox>
 
                                             </ItemTemplate>
@@ -545,7 +559,7 @@
                                         <asp:TemplateField HeaderText="Category">
                                             <ItemTemplate>
                                                 <cc1:ComboBox AutoCompleteMode="Append" ID="ddlLabourCategories" runat="server" AutoPostBack="true"
-                                                              Width="60px" DropDownStyle="DropDownList">
+                                                              Width="80px" DropDownStyle="DropDownList">
                                                 </cc1:ComboBox>
 
                                             </ItemTemplate>
@@ -553,28 +567,28 @@
                                         <asp:TemplateField HeaderText="Sub Category">
                                             <ItemTemplate>
                                                 <cc1:ComboBox AutoCompleteMode="Append" ID="ddlLabourSubCategories" runat="server" AutoPostBack="true"
-                                                              Width="60px" DropDownStyle="DropDownList">
+                                                              Width="80px" DropDownStyle="DropDownList">
                                                 </cc1:ComboBox>
 
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Item Descp.">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLabourItemDesc" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColLabItemDescription") %>'
+                                                <asp:TextBox ID="txtLabourItemDesc" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColLabItemDescription") %>'
                                                              onkeypress="return alpha_only(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Quantity">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLabourQuant" runat="server" Width="60px" MaxLength="10" Text='<%# Eval("ColLabQuantity") %>'
+                                                <asp:TextBox ID="txtLabourQuant" runat="server" Width="80px" MaxLength="10" Text='<%# Eval("ColLabQuantity") %>'
                                                              onkeypress="return isNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Bill Amount">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtLabourBillAmount" runat="server" Width="60px" MaxLength="6" Text='<%# Eval("Column3") %>'
+                                                <asp:TextBox ID="txtLabourBillAmount" runat="server" Width="80px" MaxLength="6" Text='<%# Eval("Column3") %>'
                                                              onkeypress="return isDecimalNumberKey(event);">
                                                 </asp:TextBox>
                                             </ItemTemplate>
@@ -596,10 +610,10 @@
                                 <table width="100%" align="center">
                                     <tr>
                                         <td align="center" style="height: 26px">
-                                            <asp:Button ID="btnAddNewLabourRow" runat="server" Text="Add Row" OnClick="btnAddNewLabourRow_Click"/>
+                                            <asp:Button ID="btnAddNewLabourRow" runat="server" CssClass="form-submit-button" Text="Add Row" OnClick="btnAddNewLabourRow_Click"/>
                                         </td>
                                         <td style="height: 26px">
-                                            <asp:Button ID="btnLabourReset" runat="server" Text="Reset" OnClick="btnLabourReset_Click"/>
+                                            <asp:Button ID="btnLabourReset" runat="server" Text="Reset" CssClass="form-reset-button" OnClick="btnLabourReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -620,7 +634,7 @@
         </tr>
         <tr>
             <td align="center">
-                <asp:Button ID="btnBillDetailsSummary" runat="server" Text="Bill Details Summary"
+                <asp:Button ID="btnBillDetailsSummary" CssClass="form-submit-button" runat="server" Text="Bill Details Summary" width="180px"
                             OnClick="btnBillDetailsSummary_Click"/>
             </td>
         </tr>
@@ -632,7 +646,7 @@
 <asp:Panel ID="pnlBillSummaryDetails" runat="server" Visible="false">
     <fieldset style="padding: 10px 10px 0px 10px">
         <legend>Bill Details Summary</legend>
-        <table width="100%">
+        <table align="center">
             <tr>
                 <td>
                     <table align="center">
@@ -678,7 +692,7 @@
             Total Bill Amount
         </td>
         <td style="width: 120px">
-            <asp:TextBox ID="txtTotalBillAmt" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
+            <asp:TextBox ID="txtTotalBillAmt" CssClass="search_3" runat="server" Width="120px" onkeypress="return false;"></asp:TextBox>
         </td>
     </tr>
 </table>
@@ -802,11 +816,11 @@
 <table align="center">
     <tr>
         <td>
-            <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" Enabled="false"/>
+            <asp:Button ID="btnSave" runat="server" CssClass="form-submit-button" Text="Save" OnClick="btnSave_Click" Enabled="false"/>
         </td>
         <td style="width: 100px"></td>
         <td>
-            <asp:Button ID="btnReset" runat="server" Text="Reset" OnClick="btnReset_Click"/>
+            <asp:Button ID="btnReset" runat="server" CssClass="form-reset-button" Text="Reset" OnClick="btnReset_Click"/>
         </td>
     </tr>
 </table>

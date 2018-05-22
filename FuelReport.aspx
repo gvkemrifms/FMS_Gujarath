@@ -8,11 +8,11 @@
             var txtFirstDate = $('#<%= txtfromdate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
             if (txtFirstDate === "") {
-             return   alert('From Date is Mandatory');
+                return alert('From Date is Mandatory');
 
             }
             if (txtToDate === "") {
-               return alert("End Date is Mandatory");
+                return alert("End Date is Mandatory");
 
             }
             var fromDate = (txtFirstDate).replace(/\D/g, '/');
@@ -21,7 +21,7 @@
             var ordToDate = new Date(toDate);
             var currentDate = new Date();
             if (ordFromDate > currentDate) {
-              return  alert("From date should not be greater than today's date");
+                return alert("From date should not be greater than today's date");
 
             }
             if (ordToDate < ordFromDate) {
@@ -30,7 +30,7 @@
             return true;
         }
     </script>
-    <legend align="center" style="color:brown">FuelReport</legend>
+    <legend align="center" style="color: brown">FuelReport</legend>
     <br/>
     <div id="main" align="center">
 
@@ -91,14 +91,14 @@
             <div class="row" style="margin-top: 30px">
                 <div class="col-sm-12" style="">
                     <asp:Button runat="server" class="btn btn-primary"
-                                Text="Show" Style="height: 33px; width: 55px; border-radius: 3px;" OnClick="btnShow_Click" CssClass="form-submit-button">
+                                Text="Show" Style="border-radius: 3px; height: 33px; width: 55px;" OnClick="btnShow_Click" CssClass="form-submit-button">
                     </asp:Button>
                 </div>
             </div>
         </div>
         <div id="five" style="float: left; width: 5%">
             <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" CssClass="form-reset-button" OnClick="btntoExcel_Click" Text="Excel" Style="height: 33px; font-size: 12px; width: 50px;" OnClientClick="if(!Validations()) return false;"></asp:Button>
+                <asp:Button ID="btntoExcel" runat="server" CssClass="form-reset-button" OnClick="btntoExcel_Click" Text="Excel" Style="font-size: 12px; height: 33px; width: 50px;" OnClientClick="if (!Validations()) return false;"></asp:Button>
             </div>
         </div>
 
@@ -133,4 +133,3 @@
         </div>
     </div>
 </asp:Content>
-

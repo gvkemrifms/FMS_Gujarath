@@ -10,7 +10,6 @@ using DistrictVehicleMapping = GvkFMSAPP.DLL.Admin.DistrictVehicleMapping;
 public partial class DistrictUserMapping : Page
 {
     private readonly DistrictUserMappping _distUserMapping = new DistrictUserMappping();
-    private readonly DistrictVehicleMapping _distvehmapp = new DistrictVehicleMapping();
     private readonly Helper _helper = new Helper();
 
     protected void Page_Load(object sender, EventArgs e)

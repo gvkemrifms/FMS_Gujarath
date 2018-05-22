@@ -10,14 +10,16 @@ using GvkFMSAPP.BLL.VehicleMaintenance;
 
 public partial class VehicleMaintenanceEdit : Page
 {
-    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
-    private readonly VAS _fmsVas = new VAS();
     private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
-    private readonly VASGeneral _vehallobj = new VASGeneral();
+    private readonly VAS _fmsVas = new VAS();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vehallobj = new VASGeneral();
+    private readonly VehicleMaintenance _vehMain = new VehicleMaintenance();
     private DataSet _dslabourAggregates;
     private DataSet _dsLabourCategories;
     private DataSet _dsLabourSubCategories;
+
+    private bool _isedit;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -39,7 +41,7 @@ public partial class VehicleMaintenanceEdit : Page
         try
         {
             _fmsVas.District = ddlDistrict.SelectedItem.Text;
-            DataSet ds = (DataSet) _fmsVas.GetOffRoadVehiclesall();
+            var ds = (DataSet) _fmsVas.GetOffRoadVehiclesall();
             if (ds == null) throw new ArgumentNullException(nameof(ds));
             _helper.FillDropDownHelperMethodWithDataSet(ds, "OffRoadVehicle_No", "", ddlVehicleNumber);
         }
@@ -414,12 +416,12 @@ public partial class VehicleMaintenanceEdit : Page
             ////AddRowToGridSummary();
         }
         else
+        {
             Response.Write("ViewState is null");
+        }
 
         SetPreviousDataSp();
     }
-
-    private bool _isedit;
 
     private void DisplaySpBillDetails()
     {
@@ -621,7 +623,9 @@ public partial class VehicleMaintenanceEdit : Page
                 ////AddRowToGridSummary();
             }
             else
+            {
                 Response.Write("ViewState is null");
+            }
 
             SetPreviousDataLubri();
         }
@@ -1025,7 +1029,9 @@ public partial class VehicleMaintenanceEdit : Page
             //AddRowToGridSummary();
         }
         else
+        {
             Response.Write("ViewState is null");
+        }
 
         SetPreviousDataLabour();
     }
@@ -1312,7 +1318,9 @@ public partial class VehicleMaintenanceEdit : Page
         SetInitialRowLubricant();
         SetInitialRowLabour();
         if (!chkAmount.Checked)
+        {
             chkbxlistBillType.Enabled = true;
+        }
         else
         {
             foreach (ListItem item in chkbxlistBillType.Items) item.Selected = false;
@@ -1655,7 +1663,9 @@ public partial class VehicleMaintenanceEdit : Page
                             ((DropDownList) e.Row.FindControl("ddlLabourVendorName")).SelectedValue = selectedId;
                         }
                         else
+                        {
                             return;
+                        }
                     }
 
                     _dslabourAggregates = new DataSet();
@@ -1671,7 +1681,9 @@ public partial class VehicleMaintenanceEdit : Page
                             ((ComboBox) e.Row.FindControl("ddlLabourAggregates")).SelectedValue = selectedId1;
                         }
                         else
+                        {
                             return;
+                        }
                     }
 
                     _dsLabourCategories = new DataSet();
@@ -1687,7 +1699,9 @@ public partial class VehicleMaintenanceEdit : Page
                             ((ComboBox) e.Row.FindControl("ddlLabourCategories")).SelectedValue = selectedId2;
                         }
                         else
+                        {
                             return;
+                        }
                     }
 
                     _dsLabourSubCategories = new DataSet();

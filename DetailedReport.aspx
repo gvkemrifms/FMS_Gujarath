@@ -5,19 +5,22 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#<%= ddldistrict.ClientID %>').select2({
-                disable_search_threshold: 5, search_contains: true, minimumResultsForSearch: 2,
+                disable_search_threshold: 5,
+                search_contains: true,
+                minimumResultsForSearch: 2,
                 placeholder: "Select an option"
             });
         });
+
         function Validations() {
             var ddlDistrict = $('#<%= ddldistrict.ClientID %> option:selected').text().toLowerCase();
-            if (ddlDistrict === '--select--') 
+            if (ddlDistrict === '--select--')
                 return alert("Please select District");
             var txtFirstDate = $('#<%= txtfrmDate.ClientID %>').val();
             var txtToDate = $('#<%= txttodate.ClientID %>').val();
-            if (txtFirstDate === "") 
+            if (txtFirstDate === "")
                 return alert('From Date is Mandatory');;
             if (txtToDate === "")
                 return alert("End Date is Mandatory");
@@ -26,10 +29,10 @@
             var ordFromDate = new Date(fromDate);
             var ordToDate = new Date(toDate);
             var currentDate = new Date();
-            if (ordFromDate > currentDate) 
+            if (ordFromDate > currentDate)
                 return alert("From date should not be greater than today's date");
-            
-            if (ordToDate < ordFromDate) 
+
+            if (ordToDate < ordFromDate)
                 alert("Please select valid date range");
             return true;
         }
@@ -37,7 +40,7 @@
     <table align="center">
         <tr>
             <td>
-                <asp:Label style="font-size: 20px; color: brown" runat="server" Text="Detailed&nbsp;Report"></asp:Label>
+                <asp:Label style="color: brown; font-size: 20px;" runat="server" Text="Detailed&nbsp;Report"></asp:Label>
             </td>
         </tr>
     </table>
@@ -67,14 +70,14 @@
 
 
             </td>
-            </tr>
+        </tr>
         <tr>
             <td>
                 To date<asp:Label runat="server" Text="To date" style="color: red">*</asp:Label>
             </td>
 
             <td>
-                <asp:TextBox ID="txttodate" runat="server"  CssClass="search_3"></asp:TextBox>
+                <asp:TextBox ID="txttodate" runat="server" CssClass="search_3"></asp:TextBox>
             </td>
             <td>
                 <cc1:CalendarExtender ID="CalendarExtender1" runat="server" Format="MM/dd/yyyy" TargetControlID="txttodate" Enabled="true" CssClass="cal_Theme1"></cc1:CalendarExtender>
@@ -82,9 +85,9 @@
 
             </td>
         </tr>
-           <tr>
+        <tr>
             <td>
-                <asp:Button runat="server" Text="ShowReport" OnClick="btnSubmit_Click" CssClass="form-submit-button" OnClientClick="if(! Validations()) return false;"></asp:Button>
+                <asp:Button runat="server" Text="ShowReport" OnClick="btnSubmit_Click" CssClass="form-submit-button" OnClientClick="if (! Validations()) return false;"></asp:Button>
             </td>
 
             <td>
@@ -100,6 +103,3 @@
         </asp:Panel>
     </div>
 </asp:Content>
-
-
-

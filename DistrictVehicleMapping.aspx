@@ -3,7 +3,6 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-gvkemergencymanagement3&places=West+Bengal&libraries=places"></script>
     <script src="locationpicker.js"></script>
     <title>:: GVK EMRI ::</title>
-
     <style>
         .pac-container:after { content: none !important; }
 
@@ -150,15 +149,15 @@
                 }
 
             </script>
-            <div style="float: left; width: 50%;">
-
+            <div align="center">
+                <legend align="center" style="color: brown" >District Vehicle Mapping</legend>
                 <table align="center">
                     <tr>
                         <td>
                             <table width="100%">
                                 <tr>
                                     <td>
-                                        Vehicle Number<span class="labelErr" style="color: Red">*</span>
+                                        Vehicle Number<span style="color: Red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td>

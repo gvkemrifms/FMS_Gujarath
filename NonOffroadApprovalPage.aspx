@@ -86,14 +86,14 @@
                             </tr>
                         </table>
                         <div align="center">
-                            <asp:GridView ID="gvNonOffroadApprovalPage" style="margin-top: 10px; width: auto; border-width: 1px;border-color: brown" runat="server" EmptyDataText="No Records Found"
+                            <asp:GridView ID="gvNonOffroadApprovalPage" style="border-color: brown; border-width: 1px; margin-top: 10px; width: auto;" runat="server" EmptyDataText="No Records Found"
                                           AllowSorting="True" AutoGenerateColumns="True"
                                           CssClass="gridview" CellSpacing="2"
-                                          CellPadding="4" wrap="nowrap" ForeColor="#333333" GridLines="Both"  AllowPaging="True"
+                                          CellPadding="4" wrap="nowrap" ForeColor="#333333" GridLines="Both" AllowPaging="True"
                                           EnableSortingAndPagingCallbacks="True"
                                           onrowcommand="gvNonOffroadApprovalPage_RowCommand"
                                           onpageindexchanging="gvNonOffroadApprovalPage_PageIndexChanging"
-                                          onrowdatabound="gvNonOffroadApprovalPage_RowDataBound" >
+                                          onrowdatabound="gvNonOffroadApprovalPage_RowDataBound">
 
                                 <RowStyle CssClass="rowStyleGrid"/>
                                 <Columns>

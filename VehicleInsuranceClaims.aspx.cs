@@ -9,11 +9,7 @@ public partial class VehicleInsuranceClaims : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
-        if (!IsPostBack)
-        {
-            GetInsuranceClaims();
-           // pnlVehicleInsuranceClaims.Visible = false;
-        }
+        if (!IsPostBack) GetInsuranceClaims();
     }
 
     public void GetInsuranceClaims()

@@ -4,9 +4,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MySql.Data.MySqlClient;
+using AjaxControlToolkit;
 
 public class Helper
 {
@@ -17,7 +18,7 @@ public class Helper
         SqlConnection connection = null;
         try
         {
-            connection = new SqlConnection(cs);        
+            connection = new SqlConnection(cs);
             connection.Open();
             var dataAdapter = new SqlDataAdapter {SelectCommand = new SqlCommand(query, connection)};
             dataAdapter.Fill(dtSyncData);
@@ -34,7 +35,8 @@ public class Helper
             connection.Close();
         }
     }
-    public DataTable ExecuteSelectStmt(string query, string parameterName1, int parameterValue1 )
+
+    public DataTable ExecuteSelectStmt(string query, string parameterName1, int parameterValue1)
     {
         var cs = ConfigurationManager.AppSettings["Str"];
         var dtSyncData = new DataTable();
@@ -43,10 +45,10 @@ public class Helper
         {
             connection = new SqlConnection(cs);
             connection.Open();
-           SqlCommand cmd=new SqlCommand(query,connection);
+            var cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue(parameterName1, parameterValue1);
             cmd.CommandType = CommandType.StoredProcedure;
-            var dataAdapter = new SqlDataAdapter { SelectCommand = cmd };
+            var dataAdapter = new SqlDataAdapter {SelectCommand = cmd};
             dataAdapter.Fill(dtSyncData);
             TraceService(query);
             return dtSyncData;
@@ -112,7 +114,7 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null, string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null, DropDownList dropDownValue5 = null,int? filter=null)
+    public void FillDropDownHelperMethodWithSp(string commandText, string textFieldValue = null, string valueField = null, DropDownList dropDownValue = null, DropDownList dropDownValue2 = null, TextBox txtBox = null, TextBox txtBox1 = null, string parameterValue1 = null, string parameterValue2 = null, string parameterValue3 = null, string parameterValue4 = null, string parameterValue5 = null, GridView gridView = null, DropDownList dropDownValue3 = null, DropDownList dropDownValue4 = null, DropDownList dropDownValue5 = null, int? filter = null)
     {
         var conn = new SqlConnection(ConfigurationManager.AppSettings["Str"]);
         var ds = new DataSet();
@@ -125,7 +127,7 @@ public class Helper
             CommonMethod(textFieldValue, valueField, dropDownValue, ds, cmd);
             dropDownValue.Items.Insert(0, new ListItem("--Select--", "0"));
         }
-        else if (dropDownValue != null && dropDownValue2 != null && dropDownValue3 != null && gridView==null )
+        else if (dropDownValue != null && dropDownValue2 != null && dropDownValue3 != null && gridView == null)
         {
             cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedValue);
             cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedValue);
@@ -140,12 +142,11 @@ public class Helper
 
         else if (gridView != null)
         {
-
-                if (dropDownValue != null && dropDownValue.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
-                if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
-                if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue3.SelectedItem.Value);
-                if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
-                if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
+            if (dropDownValue != null && dropDownValue.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
+            if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
+            if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5,dropDownValue3.SelectedItem.Value);
+            if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
+            if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
             if (txtBox != null) cmd.Parameters.AddWithValue(parameterValue3, txtBox.Text + " 00:00:00");
             if (txtBox1 != null) cmd.Parameters.AddWithValue(parameterValue4, txtBox1.Text + " 23:59:59");
             var da = new SqlDataAdapter(cmd);
@@ -181,6 +182,7 @@ public class Helper
 
         conn.Close();
     }
+
     private static void CommonMethod(string textFieldValue, string valueField, DropDownList dropDownValue, DataSet ds, SqlCommand cmd)
     {
         var da = new SqlDataAdapter(cmd);
@@ -210,9 +212,8 @@ public class Helper
         }
     }
 
-    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, AjaxControlToolkit.ComboBox combo = null, DropDownList dropdownId1 = null,RadioButtonList radiolist=null,string filter=null)
+    public void FillDropDownHelperMethodWithDataSet(DataSet dataSet, string textFieldValue, string valueField, DropDownList dropdownId = null, ComboBox combo = null, DropDownList dropdownId1 = null, RadioButtonList radiolist = null, string filter = null)
     {
-       
         if (dropdownId == null && dropdownId1 == null)
         {
             if (combo != null)
@@ -286,7 +287,11 @@ public class Helper
         else
             panel.RenderControl(htw);
         page.Response.Write(sw.ToString());
-        page.Response.End();
+        // HttpContext.Current.ApplicationInstance.CompleteRequest();
+        // page.Response.End();
+        page.Response.BufferOutput = true;
+        page.Response.Flush();
+        page.Response.Close();
     }
 
     public void ErrorsEntry(Exception ex)
@@ -302,12 +307,12 @@ public class Helper
             var frame = trace.GetFrame(0);
             if (frame == null) throw new ArgumentNullException(nameof(frame));
             // Get the line number from the stack frame
-            int errorNo = frame.GetFileLineNumber();
+            var errorNo = frame.GetFileLineNumber();
             //Get  Error Source
-            string errorSource = ex.Source;
+            var errorSource = ex.Source;
             if (errorSource == null) throw new ArgumentNullException(nameof(errorSource));
             //Get Error Description
-            string errorDescription = ex.Message;
+            var errorDescription = ex.Message;
             streamWriter.WriteLine("====================" + DateTime.Now.ToLongDateString() + "  " + DateTime.Now.ToLongTimeString());
             streamWriter.WriteLine(errorDescription);
             streamWriter.WriteLine(errorSource);
@@ -316,5 +321,4 @@ public class Helper
             streamWriter.Close();
         }
     }
-    
 }

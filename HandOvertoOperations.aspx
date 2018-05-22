@@ -102,7 +102,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <asp:Panel ID="pnlHandOverToOperation" runat="server">
-
+                <legend align="center" style="color: brown">Hand Over To Operations</legend>
                 <table style="width: 100%">
                     <tr>
                         <td align="center" style="font-size: small; font-weight: bold" colspan="4">

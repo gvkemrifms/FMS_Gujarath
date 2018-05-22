@@ -4,16 +4,17 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
+using GvkFMSAPP.BLL.Alert;
 
 public partial class MaintenanceAlert : Page
 {
-    readonly Helper _helper = new Helper();
-    private readonly GvkFMSAPP.BLL.Alert.Alert _fmsAlert = new GvkFMSAPP.BLL.Alert.Alert();
+    private readonly Alert _fmsAlert = new Alert();
+    private readonly Helper _helper = new Helper();
     private readonly VehicleRegistration _vehreg = new VehicleRegistration();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Session["User_Name"]==null)Response.Redirect("Login.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack) GetVehicles();
     }
 
@@ -82,14 +83,13 @@ public partial class MaintenanceAlert : Page
         try
         {
             var subject = "Vehicle Maintenance Alert";
-            var mailBody = CreateHtml((DataSet)ViewState["ds"]);
+            var mailBody = CreateHtml((DataSet) ViewState["ds"]);
             MailHelper.SendMailMessage(ConfigurationManager.AppSettings["MasterMailid"], ConfigurationManager.AppSettings["AdminMailid"], "", "", subject, mailBody);
         }
         catch (Exception ex)
         {
             _helper.ErrorsEntry(ex);
         }
-        
     }
 
     protected void ddlVehicle_SelectedIndexChanged(object sender, EventArgs e)

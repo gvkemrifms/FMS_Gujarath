@@ -8,12 +8,12 @@ using GvkFMSAPP.BLL.VAS_BLL;
 public partial class VehicleSwappingDistrictWise : Page
 {
     private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
-    private readonly VASGeneral _vasbll = new VASGeneral();
     private readonly Helper _helper = new Helper();
+    private readonly VASGeneral _vasbll = new VASGeneral();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User_Name"] == null) Response.Redirect("Error.aspx");
+        if (Session["User_Name"] == null) Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
             btnSubmit.Attributes.Add("onclick", "return validation()");

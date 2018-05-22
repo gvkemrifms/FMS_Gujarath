@@ -1,14 +1,11 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="VehicleScheduleServiceRequest.aspx.cs" Inherits="VehicleScheduleServiceRequest" %>
-
-<%@ Import Namespace="System.EnterpriseServices" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="js/Validation.js"></script>
     <div style="background-color: #f7f7f7; border: 1px #E2BBA0 solid; height: 150px; margin: 0 0px 15px 0px; padding: 5px;">
         <img src="images/b1.jpg" alt="banner" width="653" height="150"/>
     </div>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <script type="text/javascript">
                 function pageLoad() {
@@ -18,43 +15,50 @@
                         minimumResultsForSearch: 20,
                         placeholder: "Select an option"
                     });
+                    $('#<%= ddlScheduleCat.ClientID %>').select2({
+                        disable_search_threshold: 5,
+                        search_contains: true,
+                        minimumResultsForSearch: 20,
+                        placeholder: "Select an option"
+                    });
                 }
+
                 function validations() {
                     var ddlVehicle = $('#<%= ddlVehicleNo.ClientID %> option:selected').text().toLowerCase();
-                    if (ddlVehicle === '--select--' ||ddlVehicle==='') {
+                    if (ddlVehicle === '--select--' || ddlVehicle === '') {
                         return alert("Please select Vehicle");
                     }
                     var ddlSchedule = $('#<%= ddlScheduleCat.ClientID %> option:selected').text().toLowerCase();
-                    if (ddlSchedule === '--select--'||ddlSchedule==='') {
+                    if (ddlSchedule === '--select--' || ddlSchedule === '') {
                         return alert("Please select Category");
                     }
-                    var txtSchedulePlan = $('#<%=txtSchedulePlanDate.ClientID%>').val();
+                    var txtSchedulePlan = $('#<%= txtSchedulePlanDate.ClientID %>').val();
                     if (txtSchedulePlan === '')
                         return alert("Date is Required");
                     return true;
                 }
-                </script>
+            </script>
 
-        <table id="table1" cellspacing="0" cellpadding="0" width="500px" align="center" border="0"
-        style="height: 37px">
-            <tr>
-            <td class="rowseparator"></td>
-            </tr>
-            <tr>
-            <td style="height: 200px">
-            <fieldset style="padding: 10px;">
-            <legend>Schedule Service Request</legend>
-            <table id="table2" class="bordergreen" width="91%" align="center">
-            <tr>
-            <td>
-            <table class="logtable" align="center">
-            <tr>
-            <td style="width: 150px" align="left">
-            Vehicle Number <span style="color: Red">*</span>
-            </td>
-            <td class="columnseparator"></td>
-            <td>
-            <asp:DropDownList ID="ddlVehicleNo" runat="server" AutoPostBack="true" Width="150px" OnSelectedIndexChanged="ddlVehicleNo_SelectedIndexChanged">
+            <table id="table1" cellspacing="0" cellpadding="0" width="500px" align="center" border="0"
+                   style="height: 37px">
+                <tr>
+                    <td class="rowseparator"></td>
+                </tr>
+                <tr>
+                    <td style="height: 200px">
+                        <fieldset style="padding: 10px;">
+                            <legend>Schedule Service Request</legend>
+                            <table id="table2" width="91%" align="center">
+                                <tr>
+                                    <td>
+                                        <table align="center">
+                                            <tr>
+                                                <td style="width: 150px" align="left">
+                                                    Vehicle Number <span style="color: Red">*</span>
+                                                </td>
+                                                <td class="columnseparator"></td>
+                                                <td>
+                                                    <asp:DropDownList ID="ddlVehicleNo" runat="server" AutoPostBack="true" Width="150px" OnSelectedIndexChanged="ddlVehicleNo_SelectedIndexChanged">
                                                     </asp:DropDownList>
                                                 </td>
                                             </tr>
@@ -63,7 +67,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Schedule Category <span style="color: Red" >*</span>
+                                                    Schedule Category <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator"></td>
                                                 <td>
@@ -77,7 +81,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="width: 150px" align="left">
-                                                    Schedule Plan Date <span style="color: Red" >*</span>
+                                                    Schedule Plan Date <span style="color: Red">*</span>
                                                 </td>
                                                 <td class="columnseparator"></td>
                                                 <td>
@@ -96,8 +100,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="height: 41px" align="center">
-                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="form-submit-button"  Width="65px"
-                                                    OnClick="btnSubmit_Click" OnClientClick="if(!validations()) return false;"/>
+                                        <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="form-submit-button" Width="65px"
+                                                    OnClick="btnSubmit_Click" OnClientClick="if (!validations()) return false;"/>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="form-submit-button" Width="65px"
                                                     OnClick="btnCancel_Click"/>

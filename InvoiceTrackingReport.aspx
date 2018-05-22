@@ -7,7 +7,6 @@
         function pageLoad() {
             $('#<%= ddlvehicle.ClientID %>').select2({
                 disable_search_threshold: 5,
-                search_contains: true,
                 minimumResultsForSearch: 20,
                 placeholder: "Select an option"
             });

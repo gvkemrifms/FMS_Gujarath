@@ -48,16 +48,16 @@
                             </div>
                             <div>
                                 <asp:Button runat="server" ID="btnUpdate" Text="Update" CssClass="form-submit-button" style="margin: 20px"
-                                            OnClientClick="if(!validationFuelEntry()) return false;" onclick="btnUpdate_Click"/>
+                                            OnClientClick="if (!validationFuelEntry()) return false;" onclick="btnUpdate_Click"/>
                             </div>
                         </div>
                         <div align="center">
-                       
-                  
+
+
                             <div align="center">
                                 <asp:GridView ID="gvVehKmplDetails" runat="server" EmptyDataText="No records found" PageSize="20"
                                               AllowSorting="true" BorderWidth="1px" BorderColor="brown" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
-                                              CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px"  AllowPaging="true"
+                                              CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="true"
                                               EnableSortingAndPagingCallbacks="true"
                                               onrowcommand="gvVehKmplDetails_RowCommand"
                                               onpageindexchanging="gvVehKmplDetails_PageIndexChanging">
@@ -97,19 +97,20 @@
             <script type="text/javascript" language="javascript">
 
                 function validationFuelEntry() {
-                    var districts = document.getElementById("<%= ddlVehNumber.ClientID %>").control._textBoxControl.value;
+                    var districts = document.getElementById("<%= ddlVehNumber.ClientID %>").control._textBoxControl
+                        .value;
                     switch (districts) {
                     case '--Select--':
-                      return  alert("Please Select the VehicleNumber");
-                      
+                        return alert("Please Select the VehicleNumber");
+
                     }
                     switch (document.getElementById("<%= txtKMPL.ClientID %>").value) {
-                        case '':
-                            document.getElementById("<%= txtKMPL.ClientID %>").focus();
+                    case '':
+                        document.getElementById("<%= txtKMPL.ClientID %>").focus();
                         return alert("KMPL Should not be Blank");
                     }
 
-                  
+
                     return true;
                 }
             </script>

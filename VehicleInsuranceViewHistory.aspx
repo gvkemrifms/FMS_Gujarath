@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <link href="css/VehicleInsuranceViewHistory.css" rel="stylesheet"/>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <table style="width: 100%">
                 <tr>
@@ -13,16 +13,16 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <asp:Panel ID="pnlVehicleInsuranceViewHistory" runat="server">
+                        <asp:Panel runat="server">
                             <table>
                                 <tr>
-                                    <td class="rowspan"></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <asp:GridView ID="gvViewHistory" runat="server" Width="630px" AutoGenerateColumns="False"
                                                       AllowPaging="True" CellPadding="4" ForeColor="#333333" EmptyDataText="No Records Found"
-                                                      GridLines="None" OnPageIndexChanging="gvViewHistory_PageIndexChanging" CssClass="mydatagrid" PagerStyle-CssClass="pager"
+                                                      GridLines="Both" OnPageIndexChanging="gvViewHistory_PageIndexChanging" CssClass="mydatagrid" PagerStyle-CssClass="pager"
                                                       HeaderStyle-CssClass="header" RowStyle-CssClass="rows"
                                                       CellSpacing="2">
                                             <RowStyle CssClass="rowStyleGrid"/>
@@ -90,7 +90,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="rowspan"></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>

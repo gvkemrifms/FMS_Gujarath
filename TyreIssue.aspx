@@ -4,13 +4,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script language="javascript" type="text/javascript">
-
         function validation() {
             var tyreCost = document.getElementById('<%= txtTyreCost.ClientID %>');
             var dcNumPopup = document.getElementById('<%= txtDcNumberPopup.ClientID %>');
             var dcDate = document.getElementById('<%= txtDcDate.ClientID %>');
             var courierName = document.getElementById('<%= txtCourierName.ClientID %>');
-            var remarks = document.getElementById('<%= txtRemarks.ClientID %>');
             if (!RequiredValidation(tyreCost, "Tyre Cost cannot be Blank"))
                 return false;
             if (!RequiredValidation(dcNumPopup, "DC Number cannot be Blank"))
@@ -192,7 +190,7 @@
                                                     <SelectedRowStyle CssClass="selectedRowStyle"/>
                                                     <HeaderStyle CssClass="headerStyle"/>
                                                 </asp:GridView>
-                                                <div id="Div7" align="center" style="width: 95%; background-color: white">
+                                                <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                                     Remarks
                                                     <asp:TextBox ID="txtRemarks" runat="server" onkeypress="return OnlyAlphaNumeric(event)"
                                                                  MaxLength="20" TextMode="MultiLine" onKeyUp="CheckLength(this,50)" onChange="CheckLength(this,50)">
@@ -214,4 +212,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

@@ -131,7 +131,7 @@
             </td>
 
             <td>
-                <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button"></asp:Button>
+                <asp:Button runat="server" Text="ExportExcel" CssClass="form-reset-button" OnClick="btntoExcel_Click"></asp:Button>
             </td>
         </tr>
     </table>

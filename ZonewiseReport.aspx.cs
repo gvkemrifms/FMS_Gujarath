@@ -32,7 +32,7 @@ public partial class ZonewiseReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleZonewise.xls");
         }
         catch
         {
@@ -49,11 +49,11 @@ public partial class ZonewiseReport : Page
     {
         try
         {
-            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_ZonewiseReport", null, null, ddldistrict, ddlmonth, null, null, "@dsid", "@Month", "@Year", null, null, Grddetails, ddlyear);
+            _helper.FillDropDownHelperMethodWithSp("P_FMSReports_ZonewiseReport", null, null, ddldistrict, ddlmonth, null, null, "@DistrictID", "@Month", null,null, "@Year", Grddetails, ddlyear);
         }
-        catch
+        catch(Exception ex)
         {
-            //
+           _helper.ErrorsEntry(ex);
         }
     }
 }

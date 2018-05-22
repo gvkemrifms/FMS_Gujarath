@@ -204,6 +204,7 @@ public partial class PetroCardIssue : Page
     protected void btReset_Click(object sender, EventArgs e)
     {
         Clearfields();
+        
     }
 
     private void Clearfields()
@@ -218,6 +219,7 @@ public partial class PetroCardIssue : Page
         ddlVehicles.SelectedIndex = 0;
         ddlFeuserDistrict.SelectedIndex = 0;
         ddlVehicles.Enabled = false;
+        ddlFeuserDistrict.Enabled = true;
     }
 
     protected void gvPetroCardIssue_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -237,6 +239,7 @@ public partial class PetroCardIssue : Page
             case "Edit":
             {
                 FillDistricts();
+                ddlFeuserDistrict.Enabled = false;
                 btSave.Text = "Update";
                 var id = Convert.ToInt32(e.CommandArgument.ToString());
                 var ds = _objFuelMan.IEditPetroCardDetails(id);
@@ -249,7 +252,6 @@ public partial class PetroCardIssue : Page
                 dd_listFe.SelectedValue = ds.Tables[0].Rows[0]["IssuedToFE"].ToString();
                 txtIssuedDate.Text = ds.Tables[0].Rows[0]["PetroCardIssDate"].ToString();
                 FillVehicles();
-                FillDistricts();
                 ddlVehicles.SelectedValue = ds.Tables[0].Rows[0]["IssuedToVehicle"].ToString();
                 ddlFeuserDistrict.SelectedValue = ds.Tables[0].Rows[0]["IssuedToDistrict"].ToString();
                 break;
@@ -284,6 +286,7 @@ public partial class PetroCardIssue : Page
     protected void dd_listFe_SelectedIndexChanged(object sender, EventArgs e)
     {
         FillUserDistrictandVehicle();
+       
     }
 
     private void FillUserDistrictandVehicle()
@@ -300,6 +303,7 @@ public partial class PetroCardIssue : Page
                 default:
                     _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlFeuserDistrict);
                     ddlFeuserDistrict.SelectedIndex = 0;
+                    ddlFeuserDistrict.Enabled = true;
                     break;
             }
 

@@ -212,8 +212,7 @@
                         Issued To District<span style="color: Red">*</span>
                     </td>
                     <td>
-                        <asp:DropDownList ID="ddlFeuserDistrict" CssClass="search_3" runat="server" AutoPostBack="True"
-                                          Enabled="False">
+                        <asp:DropDownList ID="ddlFeuserDistrict" CssClass="search_3" runat="server" AutoPostBack="True" >
                         </asp:DropDownList>
                     </td>
                 </tr>

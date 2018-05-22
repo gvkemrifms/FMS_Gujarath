@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using AjaxControlToolkit;
@@ -143,7 +144,7 @@ public class Helper
         {
             if (dropDownValue != null && dropDownValue.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue1, dropDownValue.SelectedItem.Value);
             if (dropDownValue2 != null && dropDownValue2.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue2, dropDownValue2.SelectedItem.Value);
-            if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue3.SelectedItem.Value);
+            if (dropDownValue3 != null && dropDownValue3.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5,dropDownValue3.SelectedItem.Value);
             if (dropDownValue4 != null && dropDownValue4.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue4, dropDownValue4.SelectedItem.Value);
             if (dropDownValue5 != null && dropDownValue5.SelectedIndex >= 0) cmd.Parameters.AddWithValue(parameterValue5, dropDownValue5.SelectedItem.Value);
             if (txtBox != null) cmd.Parameters.AddWithValue(parameterValue3, txtBox.Text + " 00:00:00");
@@ -286,7 +287,11 @@ public class Helper
         else
             panel.RenderControl(htw);
         page.Response.Write(sw.ToString());
-        page.Response.End();
+        // HttpContext.Current.ApplicationInstance.CompleteRequest();
+        // page.Response.End();
+        page.Response.BufferOutput = true;
+        page.Response.Flush();
+        page.Response.Close();
     }
 
     public void ErrorsEntry(Exception ex)

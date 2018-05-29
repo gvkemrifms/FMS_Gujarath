@@ -66,7 +66,7 @@
     <br/>
     <div align="center">
         <asp:Panel ID="Panel2" runat="server" Style="margin-left: 2px;">
-            <asp:GridView ID="Grddetails" runat="server" GridLines="Both" BorderColor="Brown" BorderWidth="1px"></asp:GridView>
+            <asp:GridView ID="Grddetails" runat="server" EmptyDataText="No Records todisplay" ShowHeaderWhenEmpty="true" GridLines="Both" BorderColor="Brown" BorderWidth="1px"></asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

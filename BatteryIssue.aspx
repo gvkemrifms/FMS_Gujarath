@@ -57,11 +57,11 @@
                         Pending for Issue
                     </div>
                     <div runat="server" align="center">
-                        <asp:GridView ID="grvBatteryPendingForIssue" runat="server" CellPadding="3" CellSpacing="2"
-                                      EmptyDataText="Details are not available" AutoGenerateColumns="False" GridLines="None"
+                        <asp:GridView ID="grvBatteryPendingForIssue" runat="server" CellPadding="3"
+                                      EmptyDataText="Details are not available" AutoGenerateColumns="False"
                                       CssClass="gridviewStyle" AllowPaging="True" DataKeyNames="FleetInventoryReqID"
                                       PageSize="5" OnPageIndexChanging="grvBatteryPendingForIssue_PageIndexChanging"
-                                      OnRowCommand="grvBatteryPendingForIssue_RowCommand">
+                                      OnRowCommand="grvBatteryPendingForIssue_RowCommand" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                             <Columns>
                                 <asp:BoundField HeaderText="Vehicle Number" DataField="VehicleNum"/>
                                 <asp:BoundField HeaderText="No. of Batteries" DataField="RequestedQty"/>
@@ -77,11 +77,15 @@
                                     <HeaderStyle Width="60px"/>
                                 </asp:TemplateField>
                             </Columns>
-                            <RowStyle CssClass="rowStyleGrid"/>
-                            <FooterStyle CssClass="footerStylegrid"/>
-                            <PagerStyle CssClass="pagerStylegrid"/>
-                            <SelectedRowStyle CssClass="selectedRowStyle"/>
-                            <HeaderStyle CssClass="headerStyle"/>
+                            <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
+                            <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                            <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                            <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                            <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
                         </asp:GridView>
                     </div>
                     <asp:Button ID="btnShowPopup" runat="server" Style="display: none"/>
@@ -134,9 +138,8 @@
                                         </tr>
                                     </table>
                                     <br/>
-                                    <asp:GridView ID="grvBatteryIssueDetailsPopup" runat="server" AutoGenerateColumns="False"
-                                                  GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" Width="95%"
-                                                  OnRowDataBound="grvBatteryIssueDetailsPopup_RowDataBound">
+                                    <asp:GridView ID="grvBatteryIssueDetailsPopup" runat="server" AutoGenerateColumns="False" CssClass="gridviewStyle" CellPadding="3" Width="95%"
+                                                  OnRowDataBound="grvBatteryIssueDetailsPopup_RowDataBound" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                                         <Columns>
                                             <asp:BoundField HeaderText="Battery Position ID" DataField="BatteryPositionID"/>
                                             <asp:BoundField HeaderText="Old Battery Number" DataField="BatteryNumber"/>
@@ -156,11 +159,15 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
-                                        <RowStyle CssClass="rowStyleGrid"/>
-                                        <FooterStyle CssClass="footerStylegrid"/>
-                                        <PagerStyle CssClass="pagerStylegrid"/>
-                                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                        <HeaderStyle CssClass="headerStyle"/>
+                                        <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
+                                        <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                        <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                        <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                        <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                        <SortedDescendingHeaderStyle BackColor="#00547E" />
                                     </asp:GridView>
                                     <div id="Div7" align="center" style="background-color: white; width: 95%;">
                                         Remarks

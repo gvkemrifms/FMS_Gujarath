@@ -41,7 +41,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
 
-            <legend style="align: center">Tyres Details </legend>
+            <legend align="center" style="color:brown">Tyres Details </legend>
 
             <asp:Panel ID="pnltyredetails" runat="server">
                 <table align="center">
@@ -126,10 +126,10 @@
             <td style="width: 450px">
                 <fieldset style="padding: 10px">
                     <asp:GridView ID="grvTyresDetails" runat="server" align="center" AllowPaging="True"
-                                  PageSize="5" AutoGenerateColumns="False" GridLines="Both" BorderColor="Brown" BorderWidth="1px"
-                                  CellPadding="3" CellSpacing="2" OnPageIndexChanging="grvTyresDetails_PageIndexChanging"
-                                  OnRowEditing="grvTyresDetails_RowEditing">
-                        <RowStyle CssClass="rowStyleGrid"/>
+                                  PageSize="5" AutoGenerateColumns="False" BorderColor="#CCCCCC" BorderWidth="1px"
+                                  CellPadding="3" OnPageIndexChanging="grvTyresDetails_PageIndexChanging"
+                                  OnRowEditing="grvTyresDetails_RowEditing" BackColor="White" BorderStyle="None">
+                        <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                         <Columns>
                             <asp:TemplateField HeaderText="Tyre Id">
                                 <ItemTemplate>
@@ -167,10 +167,14 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
-                        <FooterStyle CssClass="footerStylegrid"/>
-                        <PagerStyle CssClass="pagerStylegrid"/>
-                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                        <HeaderStyle CssClass="headerStyle"/>
+                        <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                        <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                        <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                        <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                        <SortedDescendingHeaderStyle BackColor="#00547E" />
                     </asp:GridView>
                 </fieldset>
                 <asp:HiddenField ID="hidTyresId" runat="server"/>

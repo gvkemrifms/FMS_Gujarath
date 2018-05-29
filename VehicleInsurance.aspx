@@ -345,10 +345,10 @@
         <tr>
             <td colspan="2"></td>
             <td align="center" style="width: 244px">
-                <asp:Button ID="btSave" CssClass="button" runat="server" OnClick="btSave_Click" Text="Save" Style="background-color: #4CAF50;"/>
+                <asp:Button ID="btSave" CssClass="form-submit-button" runat="server" OnClick="btSave_Click" Text="Save"/>
             </td>
             <td align="left">
-                <asp:Button ID="btReset" CssClass="button" runat="server" OnClick="btReset_Click" Text="Reset" Style="background-color: red;"/>
+                <asp:Button ID="btReset" CssClass="form-reset-button" runat="server" OnClick="btReset_Click" Text="Reset" />
             </td>
         </tr>
     </table>

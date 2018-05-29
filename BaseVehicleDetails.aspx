@@ -951,7 +951,7 @@
 </script>
 <asp:Panel ID="pnlBaseVehicleDetails" runat="server">
 <asp:HiddenField runat="server"/>
-<legend align="center">Base Details </legend>
+<legend align="center" style="color:brown">Base Details </legend>
 <br/>
 <table align="center">
     <tr>
@@ -968,22 +968,17 @@
         <td>
             Chassis No<span style="color: Red; padding-left: 10px;">*</span>
         </td>
-        <td align>
+        <td >
             &nbsp;<asp:TextBox ID="txtChassisNo" runat="server" BackColor="DarkGray" CssClass="search_3" ReadOnly="True" Width="150px" TabIndex="2"></asp:TextBox>
         </td>
     </tr>
 </table>
 <br/>
 <fieldset style="padding: 10px; width: 645px;">
-    <legend>Invoice and Base Details</legend>
+    <legend align="center">Invoice and Base Details</legend>
     <table align="center">
         <tr>
             <td class="rowseparator" style="width: 164px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="10" style="text-align: center">
-                <b>Invoice Details </b>
             </td>
         </tr>
         <tr>
@@ -992,7 +987,7 @@
         </tr>
         <tr>
             <td style="width: 164px">
-                &nbsp;
+  
             </td>
             <td style="width: 198px">
                 Invoice No<span style="color: Red">*</span>
@@ -1011,7 +1006,7 @@
             <td style="width: 198px">
                 Invoice Date<span style="color: Red">*</span>
             </td>
-            <td style="width: 103px" nowrap="nowrap">
+            <td style="width: 103px">
                 <asp:TextBox ID="txtInvoiceDate" runat="server" oncut="return false;" onpaste="return false;"
                              Width="100px" onkeypress="return false" CssClass="search_3" TabIndex="4">
                 </asp:TextBox>
@@ -1019,7 +1014,7 @@
                                       TargetControlID="txtInvoiceDate" Format="MM/dd/yyyy">
                 </cc1:CalendarExtender>
             </td>
-            <td nowrap="nowrap" style="width: 51px">
+            <td style="width: 51px">
                 <asp:ImageButton ID="imgBtnCalendarInvoiceDate" runat="server" alt="" src="images/Calendar.gif"
                                  Style="vertical-align: top"/>
             </td>
@@ -1171,15 +1166,10 @@
         </tr>
     </table>
 </fieldset>
-&nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-<legend>General Information</legend>
+<legend align="center">General Information</legend>
 <table align="center">
-<tr>
-    <td colspan="10" style="text-align: center">
-        <b>General Information </b>
-    </td>
-</tr>
+
 <tr>
     <td class="rowseparator" style="width: 69px">
     </td>
@@ -1392,13 +1382,9 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-<legend>Insurance Information</legend>
+<legend align="center">Insurance Information</legend>
 <table align="center">
-<tr>
-    <td colspan="10" style="text-align: center">
-        <b>Insurance Information</b>
-    </td>
-</tr>
+
 <tr>
     <td class="rowseparator" style="width: 69px">
     </td>
@@ -1599,13 +1585,9 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-    <legend>Inspection Information</legend>
+    <legend align="center">Inspection Information</legend>
     <table align="center">
-        <tr>
-            <td colspan="10" style="text-align: center">
-                <b>Inspection Information </b>
-            </td>
-        </tr>
+        
         <tr>
             <td class="rowseparator" style="width: 67px">
             </td>
@@ -1654,13 +1636,9 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-    <legend>Temporary Registration</legend>
+    <legend align="center">Temporary Registration</legend>
     <table align="center">
-        <tr>
-            <td colspan="10" style="text-align: center">
-                <b>Temporary Registration </b>
-            </td>
-        </tr>
+        
         <tr>
             <td class="rowseparator" style="width: 68px">
             </td>
@@ -1778,13 +1756,9 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-    <legend>Tyre Information</legend>
+    <legend align="center">Tyre Information</legend>
     <table align="center">
-        <tr>
-            <td colspan="10" style="text-align: center">
-                <b>Tyre Information </b>
-            </td>
-        </tr>
+       
         <tr>
             <td class="rowseparator" style="width: 70px">
             </td>
@@ -1931,13 +1905,9 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;
 <fieldset style="padding: 10px; width: 645px;">
-    <legend>Battery Information</legend>
+    <legend align="center">Battery Information</legend>
     <table align="center">
-        <tr>
-            <td colspan="10" style="text-align: center">
-                <b>Battery Information </b>
-            </td>
-        </tr>
+       
         <tr>
             <td class="rowseparator" style="width: 70px">
             </td>

@@ -76,6 +76,8 @@
 
                 }
             </script>
+            <legend align="center" style="color:brown">Road Tax</legend>
+            <br />
             <table align="center">
                 <tr>
                     <td>

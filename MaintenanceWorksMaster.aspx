@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" masterpagefile="~/temp.master" AutoEventWireup="true" CodeFile="MaintenanceWorksMaster.aspx.cs" Inherits="MaintenanceWorksMaster" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<script type="text/javascript">
+    <script type="text/javascript">
 
     function validationMaintenanceWorksMaster() {
         switch (document.getElementById("<%= ddlServiceGroupName.ClientID %>").selectedIndex) {
@@ -191,72 +191,75 @@
         <tr>
             <td class="rowseparator"></td>
         </tr>
-        <br/>
-        <tr>
-            <td>
-                <fieldset style="padding: 10px">
-                    <asp:GridView ID="grvMaintenanceWorksMasterDetails" runat="server" AllowPaging="True"
-                                  PageSize="5" AutoGenerateColumns="False" BorderColor="brown" BorderWidth="1px" CellPadding="3" CellSpacing="2" GridLines="Both"
-                                  CssClass="gridviewStyle" OnRowEditing="grvMaintenanceWorksMasterDetails_RowEditing"
-                                  OnPageIndexChanging="grvMaintenanceWorksMasterDetails_PageIndexChanging">
-                        <RowStyle CssClass="rowStyleGrid"/>
-                        <Columns>
-                            <asp:TemplateField HeaderText="Aggregates">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblServiceGroupName" runat="server" Text='<%#Eval("Aggregates") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Id">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblServiceId" runat="server" Text='<%#Eval("Service_Id") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Categories">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblSubServiceName" runat="server" Text='<%#Eval("Categories") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Sub Categories">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblSubCategories" runat="server" Text='<%#Eval("Sub Categories") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Cost">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblServiceName" runat="server" Text='<%#Eval("Cost") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Time Taken(In Mins)">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblTimeTaken" runat="server" Text='<%#Eval("Time_Taken") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Creation Date">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblCreateDate" runat="server" Text='<%#Eval("Creation_Date", "{0:d}") %>'/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Edit">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="lnkbtnEdit" runat="server" Text="Edit" CommandName="Edit"/>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                        <FooterStyle CssClass="footerStylegrid"/>
-                        <PagerStyle CssClass="pagerStylegrid"/>
-                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                        <HeaderStyle CssClass="headerStyle"/>
-                    </asp:GridView>
-                </fieldset>
-                <asp:HiddenField ID="hidWorksMasterId" runat="server"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="rowseparator"></td>
-        </tr>
-        <tr>
-            <td class="rowseparator"></td>
-        </tr>
+        <caption>
+            <br/>
+            <tr>
+                <td>
+                    <fieldset style="padding: 10px">
+                        <asp:GridView ID="grvMaintenanceWorksMasterDetails" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="gridviewStyle" OnPageIndexChanging="grvMaintenanceWorksMasterDetails_PageIndexChanging" OnRowEditing="grvMaintenanceWorksMasterDetails_RowEditing" PageSize="5">
+                            <RowStyle CssClass="rowStyleGrid" ForeColor="#000066" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="Aggregates">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblServiceGroupName" runat="server" Text='<%#Eval("Aggregates") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Id">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblServiceId" runat="server" Text='<%#Eval("Service_Id") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Categories">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblSubServiceName" runat="server" Text='<%#Eval("Categories") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Sub Categories">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblSubCategories" runat="server" Text='<%#Eval("Sub Categories") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cost">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblServiceName" runat="server" Text='<%#Eval("Cost") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Time Taken(In Mins)">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblTimeTaken" runat="server" Text='<%#Eval("Time_Taken") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Creation Date">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblCreateDate" runat="server" Text='<%#Eval("Creation_Date", "{0:d}") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Edit">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkbtnEdit" runat="server" CommandName="Edit" Text="Edit" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="White" CssClass="footerStylegrid" ForeColor="#000066" />
+                            <PagerStyle BackColor="White" CssClass="pagerStylegrid" ForeColor="#000066" HorizontalAlign="Left" />
+                            <SelectedRowStyle BackColor="#669999" CssClass="selectedRowStyle" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#006699" CssClass="headerStyle" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
+                        </asp:GridView>
+                    </fieldset>
+                    <asp:HiddenField ID="hidWorksMasterId" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td class="rowseparator"></td>
+            </tr>
+            <tr>
+                <td class="rowseparator"></td>
+            </tr>
+        </caption>
     </table>
 </ContentTemplate>
 </asp:UpdatePanel>

@@ -21,53 +21,59 @@
                         </cc1:ComboBox>
                     </td>
                 </tr>
-                <br/>
-                <tr>
-                    <td>
-                        <asp:GridView ID="grdMaintAlert" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                      ForeColor="#333333" GridLines="Both" BorderWidth="1px" BorderColor="brown" Width="622px" AllowPaging="True" EmptyDataText="No Records Found"
-                                      CssClass="setposition" CellSpacing="2" OnPageIndexChanging="grdMaintAlert_PageIndexChanging">
-                            <RowStyle CssClass="rowStyleGrid"/>
-                            <Columns>
-                                <asp:TemplateField HeaderText="Vehicle Number" ItemStyle-HorizontalAlign="Center">
-                                    <ItemTemplate>
-                                        <%#Eval("VehicleNumber") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Latest Odometer" ItemStyle-HorizontalAlign="Center">
-                                    <ItemTemplate>
-                                        <%#Eval("Latest_odo") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Last Maintenance Odo">
-                                    <ItemTemplate>
-                                        <%#Eval("LastMaintenanceOdo") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Last Maintenance Date" ItemStyle-HorizontalAlign="Center">
-                                    <ItemTemplate>
-                                        <%#Eval("LastMaintenanceDate") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Service Alert">
-                                    <ItemTemplate>
-                                        <%#Eval("servicealert") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                            <FooterStyle CssClass="footerStylegrid"/>
-                            <PagerStyle CssClass="pagerStylegrid"/>
-                            <SelectedRowStyle CssClass="selectedRowStyle"/>
-                            <HeaderStyle CssClass="headerStyle"/>
-                        </asp:GridView>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td align="center" valign="middle">
-                        <asp:Button runat="server" Text="Send Mail" CssClass="form-submit-button" OnClick="btnSendMail_Click1" OnClientClick="if (!validationFuelEntry()) return false;"/>
-                    </td>
-                </tr>
+                <caption>
+                    <br/>
+                    <tr>
+                        <td>
+                            <asp:GridView ID="grdMaintAlert" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="setposition" EmptyDataText="No Records Found" OnPageIndexChanging="grdMaintAlert_PageIndexChanging" Width="622px">
+                                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066" />
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Vehicle Number" ItemStyle-HorizontalAlign="Center">
+                                        <ItemTemplate>
+                                            <%#Eval("VehicleNumber") %>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Latest Odometer" ItemStyle-HorizontalAlign="Center">
+                                        <ItemTemplate>
+                                            <%#Eval("Latest_odo") %>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Last Maintenance Odo">
+                                        <ItemTemplate>
+                                            <%#Eval("LastMaintenanceOdo") %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Last Maintenance Date" ItemStyle-HorizontalAlign="Center">
+                                        <ItemTemplate>
+                                            <%#Eval("LastMaintenanceDate") %>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Service Alert">
+                                        <ItemTemplate>
+                                            <%#Eval("servicealert") %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <FooterStyle BackColor="White" CssClass="footerStylegrid" ForeColor="#000066" />
+                                <PagerStyle BackColor="White" CssClass="pagerStylegrid" ForeColor="#000066" HorizontalAlign="Left" />
+                                <SelectedRowStyle BackColor="#669999" CssClass="selectedRowStyle" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#006699" CssClass="headerStyle" Font-Bold="True" ForeColor="White" />
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
+                            </asp:GridView>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">
+                            <asp:Button runat="server" CssClass="form-submit-button" OnClick="btnSendMail_Click1" OnClientClick="if (!validationFuelEntry()) return false;" Text="Send Mail" />
+                        </td>
+                    </tr>
+                </caption>
             </table>
             <script type="text/javascript">
                 function validationFuelEntry() {

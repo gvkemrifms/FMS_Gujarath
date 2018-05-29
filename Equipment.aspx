@@ -23,11 +23,11 @@
         return true;
     }
 </script>
-<table>
+<table align="center">
 <tr align="center">
 <td>
 <fieldset style="padding: 10px;">
-    <legend>Vehicle Equipment Mapping </legend>
+    <legend align="center" style="color:brown">Vehicle Equipment Mapping </legend>
     <asp:Panel runat="server">
         <table align="center">
             <tr align="center">

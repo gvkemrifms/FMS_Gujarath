@@ -9,11 +9,10 @@ using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.VAS_BLL;
 using GvkFMSAPP.DLL;
 using MySql.Data.MySqlClient;
-using BaseVehicleDetails = GvkFMSAPP.BLL.BaseVehicleDetails;
 
 public partial class VehicleAllocation : Page
 {
-    private readonly BaseVehicleDetails _fmsobj = new BaseVehicleDetails();
+    private readonly GvkFMSAPP.BLL.BaseVehicleDetails _fmsobj = new GvkFMSAPP.BLL.BaseVehicleDetails();
     private readonly Helper _helper = new Helper();
     private readonly VASGeneral _vehallobj = new VASGeneral();
 
@@ -142,7 +141,7 @@ public partial class VehicleAllocation : Page
             _vehallobj.SegFlag = "Active";
             _vehallobj.Segment = "";
             _vehallobj.ContactNumber = txtContactNumber.Text;
-            makeVehicleonRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtUptimeDate.Text + " " + ddlUPHour.SelectedValue + ":" + ddlUPMin.SelectedValue).ToString("yyyy-MM-dd HH:mm:ss"), Session["User_Name"].ToString(), txtOdo.Text, txtReqBy.Text, "NA", "NA");
+            MakeVehicleonRoad(ddlVehicleNumber.SelectedItem.Text, Convert.ToDateTime(txtUptimeDate.Text + " " + ddlUPHour.SelectedValue + ":" + ddlUPMin.SelectedValue).ToString("yyyy-MM-dd HH:mm:ss"), Session["User_Name"].ToString(), txtOdo.Text, txtReqBy.Text, "NA", "NA");
             var insres = _vehallobj.InsOffRoadVehAllocation();
             switch (insres)
             {
@@ -287,7 +286,7 @@ public partial class VehicleAllocation : Page
         }
     }
 
-    private void makeVehicleonRoad(string vehicleNumber, string onroaddate, string statusChangeBy, string odoMeter, string informerName, string piliotName, string piliotGid)
+    private void MakeVehicleonRoad(string vehicleNumber, string onroaddate, string statusChangeBy, string odoMeter, string informerName, string piliotName, string piliotGid)
     {
         try
         {

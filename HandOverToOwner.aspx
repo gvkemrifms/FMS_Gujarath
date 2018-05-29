@@ -108,11 +108,12 @@
                     <td>
                         <asp:Panel ID="pnlgrdTemporaryVehicle" runat="server">
                             <fieldset style="padding: 10px">
-                                <legend>Temporary Vehicle </legend>
-                                <asp:GridView ID="grdTemporaryVehicle" runat="server" AutoGenerateColumns="False"
-                                              CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="grdTemporaryVehicle_RowCommand"
-                                              Width="238px" EmptyDataText="No Records Found" CssClass="gridviewStyle">
-                                    <RowStyle CssClass="rowStyleGrid"/>
+                                <legend align="center" style="color:brown">Temporary Vehicle </legend>
+                                <br />
+                                <asp:GridView ID="grdTemporaryVehicle" align="center" runat="server" AutoGenerateColumns="False"
+                                              CellPadding="3" OnRowCommand="grdTemporaryVehicle_RowCommand"
+                                              Width="238px" EmptyDataText="No Records Found" CssClass="gridviewStyle" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                     <Columns>
                                         <asp:TemplateField HeaderText="Vehicle Number">
                                             <ItemTemplate>
@@ -127,10 +128,14 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
-                                    <FooterStyle CssClass="footerStylegrid"/>
-                                    <PagerStyle CssClass="pagerStylegrid"/>
-                                    <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                    <HeaderStyle CssClass="headerStyle"/>
+                                    <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                    <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                    <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                    <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                    <SortedDescendingHeaderStyle BackColor="#00547E" />
                                 </asp:GridView>
                             </fieldset>
                         </asp:Panel>
@@ -143,7 +148,7 @@
                 <tr>
                     <td style="width: 100%;">
                         <asp:Panel ID="Panel1" runat="server" Style="display: none; padding: 10px" CssClass="modalPanel">
-                            <table cellpadding="2" cellspacing="2" width="100%">
+                            <table cellpadding="2" cellspacing="2" width="100%" align="center">
                                 <tr>
                                     <td class="tdlabel">
                                         Vehicle Number
@@ -240,12 +245,11 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                            <legend>Hand Over to Owner</legend>
-                            <asp:GridView ID="grdVehicleDecompositionApproval" runat="server" AutoGenerateColumns="False"
+                            <legend align="center" style="color:brown">Hand Over to Owner</legend>
+                            <asp:GridView ID="grdVehicleDecompositionApproval" align="center" runat="server" AutoGenerateColumns="False"
                                           Width="630px" OnRowCommand="grdVehicleDecompositionApproval_RowCommand" AllowPaging="True"
-                                          OnPageIndexChanging="grdVehicleDecompositionApproval_PageIndexChanging" CellPadding="4"
-                                          ForeColor="#333333" GridLines="None" EmptyDataText="No Records Found" CssClass="gridviewStyle">
-                                <RowStyle CssClass="rowStyleGrid"/>
+                                          OnPageIndexChanging="grdVehicleDecompositionApproval_PageIndexChanging" CellPadding="3" EmptyDataText="No Records Found" CssClass="gridviewStyle" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                 <Columns>
                                     <asp:TemplateField HeaderText="Vehicle Number">
                                         <ItemTemplate>
@@ -269,10 +273,14 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
-                                <FooterStyle CssClass="footerStylegrid"/>
-                                <PagerStyle CssClass="pagerStylegrid"/>
-                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                <HeaderStyle CssClass="headerStyle"/>
+                                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                             </asp:GridView>
                         </fieldset>
                     </td>

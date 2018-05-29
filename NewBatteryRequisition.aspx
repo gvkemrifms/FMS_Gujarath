@@ -43,9 +43,9 @@
                     <tr>
                         <td>
                             <asp:GridView ID="grvInventoryNewBatteryRequisition" runat="server" CellPadding="3"
-                                          EmptyDataText="Details are not available" CellSpacing="2" GridLines="None" CssClass="gridviewStyle"
-                                          AutoGenerateColumns="False">
-                                <RowStyle CssClass="rowStyleGrid"/>
+                                          EmptyDataText="Details are not available" CssClass="gridviewStyle"
+                                          AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                 <Columns>
                                     <asp:TemplateField HeaderText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
@@ -68,10 +68,14 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
-                                <FooterStyle CssClass="footerStylegrid"/>
-                                <PagerStyle CssClass="pagerStylegrid"/>
-                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                <HeaderStyle CssClass="headerStyle"/>
+                                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                             </asp:GridView>
                         </td>
                     </tr>
@@ -97,123 +101,114 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
-                <br/>
-                <tr>
-                    <td>
-                        <asp:GridView ID="grvBatteryPendingForApproval" runat="server" CellPadding="3" CellSpacing="2"
-                                      GridLines="None" CssClass="gridviewStyle" AutoGenerateColumns="False" AllowPaging="True"
-                                      DataKeyNames="FleetInventoryReqID" OnPageIndexChanging="grvBatteryPendingForApproval_PageIndexChanging"
-                                      PageSize="5" OnRowCommand="grvBatteryPendingForApproval_RowCommand">
-                            <Columns>
-                                <asp:BoundField HeaderText="Vehicle Number" DataField="VehicleNum"/>
-                                <asp:BoundField HeaderText="No. of Batteries" DataField="RequestedQty"/>
-                                <asp:BoundField HeaderText="Request Date" DataField="RequestedDate" DataFormatString="{0:MM/dd/yyyy}"/>
-                                <asp:BoundField HeaderText="Request By" DataField="RequestedBy" Visible="false"/>
-                                <asp:BoundField HeaderText="Status" DataField="Status"/>
-                                <asp:TemplateField ControlStyle-Width="50px" HeaderStyle-Width="60px">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btnViewDetails" runat="server" Text="View" ToolTip="Click here to Approve/Reject the details"
-                                                        OnClick="BtnViewDetails_Click" CssClass="button2" RowIndex="<%# Container.DisplayIndex %>"
-                                                        CommandName="Show" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "FleetInventoryReqID") %>'/>
-                                    </ItemTemplate>
-                                    <ControlStyle Width="50px"/>
-                                    <HeaderStyle Width="60px"/>
-                                </asp:TemplateField>
-                            </Columns>
-                            <RowStyle CssClass="rowStyleGrid"/>
-                            <FooterStyle CssClass="footerStylegrid"/>
-                            <PagerStyle CssClass="pagerStylegrid"/>
-                            <SelectedRowStyle CssClass="selectedRowStyle"/>
-                            <HeaderStyle CssClass="headerStyle"/>
-                        </asp:GridView>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Panel ID="RequisitionHistory" runat="server">
-                            <fieldset style="padding: 10px; width: auto">
-                                <legend>Requisition History </legend>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <asp:GridView ID="grvRequisitionHistory" runat="server" AutoGenerateColumns="True"
-                                                          GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" Width="95%"
-                                                          OnPageIndexChanging="grvRequisitionHistory_PageIndexChanging" AllowPaging="True"
-                                                          PageSize="5" EmptyDataText="No History Found">
-                                                <RowStyle CssClass="rowStyleGrid"/>
-                                                <FooterStyle CssClass="footerStylegrid"/>
-                                                <PagerStyle CssClass="pagerStylegrid"/>
-                                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                                <HeaderStyle CssClass="headerStyle"/>
-                                            </asp:GridView>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <asp:Button ID="hideHistory" runat="server" Text="Hide History" Visible="false" OnClick="hideHistory_Click"/>
-                            </fieldset>
-                        </asp:Panel>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="btnShowPopup" runat="server" Style="display: none"/>
-                        <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtender1" BehaviorID="mdlPopup"
-                                                        runat="server" TargetControlID="btnShowPopup" PopupControlID="pnlPopup" BackgroundCssClass="modalBackground"/>
-                        <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Width="500px" Style="display: none; padding: 10px;">
-                            <fieldset style="padding: 10px; width: auto">
-                                <legend>Battery Request Details</legend>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <asp:Label runat="server" Text="Vehicle Number"></asp:Label>
-                                        </td>
-                                        <td class="columnseparator"></td>
-                                        <td>
-                                            <asp:TextBox ID="txtVehicleNumberPopUp" runat="server" ReadOnly="True"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:Label runat="server" Text="Request ID"></asp:Label>
-                                        </td>
-                                        <td class="columnseparator"></td>
-                                        <td>
-                                            <asp:TextBox ID="txtRequestIdPopup" runat="server" ReadOnly="True"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div>
-                                    <asp:GridView ID="grvBatteryRequestDetails" runat="server" AutoGenerateColumns="True"
-                                                  GridLines="None" CssClass="gridviewStyle" CellPadding="3" CellSpacing="2" Width="95%">
-                                        <RowStyle CssClass="rowStyleGrid"/>
-                                        <FooterStyle CssClass="footerStylegrid"/>
-                                        <PagerStyle CssClass="pagerStylegrid"/>
-                                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                        <HeaderStyle CssClass="headerStyle"/>
-                                    </asp:GridView>
-                                </div>
-                                <div id="Div7" align="center" style="background-color: white; width: 95%;">
-                                    <br/>
-                                    <asp:Button ID="btnOk" runat="server" Text="Approve" OnClick="btnOk_Click" Width="50px"/>
-                                    <ajaxToolkit:ConfirmButtonExtender runat="server" TargetControlID="btnOk" ConfirmText="Are you sure you want to APPROVE">
-                                    </ajaxToolkit:ConfirmButtonExtender>
-                                    <asp:Button ID="btnNo" runat="server" Text="Reject" OnClick="btnNo_Click" Width="50px"/>
-                                    <ajaxToolkit:ConfirmButtonExtender runat="server" TargetControlID="btnNo" ConfirmText="Are you sure you want to REJECT">
-                                    </ajaxToolkit:ConfirmButtonExtender>
-                                    <asp:Button runat="server" Text="Cancel" OnClick="btnCancel_Click"
-                                                Width="50px"/>
-                                </div>
-                            </fieldset>
-                        </asp:Panel>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
+                <caption>
+                    <br/>
+                    <tr>
+                        <td>
+                            <asp:GridView ID="grvBatteryPendingForApproval" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" CssClass="gridviewStyle" DataKeyNames="FleetInventoryReqID" GridLines="None" OnPageIndexChanging="grvBatteryPendingForApproval_PageIndexChanging" OnRowCommand="grvBatteryPendingForApproval_RowCommand" PageSize="5">
+                                <Columns>
+                                    <asp:BoundField DataField="VehicleNum" HeaderText="Vehicle Number" />
+                                    <asp:BoundField DataField="RequestedQty" HeaderText="No. of Batteries" />
+                                    <asp:BoundField DataField="RequestedDate" DataFormatString="{0:MM/dd/yyyy}" HeaderText="Request Date" />
+                                    <asp:BoundField DataField="RequestedBy" HeaderText="Request By" Visible="false" />
+                                    <asp:BoundField DataField="Status" HeaderText="Status" />
+                                    <asp:TemplateField ControlStyle-Width="50px" HeaderStyle-Width="60px">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btnViewDetails" runat="server" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "FleetInventoryReqID") %>' CommandName="Show" CssClass="button2" OnClick="BtnViewDetails_Click" RowIndex="<%# Container.DisplayIndex %>" Text="View" ToolTip="Click here to Approve/Reject the details" />
+                                        </ItemTemplate>
+                                        <ControlStyle Width="50px" />
+                                        <HeaderStyle Width="60px" />
+                                    </asp:TemplateField>
+                                </Columns>
+                                <RowStyle CssClass="rowStyleGrid" />
+                                <FooterStyle CssClass="footerStylegrid" />
+                                <PagerStyle CssClass="pagerStylegrid" />
+                                <SelectedRowStyle CssClass="selectedRowStyle" />
+                                <HeaderStyle CssClass="headerStyle" />
+                            </asp:GridView>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowseparator"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Panel ID="RequisitionHistory" runat="server">
+                                <fieldset style="padding: 10px; width: auto">
+                                    <legend>Requisition History </legend>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <asp:GridView ID="grvRequisitionHistory" runat="server" AllowPaging="True" AutoGenerateColumns="True" CellPadding="3" CellSpacing="2" CssClass="gridviewStyle" EmptyDataText="No History Found" GridLines="None" OnPageIndexChanging="grvRequisitionHistory_PageIndexChanging" PageSize="5" Width="95%">
+                                                    <RowStyle CssClass="rowStyleGrid" />
+                                                    <FooterStyle CssClass="footerStylegrid" />
+                                                    <PagerStyle CssClass="pagerStylegrid" />
+                                                    <SelectedRowStyle CssClass="selectedRowStyle" />
+                                                    <HeaderStyle CssClass="headerStyle" />
+                                                </asp:GridView>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <asp:Button ID="hideHistory" runat="server" OnClick="hideHistory_Click" Text="Hide History" Visible="false" />
+                                </fieldset>
+                            </asp:Panel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowseparator"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="btnShowPopup" runat="server" Style="display: none" />
+                            <ajaxToolkit:ModalPopupExtender ID="gv_ModalPopupExtender1" runat="server" BackgroundCssClass="modalBackground" BehaviorID="mdlPopup" PopupControlID="pnlPopup" TargetControlID="btnShowPopup" />
+                            <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPanel" Style="display: none; padding: 10px;" Width="500px">
+                                <fieldset style="padding: 10px; width: auto">
+                                    <legend>Battery Request Details</legend>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <asp:Label runat="server" Text="Vehicle Number"></asp:Label>
+                                            </td>
+                                            <td class="columnseparator"></td>
+                                            <td>
+                                                <asp:TextBox ID="txtVehicleNumberPopUp" runat="server" ReadOnly="True"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:Label runat="server" Text="Request ID"></asp:Label>
+                                            </td>
+                                            <td class="columnseparator"></td>
+                                            <td>
+                                                <asp:TextBox ID="txtRequestIdPopup" runat="server" ReadOnly="True"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <asp:GridView ID="grvBatteryRequestDetails" runat="server" AutoGenerateColumns="True" CellPadding="3" CellSpacing="2" CssClass="gridviewStyle" GridLines="None" Width="95%">
+                                            <RowStyle CssClass="rowStyleGrid" />
+                                            <FooterStyle CssClass="footerStylegrid" />
+                                            <PagerStyle CssClass="pagerStylegrid" />
+                                            <SelectedRowStyle CssClass="selectedRowStyle" />
+                                            <HeaderStyle CssClass="headerStyle" />
+                                        </asp:GridView>
+                                    </div>
+                                    <div id="Div7" align="center" style="background-color: white; width: 95%;">
+                                        <br/>
+                                        <asp:Button ID="btnOk" runat="server" OnClick="btnOk_Click" Text="Approve" Width="50px" />
+                                        <ajaxToolkit:ConfirmButtonExtender runat="server" ConfirmText="Are you sure you want to APPROVE" TargetControlID="btnOk">
+                                        </ajaxToolkit:ConfirmButtonExtender>
+                                        <asp:Button ID="btnNo" runat="server" OnClick="btnNo_Click" Text="Reject" Width="50px" />
+                                        <ajaxToolkit:ConfirmButtonExtender runat="server" ConfirmText="Are you sure you want to REJECT" TargetControlID="btnNo">
+                                        </ajaxToolkit:ConfirmButtonExtender>
+                                        <asp:Button runat="server" OnClick="btnCancel_Click" Text="Cancel" Width="50px" />
+                                    </div>
+                                </fieldset>
+                            </asp:Panel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowseparator"></td>
+                    </tr>
+                </caption>
             </table>
         </td>
     </tr>

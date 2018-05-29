@@ -106,9 +106,9 @@
     <br/>
     <div align="center">
         <div align="center">
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="margin-top: 2%;"
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Style="margin-top: 2%;"
                           EmptyDataText="No Data Found" EmptyDataRowStyle-ForeColor="Red"
-                          HeaderStyle-ForeColor="#337ab7" class="table table-striped table-bordered table-hover">
+                          HeaderStyle-ForeColor="#337ab7"  class="gridview" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
                 <Columns>
                     <asp:TemplateField HeaderText="S&nbsp;No">
                         <ItemTemplate>
@@ -129,6 +129,19 @@
                     <asp:BoundField DataField="Amount" HeaderText="Amount"/>
 
                 </Columns>
+
+<EmptyDataRowStyle ForeColor="Red"></EmptyDataRowStyle>
+
+                <FooterStyle BackColor="White" ForeColor="#000066" />
+
+<HeaderStyle ForeColor="White" BackColor="#006699" Font-Bold="True"></HeaderStyle>
+                <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                <RowStyle ForeColor="#000066" />
+                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
         </div>
     </div>

@@ -305,9 +305,9 @@
     <td>
         <fieldset style="padding: 10px">
             <asp:GridView ID="grvManufacturerDetails" runat="server" AllowPaging="True" PageSize="5"
-                          AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" GridLines="None" class="table table-striped table-bordered table-hover"
-                          OnRowEditing="grvManufacturerDetails_RowEditing" OnPageIndexChanging="grvManufacturerDetails_PageIndexChanging">
-                <RowStyle CssClass="rowStyleGrid"/>
+                          AutoGenerateColumns="False" CellPadding="3" class="table table-striped table-bordered table-hover"
+                          OnRowEditing="grvManufacturerDetails_RowEditing" OnPageIndexChanging="grvManufacturerDetails_PageIndexChanging" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                 <Columns>
                     <asp:TemplateField HeaderText="Id">
                         <ItemTemplate>
@@ -342,10 +342,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-                <FooterStyle CssClass="footerStylegrid"/>
-                <PagerStyle CssClass="pagerStylegrid"/>
-                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                <HeaderStyle CssClass="headerStyle"/>
+                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
             <br/>
             <asp:HiddenField ID="hidManId" runat="server"/>

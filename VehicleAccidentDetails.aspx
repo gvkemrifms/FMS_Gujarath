@@ -526,8 +526,8 @@
 <table align="center">
     <tr>
         <td>
-            <asp:GridView ID="grdVehicleAccidentDetails" gridlines="Both" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                          OnPageIndexChanging="grdVehicleAccidentDetails_PageIndexChanging" Width="100%">
+            <asp:GridView ID="grdVehicleAccidentDetails" runat="server" AllowPaging="True" AutoGenerateColumns="False"
+                          OnPageIndexChanging="grdVehicleAccidentDetails_PageIndexChanging" Width="100%" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3">
                 <Columns>
                     <asp:TemplateField HeaderText="Accident Title">
                         <ItemTemplate>
@@ -569,6 +569,15 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
+                <FooterStyle BackColor="White" ForeColor="#000066" />
+                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                <RowStyle ForeColor="#000066" />
+                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
         </td>
     </tr>

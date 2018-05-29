@@ -318,11 +318,10 @@
 <table align="center">
     <tr>
         <td>
-            <asp:GridView ID="gvVehicleDetails" AutoGenerateColumns="false" runat="server"
-                          ForeColor="#333333" BorderWidth="1px" CssClass="gridviewStyle" GridLines="Both"
-                          CellPadding="4" CellSpacing="2" Width="630px"
-                          OnRowCommand="gvVehicleDetails_RowCommand">
-                <RowStyle CssClass="rowStyleGrid"/>
+            <asp:GridView ID="gvVehicleDetails" AutoGenerateColumns="False" runat="server" BorderWidth="1px" CssClass="gridviewStyle"
+                          CellPadding="3" Width="630px"
+                          OnRowCommand="gvVehicleDetails_RowCommand" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None">
+                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
 
                 <Columns>
                     <asp:TemplateField HeaderText="S No" ItemStyle-HorizontalAlign="Center">
@@ -345,10 +344,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-                <FooterStyle CssClass="footerStylegrid"/>
-                <PagerStyle CssClass="pagerStylegrid"/>
-                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                <HeaderStyle CssClass="headerStyle"/>
+                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
         </td>
     </tr>

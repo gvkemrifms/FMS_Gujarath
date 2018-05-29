@@ -92,7 +92,7 @@ public partial class VehicleRegistration : Page
         _vehreg.ChasisNumber = txtChassisNo.Text;
         _vehreg.SeatingCapacity = int.Parse(txtSittingCapacity.Text);
         _vehreg.PRNo = txtPRNo.Text;
-        _vehreg.RegDate = DateTime.Parse(txtRegistrationDate.Text);
+        _vehreg.RegDate = DateTime.ParseExact(txtRegistrationDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture);
         _vehreg.VehicleRTACircle = txtRTACircle.Text;
         _vehreg.District = ddlDistrict.SelectedItem.Value;
         _vehreg.RegExpenses = float.Parse(txtRegisExpenses.Text);

@@ -20,14 +20,14 @@
     </script>
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
-            <table>
+            <table align="center">
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                            <legend>Vehicle Types</legend>
+                            <legend align="center" style="color:brown">Vehicle Types</legend>
                             <asp:Panel ID="pnlvehicletypes" runat="server">
                                 <table align="center" style="width: 500px;" title="Vehicle Types">
                                     <tr>
@@ -36,7 +36,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtVehicleType" runat="server" MaxLength="15"></asp:TextBox>
+                                            <asp:TextBox ID="txtVehicleType" CssClass="search_3" runat="server" MaxLength="15"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -48,7 +48,7 @@
                                         </td>
                                         <td class="columnseparator"></td>
                                         <td>
-                                            <asp:TextBox ID="txtVehicleDescription" runat="server" TextMode="MultiLine" Rows="3"
+                                            <asp:TextBox ID="txtVehicleDescription" CssClass="search_3" runat="server" TextMode="MultiLine" Rows="3"
                                                          onKeyUp="CheckLength(this,300)" onChange="CheckLength(this,300)" onkeypress="return alphanumeric_withspace_only(event);">
                                             </asp:TextBox>
                                         </td>
@@ -58,10 +58,10 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3" align="center">
-                                            <asp:Button ID="btnvehicleTypeSave" runat="server" Text="Save" OnClientClick="return validation();"
+                                            <asp:Button ID="btnvehicleTypeSave" runat="server" Text="Save" cssClass="form-submit-button" OnClientClick="return validation();"
                                                         OnClick="vehicleTypeSave_Click"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <asp:Button ID="vehicleTypeReset" runat="server" Text="Reset" OnClick="vehicleTypeReset_Click"/>
+                                            <asp:Button ID="vehicleTypeReset" runat="server" Text="Reset" cssClass="form-reset-button" OnClick="vehicleTypeReset_Click"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -75,11 +75,10 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px;">
-                            <asp:GridView ID="grvVehicleTypes" runat="server" align="center" AllowPaging="True" BorderColor="Brown" BorderWidth="1px"
-                                          PageSize="5" AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" OnPageIndexChanging="grvVehicleTypes_PageIndexChanging"
-                                          GridLines="Both" CssClass="gridviewStyle" OnRowEditing="grvVehicleTypes_RowEditing"
-                                          Width="600px">
-                                <RowStyle CssClass="rowStyleGrid"/>
+                            <asp:GridView ID="grvVehicleTypes" runat="server" align="center" AllowPaging="True" BorderColor="#CCCCCC" BorderWidth="1px"
+                                          PageSize="5" AutoGenerateColumns="False" CellPadding="3" OnPageIndexChanging="grvVehicleTypes_PageIndexChanging" CssClass="gridviewStyle" OnRowEditing="grvVehicleTypes_RowEditing"
+                                          Width="600px" BackColor="White" BorderStyle="None">
+                                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                 <Columns>
                                     <asp:TemplateField HeaderText="Vehicle Id">
                                         <ItemTemplate>
@@ -104,10 +103,14 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
-                                <FooterStyle CssClass="footerStylegrid"/>
-                                <PagerStyle CssClass="pagerStylegrid"/>
-                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                <HeaderStyle CssClass="headerStyle"/>
+                                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                             </asp:GridView>
                         </fieldset>
                     </td>

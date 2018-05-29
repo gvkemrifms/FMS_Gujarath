@@ -66,7 +66,7 @@
     </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table>
+            <table align="center">
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
@@ -129,8 +129,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                    </tr>
-                                    <tr>
                                         <td colspan="2">
                                             <asp:TextBox ID="txtSparePartID" CssClass="search_3" runat="server" Visible="False"></asp:TextBox>
                                         </td>
@@ -145,8 +143,6 @@
                                             <asp:Button ID="btReset" runat="server" CssClass="form-reset-button" OnClick="btReset_Click" Text="Reset"/>
                                         </td>
                                     </tr>
-                                    <tr>
-                                    </tr>
                                 </table>
                             </asp:Panel>
                         </fieldset>
@@ -155,78 +151,80 @@
                 <tr>
                     <td class="rowseparator"></td>
                 </tr>
-                <br/>
-                <tr>
-                    <td>
-                        <fieldset style="padding: 10px">
-                            <asp:GridView ID="gvSpareParts" runat="server" AutoGenerateColumns="False" CellPadding="3"
-                                          CellSpacing="2" GridLines="Both" CssClass="gridviewStyle" BorderColor="Brown" BorderWidth="1px" OnPageIndexChanging="gvSpareParts_PageIndexChanging"
-                                          OnRowDeleting="gvSpareParts_RowDeleting" OnRowEditing="gvSpareParts_RowEditing">
-                                <RowStyle CssClass="rowStyleGrid"/>
-                                <Columns>
-                                    <asp:TemplateField HeaderText="SparePart Id">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblId" runat="server" Text='<%#Eval("SparePart_Id") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="SparePart Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblSparePartName" runat="server" Text='<%#Eval("SparePart_Name") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Manufacturer SpareId">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblManSprId" runat="server" Text='<%#Eval("ManufacturerSpare_Id") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Manufacturer Id">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblManId" runat="server" Text='<%#Eval("Manufacturer_Id") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Group Id">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblGroupId" runat="server" Text='<%#Eval("SparePart_Group_Id") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Group Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblGroupName" runat="server" Text='<%#Eval("Group_Name") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Cost">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblCost" runat="server" Text='<%#Eval("Cost") %>'/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Edit">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Delete">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" Text="Deactivate"></asp:LinkButton>
-                                            <asp:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" ConfirmText="Are You sure you want to DEACTIVATE"
-                                                                       TargetControlID="lnkDelete">
-                                            </asp:ConfirmButtonExtender>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <FooterStyle CssClass="footerStylegrid"/>
-                                <PagerStyle CssClass="pagerStylegrid"/>
-                                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                <HeaderStyle CssClass="headerStyle"/>
-                            </asp:GridView>
-                        </fieldset>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
-                <tr>
-                    <td class="rowseparator"></td>
-                </tr>
+                <caption>
+                    <br/>
+                    <tr>
+                        <td>
+                            <fieldset style="padding: 10px">
+                                <asp:GridView ID="gvSpareParts" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="gridviewStyle" OnPageIndexChanging="gvSpareParts_PageIndexChanging" OnRowDeleting="gvSpareParts_RowDeleting" OnRowEditing="gvSpareParts_RowEditing">
+                                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066" />
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="SparePart Id">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblId" runat="server" Text='<%#Eval("SparePart_Id") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="SparePart Name">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblSparePartName" runat="server" Text='<%#Eval("SparePart_Name") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Manufacturer SpareId">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblManSprId" runat="server" Text='<%#Eval("ManufacturerSpare_Id") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Manufacturer Id">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblManId" runat="server" Text='<%#Eval("Manufacturer_Id") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Group Id">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblGroupId" runat="server" Text='<%#Eval("SparePart_Group_Id") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Group Name">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblGroupName" runat="server" Text='<%#Eval("Group_Name") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Cost">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblCost" runat="server" Text='<%#Eval("Cost") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Edit">
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Delete">
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" Text="Deactivate"></asp:LinkButton>
+                                                <asp:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" ConfirmText="Are You sure you want to DEACTIVATE" TargetControlID="lnkDelete">
+                                                </asp:ConfirmButtonExtender>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                    <FooterStyle BackColor="White" CssClass="footerStylegrid" ForeColor="#000066" />
+                                    <PagerStyle BackColor="White" CssClass="pagerStylegrid" ForeColor="#000066" HorizontalAlign="Left" />
+                                    <SelectedRowStyle BackColor="#669999" CssClass="selectedRowStyle" Font-Bold="True" ForeColor="White" />
+                                    <HeaderStyle BackColor="#006699" CssClass="headerStyle" Font-Bold="True" ForeColor="White" />
+                                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                    <SortedDescendingHeaderStyle BackColor="#00547E" />
+                                </asp:GridView>
+                            </fieldset> </td>
+                    </tr>
+                    <tr>
+                        <td class="rowseparator"></td>
+                    </tr>
+                    <tr>
+                        <td class="rowseparator"></td>
+                    </tr>
+                </caption>
             </table>
             <asp:HiddenField ID="hidSpareId" runat="server"/>
         </ContentTemplate>

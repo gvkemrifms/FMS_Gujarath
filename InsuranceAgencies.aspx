@@ -51,7 +51,7 @@
                 <tr>
                     <td style="height: 200px">
                         <fieldset style="padding: 10px;">
-                            <legend align="center">Insurance Agency</legend>
+                            <legend align="center" style="color:brown">Insurance Agency</legend>
                             <table id="table2" width="91%" align="center">
                                 <tr>
                                     <td>
@@ -144,8 +144,8 @@
                     <td>
                         <fieldset style="padding: 10px;">
                             <asp:GridView ID="grvInsuranceAgencyDetails" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                                          BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px"
-                                          CellPadding="3" CellSpacing="2" PageSize="5" Width="548px" OnRowCommand="grvInsuranceAgencyDetails_RowCommand"
+                                          BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
+                                          CellPadding="3" PageSize="5" Width="548px" OnRowCommand="grvInsuranceAgencyDetails_RowCommand"
                                           OnPageIndexChanging="grvInsuranceAgencyDetails_PageIndexChanging">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Id">
@@ -184,11 +184,15 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
-                                <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510"/>
-                                <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510"/>
-                                <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center"/>
-                                <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White"/>
-                                <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White"/>
+                                <FooterStyle BackColor="White" ForeColor="#000066"/>
+                                <RowStyle ForeColor="#000066"/>
+                                <PagerStyle ForeColor="#000066" HorizontalAlign="Left" BackColor="White"/>
+                                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                             </asp:GridView>
                         </fieldset>
                     </td>

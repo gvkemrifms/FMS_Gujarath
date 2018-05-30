@@ -108,13 +108,14 @@
                                     </td>
                                 </tr>
                             </table>
+                            <br />
                             <asp:Panel ID="pnlDisplayDetails" runat="server" Width="100%" Visible="false">
                                 <asp:GridView ID="grvScheduleServiceRequest" runat="server" AllowPaging="True" PageSize="5"
-                                              AutoGenerateColumns="False" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None"
-                                              BorderWidth="1px" CellPadding="3" CellSpacing="2" Width="660px" OnRowEditing="grvScheduleServiceRequest_RowEditing"
+                                              AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None"
+                                              BorderWidth="1px" CellPadding="3" Width="660px" OnRowEditing="grvScheduleServiceRequest_RowEditing"
                                               OnRowDeleting="grvScheduleServiceRequest_RowDeleting" OnPageIndexChanging="grvScheduleServiceRequest_PageIndexChanging"
                                               CssClass="gridviewStyle">
-                                    <RowStyle CssClass="rowStyleGrid"/>
+                                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sl No" Visible="false">
                                             <ItemTemplate>
@@ -168,10 +169,14 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
-                                    <FooterStyle CssClass="footerStylegrid"/>
-                                    <PagerStyle CssClass="pagerStylegrid"/>
-                                    <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                    <HeaderStyle CssClass="headerStyle"/>
+                                    <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                    <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                    <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                    <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                    <SortedDescendingHeaderStyle BackColor="#00547E" />
                                 </asp:GridView>
                             </asp:Panel>
                         </fieldset>

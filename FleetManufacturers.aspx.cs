@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,9 +19,7 @@ public partial class FleetManufacturers : Page
         if (!IsPostBack)
         {
             grvManufacturerDetails.Columns[0].Visible = false;
-            FillStates();
-            FillDistricts(0);
-            ddlFleetManufacturerDistrict.Enabled = false;
+            FillDistricts();
             FillGrid_FleetManufacturerDetails();
             btnManufacturerSave.Attributes.Add("onclick", "javascript:return validationFleetManufacturers()");
             txtManufacturerName.Attributes.Add("onkeypress", "javascript:return OnlyAlphabets(this,event)");
@@ -71,43 +70,19 @@ public partial class FleetManufacturers : Page
         txtManufacturerModel.Text = "";
         txtManufacturerTin.Text = "";
         ddlFleetManufacturerDistrict.SelectedIndex = 0;
-        ddlFleetManufacturerDistrict.Enabled = false;
-        ddlManufacturerState.SelectedIndex = 0;
         ddlManufacturerType.SelectedIndex = 0;
         btnManufacturerSave.Text = "Save";
     }
 
     #endregion
-
-    #region Fill States Function
-
-    private void FillStates()
-    {
-        var ds = ObjFmsMan.IFillStates();
-        if (ds != null)
-            try
-            {
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlManufacturerState);
-                ddlFleetManufacturerDistrict.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                _helper.ErrorsEntry(ex);
-            }
-    }
-
-    #endregion
-
     #region Fill Districts Function
 
-    private void FillDistricts(int stateId)
+    private void FillDistricts()
     {
-        var ds = ObjFmsMan.IFillDistricts(stateId);
-        if (ds != null)
+        string query = ConfigurationManager.AppSettings["Query"];
             try
             {
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFleetManufacturerDistrict);
-                ddlFleetManufacturerDistrict.Enabled = true;
+                _helper.FillDropDownHelperMethod(query, "DISTRICT_NAME", "DISTRICT_ID", ddlFleetManufacturerDistrict);
             }
             catch (Exception ex)
             {
@@ -117,33 +92,7 @@ public partial class FleetManufacturers : Page
 
     #endregion
 
-    #region Selected Index change for State drop down list
-
-    protected void ddlManufacturerState_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlManufacturerState == null) return;
-        switch (ddlManufacturerState.SelectedIndex)
-        {
-            case 0:
-                ddlFleetManufacturerDistrict.Enabled = false;
-                break;
-            default:
-                ddlFleetManufacturerDistrict.Enabled = true;
-                FillDistricts(Convert.ToInt32(ddlManufacturerState.SelectedValue));
-                break;
-        }
-    }
-
-    #endregion
-
-    #region Selected Index Change for District drop down list
-
-    protected void ddlFleetManufacturerDistrict_SelectedIndexChanged(object sender, EventArgs e)
-    {
-    }
-
-    #endregion
-
+   
     #region Save and Update Button
 
     protected void btnManufacturerSave_Click(object sender, EventArgs e)
@@ -163,7 +112,6 @@ public partial class FleetManufacturers : Page
                                 var mfname = txtManufacturerName.Text;
                                 var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
                                 var mfmodel = txtManufacturerModel.Text;
-                                var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
                                 var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
                                 var mfmandal = 0;
                                 var mfcity = 0;
@@ -180,7 +128,7 @@ public partial class FleetManufacturers : Page
                                 var mfcreateby = Convert.ToString(Session["User_Id"]);
                                 var mfupdtdate = DateTime.Today;
                                 var mfupdateby = Convert.ToString(Session["User_Id"]);
-                                ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
+                                ds = ObjFmsMan.InsertManufacturerDetails(mfname, mftypid, mfmodel,1, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern, mfstatus, mfinactby, mfinactdate, mfcreatedate, mfcreateby, mfupdtdate, mfupdateby);
                                 switch (ds.Tables.Count)
                                 {
                                     case 0:
@@ -210,7 +158,6 @@ public partial class FleetManufacturers : Page
                             var mfname = txtManufacturerName.Text;
                             var mftypid = Convert.ToInt32(ddlManufacturerType.SelectedValue);
                             var mfmodel = txtManufacturerModel.Text;
-                            var mfstate = Convert.ToInt32(ddlManufacturerState.SelectedValue);
                             var mfdist = Convert.ToInt32(ddlFleetManufacturerDistrict.SelectedValue);
                             var mfmandal = 0;
                             var mfcity = 0;
@@ -221,7 +168,7 @@ public partial class FleetManufacturers : Page
                             var mftin = Convert.ToInt64(txtManufacturerTin.Text);
                             var mfern = Convert.ToInt64(txtManufacturerErn.Text);
                             //UpdateManufacturerDetails interface object
-                            ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, mfstate, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
+                            ds = ObjFmsMan.UpdateManufacturerDetails(mfId, mfname, mftypid, mfmodel, 1, mfdist, mfmandal, mfcity, mfaddress, mfcontno, mfcontper, mfmail, mftin, mfern);
                             switch (ds.Tables.Count)
                             {
                                 case 0:
@@ -291,14 +238,12 @@ public partial class FleetManufacturers : Page
         hidManId.Value = lblid.Text;
         int mfId = Convert.ToInt16(hidManId.Value);
         var ds = ObjFmsMan.IRowEditManufacturerDetails(mfId);
-        Session["State_Id"] = ds.Tables[0].Rows[0].ItemArray[3].ToString();
         Session["District_Id"] = ds.Tables[0].Rows[0].ItemArray[4].ToString();
         Session["Mandal_Id"] = ds.Tables[0].Rows[0].ItemArray[5].ToString();
         Session["City_Id"] = ds.Tables[0].Rows[0].ItemArray[6].ToString();
         txtManufacturerName.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_Name"].ToString());
         ddlManufacturerType.SelectedValue = ds.Tables[0].Rows[0]["FleetType_Id"].ToString();
         txtManufacturerModel.Text = Convert.ToString(ds.Tables[0].Rows[0]["Fleet_Model"].ToString());
-        ddlManufacturerState.SelectedValue = ds.Tables[0].Rows[0]["State_Id"].ToString();
         txtManufacturerAddress.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_Address"].ToString());
         txtManufacturerContactNumber.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_ContactNo"].ToString());
         txtManufacturerContactPerson.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_ContactPerson"].ToString());
@@ -306,7 +251,7 @@ public partial class FleetManufacturers : Page
         txtManufacturerTin.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_TIN"].ToString());
         txtManufacturerErn.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetManufacturer_ERN"].ToString());
         //FillStates();
-        FillDistricts(Convert.ToInt32(Session["State_Id"].ToString()));
+        FillDistricts();
         ddlFleetManufacturerDistrict.SelectedValue = ds.Tables[0].Rows[0]["District_Id"].ToString();
     }
 

@@ -145,7 +145,10 @@
 </script>
 <table align="center">
 <tr>
-    <legend align="center" style="color: brown">Fabricated Vehicle Details</legend>
+    <legend align="center" style="color: brown">
+        <caption>
+            Fabricated Vehicle Details</caption>
+    </legend>
     <td class="rowseparator"></td>
 </tr>
 <tr>
@@ -336,12 +339,12 @@
             <tr align="center">
                 <td>
                     <asp:GridView ID="gvFabricatedVehicleDetails" runat="server" EmptyDataText="No Records Found"
-                                  CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="True"
+                                  CellPadding="3" Width="630px" AllowPaging="True"
                                   AllowSorting="True" OnSorting="gridView_Sorting" OnPageIndexChanging="gridView_PageIndexChanging"
                                   AutoGenerateColumns="False" OnRowCommand="gvFabricatedVehicleDetails_RowCommand"
                                   class="table table-striped table-bordered table-hover" PagerStyle-CssClass="pager"
-                                  HeaderStyle-ForeColor="#337ab7" CellSpacing="2" style="margin-top: 100px; text-align: center;">
-                        <RowStyle CssClass="rows"/>
+                                  HeaderStyle-ForeColor="#337ab7" style="margin-top: 100px; text-align: center;" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                        <RowStyle CssClass="rows" ForeColor="#000066"/>
                         <Columns>
                             <asp:TemplateField HeaderText="T/R No">
                                 <ItemTemplate>
@@ -386,10 +389,14 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
-                        <FooterStyle CssClass="footerStylegrid"/>
-                        <PagerStyle CssClass="pagerStylegrid"/>
-                        <SelectedRowStyle CssClass="selectedRowStyle"/>
-                        <HeaderStyle CssClass="headerStyle"/>
+                        <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                        <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                        <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                        <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                        <SortedDescendingHeaderStyle BackColor="#00547E" />
                     </asp:GridView>
                 </td>
             </tr>

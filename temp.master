@@ -352,7 +352,7 @@
                                         </li>
                                         <li><a>VAS Reports<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li class="VehicleSummaryRegionwise.aspx"><a href="level2.html">Vehicle Summary Regionwise</a>
+                                                <li class="VehicleSummaryRegionwise.aspx"><a href="VehicleSummaryRegionwise.html">Vehicle Summary Regionwise</a>
                                                 </li>
                                                 <li><a href="VehicleSummaryDistrictwise.aspx">Vehicle Summary Districtwise</a>
                                                 </li>
@@ -535,7 +535,6 @@
     <!-- bootstrap-daterangepicker -->
     <script src="js/js/moment/moment.min.js"></script>
     <script src="js/js/datepicker/daterangepicker.js"></script>
-
     <!-- Custom Theme Scripts -->
     <script src="js/js/custom.js"></script>
 

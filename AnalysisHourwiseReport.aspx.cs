@@ -53,7 +53,7 @@ public partial class AnalysisHourwiseReport : Page
     {
         try
         {
-            _helper.LoadExcelSpreadSheet(this, Panel2, "VehicleSummaryDistrictwise.xls");
+            _helper.LoadExcelSpreadSheet(this, null, "VehicleSummaryDistrictwise.xls",Grddetails);
         }
         catch (Exception ex)
         {

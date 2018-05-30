@@ -95,14 +95,14 @@
 <asp:UpdatePanel ID="UpdPanel1" runat="server">
 <ContentTemplate>
 <fieldset style="padding: 10px">
-<legend>Spare Part Receipt</legend>
+<legend align="center" style="color:brown">Spare Part Receipt</legend>
 <table style="width: 100%">
 <tr>
     <td class="rowseparator"></td>
 </tr>
 <tr>
     <td align="center">
-        <asp:Label ID="lbVehicles" runat="server" Text="Vehicles"></asp:Label>
+        <asp:Label runat="server" Text="Vehicles"></asp:Label>
         <span style="color: Red">*</span>
         <ajaxToolKit:ComboBox AutoCompleteMode="Append" ID="ddlVehicles" runat="server" AutoPostBack="True"
                               OnSelectedIndexChanged="ddlVehicles_SelectedIndexChanged" DropDownStyle="DropDownList">
@@ -115,8 +115,8 @@
 <tr>
     <td align="center">
         <asp:GridView ID="gvIssueDetails" runat="server" AutoGenerateColumns="False" CellPadding="3"
-                      EmptyDataText="Details are not available" CellSpacing="2" GridLines="None" CssClass="gridviewStyle"
-                      OnPageIndexChanging="gvIssueDetails_PageIndexChanging" OnRowCommand="gvIssueDetails_RowCommand">
+                      EmptyDataText="Details are not available" CssClass="gridviewStyle"
+                      OnPageIndexChanging="gvIssueDetails_PageIndexChanging" OnRowCommand="gvIssueDetails_RowCommand" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
             <Columns>
                 <asp:BoundField HeaderText="VehicleNum" DataField="VehicleNum"/>
                 <asp:BoundField HeaderText="District" DataField="ds_lname"/>
@@ -134,11 +134,15 @@
                     <HeaderStyle Width="60px"/>
                 </asp:TemplateField>
             </Columns>
-            <RowStyle CssClass="rowStyleGrid"/>
-            <FooterStyle CssClass="footerStylegrid"/>
-            <PagerStyle CssClass="pagerStylegrid"/>
-            <SelectedRowStyle CssClass="selectedRowStyle"/>
-            <HeaderStyle CssClass="headerStyle"/>
+            <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
+            <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+            <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+            <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+            <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#00547E" />
         </asp:GridView>
     </td>
 </tr>

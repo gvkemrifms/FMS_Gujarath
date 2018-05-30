@@ -22,12 +22,11 @@
             document.getElementById("<%= txtManufacturerModel.ClientID %>").focus();
             return false;
         }
-        switch (document.getElementById("<%= ddlManufacturerState.ClientID %>").selectedIndex) {
+        switch (document.getElementById("<%= ddlFleetManufacturerDistrict.ClientID %>").selectedIndex) {
         case 0:
-            alert("Please Select Manufacturer State");
-            document.getElementById("<%= ddlManufacturerState.ClientID %>").focus();
+            alert("Please select State");
+            document.getElementById("<%= ddlFleetManufacturerDistrict.ClientID %>").focus();
             return false;
-
         }
         switch (document.getElementById("<%= txtManufacturerAddress.ClientID %>").value) {
         case '':
@@ -97,12 +96,7 @@
 <ContentTemplate>
 <script type="text/javascript">
     function pageLoad() {
-        $('#<%= ddlManufacturerState.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 20,
-            placeholder: "Select an option"
-        });
+       
         $('#<%= ddlFleetManufacturerDistrict.ClientID %>').select2({
             disable_search_threshold: 5,
             search_contains: true,
@@ -164,29 +158,18 @@
                                 </tr>
                                 <tr>
                                     <td class="rowseparator"></td>
-                                </tr>
-                                <tr>
-                                    <td style="height: 25px; width: 150px;" align="left">
-                                        State <span style="color: Red">*</span>
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlManufacturerState" Width="150px" runat="server"
-                                                          OnSelectedIndexChanged="ddlManufacturerState_SelectedIndexChanged" AutoPostBack="True">
-                                        </asp:DropDownList>
-                                    </td>
-                                </tr>
+                                </tr>                           
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 150px" align="left">
-                                        District
+                                       State<span style="color:red">*</span>
 
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
-                                        <asp:DropDownList ID="ddlFleetManufacturerDistrict" runat="server" Width="150px" OnSelectedIndexChanged="ddlFleetManufacturerDistrict_SelectedIndexChanged"
+                                        <asp:DropDownList ID="ddlFleetManufacturerDistrict" runat="server" Width="150px" 
                                                           AutoPostBack="True">
                                         </asp:DropDownList>
                                     </td>
@@ -305,9 +288,9 @@
     <td>
         <fieldset style="padding: 10px">
             <asp:GridView ID="grvManufacturerDetails" runat="server" AllowPaging="True" PageSize="5"
-                          AutoGenerateColumns="False" CellPadding="3" CellSpacing="2" GridLines="None" class="table table-striped table-bordered table-hover"
-                          OnRowEditing="grvManufacturerDetails_RowEditing" OnPageIndexChanging="grvManufacturerDetails_PageIndexChanging">
-                <RowStyle CssClass="rowStyleGrid"/>
+                          AutoGenerateColumns="False" CellPadding="3" class="table table-striped table-bordered table-hover"
+                          OnRowEditing="grvManufacturerDetails_RowEditing" OnPageIndexChanging="grvManufacturerDetails_PageIndexChanging" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                 <Columns>
                     <asp:TemplateField HeaderText="Id">
                         <ItemTemplate>
@@ -342,10 +325,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-                <FooterStyle CssClass="footerStylegrid"/>
-                <PagerStyle CssClass="pagerStylegrid"/>
-                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                <HeaderStyle CssClass="headerStyle"/>
+                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
             <br/>
             <asp:HiddenField ID="hidManId" runat="server"/>

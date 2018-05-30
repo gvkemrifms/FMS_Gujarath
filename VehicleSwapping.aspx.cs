@@ -28,7 +28,7 @@ public partial class VehicleSwapping : Page
         {
             var ds = _fmsobj.GetDistricts_new();
             if (ds == null) throw new ArgumentNullException(nameof(ds));
-            _helper.FillDropDownHelperMethodWithDataSet(ds, "ds_lname", "ds_dsid", ddlDistrict);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "district_name", "district_id", ddlDistrict);
         }
         catch (Exception ex)
         {
@@ -100,10 +100,7 @@ public partial class VehicleSwapping : Page
             txtSrcBaseLocation.Text = dvsrcvehbase[0][1].ToString();
             txtSrcContactNo.Text = dvsrcvehbase[0][3].ToString();
             ViewState["SrcBaseLocationId"] = Convert.ToInt32(dvsrcvehbase[0][4]);
-            var dvdestvehicle = new DataView(ds.Tables[0], "VehicleID <>'" + ddlSrcVehicle.SelectedItem.Value + "'", "VehicleNumber", DataViewRowState.CurrentRows);
-            var dtVehicle = dvdestvehicle.Table;
-            dsVehicle.Tables.Add(dtVehicle);
-            _helper.FillDropDownHelperMethodWithDataSet(dsVehicle, "VehicleNumber", "VehicleID", ddlDestVehicle);
+            _helper.FillDropDownHelperMethodWithDataSet(ds, "VehicleNumber", "VehicleID", ddlDestVehicle);
         }
         catch (Exception ex)
         {

@@ -8,6 +8,7 @@ using GvkFMSAPP.BLL;
 using GvkFMSAPP.DLL;
 using ServiceReference2;
 using FMSGeneral = GvkFMSAPP.BLL.FMSGeneral;
+using System.Globalization;
 
 public partial class PetroCardIssue : Page
 {
@@ -106,11 +107,11 @@ public partial class PetroCardIssue : Page
         switch (btSave.Text)
         {
             case "Save":
-                InsPetroCardIssueDetails(Convert.ToInt32(Session["UserdistrictId"].ToString()), txtPetroCardNumber.Text, Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToInt32(ddlCardType.SelectedValue), Convert.ToDateTime(txtValidityEndDate.Text), Convert.ToInt32(dd_listFe.SelectedValue), Convert.ToDateTime(txtIssuedDate.Text), 0, 25, Convert.ToDateTime("05/24/2011"), 34, Convert.ToDateTime("05/25/2011"), Convert.ToInt32(ddlVehicles.SelectedValue), Convert.ToInt32(ddlFeuserDistrict.SelectedValue));
+                InsPetroCardIssueDetails(Convert.ToInt32(Session["UserdistrictId"].ToString()), txtPetroCardNumber.Text, Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToInt32(ddlCardType.SelectedValue), DateTime.ParseExact(txtValidityEndDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture), Convert.ToInt32(dd_listFe.SelectedValue), DateTime.ParseExact(txtIssuedDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture), 0, 25, Convert.ToDateTime("05/24/2011"), 34, Convert.ToDateTime("05/25/2011"), Convert.ToInt32(ddlVehicles.SelectedValue), Convert.ToInt32(ddlFeuserDistrict.SelectedValue));
                 FillGridPetroCard();
                 break;
             default:
-                UpdPetroCardIssueDetails(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt64(txtPetroCardNumber.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToInt32(ddlCardType.SelectedValue), Convert.ToDateTime(txtValidityEndDate.Text), Convert.ToInt32(dd_listFe.SelectedValue), Convert.ToDateTime(txtIssuedDate.Text), Convert.ToInt32(ddlVehicles.SelectedValue), Convert.ToInt32(ddlFeuserDistrict.SelectedValue));
+                UpdPetroCardIssueDetails(Convert.ToInt32(txtEdit.Text), Convert.ToInt32(Session["UserdistrictId"].ToString()), Convert.ToInt64(txtPetroCardNumber.Text), Convert.ToInt32(ddlAgency.SelectedValue), Convert.ToInt32(ddlCardType.SelectedValue), DateTime.ParseExact(txtValidityEndDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture), Convert.ToInt32(dd_listFe.SelectedValue), DateTime.ParseExact(txtIssuedDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture), Convert.ToInt32(ddlVehicles.SelectedValue), Convert.ToInt32(ddlFeuserDistrict.SelectedValue));
                 FillGridPetroCard();
                 break;
         }

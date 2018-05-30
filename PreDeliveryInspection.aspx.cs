@@ -90,10 +90,10 @@ public partial class PreDeliveryInspection : Page
         Show(DateTime.Now.ToString(CultureInfo.InvariantCulture));
         if (ViewState["PreDeliveryInspectionID"] != null) _predelinsp.PreDeliveryInspectionID = int.Parse(ViewState["PreDeliveryInspectionID"].ToString());
         _predelinsp.VehicleReceivedFrom = ddlVehicleReceived.SelectedItem.Value;
-        _predelinsp.ReceivedDate = DateTime.Parse(txtReceivedDate.Text);
+        _predelinsp.ReceivedDate = DateTime.ParseExact(txtReceivedDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture);
         _predelinsp.Odometer = int.Parse(txtOdometer.Text);
         _predelinsp.PDIBy = txtPDIBy.Text;
-        _predelinsp.PDIDate = DateTime.Parse(txtPDIDate.Text);
+        _predelinsp.PDIDate = DateTime.ParseExact(txtPDIDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture);
         switch (btSave.Text)
         {
             case "Save":

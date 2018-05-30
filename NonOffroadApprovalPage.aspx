@@ -86,8 +86,8 @@
                             </tr>
                         </table>
                         <div align="center">
-                            <asp:GridView ID="gvNonOffroadApprovalPage" style="border-color: brown; border-width: 1px; margin-top: 10px; width: auto;" runat="server" EmptyDataText="No Records Found"
-                                          AllowSorting="True" AutoGenerateColumns="True"
+                            <asp:GridView ID="gvNonOffroadApprovalPage" style="border-color: brown; border-width: 1px; margin-top: 10px;" runat="server" EmptyDataText="No Records Found"
+                                          AllowSorting="True" AutoGenerateColumns="false"
                                           CssClass="gridview" CellSpacing="2"
                                           CellPadding="4" wrap="nowrap" ForeColor="#333333" GridLines="Both" AllowPaging="True"
                                           EnableSortingAndPagingCallbacks="True"
@@ -107,8 +107,6 @@
                                             <asp:Label ID="lblBrkDwn" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ID") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
-
                                     <asp:TemplateField HeaderText="Vehicle No">
                                         <ItemTemplate>
                                             <asp:Label ID="lblVehicle_No" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "Vechicleno") %>'></asp:Label>

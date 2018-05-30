@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,10 +19,7 @@ public partial class Fabricator : Page
         if (!IsPostBack)
         {
             grvFabricatorDetails.Columns[0].Visible = false;
-
-            FillStates();
-            FillDistricts(0);
-            ddlFabricatorDistrict.Enabled = false;
+            FillDistricts();
             FillGrid_FabricatorDetails();
         }
 
@@ -66,49 +64,25 @@ public partial class Fabricator : Page
         txtFabricatorContactNumber.Text = "";
         txtFabricatorContactPerson.Text = "";
         ddlFabricatorDistrict.SelectedIndex = 0;
-        ddlFabricatorDistrict.Enabled = false;
         txtFabricatorEmailId.Text = "";
         txtFabricatorErn.Text = "";
         txtFabricatorName.Text = "";
         txtFabricatorPanNo.Text = "";
         txtFabricatorTin.Text = "";
-        ddlFabricatorState.SelectedIndex = 0;
         ddlFabricatorType.SelectedIndex = 0;
         btnFabricatorSave.Text = "Save";
     }
 
     #endregion
 
-    #region Fill State Function
-
-    private void FillStates()
-    {
-        var ds = ObjFmsFab.IFillStates();
-        if (ds != null)
-            try
-            {
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "sc_lname", "sc_scid", ddlFabricatorState);
-                ddlFabricatorState.Items[0].Value = "0";
-                ddlFabricatorDistrict.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                _helper.ErrorsEntry(ex);
-            }
-    }
-
-    #endregion
-
     #region Fill Districts Function
 
-    private void FillDistricts(int stateId)
+    private void FillDistricts()
     {
-        var ds = ObjFmsFab.IFillDistricts(stateId);
-        if (ds != null)
+        string query = ConfigurationManager.AppSettings["Query"];
             try
             {
-                _helper.FillDropDownHelperMethodWithDataSet(ds, "DISTRICT_NAME", "DISTRICT_ID", ddlFabricatorDistrict);
-                ddlFabricatorDistrict.Enabled = true;
+                _helper.FillDropDownHelperMethod(query, "DISTRICT_NAME", "DISTRICT_ID", ddlFabricatorDistrict);
             }
             catch (Exception ex)
             {
@@ -120,27 +94,12 @@ public partial class Fabricator : Page
 
     #region Selected Index Change for State dropdown list
 
-    protected void ddlFabricatorState_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        switch (ddlFabricatorState.SelectedIndex)
-        {
-            case 0:
-                ddlFabricatorDistrict.Enabled = false;
-                break;
-            default:
-                ddlFabricatorDistrict.Enabled = true;
-                FillDistricts(Convert.ToInt32(ddlFabricatorState.SelectedValue));
-                break;
-        }
-    }
 
     #endregion
 
     #region Selected Index Change for District dropdown list
 
-    protected void ddlFabricatorDistrict_SelectedIndexChanged(object sender, EventArgs e)
-    {
-    }
+ 
 
     #endregion
 
@@ -162,7 +121,6 @@ public partial class Fabricator : Page
                             {
                                 var fname = txtFabricatorName.Text;
                                 var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
-                                var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
                                 var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
                                 var fmandal = 0;
                                 var fcity = 0;
@@ -181,7 +139,7 @@ public partial class Fabricator : Page
                                 var fupdtdate = DateTime.Today;
                                 var fupdateby = Convert.ToString(Session["User_Id"]);
                                 //InsertFabricatorDetails()
-                                ds = ObjFmsFab.InsertFabricatorDetails(fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, femail, ftin, fern, fstatus, finactby, finactdate, fcreatedate, fcreateby, fupdtdate, fupdateby);
+                                ds = ObjFmsFab.InsertFabricatorDetails(fname, ftype, 1, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, femail, ftin, fern, fstatus, finactby, finactdate, fcreatedate, fcreateby, fupdtdate, fupdateby);
                                 switch (ds.Tables.Count)
                                 {
                                     case 0:
@@ -209,7 +167,6 @@ public partial class Fabricator : Page
                             int fId = Convert.ToInt16(hidFabId.Value);
                             var fname = txtFabricatorName.Text;
                             var ftype = Convert.ToInt32(ddlFabricatorType.SelectedValue);
-                            var fstate = Convert.ToInt32(ddlFabricatorState.SelectedValue);
                             var fdist = Convert.ToInt32(ddlFabricatorDistrict.SelectedValue);
                             var fmandal = 0;
                             var fcity = 0;
@@ -221,7 +178,7 @@ public partial class Fabricator : Page
                             var ftin = Convert.ToInt64(txtFabricatorTin.Text);
                             var fern = Convert.ToInt64(txtFabricatorErn.Text);
                             //UpdateFAbricatorDetails
-                            ds = ObjFmsFab.UpdateFabricatorDetails(fId, fname, ftype, fstate, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, fmail, ftin, fern);
+                            ds = ObjFmsFab.UpdateFabricatorDetails(fId, fname, ftype, 1, fdist, fmandal, fcity, faddress, fcontno, fcontper, fpan, fmail, ftin, fern);
                             switch (ds.Tables.Count)
                             {
                                 case 0:
@@ -291,13 +248,11 @@ public partial class Fabricator : Page
         hidFabId.Value = lblid.Text;
         int fId = Convert.ToInt16(hidFabId.Value);
         var ds = ObjFmsFab.IRowEditFabricatorDetails(fId);
-        Session["State_Id"] = ds.Tables[0].Rows[0].ItemArray[2].ToString();
         Session["District_Id"] = ds.Tables[0].Rows[0].ItemArray[3].ToString();
         Session["Mandal_Id"] = ds.Tables[0].Rows[0].ItemArray[4].ToString();
         Session["City_Id"] = ds.Tables[0].Rows[0].ItemArray[5].ToString();
         txtFabricatorName.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_Name"].ToString());
         ddlFabricatorType.SelectedValue = ds.Tables[0].Rows[0]["FabricationType_Id"].ToString();
-        ddlFabricatorState.SelectedValue = ds.Tables[0].Rows[0]["State_Id"].ToString();
         txtFabricatorAddress.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_Address"].ToString());
         txtFabricatorContactNumber.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_ContactNo"].ToString());
         txtFabricatorContactPerson.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_ContactPerson"].ToString());
@@ -306,7 +261,7 @@ public partial class Fabricator : Page
         txtFabricatorTin.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_TIN"].ToString());
         txtFabricatorErn.Text = Convert.ToString(ds.Tables[0].Rows[0]["FleetFabricator_ERN"].ToString());
         //FillStates();
-        FillDistricts(Convert.ToInt32(Session["State_Id"].ToString()));
+        FillDistricts();
         ddlFabricatorDistrict.SelectedValue = ds.Tables[0].Rows[0]["District_Id"].ToString();
     }
 

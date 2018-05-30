@@ -9,9 +9,7 @@
                 <tr>
                     <td>
                         <fieldset style="padding: 10px">
-                        <legend style="color: brown">
-                            KMPL<br/>
-                        </legend>
+                        <legend style="color: brown" align="center">KMPL</legend>
                         <table align="center">
                             <tr>
                                 <td>
@@ -56,12 +54,12 @@
 
                             <div align="center">
                                 <asp:GridView ID="gvVehKmplDetails" runat="server" EmptyDataText="No records found" PageSize="20"
-                                              AllowSorting="true" BorderWidth="1px" BorderColor="brown" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
-                                              CellPadding="4" ForeColor="#333333" GridLines="None" Width="630px" AllowPaging="true"
-                                              EnableSortingAndPagingCallbacks="true"
+                                              AllowSorting="True" BorderWidth="1px" BorderColor="#CCCCCC" AutoGenerateColumns="False" CssClass="gridviewStyle"
+                                              CellPadding="3" Width="630px" AllowPaging="True"
+                                              EnableSortingAndPagingCallbacks="True"
                                               onrowcommand="gvVehKmplDetails_RowCommand"
-                                              onpageindexchanging="gvVehKmplDetails_PageIndexChanging">
-                                    <RowStyle CssClass="rowStyleGrid"/>
+                                              onpageindexchanging="gvVehKmplDetails_PageIndexChanging" BackColor="White" BorderStyle="None">
+                                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                                     <Columns>
                                         <asp:TemplateField HeaderText="VehicleNumber">
                                             <ItemTemplate>
@@ -83,10 +81,14 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
-                                    <FooterStyle CssClass="footerStylegrid"/>
-                                    <PagerStyle CssClass="pagerStylegrid"/>
-                                    <SelectedRowStyle CssClass="selectedRowStyle"/>
-                                    <HeaderStyle CssClass="headerStyle"/>
+                                    <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                                    <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                                    <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                                    <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                    <SortedDescendingHeaderStyle BackColor="#00547E" />
                                 </asp:GridView>
                             </div>
                         </div>

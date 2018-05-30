@@ -5,9 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
-            <legend align="center">
-                Service Station
-            </legend>
+            <legend align="center" style="color:brown">Service Station</legend>
             <table align="center">
                 <tr>
                     <td>
@@ -44,13 +42,13 @@
             </div>
             <br/>
             <div align="center">
-                <asp:GridView ID="gvServiceStationDetails" Visible="false" runat="server" EmptyDataText="No records found"
-                              AllowSorting="true" AutoGenerateColumns="false" CssClass="gridviewStyle" CellSpacing="2"
-                              CellPadding="4" ForeColor="#333333" GridLines="Both" Width="630px" AllowPaging="true"
-                              EnableSortingAndPagingCallbacks="true"
+                <asp:GridView ID="gvServiceStationDetails" Visible="False" runat="server" EmptyDataText="No records found"
+                              AllowSorting="True" AutoGenerateColumns="False" CssClass="gridviewStyle"
+                              CellPadding="3" Width="630px" AllowPaging="True"
+                              EnableSortingAndPagingCallbacks="True"
                               OnRowCommand="gvServiceStationDetails_RowCommand"
-                              OnPageIndexChanging="gvServiceStationDetails_PageIndexChanging">
-                    <RowStyle CssClass="rowStyleGrid"/>
+                              OnPageIndexChanging="gvServiceStationDetails_PageIndexChanging" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                     <Columns>
                         <asp:TemplateField HeaderText="Station">
                             <ItemTemplate>
@@ -85,10 +83,14 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
-                    <FooterStyle CssClass="footerStylegrid"/>
-                    <PagerStyle CssClass="pagerStylegrid"/>
-                    <SelectedRowStyle CssClass="selectedRowStyle"/>
-                    <HeaderStyle CssClass="headerStyle"/>
+                    <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                    <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                    <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                    <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                    <SortedDescendingHeaderStyle BackColor="#00547E" />
                 </asp:GridView>
             </div>
         </td>

@@ -140,10 +140,10 @@
             <tr align="center">
             <td>
             <asp:GridView ID="grdvwDecommVehicles" runat="server" AutoGenerateColumns="False"
-                          CellPadding="4" ForeColor="#333333" BorderWidth="1px" BorderColor="Brown" GridLines="Both" Width="630px" AllowPaging="True"
-                          EmptyDataText="No Records Found" CssClass="gridviewStyle" CellSpacing="2" OnPageIndexChanging="grdvwDecommVehicles_PageIndexChanging"
-                          OnRowCommand="grdvwDecommVehicles_RowCommand">
-                <RowStyle CssClass="rowStyleGrid"/>
+                          CellPadding="3" BorderWidth="1px" BorderColor="#CCCCCC" Width="630px" AllowPaging="True"
+                          EmptyDataText="No Records Found" CssClass="gridviewStyle" OnPageIndexChanging="grdvwDecommVehicles_PageIndexChanging"
+                          OnRowCommand="grdvwDecommVehicles_RowCommand" BackColor="White" BorderStyle="None">
+                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                 <Columns>
                     <asp:TemplateField HeaderText="District">
                         <ItemTemplate>
@@ -187,12 +187,17 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-                <FooterStyle CssClass="footerStylegrid"/>
-                <PagerStyle CssClass="pagerStylegrid"/>
-                <SelectedRowStyle CssClass="selectedRowStyle"/>
-                <HeaderStyle CssClass="headerStyle"/>
+                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                <SortedDescendingHeaderStyle BackColor="#00547E" />
             </asp:GridView>
             </fieldset>
+            </table>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

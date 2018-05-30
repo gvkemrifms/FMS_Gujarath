@@ -137,12 +137,12 @@
     }
 </script>
 <legend align="center" style="color: brown">Vehicle Insurance</legend>
-<div class="dropdown">
+<div  class="dropdown">
 
-<table align="left">
+<table >
     <tr>
         <td >
-            <a href="VehicleInsuranceViewHistory.aspx" style="color: dodgerblue">View History</a>
+            <a href="VehicleInsuranceViewHistory.aspx" style="color: dodgerblue" ><h5 class="search_3" style="width:90px">View History</h5></a>
         </td>
     </tr>
 </table>
@@ -152,7 +152,7 @@
 </tr>
 <tr>
 <td >
-<asp:Panel ID="pnlVehicleInsurance" runat="server" Width="688px">
+<asp:Panel ID="pnlVehicleInsurance" runat="server" Width="900px" align="center">
     <table align="center">
 
         <tr>
@@ -345,10 +345,10 @@
         <tr>
             <td colspan="2"></td>
             <td align="center" style="width: 244px">
-                <asp:Button ID="btSave" CssClass="button" runat="server" OnClick="btSave_Click" Text="Save" Style="background-color: #4CAF50;"/>
+                <asp:Button ID="btSave" CssClass="form-submit-button" runat="server" OnClick="btSave_Click" Text="Save"/>
             </td>
             <td align="left">
-                <asp:Button ID="btReset" CssClass="button" runat="server" OnClick="btReset_Click" Text="Reset" Style="background-color: red;"/>
+                <asp:Button ID="btReset" CssClass="form-reset-button" runat="server" OnClick="btReset_Click" Text="Reset" />
             </td>
         </tr>
     </table>

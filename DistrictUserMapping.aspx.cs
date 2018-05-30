@@ -5,7 +5,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL.Admin;
 using ServiceReference2;
-using DistrictVehicleMapping = GvkFMSAPP.DLL.Admin.DistrictVehicleMapping;
 
 public partial class DistrictUserMapping : Page
 {
@@ -43,7 +42,7 @@ public partial class DistrictUserMapping : Page
 
     public void GetDistrict()
     {
-        var ds = DistrictVehicleMapping.GetDistrict();
+        var ds = GvkFMSAPP.DLL.Admin.DistrictVehicleMapping.GetDistrict();
         if (ds != null)
             try
             {

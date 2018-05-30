@@ -2,6 +2,7 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GvkFMSAPP.BLL;
+using System.Globalization;
 
 public partial class BatteryDetails : Page
 {
@@ -73,7 +74,7 @@ public partial class BatteryDetails : Page
                     var mbcapacity = txtBatteryCapacity.Text;
                     if (txtBatteryExpiryDate != null)
                     {
-                        var mbexpiry = Convert.ToDateTime(txtBatteryExpiryDate.Text);
+                        var mbexpiry = DateTime.ParseExact(txtBatteryExpiryDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture);
                         var mbstatus = 1;
                         var mbinactdate = DateTime.Today;
                         var mbcreationdate = DateTime.Today;
@@ -107,7 +108,7 @@ public partial class BatteryDetails : Page
                     var umake = txtBatteryMake.Text;
                     var umodel = txtBatteryModel.Text;
                     var ucapac = txtBatteryCapacity.Text;
-                    var uexpiry = Convert.ToDateTime(txtBatteryExpiryDate.Text);
+                    var uexpiry = DateTime.ParseExact(txtBatteryExpiryDate.Text,"MM/dd/yyyy",CultureInfo.InvariantCulture);
                     ds = ObjFmsBatDet.UpdateBatteryDetails(ubatid, batitemcode, umake, umodel, ucapac, uexpiry);
                     switch (ds.Tables.Count)
                     {

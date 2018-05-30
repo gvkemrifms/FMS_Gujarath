@@ -133,11 +133,11 @@
             <fieldset style="padding: 10px;">
                 <asp:GridView ID="grdViewVehicleDecommisionProposal" runat="server" AutoGenerateColumns="False"
                               OnRowCommand="grdViewVehicleDecommisionProposal_RowCommand"
-                              CellPadding="4" ForeColor="#333333"
+                              CellPadding="3"
                               Width="630px" EmptyDataText="No Records Found" CssClass="gridviewStyle"
                               OnPageIndexChanging="grdViewVehicleDecommisionProposal_PageIndexChanging"
-                              PageSize="20" AllowPaging="True">
-                    <RowStyle CssClass="rowStyleGrid"/>
+                              PageSize="20" AllowPaging="True" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+                    <RowStyle CssClass="rowStyleGrid" ForeColor="#000066"/>
                     <Columns>
                         <asp:TemplateField HeaderText="Vehicle Number">
                             <ItemTemplate>
@@ -164,10 +164,14 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
-                    <FooterStyle CssClass="footerStylegrid"/>
-                    <PagerStyle CssClass="pagerStylegrid"/>
-                    <SelectedRowStyle CssClass="selectedRowStyle"/>
-                    <HeaderStyle CssClass="headerStyle"/>
+                    <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+                    <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+                    <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                    <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                    <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                    <SortedDescendingHeaderStyle BackColor="#00547E" />
                 </asp:GridView>
             </fieldset>
         </asp:Panel>
@@ -374,74 +378,72 @@
 <tr>
     <td class="rowseparator"></td>
 </tr>
-<br/>
-<tr>
-    <td>
-        <asp:GridView ID="grdViewVehicleDecomissionApproval" runat="server" AutoGenerateColumns="False"
-                      CellPadding="4" ForeColor="#333333" GridLines="Both" Width="630px" EmptyDataText="No Records Found"
-                      CssClass="gridviewStyle">
-            <RowStyle CssClass="rowStyleGrid"/>
-            <Columns>
-                <asp:TemplateField HeaderText="S.No">
-                    <ItemTemplate>
-                        <%# ((GridViewRow) Container).RowIndex + 1 %>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Vehicle Number">
-                    <ItemTemplate>
-                        <%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Survey Date">
-                    <ItemTemplate>
-                        <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyDate") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Survey By">
-                    <ItemTemplate>
-                        <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyBy") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Survey Remarks">
-                    <ItemTemplate>
-                        <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyRemark") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Proposed Remarks">
-                    <ItemTemplate>
-                        <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ProposedRemark") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Status">
-                    <ItemTemplate>
-                        <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "StatusDesc") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:LinkButton ID="lnkBtnEdit" runat="server" Text="Edit" CommandArgument='<% DataBinder.Eval(Container.Dataitem, "VehicleProposalId") %>'
-                                        CommandName="vehicleAccidentedit" Visible="false">
+    <caption>
+        <br/>
+        <tr>
+            <td>
+                <asp:GridView ID="grdViewVehicleDecomissionApproval" runat="server" AutoGenerateColumns="False" CellPadding="4" CssClass="gridviewStyle" EmptyDataText="No Records Found" ForeColor="#333333" GridLines="Both" Width="630px">
+                    <RowStyle CssClass="rowStyleGrid" />
+                    <Columns>
+                        <asp:TemplateField HeaderText="S.No">
+                            <ItemTemplate>
+                                <%# ((GridViewRow) Container).RowIndex + 1 %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Vehicle Number">
+                            <ItemTemplate>
+                                <%#DataBinder.Eval(Container.DataItem, "VehicleNumber") %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Survey Date">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyDate") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Survey By">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyBy") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Survey Remarks">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "SurveyRemark") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Proposed Remarks">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "ProposedRemark") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDateofPurchase" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "StatusDesc") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lnkBtnEdit" runat="server" CommandArgument='<% DataBinder.Eval(Container.Dataitem, "VehicleProposalId") %>' CommandName="vehicleAccidentedit" Text="Edit" Visible="false">
                         </asp:LinkButton>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:LinkButton ID="lnkBtnDelete" runat="server" Text="Delete" CommandArgument='<% DataBinder.Eval(Container.Dataitem, "") %>'
-                                        CommandName="vehicleAccidentDelete" Visible="false">
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lnkBtnDelete" runat="server" CommandArgument='<% DataBinder.Eval(Container.Dataitem, "") %>' CommandName="vehicleAccidentDelete" Text="Delete" Visible="false">
                         </asp:LinkButton>
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-            <FooterStyle CssClass="footerStylegrid"/>
-            <PagerStyle CssClass="pagerStylegrid"/>
-            <SelectedRowStyle CssClass="selectedRowStyle"/>
-            <HeaderStyle CssClass="headerStyle"/>
-        </asp:GridView>
-    </td>
-</tr>
-<tr>
-    <td class="rowseparator"></td>
-</tr>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <FooterStyle CssClass="footerStylegrid" />
+                    <PagerStyle CssClass="pagerStylegrid" />
+                    <SelectedRowStyle CssClass="selectedRowStyle" />
+                    <HeaderStyle CssClass="headerStyle" />
+                </asp:GridView>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowseparator"></td>
+        </tr>
+    </caption>
 </table>
 </ContentTemplate>
 </asp:UpdatePanel>

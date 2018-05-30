@@ -208,7 +208,7 @@
                         </td>
                     </tr>
                 </table>
-                <asp:GridView style="height: 200px; overflow-x: auto; overflow-y: Scroll; text-align: center; width: 1000px;" runat="server" ID="grdRepData" AutoGenerateColumns="true" CssClass="table table-bordered" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
+                <asp:GridView style="height: 200px; overflow-x: auto; overflow-y: Scroll; text-align: center; width: 1000px;" runat="server" ID="grdRepData" AutoGenerateColumns="true" CssClass="gridview" ShowHeader="true" OnRowDataBound="grdRepData_RowDataBound">
                     <HeaderStyle BackColor="#6D91BF" ForeColor="white" Wrap="true" Font-Bold="true" HorizontalAlign="center"
                                  Font-Size="15px" Height="50px"/>
                     <Columns>

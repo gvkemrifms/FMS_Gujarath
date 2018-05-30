@@ -128,10 +128,10 @@
                 <tr>
                     <td colspan="3">
                         <asp:GridView ID="grdVehicleAttachment" runat="server" AutoGenerateColumns="False"
-                                      Width="80%" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px"
-                                      CellPadding="3" CellSpacing="2" ForeColor="#333333" GridLines="None" AllowPaging="True"
+                                      Width="80%" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
+                                      CellPadding="3" AllowPaging="True"
                                       OnPageIndexChanging="grdVehicleAttachment_PageIndexChanging">
-                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333"/>
+                            <RowStyle ForeColor="#000066"/>
                             <Columns>
                                 <asp:TemplateField HeaderText="File Name">
                                     <ItemTemplate>
@@ -166,11 +166,15 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510"/>
+                            <FooterStyle BackColor="White" ForeColor="#000066"/>
                             <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510"/>
-                            <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center"/>
-                            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White"/>
-                            <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White"/>
+                            <PagerStyle ForeColor="#000066" HorizontalAlign="Left" BackColor="White"/>
+                            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+                            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
                         </asp:GridView>
                     </td>
                 </tr>

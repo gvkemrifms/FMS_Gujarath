@@ -5,7 +5,7 @@
     <div id="main">
         <div id="five" style="float: left; width: 5%">
             <div class="row" style="margin-top: 30px">
-                <asp:Button ID="btntoExcel" runat="server" OnClick="btntoExcel_Click" Text="Export To Excel" Style="font-size: 12px; height: 33px; width: 150px;"></asp:Button>
+                <asp:Button ID="btntoExcel" class="form-submit-button"  runat="server" OnClick="btntoExcel_Click" Text="Export To Excel" Style="font-size: 12px; height: 33px; width: 150px;margin-top:-20px;margin-bottom:20px;margin-left:20px"></asp:Button>
             </div>
         </div>
 

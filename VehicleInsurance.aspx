@@ -137,12 +137,12 @@
     }
 </script>
 <legend align="center" style="color: brown">Vehicle Insurance</legend>
-<div class="dropdown">
+<div  class="dropdown">
 
-<table align="left">
+<table >
     <tr>
         <td >
-            <a href="VehicleInsuranceViewHistory.aspx" style="color: dodgerblue">View History</a>
+            <a href="VehicleInsuranceViewHistory.aspx" style="color: dodgerblue" ><h5 class="search_3" style="width:90px">View History</h5></a>
         </td>
     </tr>
 </table>
@@ -152,7 +152,7 @@
 </tr>
 <tr>
 <td >
-<asp:Panel ID="pnlVehicleInsurance" runat="server" Width="688px">
+<asp:Panel ID="pnlVehicleInsurance" runat="server" Width="900px" align="center">
     <table align="center">
 
         <tr>

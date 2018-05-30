@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/temp.master" AutoEventWireup="true" CodeFile="PollutionUnderControl.aspx.cs" Inherits="PollutionUnderControl" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<link href="css/PollutionUnderControl.css" rel="stylesheet"/>
+    <link href="css/PollutionUnderControl.css" rel="stylesheet"/>
 
 <script language="javascript" type="text/javascript">
     function validation() {
@@ -222,12 +222,12 @@
 <tr align="center">
     <td>
         <asp:GridView ID="gvPollutionUnderControl" runat="server" AutoGenerateColumns="False"
-                      CellPadding="4" Width="630px" ForeColor="#333333" GridLines="Both" OnRowCommand="gvPollutionUnderControl_RowCommand"
+                      CellPadding="3" Width="630px" OnRowCommand="gvPollutionUnderControl_RowCommand"
                       OnRowDataBound="gvPollutionUnderControl_RowDataBound" EmptyDataText="No Records Found"
                       AllowPaging="True" OnPageIndexChanging="gvPollutionUnderControl_PageIndexChanging"
                       CssClass="mydatagrid" PagerStyle-CssClass="pager"
-                      HeaderStyle-CssClass="header" CellSpacing="2">
-            <RowStyle CssClass="rows"/>
+                      HeaderStyle-CssClass="header" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+            <RowStyle CssClass="rows" ForeColor="#000066"/>
             <Columns>
                 <asp:TemplateField HeaderText="Vehicle Number">
                     <ItemTemplate>
@@ -274,10 +274,14 @@
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-            <FooterStyle CssClass="footerStylegrid"/>
-            <PagerStyle CssClass="pagerStylegrid"/>
-            <SelectedRowStyle CssClass="selectedRowStyle"/>
-            <HeaderStyle CssClass="headerStyle"/>
+            <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066"/>
+            <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left"/>
+            <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White"/>
+            <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#00547E" />
         </asp:GridView>
     </td>
 </tr>

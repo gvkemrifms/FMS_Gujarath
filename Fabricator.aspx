@@ -17,13 +17,6 @@
             return false;
         }
 
-        switch (document.getElementById("<%= ddlFabricatorState.ClientID %>").selectedIndex) {
-        case 0:
-            alert("Please Select Fabricator State");
-            document.getElementById("<%= ddlFabricatorState.ClientID %>").focus();
-            return false;
-        }
-
         switch (document.getElementById("<%= txtFabricatorAddress.ClientID %>").value) {
         case '':
             alert("Please Enter Fabricator Address");
@@ -103,12 +96,6 @@
 <ContentTemplate>
 <script type="text/javascript">
     function pageLoad() {
-        $('#<%= ddlFabricatorState.ClientID %>').select2({
-            disable_search_threshold: 5,
-            search_contains: true,
-            minimumResultsForSearch: 2,
-            placeholder: "Select an option"
-        });
         $('#<%= ddlFabricatorDistrict.ClientID %>').select2({
             disable_search_threshold: 5,
             search_contains: true,
@@ -161,28 +148,18 @@
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
-                                <tr>
-                                    <td style="height: 25px; width: 140px;" align="left">
-                                        State <span style="color: Red">*</span>
-                                    </td>
-                                    <td class="columnseparator"></td>
-                                    <td style="height: 25px">
-                                        <asp:DropDownList ID="ddlFabricatorState" runat="server" Width="150px" AutoPostBack="True"
-                                                          OnSelectedIndexChanged="ddlFabricatorState_SelectedIndexChanged">
-                                        </asp:DropDownList>
-                                    </td>
-                                </tr>
+                                
                                 <tr>
                                     <td class="rowseparator"></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 140px" align="left">
-                                        District
+                                        State<span style="color:red">*</span>
                                     </td>
                                     <td class="columnseparator"></td>
                                     <td style="height: 23px">
                                         <asp:DropDownList ID="ddlFabricatorDistrict" runat="server" Width="150px"
-                                                          AutoPostBack="True" OnSelectedIndexChanged="ddlFabricatorDistrict_SelectedIndexChanged">
+                                                          AutoPostBack="True" >
                                         </asp:DropDownList>
                                     </td>
                                 </tr>

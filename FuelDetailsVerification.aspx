@@ -48,8 +48,8 @@
                                     <br/>
                                     <tr>
                                         <td align="center" colspan="2">
-                                            <asp:GridView ID="gvVerification" runat="server" AllowPaging="True" AutoGenerateColumns="false" AutoGenerateEditButton="False" BorderColor="brown" BorderWidth="1px" Caption="Fuel Entry Details" CaptionAlign="Top" CellPadding="3" CellSpacing="2" CssClass="gridviewStyle" EmptyDataText="No Records to Approve/Reject" GridLines="None" onpageindexchanging="gvVerification_PageIndexChanging1" OnRowEditing="gvVerification_RowEditing" Width="434px">
-                                                <RowStyle CssClass="rowStyleGrid" />
+                                            <asp:GridView ID="gvVerification" runat="server" AllowPaging="True" AutoGenerateColumns="False" BorderColor="#CCCCCC" BorderWidth="1px" Caption="Fuel Entry Details" CaptionAlign="Top" CellPadding="3" CssClass="gridviewStyle" EmptyDataText="No Records to Approve/Reject" onpageindexchanging="gvVerification_PageIndexChanging1" OnRowEditing="gvVerification_RowEditing" Width="434px" BackColor="White" BorderStyle="None">
+                                                <RowStyle CssClass="rowStyleGrid" ForeColor="#000066" />
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="Check">
                                                         <ItemTemplate>
@@ -69,10 +69,14 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                 </Columns>
-                                                <FooterStyle CssClass="footerStylegrid" />
-                                                <PagerStyle CssClass="pagerStylegrid" />
-                                                <SelectedRowStyle CssClass="selectedRowStyle" />
-                                                <HeaderStyle CssClass="headerStyle" />
+                                                <FooterStyle CssClass="footerStylegrid" BackColor="White" ForeColor="#000066" />
+                                                <PagerStyle CssClass="pagerStylegrid" BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                                                <SelectedRowStyle CssClass="selectedRowStyle" BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                                                <HeaderStyle CssClass="headerStyle" BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                                <SortedDescendingHeaderStyle BackColor="#00547E" />
                                             </asp:GridView>
                                             <br/>
                                             <br/>
